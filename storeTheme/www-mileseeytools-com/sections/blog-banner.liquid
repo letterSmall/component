@@ -1,0 +1,37 @@
+<div class="blog-banner">
+  {% if section.settings.url != blank %}<a  href="{{section.settings.url}}">{% endif %}
+    <img src="{{section.settings.image | img_url: 'master'}}" class="image hide-mb" />
+    <img src="{{section.settings.image_mb |img_url: 'master'}}" class="image hide-pc" />
+    <div class="blog-banner-text">{{section.settings.text}}</div>
+  {% if section.settings.url != blank %}</a>{% endif %}
+</div>
+{% schema %}
+  {
+    "name": "Blog banner",
+    "settings": [
+	  {
+        "type":"image_picker",
+        "id":"image",
+        "label":"Image"
+      },{
+        "type":"image_picker",
+        "id":"image_mb",
+        "label":"Image Mobile"
+      },{
+        "type":"html",
+        "id":"text",
+        "label":"Text"
+      },{
+        "type":"url",
+        "id":"url",
+        "label":"Url"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

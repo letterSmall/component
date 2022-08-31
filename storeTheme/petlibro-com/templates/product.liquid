@@ -1,0 +1,15 @@
+
+
+{% section 'product-template' %}
+{% section 'product-desc' %}
+
+{% section 'product-recommendations' %}
+{% section 'product-collection-links' %}
+{%comment%}
+{% include 'wiser_related' %}{% include 'wiser_recommended' %}{% include 'wiser_alsobought' %}{% include 'wiser_recentview' %}{% include 'wiser_topselling' %}{% include 'wiser_trending' %}{% include 'wiser_newarrivals' %}{% include 'wiser_featured' %}{% include 'wiser_recent_related' %}
+{%endcomment%}
+
+ 
+{% include 'wiser_recommended' %}
+{% include 'wiser_topselling' %}{% include 'wiser_trending' %}{% include 'wiser_newarrivals' %}{% include 'wiser_featured' %}{% include 'wiser_recent_related' %}
+{% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: true, auto_install: true, product: product %}

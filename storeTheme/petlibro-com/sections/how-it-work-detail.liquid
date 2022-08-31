@@ -1,0 +1,259 @@
+<div class="page-how-it-work-detail">
+  <div class="title">{{section.settings.title}}</div>
+  <div class="subtitle">{{section.settings.subtitle}}</div>
+  <div class="videos-wrapper">
+    {% for block in section.blocks %}
+    <div class="video-item {% if forloop.first %} active{% endif %}" data-index="{{forloop.index}}">
+      <div class="player_video-wrapper" data-index="{{forloop.index}}">
+        <img {% unless forloop.first %} data-{% endunless %}src="{{block.settings.image | img_url: 'master'}}"  class="lazyload prev_video_image hide-mb"/>
+        <div class="play-icon-wrapper paly-icon-white">
+          {%- render 'icon-svg',icon_svg: 'play_icon' -%} 
+        </div>
+        <div class="product_player_video-wrapper">
+          <div id="product_player_video_{{forloop.index}}" class="product_player_video"></div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  
+  <div class="thumbs-wrapper-for-mb">
+    <div class="thumbs-wrapper">
+      <div class="swiper-container-faq-video">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+          <div class="thumb-item swiper-slide {% if forloop.first %} active{% endif %}" data-index="{{forloop.index}}">
+            <div class="item-image-wrapper">
+              <img src="{{block.settings.thumb | img_url: '190x'}}" class="item-image">
+              <div class="bg-shadow-background"></div>
+              <div class="item-title">{{block.settings.title}}</div>
+              <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/playing.svg?v=1646199342" class="playing-icon">
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="swiper-button-next swiper-button-next-detail-thumb" style="background-image: unset;"><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_7.png?v=1646190495"></div>
+    <div class="swiper-button-prev swiper-button-prev-detail-thumb" style="background-image: unset;"><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_6.png?v=1646183865"></div>
+  </div>
+  
+  <div class="content-wrapper">
+    <div class="item">
+      <div class="item-title">
+        TIPS
+        <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/8e26a03846567dfb43a4b1ea4991a59e.png?v=1646191407" class="icon up">
+      </div>
+      <div class="item-content" style="display:block">{{section.settings.tips}}</div>
+    </div>
+    <div class="item active">
+      <div class="item-title">
+        FAQ
+        <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/8e26a03846567dfb43a4b1ea4991a59e.png?v=1646191407" class="icon up">
+      </div>
+      <div class="item-content">{{section.settings.faq}}</div>
+    </div>
+    <div class="item">
+      <a class="item-title" href="{{section.settings.link}}" target="_blank">
+        USER MANUAL
+        <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/download.png?v=1646192391" class="icon">
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  var player_videos =[];
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/player_api?"+Math.random();
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+</script>
+<script>
+  function productVedioChange(event){
+    if(event.data == 0){
+      $(".player_video-wrapper").find(".prev_video_image").removeClass("hide");
+      $(".player_video-wrapper").find(".play-icon-wrapper").css("display","block");
+      $(".player_video-wrapper").find(".text").css("display","block");
+      $(".player_video-wrapper").find(".product_player_video-wrapper").css("display","none");
+    }
+  }
+  
+  
+  var player_pdtpage_desc;
+  var player_pdtpage_product = [];
+  function onYouTubePlayerAPIReady() {
+    {% for block in section.blocks %}
+    player_pdtpage_product[{{forloop.index}}] = new YT.Player('product_player_video_{{forloop.index}}', {
+      height: '675',
+      width: '1200',
+      videoId: {{block.settings.code | json}},
+      playerVars:{
+        controls: 1,
+      },
+      events: {
+        'onStateChange': productVedioChange,                     
+      },
+   });
+    {% endfor %}
+ }
+</script>
+<script>
+$(function(){
+  var last_video_index = 1;
+  var video_width =  1200;
+  var video_height =  675;
+
+  $(".player_video-wrapper").click(function(){
+    if(player_pdtpage_product){
+      if($(window).width() > 768){
+        $(this).find(".product_player_video").css({'width':$(this).find(".prev_video_image.hide-mb").width(),'height':$(this).find(".prev_video_image.hide-mb").height(),'display': 'block'});
+      }else{
+        $(this).find(".product_player_video").css({'width':$(this).find(".prev_video_image.hide-pc").width(),'height':$(this).find(".prev_video_image.hide-pc").height(),'display': 'block'});
+      }
+      $(this).find(".prev_video_image").addClass("hide");
+      $(this).find(".play-icon-wrapper").css("display","none");
+      $(this).find(".text").css("display","none");
+      $(this).find(".product_player_video-wrapper").css("display","block");
+      var now_index = parseInt($(this).attr("data-index"));
+      player_pdtpage_product[last_video_index].stopVideo();
+      player_pdtpage_product[now_index].seekTo(0);	
+      player_pdtpage_product[now_index].playVideo();
+      last_video_index = now_index;
+    }
+  });
+  
+  $(".thumbs-wrapper .thumb-item").click(function(){
+    
+    video_width = $(".videos-wrapper .video-item[data-index="+last_video_index+"] .player_video-wrapper").width();
+    video_height = $(".videos-wrapper .video-item[data-index="+last_video_index+"] .player_video-wrapper").height();
+    
+    var active_index = parseInt($(this).attr("data-index"));
+
+    
+    
+    $(this).addClass("active").siblings().removeClass("active");;
+    $(".videos-wrapper .video-item[data-index="+active_index+"]").addClass("active").siblings().removeClass("active");
+    
+    playVideoByIndex(active_index,video_width,video_height);
+  });
+  
+  function playVideoByIndex(index,video_width,video_height){
+    if(player_pdtpage_product){
+      let $payVideoWrapper = $(".player_video-wrapper[data-index="+index+"]");
+      if($(window).width() > 768){
+        $payVideoWrapper.find(".product_player_video").css({'width':video_width,'height':video_height,'display': 'block'});
+      }else{
+        $payVideoWrapper.find(".product_player_video").css({'width':video_width,'height':video_height,'display': 'block'});
+      }
+      $payVideoWrapper.find(".prev_video_image").addClass("hide");
+      $payVideoWrapper.find(".play-icon-wrapper").css("display","none");
+      $payVideoWrapper.find(".text").css("display","none");
+      $payVideoWrapper.find(".product_player_video-wrapper").css("display","block");
+      
+      
+      let now_index = parseInt($payVideoWrapper.attr("data-index"));
+      player_pdtpage_product[last_video_index].stopVideo();
+      player_pdtpage_product[now_index].seekTo(0);	
+      player_pdtpage_product[now_index].playVideo();
+      last_video_index = now_index;
+    }
+  }
+  
+  setTimeout(function(){
+    $(".videos-wrapper").css("min-height",$(".video-item.active").height() + "px");
+  },2500);
+  
+});
+  
+  var swiper_faq_videos = new Swiper('.swiper-container-faq-video', {
+    spaceBetween: 12,
+    centeredSlides: false,
+    slidesPerView: 4,
+    loop: 0,
+    breakpoints:{
+      1000: { slidesPerView: 4 }, 
+      500: {slidesPerView: 2.2}
+    },
+    navigation: {
+      nextEl: '.swiper-button-next-detail-thumb',
+      prevEl: '.swiper-button-prev-detail-thumb',
+	}
+  });
+  
+  $(".content-wrapper .item").click(function(){
+    if($(this).hasClass("active")){
+       $(this).removeClass("active");
+      $(this).find(".item-content").show(300);
+    }else{
+    $(this).addClass("active"); 
+      $(this).find(".item-content").hide(300); 
+    }
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "How it work detail",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Title",
+        "id": "title"
+      },{
+        "type": "text",
+        "label": "Subtitle",
+        "id": "subtitle"
+      },{
+        "type": "html",
+        "label": "Tips",
+        "id": "tips"
+      },{
+        "type": "html",
+        "label": "FAQ",
+        "id": "faq"
+      },{
+        "type": "url",
+        "label": "User Manual Link",
+        "id": "link"
+      }
+	],
+	"blocks":[
+      {
+        "type": "video",
+        "name": "Video",
+        "settings":[
+          {
+            "type": "text",
+            "label": "Title",
+            "id": "title"
+          },{
+            "type": "text",
+            "label": "Video Code",
+            "id": "code"
+          },{
+            "type": "image_picker",
+            "label": "Video Pre Image",
+            "id": "image"
+          },{
+            "type": "image_picker",
+            "label": "Thumb image",
+            "id": "thumb"
+          }
+      	]
+      }
+	],
+   "presets": [
+      {
+		"name": "How it work detail",
+		"category": "Image With Text"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

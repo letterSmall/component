@@ -1,0 +1,106 @@
+{%- capture itemtag -%}{{ tag | append:"_" }}{%- endcapture -%}
+{%- capture link_id -%}{{ index | prepend:"filter-" }}{%- endcapture -%}
+{% assign list_current_tag = blog.all_tags %}
+{%assign this_blog_handle=blog.handle|prepend:"blogs/" %}  
+
+
+
+
+{% for filter_current_tag in list_current_tag %}
+{% assign check1 = false %}
+{%if filter_current_tag contains itemtag %}
+{% assign check1 = true %}
+
+
+
+
+{% break %}
+{% endif %}
+{% endfor %}
+{%assign has_tag_status=false%}
+{%if list_current_tag!=blank%}
+{%assign has_tag_status=false%}
+{%endif%}
+
+ {%- assign groups = '' -%}
+{% for filter_current_tag in list_current_tag %}
+
+ {% if filter_current_tag contains 'type_' %}
+   {%- assign tag_parts = filter_current_tag | split: '_' -%}
+{%- assign tag_parts_first = tag_parts.first -%}
+{%- assign groups = groups | append: tag_parts_first| append: ',' -%}
+{%endif%}
+{% endfor %}
+
+
+  {%- assign groups = groups | split: ',' | compact | uniq -%}
+{% if check1 == true %}
+
+{%for group in groups%}
+{%assign group_downcase=group|downcase%}
+{%if  group_downcase=='tags' or  group_downcase=="product"%}{%continue%}{%endif%}
+ {% assign tagNum = 0 %}
+<div class="filter-type ">
+ 
+ 
+
+  <ul class="filter-item-list  blog-filter-list"  >                        
+    {% for filter_current_tag in list_current_tag %}
+
+    {% assign custom_current_tag = filter_current_tag  %}
+      {% assign custom_current_tag_prev = filter_current_tag | split:"_"|first %}
+     {% assign custom_current_tag_append = filter_current_tag | split:"_"|last %}
+    {% assign fcheck = false %}
+    {% assign cur_tag = current_tags %}
+    {% assign tagCount1 = 0 %}
+   
+    {% for ct in cur_tag %}
+    {% if ct == custom_current_tag %}
+    {% assign fcheck = true %}
+    {% endif %}
+    {% endfor %}
+    
+   
+    
+    {%if custom_current_tag contains itemtag %}
+    {% for article in blogs[blog.handle].articles %}
+    {% for articleTag in article.tags %}
+     
+
+    {% if articleTag == filter_current_tag %}
+    {% assign tagCount1 = tagCount1 | plus: 1 %}
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+    
+    <div class="advanced-filter-cell">
+ 
+ {%if custom_current_tag_prev ==group%}
+     {% assign tagNum =tagNum| plus: 1 %}
+    {% if fcheck %}
+    <li class="advanced-filter active-filter" data-group="{{ itemtag}}" data-handle="{{ custom_current_tag_append | handleize }}">
+   <a href="/blogs/{{ blog.handle }}">
+        {{ custom_current_tag_append |append:"</span> &nbsp;("  |append:tagCount1|append:")"}}
+      </a></li>
+    {% else %} 
+    <li class="advanced-filter" data-group="{{ itemtag}}" data-handle="{{ custom_current_tag_append | handleize }}">
+      
+      <a href="/blogs/{{ blog.handle }}/tagged/{{ filter_current_tag | handleize }}">
+        {{ custom_current_tag_append |append:"</span> &nbsp;("  |append:tagCount1 |append:")"}}
+      </a>
+      
+      
+      </li>
+    {% endif %}
+    {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %} 
+    
+  </ul>
+<!--     </div> -->
+</div>
+{%endfor%}
+{% endif %}
+
+<!-- end of tag setting-->

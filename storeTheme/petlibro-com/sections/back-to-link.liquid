@@ -1,0 +1,29 @@
+<div class="how-it-work-back-wrapper">
+  <a class="how-it-work-back" href="javascript:history.back(-1)">
+    <img src="https://cdn.shopifycdn.net/s/files/1/0252/5197/1119/files/copy_6.png?v=1646183865">How It Works<span style="margin: 0px 24px;">|</span>{{section.settings.class}}
+  </a>
+</div>
+
+{% schema %}
+  {
+    "name": "Top Link",
+    "settings": [
+      {
+        "type":"text",
+        "id":"class",
+        "label":"Class",
+		"default":"Fountain"
+      },{
+        "type":"url",
+        "id":"link",
+        "label":"Link"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,217 @@
+{% paginate blog.articles by 6 %}
+
+<div data-section-id="{{ section.id }}" data-section-type="blog">
+  <div class="page-width page-content  big-page-width">
+
+    <header class="section-header">
+      <h1 class="section-header__title">
+        {{ blog.title }}
+
+        {% if section.settings.blog_show_tag_filter %}
+          {% if blog.tags.size > 0 %}
+            <select id="BlogTagFilter">
+              <option value="/blogs/{{ blog.handle }}">All</option>
+              {% for tag in blog.all_tags %}
+              {%assign blog_handle=tag|dwoncase%}
+              {%unless blog_handle contains "type_"%}
+              
+
+                {% if tag contains "_" %}{%- assign tag_starts_with = tag | slice: 0 -%}{% if tag_starts_with == "_" %}{% if tag_count %}{%- assign tag_count = tag_count | minus: 1 | at_least: 0 -%}{% endif %}{% continue %}{% endif %}{% endif %}
+                <option value="/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}" {% if current_tags contains tag %}selected{% endif %}>{{ tag }}</option>
+                           {%endunless%}
+              {% endfor %}
+            </select>
+          {% endif %}
+        {% endif %}
+
+        {% if section.settings.blog_show_rss %}
+          <a href="{{ shop.url }}{{ blog.url }}.atom" class="rss-link">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-rss" viewBox="0 0 20 20"><path fill="#444" d="M5.903 16.586a2.489 2.489 0 1 1-4.977 0 2.489 2.489 0 0 1 4.977 0zM12.956 19.075H9.43c0-4.688-3.817-8.505-8.505-8.505V7.044c6.638 0 12.031 5.393 12.031 12.031z"/><path fill="#444" d="M15.445 19.075c0-8.028-6.493-14.52-14.52-14.52V.925c10.019 0 18.15 8.131 18.15 18.15h-3.63z"/></svg>
+            <span class="icon__fallback-text">RSS</span>
+          </a>
+        {% endif %}
+      </h1>
+    </header>
+
+    
+    {%assign has_filter=false%}
+ {% for tag in blog.all_tags %}
+              {%assign blog_handle=tag|dwoncase%}
+              {%if blog_handle contains "type_"%}
+     {%assign has_filter=true%}
+    {%break%}
+    {%endif%}
+    {%endfor%}
+              
+    
+    
+    <div class="article-container-box">
+      {%if has_filter%}
+      <div class="grid">
+        <div class="large-up--one-quarter one-whloe grid__item  acb-left">
+           {%render "filter-box"%}
+           </div>
+        
+        <div class="large-up--three-quarters one-whloe grid__item  acb-right">
+          {%endif%}
+          <div class="grid grid--uniform">
+               {%- assign is_even_post = false -%}
+    {% for article in blog.articles %}
+      {% assign featured_image_src = '' %}
+
+      {% if article.image %}
+        {% assign featured_image_src = article | img_url: '1024x1024' %}
+      {% endif %}
+
+     <div class="one-whole medium-down--one-half {%if has_filter%} large-up--one-third {%else%}large-up--one-quarter {%endif%}    grid__item wow fadeInUp d0-{% increment my_counter %}">
+      <article class="article " data-aos>
+        <a href="{{ article.url }}">
+        <div class="article__image-wrap{% if article.image == blank %} article__image-wrap--empty{% endif %}">
+            {%- if article.image -%}
+          <div class="image-wrap" style="height: 0; padding-bottom: {{ 100 | divided_by: article.image.aspect_ratio }}%;">
+              <div class="article__image ">
+                {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                <img class="image-fit lazyload"
+                    data-src="{{ img_url }}"
+                    data-widths="[720, 900, 1080]"
+                    data-aspectratio="{{ article.image.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ article.image.alt | escape }}">
+                <noscript>
+                  <img class="image-fit lazyloaded" src="{{ article.image | img_url: '600x' }}" alt="{{ article.title | escape }}">
+                </noscript>
+              </div>
+            {%- endif -%}
+          </div>
+           </div>
+        </a>
+          <div class="article__content ">
+            <div class="article__content-meta">
+                <h2 class="h3 article__h3">
+                <a href="{{ article.url }}">{{ article.title }}</a>
+              </h2>
+              
+              <div class="blog-article-header">
+              <div class="article__date">
+          
+                {%- assign first_item = true -%}
+                {%- if section.settings.blog_show_tags and article.tags.size > 0 -%}
+                  {%- for tag in article.tags -%}
+                {%if forloop.first%}
+                {%assign tag_handle=tag|downcase%}
+                    {% if tag_handle contains "type_" %} 
+                                {%- assign first_item = false -%}
+                  {%assign tag_last=tag|split:"_"|last%}
+                    <a href="{{ blog.url }}/tagged/{{ tag | handle }}">
+                      {{ tag_last }}
+                    </a> 
+                {% endif %}
+                {% endif %}
+                  {%- endfor -%}
+                {%- unless first_item -%}<div class="diver"></div> {%- endunless -%}
+                {%- endif -%}
+             
+                {%- if section.settings.blog_show_comments and article.comments_count > 0 -%}
+                
+                  {%- assign first_item = false -%}
+                  <a href="{{ article.url }}#comments">
+                    {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+                  </a>
+                {%- endif -%}
+                {%- if section.settings.blog_show_date -%}
+               
+                {%- assign first_item = false -%}
+                {{ article.published_at | time_tag: format: 'month_day_year' }}
+              {%- endif -%}   
+            </div>
+            {%- if section.settings.blog_show_author -%}
+            <div class="article__author">by {{ article.author }}</div>
+          {%- endif -%}
+              </div>
+  
+            
+  
+             
+            </div>
+  
+           
+  
+           
+          </div>
+      </article>
+    </div>
+
+      {% comment %}Set the next post as an even one{% endcomment %}
+      {% if is_even_post %}
+        {%- assign is_even_post = false -%}
+      {% else %}
+        {%- assign is_even_post = true -%}
+      {% endif %}
+    {% endfor %}
+            
+            <div class="grid__item">
+                {% if paginate.pages > 1 %}
+      {% render 'pagination', paginate: paginate %}
+    {% endif %}
+            </div>
+            
+          </div>
+          {%if has_filter%}
+           </div>
+         </div>
+      {%endif%}
+    </div>
+    
+    
+ 
+
+  
+  </div>
+</div>
+
+{% endpaginate %}
+
+{% schema %}
+  {
+    "name": "Blog pages",
+    "settings": [
+{
+        "id": "blog",
+        "type": "blog",
+        "label": "Blog"
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_tag_filter",
+        "label": "Show tag filter"
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_rss",
+        "label": "Show RSS link"
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_tags",
+        "label": "Show tags"
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_date",
+        "label": "Show date",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_comments",
+        "label": "Show comment count",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_author",
+        "label": "Show author"
+      }
+    ]
+  }
+{% endschema %}

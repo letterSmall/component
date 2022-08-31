@@ -1,0 +1,136 @@
+{%if section.settings.code != blank%}  
+<div class="product-page-video">
+<div class="section-product-video">
+  <div class="player_video-wrapper">
+    {%if section.settings.image != blank%}  
+    <img src="{{section.settings.image | img_url: 'master'}}"  class="prev_video_image hide-mb"/>
+    {% endif %}
+    {%if section.settings.image_mb != blank%}  
+    <img src="{{section.settings.image_mb | img_url: 'master'}}" class="prev_video_image hide-pc" />
+    {% else %}
+    <img src="{{section.settings.image | img_url: 'master'}}" class="prev_video_image hide-pc" />
+    {% endif %}
+    <div class="play-icon-wrapper">
+      {%- render 'icon-svg',icon_svg: 'play_icon' -%} 
+    </div>
+    <div class="product_player_video-wrapper">
+      <div id="product_player_video"></div>
+    </div>
+    {% if section.settings.text != blank %}
+    <div class="text">
+      {{section.settings.text}}
+    </div>
+    {% endif %}
+  </div>
+</div>
+</div>
+
+<style>
+  .product-page-video .section-product-video{ background: {{ section.settings.bg_color }}; padding: 80px 100px;}
+  .product-page-video .section-product-video .text{ color: {{ section.settings.color }}; }
+  .product-page-video .section-product-video .player_video-wrapper{    max-width: 1400px;}
+  @media (max-width: 768px){
+    .product-page-video .section-product-video{padding: 0;}
+  }
+</style>
+
+<script>
+  var player_videos =[];
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/player_api?"+Math.random();
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+</script>
+<script>
+  function productVedioChange(event){
+    if(event.data == 0){
+      $(".player_video-wrapper").find(".prev_video_image").removeClass("hide");
+      $(".player_video-wrapper").find(".play-icon-wrapper").css("display","block");
+      $(".player_video-wrapper").find(".text").css("display","block");
+      $(".player_video-wrapper").find(".product_player_video-wrapper").css("display","none");
+    }
+  }
+  
+  
+  var player_pdtpage_desc;
+  function onYouTubePlayerAPIReady() {
+    player_pdtpage_product = new YT.Player('product_player_video', {
+      height: '675',
+      width: '1200',
+      videoId: {{section.settings.code | json}},
+      playerVars:{
+        controls: 1,
+      },
+      events: {
+        'onStateChange': productVedioChange,                     
+      },
+   });
+ }
+</script>
+<script>
+$(function(){
+   
+    $(".player_video-wrapper").click(function(){
+      if(player_pdtpage_product){
+        if($(window).width() > 768){
+          $(this).find("#product_player_video").css({'width':$(this).find(".prev_video_image.hide-mb").width(),'height':$(this).find(".prev_video_image.hide-mb").height(),'display': 'block'});
+        }else{
+          $(this).find("#product_player_video").css({'width':$(this).find(".prev_video_image.hide-pc").width(),'height':$(this).find(".prev_video_image.hide-pc").height(),'display': 'block'});
+        }
+        $(this).find(".prev_video_image").addClass("hide");
+        $(this).find(".play-icon-wrapper").css("display","none");
+        $(this).find(".text").css("display","none");
+        $(this).find(".product_player_video-wrapper").css("display","block");
+        player_pdtpage_product.playVideo();
+      }
+    });
+  });
+</script>
+{% endif %} 
+
+{% schema %}
+  {
+    "name": "Youtube Video",
+    "settings": [
+      {
+        "type":"color",
+        "id":"bg_color",
+        "label":"Section Background Color",
+        "default":"#2F2F2F"
+      },{
+        "type":"color",
+        "id":"color",
+        "label":"Text Color",
+        "default":"#FFF"
+      },{
+        "type": "text",
+        "label": "Youtube Code",
+        "id": "code"
+      },{
+        "type": "image_picker",
+        "label": "Prev Image",
+        "id": "image"
+      },{
+        "type": "image_picker",
+        "label": "Prev Image Mobile",
+        "id": "image_mb"
+	  },{
+        "type": "html",
+        "label": "text",
+        "id": "text"
+	  }
+	],
+   "presets": [
+      {
+		"name": "Product Video",
+		"category": "Video"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,44 @@
+
+  <div class="palogo-box">
+   {% for block in section.blocks %}
+  <div class="palogo-item">
+    {% if block.settings.image %}
+    <img alt src="{{ block.settings.image | img_url:'master' }}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" /> 
+   {% endif %}
+   </div>
+   {% endfor %}
+  </div>
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Parkinson Logo",
+    "settings": [
+
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：144*70px)"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Parkinson Logo",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+

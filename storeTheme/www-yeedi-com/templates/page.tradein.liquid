@@ -1,0 +1,849 @@
+<style>
+  	.tradein-page-faq-section-panel {
+        margin-bottom: 25px;
+    }
+  	.tradein-page-faq-section-panel + .tradein-page-faq-section-panel {
+        margin-top: -25px;
+    }
+  	.tradein-page-faq-section-panel .tradein-page-faq-collapsibles-wrapper {
+        padding: 10px 0;
+    }
+  	.tradein-page-faq-section-panel .tradein-page-faq-collapsibles-wrapper {
+        border-bottom: 1px solid rgba(50, 77, 97, 0.5);
+    }
+    .tradein-page-heading span {
+        font-weight: 400;
+        font-size: 26px;
+        line-height: 42px;
+        font-family: 'Acre';
+        color: #324D61;
+        margin-bottom: 15px;
+        display: block;
+    }
+  	.tradein-page-heading span img {
+        vertical-align: middle;
+        width: 60px;
+    }
+    .tradein-page-heading h1 {
+        font-weight: 400;
+        font-size: 46px;
+        line-height: 50px;
+        font-family: 'Acre';
+        color: #324D61;
+        margin: auto;
+        margin-bottom: 25px;
+    }
+    .tradein-page-heading .tradein-page-heading-blue-text {
+      font-size: 46px;
+      line-height: 50px;
+      color: #75C1DC;
+      display: inline;
+    }
+    .tradein-page-heading p {
+        font-family: 'Acre';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        color: #324D61;
+        margin-bottom: 10px;
+    }
+    .tradein-page-heading {
+        margin-bottom: 60px;
+    }
+    .tradein-page-banner {
+        margin-bottom: 80px;
+      	position:relative;
+    }
+  	.tradein-page-banner-main-content {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        margin-top: 60px;
+    }
+    .tradein-page-credit-grid {
+        display: flex;
+        align-items: center;
+    }
+    .tradein-page-credit-grid-img {
+        flex: 0 1 42%;
+    }
+    .tradein-page-credit-grid-text {
+        flex: 0 1 58%;
+        margin-left: 20px;
+    }
+    .tradein-page-credit-grid-text p {
+        font-family: 'Acre';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        color: #324D61;
+        margin-bottom: 10px
+    }
+    .tradein-page-credit-grid-text h2 {
+        font-family: 'Acre';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 25px;
+        line-height: 30px;
+        color: #324D61;
+        margin-bottom: 10px;
+        margin-top: 0;
+    }
+    .tradein-page-credit-grid {
+        border: 1px solid #324D61;
+        border-radius: 22px;
+        padding: 15px 25px;
+    }
+    .tradein-page-credit-banner {
+        margin-bottom: 20px;
+    }
+    .tradein-page-discount-banner {
+        border: 1px solid #324D61;
+        border-radius: 22px;
+        padding: 15px 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 80px;
+    }
+    .tradein-page-discount-banner-text p {
+        font-family: 'Acre';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        margin-bottom: 10px;
+        color: #324D61;
+    }
+    .tradein-page-discount-banner-text h2 {
+        font-family: 'Acre';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 25px;
+        line-height: 30px;
+        color: #324D61;
+        margin-top: 0;
+    }
+    .tradein-page-discount-banner-text {
+        margin-right: 50px;
+    }
+    .tradein-page-product-text h4 {
+        font-family: 'Acre';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 26px;
+        line-height: 32px;
+        color: #324D61;
+        margin-bottom: 20px;
+    }
+    .tradein-page-product-text p {
+        font-family: 'Acre';
+        font-style: normal;
+        letter-spacing: 0.05em;
+    }
+    .tradein-page-product-text p span {
+        font-size: 21px;
+        line-height: 30px;
+        text-decoration-line: line-through;
+        color: #324D61;
+    }
+    .tradein-page-product-text p small {
+        font-size: 16px;
+        line-height: 24px;
+        color: #E38674;
+        margin-left: 10px;
+        display: inline-block;
+    }
+    .tradein-page-product-text button {
+        font-family: 'Acre';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 24px;
+        text-align: center;
+        color: #FFFFFF;
+        background: #75C1DC;
+        padding: 12px 35px;
+    }
+    .tradein-page-product-listing-wrap {
+        margin: auto;
+        max-width: 90%;
+    }
+    .tradein-page-product {
+        padding-left: 10%;
+    }
+    .tradein-page-faq-ques {
+        font-family: 'Acre';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        color: #324D61;
+        border-top: 1px solid rgba(50, 77, 97, 0.5);
+        position: relative;
+        width: 100%;
+        display: block;
+        padding-right: 30px;
+        text-transform: none;
+    	letter-spacing: 0;
+        text-align: left;
+        padding: 35px 0 20px;
+      	margin-top: 15px;
+      	cursor:pointer;
+    }
+  	.tradein-page-faq-ques .collapsible-trigger__icon {
+        top: 60%;
+        transform: translateY(-30%);
+    }
+    .tradein-page-faq-section .panel-title-arrow {
+        width: 14px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 20px;
+    }
+  	.tradein-page-faq-ans{
+     	display:none; 
+    }
+    .tradein-page-faq-ans p {
+        font-family: 'Acre';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        color: #324D61;
+      	margin-bottom: 35px;
+    }
+    .tradein-page-faq-section {
+        border-bottom: 1px solid rgba(50, 77, 97, 0.5);
+        margin-bottom: 30px;
+        padding-bottom: 30px;
+    }
+    .tradein-page-product-listing {
+        margin-bottom: 80px;
+    }
+    .tradein-page-faq-wrap .tradein-page-heading {
+        margin-bottom: 0px;
+        padding-bottom: 30px;
+    }
+    #shopify-section-template--15315458523296__main header.section-header {
+        display: none;
+    }
+    .tradein-page-faq-ques h4 {
+        margin-bottom: 0;
+    }
+  	.tradein-page-grid-text{
+      	margin-top:25px;
+    }
+  	.tradein-page-faq-wrap {
+        margin-bottom: 100px;
+        border-bottom: 1px solid rgba(50, 77, 97, 0.5);
+    	padding-bottom: 15px;
+    }
+  	.tradein-page-faq-ans.is-open {
+      height: auto;
+    }
+  	.tradein-page-faq-section-panel .collapsibles-wrapper--border-bottom {
+        border-bottom: 1px solid rgba(50, 77, 97, 0.5);
+    }
+  	.tradein-page-faq-section-panel .collapsibles-wrapper {
+        padding: 10px 0;
+    }
+
+    /** Trade in responsive code **/
+  	@media only screen and (min-width: 768px) {
+      .tradein-page-video-mobile{
+          display:none; 
+      }
+    }
+  	@media only screen and (min-width: 990px) {
+		.tradein-page-credit-grid {
+            min-height: 173px;
+        }
+
+    }
+    @media only screen and (max-width: 989px) {
+        .tradein-page-credit-grid-text h2 {
+            font-size: 18px;
+            line-height: 26px;
+        }
+        .tradein-page-credit-grid-text p {
+            font-size: 14px;
+            line-height: 20px;
+            margin-bottom: 4px;
+        }
+        .tradein-page-credit-grid {
+            padding: 10px 15px;
+        }
+        .tradein-page-credit-grid-text {
+            margin-left: 10px;
+        }
+    }
+	@media only screen and (min-width: 1200px){	
+      	.tradein-page-product-img img {
+            max-height: 325px;
+        }
+    }
+  	@media only screen and (min-width: 1024px) and (max-width: 1199px) {
+        .tradein-page-product-img img {
+            max-height: 274px;
+        }
+    }
+    @media only screen and (min-width: 990px) and (max-width: 1023px) {
+        .tradein-page-credit-grid-text h2 {
+            font-size: 20px;
+        }
+        .tradein-page-credit-grid-text p {
+            font-size: 14px;
+        }
+        .tradein-page-product-img img {
+            max-height: 230px;
+        }
+    }
+
+
+    @media only screen and (min-width: 768px) and (max-width: 989px) {
+        .tradein-page-product-img img {
+            max-height: 200px;
+        }
+        .tradein-page-credit-banner .grid {
+            margin-left: -15px;
+        }
+        .tradein-page-credit-banner .grid .grid__item{
+            padding-left:15px;
+        }
+        section#shopify-section-template--15315458523296__main .page-width {
+            padding: 0;
+        }
+        .tradein-page-product {
+            text-align: center;
+        }
+    }
+
+    @media only screen and (max-width: 767px){	
+      	.tradein-page-heading p br {
+            display: none;
+        }
+      	.tradein-page-video-desktop{
+          	display:none;
+        }
+        .popup-close:after {
+            transform: scale(0.7);
+        }
+        .tradein-page-credit-grid-img {
+            text-align: right;
+        }
+        section#shopify-section-template--15315458523296__main .page-width {
+            padding: 0;
+        }
+        .tradein-page-credit-banner .grid {
+            margin-left: 0;
+        }
+        .tradein-page-credit-banner .grid .grid__item{
+            padding-left:0;
+            margin-bottom:10px;
+            width: 100%;
+        }
+        .tradein-page-banner {
+            margin-bottom: 40px;
+        }
+        .tradein-page-faq-wrap .tradein-page-heading {
+            margin-bottom: 0px;
+            padding-bottom: 5px;
+        }
+        .tradein-page-faq-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+        }
+        .tradein-page-product-text h4 {
+            font-size: 20px;
+            line-height: 30px;
+        }
+        .tradein-page-product-text p small {
+            font-size: 14px;
+        }
+        .tradein-page-product-text p span {
+            font-size: 16px;
+        }
+        .tradein-page-credit-banner {
+            margin-bottom: 0px;
+        }
+        .tradein-page-discount-banner-text {
+            margin-right: 0;
+        }
+        .tradein-page-discount-banner-text h2 {
+            font-size: 20px;
+            line-height: 26px;
+        }
+        .tradein-page-discount-banner-text p {
+            font-size: 14px;
+            line-height: 20px;
+        }
+        .tradein-page-discount-banner {
+            padding: 15px 30px;
+            margin-bottom: 40px;
+            display: block;
+        }
+    }
+  	@media only screen and (max-width: 479px) {
+        .tradein-page-banner-main-content {
+            margin-top: 20px;
+        }
+      .tradein-page-heading h1, .tradein-page-heading h1 .tradein-page-heading-blue-text {
+            font-size: 26px;
+            line-height: 32px;
+        }
+      	.tradein-page-heading span img {
+            width: 40px;
+        }
+        .tradein-page-heading span {
+            font-size: 20px;
+            line-height: 30px;
+          	margin-bottom: 15px;
+        }
+      	.tradein-page-heading h1 {
+    		margin-bottom: 15px;
+        }
+        .tradein-page-heading p {
+            font-size: 14px;
+            line-height: 20px;
+        }
+        .tradein-page-heading {
+            margin-bottom: 30px;
+        }
+    }
+  
+	@media only screen and (min-width: 480px) and (max-width: 767px) {
+      	.tradein-page-heading h1, .tradein-page-heading h1 .tradein-page-heading-blue-text {
+            font-size: 32px;
+            line-height: 38px;
+        }
+      	.tradein-page-heading span img {
+            width: 50px;
+        }
+        .tradein-page-heading span {
+            font-size: 24px;
+            line-height: 32px;
+        }
+      	.tradein-page-heading h1 {
+    		margin-bottom: 20px;
+        }    
+    }
+  
+    @media only screen and (max-width: 589px) {
+        .tradein-page-product-listing-wrap .grid {
+            margin-left: 0;
+        }
+        .tradein-page-product {
+            padding-left: 0;
+            text-align: center;
+            padding-bottom: 30px;
+        }
+        .tradein-page-product-listing {
+            margin-bottom: 30px;
+        }
+    }
+
+    @media only screen and (min-width: 590px) and (max-width: 767px) {
+        .tradein-page-product-img img {
+            max-height: 170px;
+        }
+        .tradein-page-product-listing-wrap {
+            max-width: 100%;
+        }
+        .tradein-page-product {
+            padding-left: 40px;
+            text-align: center;
+
+        }
+    }
+  	@media only screen and (min-width: 768px) and (max-width: 1199px) {
+      	.tradein-page-banner-main-content {
+            margin-top: 30px;
+        }
+      	.tradein-page-heading h1, .tradein-page-heading .tradein-page-heading-blue-text {
+            font-size: 36px;
+            line-height: 40px;
+        }
+    }
+  
+</style>
+<div class="tradein-page-section">
+        <div class="tradein-page-banner">
+          <div class="tradein-page-banner-img">
+         <!--   <iframe class="tradein-page-video-desktop" src="{{ 'tradein_video_pc.mp4' | asset_url }}"  frameborder="0" width="100%" height="759" allowfullscreen controls muted playsinline autoplay loop></iframe>
+            <iframe class="tradein-page-video-mobile" src="{{ 'tradein_video_app.mp4' | asset_url }}"  frameborder="0" width="100%" height="560" allowfullscreen controls muted playsinline autoplay loop></iframe> -->
+            <!-- <img src="{{ 'tradein-page-main-banner.png' | asset_url }}" alt="yeedi tradein banner" /> -->
+            <video class="tradein-page-video-desktop" width="100%" height="auto" autoplay loop muted>
+              <source src="{{ 'tradein_video_pc.mp4' | asset_url }}" type="video/mp4">
+            </video>
+            <video class="tradein-page-video-mobile" width="100%" height="auto" playsinline autoplay loop muted>
+              <source src="{{ 'tradein_video_app.mp4' | asset_url }}" type="video/mp4">
+            </video>
+          </div>
+          
+          {% comment %}
+          <div class="tradein-page-banner-main-content">
+            <div class="tradein-page-heading text-center page-width">
+              	<span><img src="{{ 'tradein-page-main-banner-icon.png' | asset_url }}" alt="yeedi tradein banner" />
+                  yeedi Trade-In</span>
+              	<h1>Turn the Old in <span class="tradein-page-heading-blue-text">Something Brand New</span></h1>
+                <p>yeedi trade-in program is officially on. Use the yeedi you have to upgrade to the <br/>
+				yeedi you want. Get the instand credit now!</p>
+            </div>
+          </div>
+          {% endcomment %}
+        </div>
+  <div class="page-width">
+        <div class="tradein-page-credit-banner">
+            <div class="tradein-page-heading text-center"><span>Get credit toward a purchase today.</span>
+                <p>Trade in when you buy a new product and we will apply the value toward your purchase</p>
+            </div>
+            <div class="tradein-page-credit-grids-wrap grid">
+              {% comment %} 
+              {% assign tradein_product_slugs = "yeedi-k650, yeedi-k700, yeedi-2-hybrid" | split: ', '%}
+              {% assign tradein_product_detail = '{"yeedi-k650":{"image":"{{ 'tradein-page-credit-grid-img1.png' | asset_url }}"},"yeedi-k700":{"image":"{{ 'tradein-page-credit-grid-img1.png' | asset_url }}"}}' %}
+              {% for tradein_product_slug in tradein_product_slugs %}
+                  	<div class="grid__item medium-up--one-third">
+                      <div class="tradein-page-credit-grid">
+                          <div class="tradein-page-credit-grid-img"><img src="{{ tradein_product_detail[tradein_product_slug]['image'] }}" alt="yeedi tradein banner" /></div>
+                          <div class="tradein-page-credit-grid-text">
+                              <p>{{ all_products[tradein_product_slug].title }}</p>
+                              <h2>Trade-in value up to $90</h2>
+                          </div>
+                      </div>
+                	</div>
+                {% endfor %}  
+              {% endcomment %}
+              
+                <div class="grid__item medium-up--one-third">
+                      <div class="tradein-page-credit-grid">
+                          <div class="tradein-page-credit-grid-img"><img src="{{ 'tradein-page-credit-grid-img1.png' | asset_url }}" alt="yeedi tradein banner" /></div>
+                          <div class="tradein-page-credit-grid-text">
+                              <p>{{ all_products['yeedi-k650'].title }}</p>
+                              <h2>Trade-in value up to $90</h2>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="grid__item medium-up--one-third">
+                      <div class="tradein-page-credit-grid">
+                          <div class="tradein-page-credit-grid-img"><img src="{{ 'tradein-K700.jpeg' | asset_url }}" alt="yeedi tradein banner" /></div>
+                          <div class="tradein-page-credit-grid-text">
+                              <p>yeedi k700</p>
+                              <h2>Trade-in value up to $118</h2>
+                          </div>
+                      </div>
+                  </div>
+                <div class="grid__item medium-up--one-third">
+                    <div class="tradein-page-credit-grid">
+                        <div class="tradein-page-credit-grid-img"><img src="{{ 'tradein-page-credit-grid-img3.jpg' | asset_url }}" alt="yeedi tradein banner" /></div>
+                        <div class="tradein-page-credit-grid-text">
+                            <p>yeedi k600</p>
+                            <h2>Trade-in value up to $75</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          	<div class="tradein-page-heading text-center tradein-page-grid-text">
+          		<p>For some pretty new released models like vac max, vac statoin, etc, we would also give some credits to pay back your continuous support.</p>
+          	</div>
+            <!--  tradein-page-credit-grids-wrap  --></div>
+     <!--   <div class="tradein-page-discount-banner">
+            <div class="tradein-page-discount-banner-text text-center">
+                <p>Vac max, Vac station, mop station, vac hybrid</p>
+                <h2>Trade-in value up to 20% Discount</h2>
+            </div>
+            <div class="tradein-page-discount-banner-image"><img src="//cdn.shopify.com/s/files/1/0612/9726/2768/t/2/assets/tradein-page-discount-banner.png?v=3658644794267219437" alt="yeedi tradein banner" /></div>
+        </div>
+        <!- tradein-page-discount-banner  -->
+        <div class="tradein-page-product-listing">
+            <div class="tradein-page-heading text-center">
+                <p>Trading in has never been easier.</p>
+                <span>Shop for a new yeedi with your trade-in credit</span></div>
+            <div class="tradein-page-product-listing-wrap">
+                <div class="grid">
+                    <a href="/products/yeedi-vac-2-pro">
+                  	<div class="tradein-page-product grid__item medium-up--one-half">
+                        <div class="tradein-page-product-img"><img src="{{ 'tradein-page-product-img1.png' | asset_url }}" alt="yeedi vac 2 pro" /></div>
+                        <div class="tradein-page-product-text">
+                            <h4>yeedi vac 2 pro</h4>
+                           <!-- <p><span>$xxx.xx</span><small>$xxx.xx</small></p> -->
+                            <button class="btn">Shop Now</button></div>
+                    </div>
+                    </a>
+                    <!-- tradein-page-product -->
+                  	<a href="/products/yeedi-mop-station-pro">
+                    <div class="tradein-page-product grid__item medium-up--one-half">
+                        <div class="tradein-page-product-img"><img src="{{ 'yeedi-mop-station-pro.jpeg' | asset_url }}" alt="yeedi-mop-station-pro" /></div>
+                        <div class="tradein-page-product-text">
+                            <h4>yeedi mop station pro</h4>
+                           <!-- <p><span>$xxx.xx</span><small>$xxx.xx</small></p> -->
+                            <button class="btn">Shop Now</button></div>
+                    </div>
+                  </a>
+                    <!-- tradein-page-product --></div>
+            </div>
+        </div>
+        <!-- tradein-page-product-listing  -->
+        <div class="tradein-page-faq-wrap">
+            <div class="tradein-page-heading text-center"><span>Frequently Asked Question</span></div>
+           
+                   <div class="tradein-page-faq-ques">
+                      What is yeedi trade-in?
+                    <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"></path></svg>
+                    </span>
+                    </div>
+                    <div id="tradein-faq-ans-ques4" class="tradein-page-faq-ans">
+                      <div class="tradein-page-faq-collapsible-content">
+                        <p>It is a program we designed especially for our customers so that they can purchase new models with big savings</p>
+                      </div>
+                    </div>
+            <!-- tradein-page-faq-section-panel -->
+          
+                   <div class="tradein-page-faq-ques">
+                      How does it work?
+                    <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"></path></svg>
+                    </span>
+                    </div>
+                    <div id="tradein-faq-ans-ques01" class="tradein-page-faq-ans">
+                      <div class="tradein-faq-collapsible-content">
+                        <p>Whether you’re making a purchase or not, we’ve made it easy to trade in an eligible model . Just answer a few questions regarding the model, We’ll provide an estimated trade-in value.</p>
+                      </div>
+                    </div>
+            <!-- tradein-page-faq-section-panel -->
+          
+                   <div class="tradein-page-faq-ques">
+                      How long does the trade-in process take?
+                    <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"></path></svg>
+                    </span>
+                    </div>
+                    <div id="tradein-faq-ans-ques1" class="tradein-page-faq-ans">
+                      <div class="tradein-faq-collapsible-content">
+                        <p>It is not required to send us back the old models . You can get the trade-in value and purchase new models with it immediately after you answer the questions and provide the SN proof.</p>
+                      </div>
+                    </div>
+            <!-- tradein-page-faq-section-panel -->
+          
+          	
+                   <div class="tradein-page-faq-ques">
+                      Where can I find the SN number?
+                    <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"></path></svg>
+                    </span>
+                    </div>
+                    <div id="tradein-faq-ans-ques2" class="tradein-page-faq-ans">
+                      <div class="tradein-faq-collapsible-content">
+                        <p>On the vacuum, remove the water tank and dustbin, you can see the SN, on the app, Enter map surface > click the upper right corner > scroll down and see the SN</p>
+                      </div>
+                    </div>
+            <!-- tradein-page-faq-section-panel -->
+          
+          	
+                   <div class="tradein-page-faq-ques">
+                      Do I need to provide the purchase proof?
+                    <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"></path></svg>
+                    </span>
+                    </div>
+                    <div id="tradein-faq-ans-ques3" class="tradein-page-faq-ans">
+                      <div class="tradein-faq-collapsible-content">
+                        <p>No , you dont need to provide the purrchase proof. Just provide the SN number</p>
+                      </div>
+                    </div>
+           <!-- tradein-page-faq-section-panel -->
+          
+          	
+                   <div class="tradein-page-faq-ques">
+                      Can I cancel the trade-in?
+                    <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"></path></svg>
+                    </span>
+                    </div>
+                    <div id="tradein-faq-ans-ques3" class="tradein-page-faq-ans">
+                      <div class="tradein-faq-collapsible-content">
+                        <p>Cancel the order and trae-in will be cancelled</p>
+                      </div>
+                    </div>
+          
+          	<!-- tradein-page-faq-section-panel -->
+          	
+                   <div class="tradein-page-faq-ques">
+                      How much will I get for my trade-in?
+                    <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"></path></svg>
+                    </span>
+                    </div>
+                    <div id="tradein-faq-ans-ques3" class="tradein-page-faq-ans">
+                      <div class="tradein-faq-collapsible-content">
+                        <p>That depends on the models you currently have. Check the trade-in value in description page</p>
+                      </div>
+                    </div>
+          
+          
+          <!-- tradein-page-faq-section-panel -->
+                   <div class="tradein-page-faq-ques">
+                      What devices are eligible for trade-in with yeedi trade-in?
+                    <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"></path></svg>
+                    </span>
+                    </div>
+                    <div id="tradein-faq-ans-ques3" class="tradein-page-faq-ans">
+                      <div class="tradein-faq-collapsible-content">
+                        <p>Old models like K650, K700, yeedi 2 hybrid , etc are eligible for trade-in</p>
+                      </div>
+                    </div>
+          
+          
+            <!-- tradein-page-faq-section-panel -->
+                   <div class="tradein-page-faq-ques">
+                     Do i need to include accessories like mops and dust bags ?
+                    <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"></path></svg>
+                    </span>
+                    </div>
+                    <div id="tradein-faq-ans-ques3" class="tradein-page-faq-ans">
+                      <div class="tradein-faq-collapsible-content">
+                        <p>It is not required to order together with accessories . Purcahse the accessories when you need it.</p>
+                      </div>
+                    </div>
+          
+            <!-- tradein-page-faq-section-panel -->
+                   <div class="tradein-page-faq-ques">
+                    Do I need to return the old vacuum I purchased before?
+                    <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"></path></svg>
+                    </span>
+                    </div>
+                    <div id="tradein-faq-ans-ques3" class="tradein-page-faq-ans">
+                      <div class="tradein-faq-collapsible-content">
+                        <p>No , you dont need to return the old models back.</p>
+                      </div>
+                    </div>
+          
+            <!-- tradein-page-faq-section-panel -->
+                   <div class="tradein-page-faq-ques">
+                    What's the trade-in purchased product warranty like?
+                    <span class="collapsible-trigger__icon collapsible-trigger__icon--open" role="presentation">
+                      <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon--wide icon-chevron-down" viewBox="0 0 28 16"><path d="M1.57 1.59l12.76 12.77L27.1 1.59" stroke-width="2" stroke="#000" fill="none" fill-rule="evenodd"></path></svg>
+                    </span>
+                    </div>
+                    <div id="tradein-faq-ans-ques3" class="tradein-page-faq-ans">
+                      <div class="tradein-faq-collapsible-content">
+                        <p>The warranty of the trade-in purcahsed product is no different from the prodcuts you buy with regular price from yeedi.</p>
+                      </div>
+                    </div>
+            <!-- tradein-page-faq-section-panel -->
+          	
+    	</div><!-- faq-section  -->
+  </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+ 
+
+<script>
+  var action="click";
+var speed="500";
+
+$(document).ready(function() {
+    // Question handler
+    $('.tradein-page-faq-ques').on(action, function() {
+        // Get next element
+        $(this).next()
+            .slideToggle(speed)
+        // Select all other answers
+                .siblings('.tradein-page-faq-ans')
+                    .slideUp();
+    });
+});
+</script>
+
+
+<script>
+  var x, i, j, l, ll, selElmnt, a, b, c;
+/* Look for any elements with the class "custom-select": */
+x = document.getElementsByClassName("custom-select");
+l = x.length;
+for (i = 0; i < l; i++) {
+  selElmnt = x[i].getElementsByTagName("select")[0];
+  ll = selElmnt.length;
+  /* For each element, create a new DIV that will act as the selected item: */
+  a = document.createElement("DIV");
+  a.setAttribute("class", "select-selected");
+  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+  x[i].appendChild(a);
+  /* For each element, create a new DIV that will contain the option list: */
+  b = document.createElement("DIV");
+  b.setAttribute("class", "select-items select-hide");
+  for (j = 1; j < ll; j++) {
+    /* For each option in the original select element,
+    create a new DIV that will act as an option item: */
+    c = document.createElement("DIV");
+    c.innerHTML = selElmnt.options[j].innerHTML;
+    c.addEventListener("click", function(e) {
+        /* When an item is clicked, update the original select box,
+        and the selected item: */
+        var y, i, k, s, h, sl, yl;
+        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+        sl = s.length;
+        h = this.parentNode.previousSibling;
+        for (i = 0; i < sl; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+            s.selectedIndex = i;
+            h.innerHTML = this.innerHTML;
+            y = this.parentNode.getElementsByClassName("same-as-selected");
+            yl = y.length;
+            for (k = 0; k < yl; k++) {
+              y[k].removeAttribute("class");
+            }
+            this.setAttribute("class", "same-as-selected");
+            break;
+          }
+        }
+        h.click();
+    });
+    b.appendChild(c);
+  }
+  x[i].appendChild(b);
+  a.addEventListener("click", function(e) {
+    /* When the select box is clicked, close any other select boxes,
+    and open/close the current select box: */
+    e.stopPropagation();
+    closeAllSelect(this);
+    this.nextSibling.classList.toggle("select-hide");
+    this.classList.toggle("select-arrow-active");
+  });
+}
+
+function closeAllSelect(elmnt) {
+  /* A function that will close all select boxes in the document,
+  except the current select box: */
+  var x, y, i, xl, yl, arrNo = [];
+  x = document.getElementsByClassName("select-items");
+  y = document.getElementsByClassName("select-selected");
+  xl = x.length;
+  yl = y.length;
+  for (i = 0; i < yl; i++) {
+    if (elmnt == y[i]) {
+      arrNo.push(i)
+    } else {
+      y[i].classList.remove("select-arrow-active");
+    }
+  }
+  for (i = 0; i < xl; i++) {
+    if (arrNo.indexOf(i)) {
+      x[i].classList.add("select-hide");
+    }
+  }
+}
+
+/* If the user clicks anywhere outside the select box,
+then close all select boxes: */
+document.addEventListener("click", closeAllSelect);
+</script>

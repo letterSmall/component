@@ -1,0 +1,111 @@
+{% if section.settings.show_block %}
+<div class="ourstorytextimg-container">
+  
+ {% for block in section.blocks %}
+  <div class="ourstorytextimg-wrapper {% if block.settings.position == 'right' %} ourstorytextimg-right {% endif %}">
+  <div class="ourstorytextimg-box-img">
+   {% if block.settings.btn_url %}
+    <a href="{{ block.settings.btn_url }}">
+   {% endif %}
+    {% if block.settings.image %}
+    <img src="{{ block.settings.image | img_url:'master' }}"/>
+   {% endif %}
+   {% if block.settings.btn_url %}
+    </a>
+   {% endif %}
+    
+  </div>
+  
+
+  
+  <div class="ourstorytextimg-box-text">
+    {% if block.settings.title != blank %}
+  <div class="ourstorytextimg-text-title">{{ block.settings.title }}</div>
+   {% endif %}
+  
+    {% if block.settings.content != blank %}
+  <div class="ourstorytextimg-text-content">{{ block.settings.content }}</div>
+   {% endif %}
+     {% if block.settings.btn_text != blank %}
+  <a class="ourstorytextimg-text-btn" href="{{ block.settings.btn_url }}">{{ block.settings.btn_text }}</a>
+   {% endif %}
+
+  </div>
+
+  </div>
+  
+    {% endfor %}
+
+
+</div>
+
+{% endif %}
+
+{% schema %}
+
+  {
+    "name": "Text and Img",
+    "settings": [
+         {
+            "type": "checkbox",
+            "id": "show_block",
+            "label": "show this block?",
+            "default": true
+          }   
+      
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+        "type": "select",
+        "id": "position",
+        "label": "Image Position",
+          "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "left"
+          },
+          {
+            "value": "right",
+            "label": "right"
+          }
+        ]
+      },{
+            "type": "image_picker",
+            "id": "image",
+            "label": "image(Recommended size：448*448px)"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "richtext",
+            "id": "content",
+            "label": "content"
+          },{
+            "type": "text",
+            "id": "btn_text",
+            "label": "btn_text"
+          },{
+            "type": "url",
+            "id": "btn_url",
+            "label": "btn_url"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Text and Img",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+
+         

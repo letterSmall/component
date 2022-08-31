@@ -1,0 +1,57 @@
+ <div class="profeatures-container">
+  <div class="page-width">
+  <div class="profeatures-box">
+   {% for block in section.blocks %}
+  <div class="profeatures-item">
+    {% if block.settings.image %}
+    <div class="profeatures-item-img"><img alt src="{{ block.settings.image | img_url:'master' }}"/></div>
+   {% endif %}
+    <div class="profeatures-item-text">
+      <div class="profeatures-item-title">{{block.settings.title}}</div>
+    <div class="profeatures-item-subtitle">{{block.settings.subtitle}}</div>
+    </div>
+   </div>
+   {% endfor %}
+  </div>
+</div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Features",
+    "settings": [
+
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：144*70px)"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "subtitle",
+            "label": "subtitle"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Features",
+        "category": "Ho-Advance"
+
+      }
+    ]
+  }
+{% endschema %}
+

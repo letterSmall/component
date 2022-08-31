@@ -1,0 +1,172 @@
+{% if section.blocks.size > 0 %}
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+
+{% if section.settings.text_color != blank or section.settings.link_color != blank %}
+<style>
+  {% if section.settings.text_color != blank %}
+  .simple-text-columns-{{ section.id }} .title-box {
+    color: {{ section.settings.text_color }};
+  }
+  {% endif %}
+  {% if section.settings.link_color != blank %}
+  .simple-text-columns-{{ section.id }} .content-box a.text-link {
+    color: {{ section.settings.link_color }};
+  }
+  {% endif %}
+</style>
+{% endif %}
+
+<div class="page-width simple-text-columns simple-text-columns-{{ section.id }}">
+  {%- if section.settings.title != blank -%}
+  <div class="section-header text-{{ section.settings.align_text }}">
+    <h2>{{ section.settings.title }}</h2>
+  </div>
+  {% endif %}
+
+  <div class="grid {% unless section.blocks.size == 5 %}grid--uniform{% endunless %} grid--flush-bottom">
+    {%- liquid
+      assign grid_item_width = 'medium-up--one-third'
+      case section.blocks.size
+        when 1
+          assign grid_item_width = 'medium-up--one-half'
+        when 2
+          assign grid_item_width = 'medium-up--one-half'
+        when 4
+          assign grid_item_width = 'medium-up--one-half'
+      endcase
+    -%}
+    {%- for block in section.blocks -%}
+    {%- if section.blocks.size == 5 and forloop.index < 3 -%}
+    {%- assign column_width = 'medium-up--one-half' -%}
+    {%- else -%}
+    {%- assign column_width = grid_item_width -%}
+    {%- endif -%}
+    <div class="grid__item {{ column_width }} text-{{ section.settings.align_text }}" {{ block.shopify_attributes }} data-aos="row-of-3">
+      <div class="grid_item-wrapper">
+        <div class="image-title-box">
+          <div class="image-box {% if section.settings.align_text == 'center' %}align-center {% endif %}">
+            {% if block.settings.button_link != blank %}
+            <a href="{{ block.settings.button_link }}">
+              {% endif %}
+              {% if block.settings.icon_svg != blank %}
+              <div class="image-wrap">
+                {{ block.settings.icon_svg }}
+              </div>
+              {% endif %}
+              {% if block.settings.button_link != blank %}
+            </a>
+            {% endif %}
+          </div>
+          {%- if block.settings.title != blank -%}
+          <div class="content-box">
+            <h3 class='rteH3MinHeight title-box'>{{ block.settings.title }}</h3>
+            {% if block.settings.button_label != blank %}
+            <a href="{{ block.settings.button_link }}" class="btn--secondary text-link">
+              {{ block.settings.button_label }}
+            </a>
+            {% endif %} 
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{%- if section.settings.divider -%}</div>{%- endif -%}
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Simple Text columns",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "select",
+        "id": "align_text",
+        "label": "Text alignment",
+        "default": "center",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Centered"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "Show section divider",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#3C435B"
+      },
+      {
+        "type": "color",
+        "id": "link_color",
+        "label": "Link Color",
+        "default": "#F6696C"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text_block",
+        "name": "Column",
+        "settings": [
+          {
+            "type": "html",
+            "id": "icon_svg",
+            "label": "Icon Svg Code"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading",
+            "default": "Example title"
+          },
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button label",
+            "default": "Optional button"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Simple Text columns",
+        "blocks": [
+          {
+            "type": "text_block"
+          },
+          {
+            "type": "text_block"
+          },
+          {
+            "type": "text_block"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

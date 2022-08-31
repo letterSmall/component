@@ -1,0 +1,1241 @@
+{% comment %}
+Repeat Kit - Copyright © 2022 by Adolab LLC.
+All Rights Reserved. No part of this file may be reproduced or used in any manner without written permission of the copyright owner.
+This file should not be modified as it is updated frequently. Any changes you make will be overwritten by a future update. If you do need to make changes then be sure to disable automatic updates in your Repeat Kit settings scree.
+
+{% endcomment %}
+
+{% assign isOngoingSubscriptionsEnabled = false %}
+{% assign formSelector = 'form[action*="/cart/add"' %}{% if isOngoingSubscriptionsEnabled %}
+{% assign osShopToken = "737523b5f730992785855d56e404f1cff64db7d7245ff72135ce3dea4c8efb50" %}
+{% assign osCustomerID = customer.id %}
+{% assign osCustomerToken = osCustomerID | hmac_sha256: osShopToken %}
+{% assign osWidget = shop.metafields.repeat_kit_settings.widget %}
+<style>
+.os__subscription_manage_wrapper {
+padding: 20px;
+background: #f1f1f1;
+color: #333;
+border-radius: 10px;
+border: 1px solid #eee;
+margin: 55px auto 55px auto;
+max-width: 1200px;
+}
+.os__subscription_manage_wrapper button {
+background-color: #333;
+color: #fff;
+padding: 10px 20px;
+border: none;
+font-size: 14px;
+font-weight: bold;
+outline: none;
+border-radius: 5px;
+}
+.os__button_inline {
+margin-right: 15px;
+}
+</style>
+{% if osWidget.is_custom_css_enabled == 1 %}
+<style>
+{{ osWidget.custom_css }}
+</style>
+{% endif %}
+{% if template == 'cart' %}
+{% assign osWidget = shop.metafields.repeat_kit_settings.widget %}
+<style>
+.os__cart-banner {
+border: 4px solid #eee;
+border-radius: 10px;
+padding: 20px;
+margin: 20px 0;
+background-color: #fff;
+}
+</style>
+{% if osWidget.is_custom_css_enabled == 1 %}
+<style>
+{{ osWidget.custom_css }}
+</style>
+{% endif %}
+<script>
+var repeatKitCart = {{ cart | json }};
+var lineItems = repeatKitCart.items;
+function renderSubscriptionDetails() {
+var banner = document.createElement('div');
+banner.classList.add('os__cart-banner');
+var bannerHeading = document.createElement('h3');
+bannerHeading.textContent ='Subscription Overview';
+bannerHeading.classList.add('os__cart-banner-heading');
+banner.append(bannerHeading);
+var bannerSubtext = document.createElement('p');
+bannerSubtext.classList.add('os__cart-banner-subheading');
+bannerSubtext.textContent = 'Your cart contains subscription products.';
+banner.append(bannerSubtext);
+var bannerSubscriptionDetails = document.createElement('ul');
+bannerSubscriptionDetails.classList.add('os__cart-banner-details');
+for (i = 0; i < lineItems.length; i++) {
+var lineItem = lineItems[i];
+if (lineItem.selling_plan_allocation) {
+var itemText = `${lineItem.title} [${lineItem.selling_plan_allocation.selling_plan.name}]`;
+var bannerSubscriptionLineItem = document.createElement('li');
+bannerSubscriptionLineItem.classList.add('os__cart-banner-line-item');
+bannerSubscriptionLineItem.textContent = itemText;
+bannerSubscriptionDetails.append(bannerSubscriptionLineItem);
+}
+}
+banner.append(bannerSubscriptionDetails);
+var form = document.querySelector('form[action^="/cart"');
+form.append(banner);
+}
+function init() {
+const url = 'https://app.ongoingsubscriptions.com/api/cart-info?shopify_domain={{ shop.permanent_domain }}';
+fetch(url)
+.then((res) => res.json())
+.then((response) => {
+var showSubscriptionBanner = response.show_subscription_banner;
+if (showSubscriptionBanner) {
+renderSubscriptionDetails();
+}
+})
+.catch(error => {
+console.error('osLog - error fetching the cart info: ', error);
+});
+}
+function handleCartHasItems() {
+var hasSellingPlan = false;
+for (i = 0; i < lineItems.length; i++) {
+var lineItem = lineItems[i];
+if (lineItem.selling_plan_allocation) {
+hasSellingPlan = true;
+}
+}
+if (hasSellingPlan) {
+init();
+}
+}
+if (lineItems.length) {
+handleCartHasItems();
+} else {
+}
+</script>
+{% endif %}
+{% if template == 'product' or template contains 'product.' %}
+{%- if product == null -%}
+{%- assign product = featured_product -%}
+{%- endif -%}
+{% assign groups = product.selling_plan_groups %}
+{% if groups.size > 0 %}
+{% assign isSubscriptionProduct = true %}
+{% else %}
+{% assign isSubscriptionProduct = false %}
+{% endif %}
+{% if isSubscriptionProduct %}
+{% assign osWidget = shop.metafields.repeat_kit_settings.widget %}
+<style>
+html #ongoing-subscriptions-wrapper {
+line-height: 1.15;
+-webkit-text-size-adjust: 100%;
+}
+#ongoing-subscriptions-wrapper main {
+display: block;
+}
+#ongoing-subscriptions-wrapper hr {
+box-sizing: content-box;
+height: 0;
+overflow: visible;
+}
+#ongoing-subscriptions-wrapper pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+#ongoing-subscriptions-wrapper a {
+background-color: transparent;
+}
+#ongoing-subscriptions-wrapper abbr[title] {
+border-bottom: none;
+text-decoration: underline;
+text-decoration: underline dotted;
+}
+#ongoing-subscriptions-wrapper b,
+#ongoing-subscriptions-wrapper strong {
+font-weight: bolder;
+}
+#ongoing-subscriptions-wrapper code,
+#ongoing-subscriptions-wrapper kbd,
+#ongoing-subscriptions-wrapper samp {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+#ongoing-subscriptions-wrapper small {
+font-size: 80%;
+}
+#ongoing-subscriptions-wrapper sub,
+#ongoing-subscriptions-wrapper sup {
+font-size: 75%;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+}
+#ongoing-subscriptions-wrapper sub {
+bottom: -0.25em;
+}
+#ongoing-subscriptions-wrapper sup {
+top: -0.5em;
+}
+#ongoing-subscriptions-wrapper img {
+border-style: none;
+}
+#ongoing-subscriptions-wrapper button,
+#ongoing-subscriptions-wrapper input,
+#ongoing-subscriptions-wrapper optgroup,
+#ongoing-subscriptions-wrapper select,
+#ongoing-subscriptions-wrapper textarea {
+font-family: inherit;
+font-size: 100%;
+line-height: 1.15;
+margin: 0;
+}
+#ongoing-subscriptions-wrapper button,
+#ongoing-subscriptions-wrapper input {
+overflow: visible;
+}
+#ongoing-subscriptions-wrapper button,
+#ongoing-subscriptions-wrapper select {
+text-transform: none;
+}
+#ongoing-subscriptions-wrapper button,
+#ongoing-subscriptions-wrapper [type="button"],
+#ongoing-subscriptions-wrapper [type="reset"],
+#ongoing-subscriptions-wrapper [type="submit"] {
+-webkit-appearance: button;
+}
+#ongoing-subscriptions-wrapper button::-moz-focus-inner,
+#ongoing-subscriptions-wrapper [type="button"]::-moz-focus-inner,
+#ongoing-subscriptions-wrapper [type="reset"]::-moz-focus-inner,
+#ongoing-subscriptions-wrapper [type="submit"]::-moz-focus-inner {
+border-style: none;
+padding: 0;
+}
+#ongoing-subscriptions-wrapper button:-moz-focusring,
+#ongoing-subscriptions-wrapper [type="button"]:-moz-focusring,
+#ongoing-subscriptions-wrapper [type="reset"]:-moz-focusring,
+#ongoing-subscriptions-wrapper [type="submit"]:-moz-focusring {
+outline: 1px dotted ButtonText;
+}
+#ongoing-subscriptions-wrapper fieldset {
+padding: 0.35em 0.75em 0.625em;
+}
+#ongoing-subscriptions-wrapper legend {
+box-sizing: border-box;
+color: inherit;
+display: table;
+max-width: 100%;
+padding: 0;
+white-space: normal;
+}
+#ongoing-subscriptions-wrapper progress {
+vertical-align: baseline;
+}
+#ongoing-subscriptions-wrapper textarea {
+overflow: auto;
+}
+#ongoing-subscriptions-wrapper [type="checkbox"],
+#ongoing-subscriptions-wrapper [type="radio"] {
+box-sizing: border-box;
+padding: 0;
+}
+#ongoing-subscriptions-wrapper [type="number"]::-webkit-inner-spin-button,
+#ongoing-subscriptions-wrapper [type="number"]::-webkit-outer-spin-button {
+height: auto;
+}
+#ongoing-subscriptions-wrapper [type="search"] {
+-webkit-appearance: textfield;
+outline-offset: -2px;
+}
+#ongoing-subscriptions-wrapper [type="search"]::-webkit-search-decoration {
+-webkit-appearance: none;
+}
+#ongoing-subscriptions-wrapper ::-webkit-file-upload-button {
+-webkit-appearance: button;
+font: inherit;
+}
+#ongoing-subscriptions-wrapper details {
+display: block;
+}
+#ongoing-subscriptions-wrapper summary {
+display: list-item;
+}
+#ongoing-subscriptions-wrapper template {
+display: none;
+}
+#ongoing-subscriptions-wrapper [hidden] {
+display: none;
+}
+</style>
+<style>
+#ongoing-subscriptions-wrapper {
+font-family: sans-serif;
+}
+#ongoing-subscriptions-wrapper select {
+width: 100%;
+}
+body .os__visually_hidden {
+display: none !important;
+}
+#ongoing-subscriptions-heading {
+margin: 0 0 10px;
+font-size: 2em;
+}
+.os__wrapper {
+margin: 0;
+margin-bottom: 20px;
+border-radius: 5px;
+}
+.os__pricing_wrapper {
+padding-top: 10px;
+margin-bottom: 10px;
+}
+.os__pricing_selected {
+font-size: 24px;
+font-weight: 600;
+color: #333;
+display: inline-block;
+margin-right: 10px;
+}
+.os__pricing_compare_at {
+display: inline-block;
+font-size: 24px;
+font-weight: 600;
+text-decoration: line-through;
+margin-right: 10px;
+}
+.os__pricing_subscription_banner_wrapper {
+display: inline-block;
+}
+.os__pricing_subscription_subheadings {
+padding: 10px 0;
+font-size: 12px;
+}
+.os__pricing_subscription_subheadings div {
+display: inline-block;
+margin-left: 5px;
+margin-right: 5px;
+}
+.os__pricing_subscription_subheadings div:first-child {
+margin-left: 0;
+}
+.os__pricing_subscription_banner {
+border: 2px solid red;
+display: inline-block;
+padding: 2px 10px;
+border-radius: 4px;
+color: red;
+font-weight: 600;
+font-size: 12px;
+}
+#ongoing-subscriptions-wrapper .os__purchase_type_wrapper {
+padding: 0;
+border: 1px solid #ccc;
+margin: 0 0 20px;
+}
+.os__purchase_type_option {
+padding: 20px;
+border-bottom: 1px solid #ccc;
+/*! width: 50%;
+display: inline-block; */
+}
+.os__purchase_type_option:last-child {
+border-bottom: none;
+}
+#ongoing-subscriptions-wrapper .os__purchase_type_option input[type="radio"] {
+margin-right: 5px;
+}
+#ongoing-subscriptions-wrapper .os__purchase_type_option label,
+#ongoing-subscriptions-wrapper .os__purchase_type_option input {
+display: inline-block;
+}
+.os__variant_wrapper {
+margin-bottom: 10px;
+}
+#ongoing-subscriptions-wrapper select {
+width: 100%;
+margin-bottom: 10px;
+}
+.os__add_to_cart_wrapper {
+width: 100%;
+display: flex;
+}
+#ongoing-subscriptions-wrapper input[type="number"].os__quantity_input {
+flex: 1;
+margin-right: 10px;
+max-width: 100px;
+}
+.os__add_to_cart {
+width: 100%;
+background-color: {{ osWidget.add_to_cart_button_color }};
+color: {{ osWidget.add_to_cart_text_color }};
+border: none;
+padding: 10px;
+border-radius: 5px;
+flex: 2;
+}
+.os__subscription_policy_wrapper {
+padding: 10px 0;
+}
+.os__subscription_policy_wrapper a,
+.os__subscription_policy_wrapper a:visited {
+text-decoration: none;
+color: #1878b9;
+font-size: 12px;
+}
+#ongoing-subscriptions-wrapper.os__is_purchase_type_one_time .os__selling_plan_wrapper,
+#ongoing-subscriptions-wrapper.os__is_purchase_type_one_time .os__pricing_subscription_info {
+display: none !important;
+}
+.os__selling_plan_wrapper label,
+.os__variant_wrapper label {
+font-weight: 600;
+text-transform: uppercase;
+font-size: 13px;
+display: inline-block;
+width: 100%;
+margin-bottom: 5px;
+}
+body.os__is_sub_product .inline-list.product-meta,
+body.os__is_sub_product .product-single__meta-list,
+body.os__is_sub_product .price-container,
+body.os__is_sub_product .product__price,
+body.os__is_sub_product .price {
+display: none !important;
+}
+body.os__is_sub_product .product__title,
+body.os__is_sub_product h1#ProductHeading,
+body.os__is_sub_product h1.product-single__title,
+body.os__is_sub_product h1[itemprop="name"] {
+display: none;
+}
+form.os__form {
+margin-bottom: 0;
+}
+.rk__activity_spinner,
+#repeat-kit-wrapper {
+display: none !important;
+}
+.os__activity_spinner {
+border: 16px solid #f3f3f3;
+border-top: 16px solid #333333;
+border-radius: 50%;
+width: 60px;
+height: 60px;
+animation: spin 2s linear infinite;
+}
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}
+.os__wrapper.os__wrapper_loading {
+display: none;
+}
+.os__selected_has_no_allocation .os__purchase_type_wrapper,
+.os__selected_has_no_allocation .os__pricing_subscription_subheadings,
+.os__selected_has_no_allocation .os__pricing_subscription_banner,
+.os__selected_has_no_allocation .os__selling_plan_wrapper {
+display: none !important;
+}
+.os__incompatible_wrapper {
+padding: 10px;
+color: #333;
+background-color: #eee;
+border: 1px solid #ccc;
+border-radius: 5px;
+margin-bottom: 30px;
+display: block;
+}
+body.os__selected_has_specific_allocation .os__incompatible_wrapper {
+display: none;
+}
+.os__purchase_type_wrapper,
+.os__pricing_wrapper,
+.os__pricing_subscription_subheadings,
+.os__variant_wrapper {
+display: inline-block;
+width: 100%;
+}
+.os__selected_has_specific_allocation .os__incompatible_wrapper {
+display: none !important;
+}
+.os__wrapper .os__add_to_cart:disabled,
+.os__wrapper .os__add_to_cart[disabled] {
+border: 1px solid #999;
+background-color: #ccc;
+color: #666;
+}
+.os__product_requires_plan .os__purchase_type_wrapper {
+display: none;
+}
+.os__pricing_selected,
+.os__pricing_compare_at,
+.os__pricing_subscription_banner_wrapper {
+float: left;
+}
+</style>
+{% if osWidget.is_custom_css_enabled == 1 %}
+<style>
+{{ osWidget.custom_css }}
+</style>
+{% endif %}
+<script>
+var osProductFormSelector = '{{ formSelector }}';
+try {
+document.querySelector(osProductFormSelector).classList.add('os__visually_hidden', 'os__price_wrapper_original')
+} catch {
+}
+try {
+var osPriceContainerSelector = '.product-single__prices';
+document.querySelector(osPriceContainerSelector).classList.add('os__visually_hidden')
+} catch {
+}
+try {
+var osActivitySpinner = document.createElement('div');
+osActivitySpinner.classList.add('os__activity_spinner');
+document.querySelector(osProductFormSelector).parentElement.prepend(osActivitySpinner);
+} catch {
+}
+function removeHtmlTags(input) {
+if ((input === null) || (input === '')) {
+return '';
+}
+inputString = input.toString();
+inputString = inputString.replace(/(&pound;)/ig, '£');
+return inputString.replace( /(<([^>]+)>)/ig, '');
+}
+var osVariantAllocations = {};
+function setVariantPricing() {
+var mappedVariantPricing = [];
+{% for variant in product.variants %}
+var variantPricing = {{ variant | json }};
+variantPricing.os_variant = {};
+variantPricing.os_variant.available = {{  variant.available | json }};
+variantPricing.os_variant.price = {{ variant.price | json }};
+variantPricing.os_variant.price_money = removeHtmlTags({{ variant.price | money | json }});
+variantPricing.os_variant.compare_at_price = {{ variant.compare_at_price | json }};
+variantPricing.os_variant.compare_at_price_money = removeHtmlTags({{ variant.compare_at_price | money | json }});
+variantPricing.os_allocations = [];
+{% for allocation in variant.selling_plan_allocations %}
+allocationPricing = {}
+allocationPricing.compare_at_price = {{ allocation.compare_at_price | json }};
+allocationPricing.compare_at_price_money = removeHtmlTags({{ allocation.compare_at_price | money | json }});
+allocationPricing.id_selling_plan = {{ allocation.selling_plan.id | json }};
+allocationPricing.id_selling_plan_group = {{ allocation.selling_plan_group_id | json }};
+allocationPricing.id_variant = {{ variant.id | json }};
+allocationPricing.per_delivery_price = {{ allocation.per_delivery_price | json }};
+allocationPricing.per_delivery_price_money = removeHtmlTags({{ allocation.per_delivery_price | money | json }});
+allocationPricing.position = {{ allocation.position | json }};
+allocationPricing.price = {{ allocation.price | json }};
+allocationPricing.price_money = removeHtmlTags({{ allocation.price | money | json }});
+allocationPricing.selling_plan = {{ allocation.selling_plan | json }};
+allocationPricing.unit_price = {{ allocation.unit_price | json }};
+allocationPricing.unit_price_money = removeHtmlTags({{ allocation.unit_price | money | json }});
+variantPricing.os_allocations.push(allocationPricing);
+{% endfor %}
+mappedVariantPricing.push(variantPricing);
+{% endfor %}
+osVariantAllocations = mappedVariantPricing;
+}
+setVariantPricing();
+var osSellingPlanGroups = {{ product.selling_plan_groups | json }};
+var osSellingPlans = [];
+function mapSellingPlanGroups() {
+var mappedSellingPlans = [];
+for (var i = 0; i < osSellingPlanGroups.length; i++) {
+var group = osSellingPlanGroups[i];
+for (p = 0; p < group.selling_plans.length; p++) {
+var plan = group.selling_plans[p];
+mappedSellingPlans.push(plan);
+}
+}
+osSellingPlans = mappedSellingPlans;
+}
+mapSellingPlanGroups();
+var osWrapper = document.createElement('div');
+osWrapper.setAttribute('id', 'ongoing-subscriptions-wrapper');
+osWrapper.classList.add('os__wrapper', 'os__wrapper_loading');
+if (osSellingPlans.length === 1) {
+osWrapper.classList.add('os__single_plan');
+}
+if ({{ product.variants.size }} === 1) {
+osWrapper.classList.add('os__single_variant_product');
+}
+if ({{ product.requires_selling_plan |  json }}) {
+osWrapper.classList.add('os__product_requires_plan');
+}
+var osHeading = document.createElement('h1');
+osHeading.setAttribute('id', 'ongoing-subscriptions-heading');
+osHeading.classList.add('os__heading');
+osHeading.textContent = {{ product.title | json }};
+osWrapper.append(osHeading);
+function checkVariantAllocations(variantID) {
+var variant;
+osVariantAllocations.forEach((alloc) => {
+if (alloc.id.toString() === variantID.toString()) {
+variant = alloc;
+}
+})
+return variant.os_allocations.length;
+}
+function setCompareAtPrice(variant) {
+var pricingCompareAtElement = document.querySelector('.os__pricing_compare_at');
+if (pricingCompareAtElement) {
+const shouldShowCompareAt = (variant.os_variant.compare_at_price !== variant.os_variant.price);
+if (shouldShowCompareAt && variant.os_variant.compare_at_price_money !== '') {
+pricingCompareAtElement.textContent = variant.os_variant.compare_at_price_money;
+pricingCompareAtElement.classList.remove('os__visually_hidden');
+} else {
+pricingCompareAtElement.textContent = '';
+pricingCompareAtElement.classList.add('os__visually_hidden');
+}
+}
+}
+function setSelectedPrice(variant, allocation = null) {
+var pricingSelectedElement = document.querySelector('.os__pricing_selected');
+if (pricingSelectedElement) {
+if (allocation) {
+pricingSelectedElement.textContent = allocation.price_money;
+} else {
+pricingSelectedElement.textContent = variant.os_variant.price_money;
+}
+}
+}
+function setDefaultVariantPricing(variantID) {
+var variant;
+osVariantAllocations.forEach((alloc) => {
+if (alloc.id.toString() === variantID.toString()) {
+variant = alloc;
+}
+});
+setCompareAtPrice(variant);
+setSelectedPrice(variant);
+}
+function setPerDeliveryPrice(allocation) {
+if ({{ osWidget.is_unit_price_enabled | json }} && allocation.per_delivery_price) {
+var pricingPerDeliveryInput = document.querySelector('.os__pricing_subscription_price_delivery');
+var pricePerDelivery = allocation.per_delivery_price_money;
+if (pricingPerDeliveryInput && pricePerDelivery) {
+pricingPerDeliveryInput.textContent = `${pricePerDelivery} {{ osWidget.delivery_price_text }}`;
+} else if (pricingPerDeliveryInput && !pricePerDelivery) {
+pricingPerDeliveryInput.textContent = '';
+}
+}
+}
+function setPerUnitPrice(allocation) {
+if ({{ osWidget.is_unit_price_enabled | json }} && allocation.unit_price) {
+var pricingPerUnitInput = document.querySelector('.os__pricing_subscription_price_unit');
+var pricePerUnit = allocation.unit_price_money;
+if (pricingPerUnitInput && pricePerUnit) {
+pricingPerUnitInput.textContent = `${pricePerUnit} {{ osWidget.unit_price_text }}`;
+} else if (pricingPerUnitInput && !pricePerUnit) {
+pricingPerUnitInput.textContent = '';
+}
+}
+}
+function handleFormSubmit(e) {
+e.preventDefault();
+var variantID = document.querySelector('.os__input_id').value;
+var variantHasAllocations = checkVariantAllocations(variantID);
+if (variantHasAllocations) {
+} else {
+var spInput = document.querySelector('.os__input_selling_plan');
+spInput.value = null;
+}
+var osFormElement = document.querySelector('.os__form');
+osFormElement.submit();
+}
+var osForm = document.createElement('form');
+osForm.classList.add('os__form');
+osForm.method = "post";
+osForm.action = "/cart/add";
+osForm.addEventListener('submit', (e) => handleFormSubmit(e));
+function getAllocationDiscount(allocation = null) {
+let discount = null;
+if (allocation) {
+if (allocation.selling_plan && allocation.selling_plan.price_adjustments.length) {
+const adjustment = allocation.selling_plan.price_adjustments[0];
+if (adjustment.value_type === 'percentage') {
+discount = `${adjustment.value}%`;
+}
+}
+}
+return discount;
+}
+function setSelectedPricing(variantID, planID = null) {
+var variant;
+for (var i = 0; i < osVariantAllocations.length; i++) {
+var variantAllocation = osVariantAllocations[i];
+var id = variantID.toString();
+var vid = variantAllocation.id.toString();
+if (id === vid) {
+variant = variantAllocation;
+}
+}
+if (variant) {
+setCompareAtPrice(variant);
+}
+setLabels('one_time', variant);
+if (planID) {
+var allocations = variant.os_allocations;
+for (var i = 0; i < allocations.length; i++) {
+var allocation = allocations[i];
+aID = allocation.selling_plan.id.toString();
+pID = planID.toString();
+if (aID === pID) {
+setSelectedPrice(variant, allocation);
+setPerDeliveryPrice(allocation);
+setPerUnitPrice(allocation);
+setLabels('subscription', variant, allocation);
+}
+}
+} else {
+setSelectedPrice(variant, null);
+setLabels('subscription', variant, null);
+}
+handleSetIncompatibilityMessage(variant.id);
+}
+var defaultOneTimeLabel = {{ osWidget.purchase_type_one_time_text | json }};
+var defaultSubscriptionLabel = {{ osWidget.purchase_type_subscription_text | json }};
+var isPurchaseTypeOneTimePriceEnabled = {{ osWidget.is_purchase_type_one_time_price_enabled | json }};
+var isPurchaseTypeSubscriptionDiscountEnabled = {{ osWidget.is_purchase_type_subscription_discount_enabled | json }};
+var isPurchaseTypeSubscriptionPriceEnabled = {{ osWidget.is_purchase_type_subscription_price_enabled | json }};
+var secondary = {{ osWidget.purchase_type_subscription_text_secondary | json }};
+function setLabels(type, variant, selectedAllocation = null) {
+const selector = (type === 'one_time')
+? '.os__purchase_type_one_time_label'
+: '.os__purchase_type_subscription_label';
+let label = (type === 'one_time') ? defaultOneTimeLabel : defaultSubscriptionLabel;
+let allocation;
+if (type === 'subscription') {
+allocation = (selectedAllocation)
+? selectedAllocation
+: variant.os_allocations[0];
+if ({{ osWidget.is_badge_enabled | json}} || (parseInt({{ osWidget.is_badge_enabled | json}}, 10) === 1)) {
+const isDiscounted = allocation.compare_at_price !== allocation.price;
+setPricingBadge(isDiscounted);
+}
+}
+const selectedInput = document.querySelector(selector);
+if (selectedInput) {
+const showDiscount = (type === 'subscription' && isPurchaseTypeSubscriptionDiscountEnabled);
+if (showDiscount) {
+const discount = getAllocationDiscount(allocation);
+if (discount && discount.length) {
+label = `${label} ${discount}`;
+}
+}
+const showPrice = (
+(type === 'one_time' && isPurchaseTypeOneTimePriceEnabled)
+|| (type === 'subscription' && isPurchaseTypeSubscriptionPriceEnabled)
+);
+if (showPrice) {
+let price = variant.os_variant.price_money;
+if (type === 'subscription') {
+price = allocation.price_money;
+}
+if (price && price.length) {
+label = `${label} — ${price}`;
+}
+}
+const showSecondary = (type === 'subscription');
+if (showSecondary && secondary && secondary.length) {
+label = `${label} ${secondary}`;
+}
+selectedInput.textContent = label;
+}
+}
+function setPricingBadge(isDiscounted) {
+var osSubscriptionBanner = document.querySelector('.os__pricing_subscription_banner');
+if (isDiscounted) {
+osSubscriptionBanner.textContent = {{ osWidget.badge_text_discount | json}};
+} else {
+osSubscriptionBanner.textContent = {{ osWidget.badge_text_default | json}};
+}
+}
+function handlePriceUpdate() {
+var variantIDInput = document.querySelector('.os__form input[name="id"]');
+if (variantIDInput) {
+const variantID = variantIDInput.value;
+const planIDInput = document.querySelector('.os__form input[name="selling_plan"]');
+let planID = null;
+if (planIDInput) {
+planID = planIDInput.value;
+if (!planID.length || planID.length === 0) {
+planID = null;
+}
+}
+setSelectedPricing(variantID, planID);
+} else {
+}
+}
+var osHiddenInputSellingPlan = document.createElement('input');
+osHiddenInputSellingPlan.setAttribute('type', 'hidden');
+osHiddenInputSellingPlan.name = 'selling_plan';
+osHiddenInputSellingPlan.classList.add('os__input_selling_plan');
+osForm.append(osHiddenInputSellingPlan);
+var osHiddenInputID = document.createElement('input');
+osHiddenInputID.setAttribute('type', 'hidden');
+osHiddenInputID.name = 'id';
+osHiddenInputID.classList.add('os__input_id');
+osForm.append(osHiddenInputID);
+var osIncompatibleWrapper = document.createElement('div');
+osIncompatibleWrapper.classList.add('os__incompatible_wrapper');
+osIncompatibleWrapper.textContent = 'Sorry, this selection is currently unavailable. Please select another option.'
+osWrapper.append(osIncompatibleWrapper)
+var osPricingWrapper = document.createElement('div');
+osPricingWrapper.classList.add('os__pricing_wrapper');
+var osPricingSelected = document.createElement('div');
+osPricingSelected.classList.add('os__pricing_selected');
+osPricingWrapper.append(osPricingSelected);
+var osPricingCompareAt = document.createElement('div');
+osPricingCompareAt.classList.add('os__pricing_compare_at');
+osPricingWrapper.append(osPricingCompareAt);
+if ({{ osWidget.is_badge_enabled | json}}) {
+var osSubscriptionInfoWrapper = document.createElement('div');
+osSubscriptionInfoWrapper.classList.add('os__pricing_subscription_banner_wrapper', 'os__pricing_subscription_info');
+var osSubscriptionBanner = document.createElement('div');
+osSubscriptionBanner.classList.add('os__pricing_subscription_banner')
+osSubscriptionBanner.textContent = {{ osWidget.purchase_type_subscription_text | json }};
+osSubscriptionInfoWrapper.append(osSubscriptionBanner);
+osPricingWrapper.append(osSubscriptionInfoWrapper);
+} else {
+}
+if ({{ osWidget.is_delivery_price_enabled | json }} || {{ osWidget.is_unit_price_enabled | json }}) {
+var osSubscriptionSubheadings = document.createElement('div');
+osSubscriptionSubheadings.classList.add('os__pricing_subscription_subheadings', 'os__pricing_subscription_info');
+if ({{ osWidget.is_delivery_price_enabled | json}}) {
+var osSubscriptionPriceDelivery = document.createElement('div');
+osSubscriptionPriceDelivery.classList.add('os__pricing_subscription_price_delivery');
+osSubscriptionSubheadings.append(osSubscriptionPriceDelivery);
+} else {
+}
+if ({{ osWidget.is_unit_price_enabled | json}}) {
+var osSubscriptionPriceUnit = document.createElement('div');
+osSubscriptionPriceUnit.classList.add('os__pricing_subscription_price_unit');
+osSubscriptionSubheadings.append(osSubscriptionPriceUnit);
+} else {
+}
+} else {
+}
+if (osSubscriptionSubheadings) {
+osPricingWrapper.append(osSubscriptionSubheadings);
+}
+osWrapper.append(osPricingWrapper);
+function setSelectedSubscriptionPlan() {
+var selectedSellingPlanInput = document.querySelector('.os__selling_plan_select');
+var value = selectedSellingPlanInput.value;
+if (value && value.length) {
+var input = document.querySelector('.os__form input[name="selling_plan"]');
+if (input) {
+input.value = value;
+}
+} else {
+}
+}
+function handlePurchaseTypeChage(purchaseType) {
+if (purchaseType === 'one_time') {
+var sellingPlanInput = document.querySelector('.os__form input[name="selling_plan"]');
+if (sellingPlanInput) {
+sellingPlanInput.value = null;
+}
+osWrapper.classList.add('os__is_purchase_type_one_time');
+osWrapper.classList.remove('os__is_purchase_type_subscription');
+} else {
+osWrapper.classList.remove('os__is_purchase_type_one_time');
+osWrapper.classList.add('os__is_purchase_type_subscription');
+setSelectedSubscriptionPlan();
+}
+handlePriceUpdate();
+handleSetIncompatibilityMessage();
+}
+var osPurchaseTypeWrapper = document.createElement('fieldset');
+osPurchaseTypeWrapper.classList.add('os__purchase_type_wrapper');
+var osPurchaseTypeOneTime = document.createElement('div');
+osPurchaseTypeOneTime.classList.add('os__purchase_type_option', 'os__purchase_type_one_time');
+var osPurchaseTypeOneTimeInput = document.createElement('input');
+osPurchaseTypeOneTimeInput.type = 'radio';
+osPurchaseTypeOneTimeInput.name = 'os_purchase_type';
+osPurchaseTypeOneTimeInput.id = 'one_time';
+osPurchaseTypeOneTimeInput.value = 'one_time';
+osPurchaseTypeOneTimeInput.addEventListener('change', () => handlePurchaseTypeChage('one_time'));
+osPurchaseTypeOneTime.append(osPurchaseTypeOneTimeInput);
+var osPurchaseTypeOneTimeLabel = document.createElement('label')
+osPurchaseTypeOneTimeLabel.htmlFor = 'one_time';
+osPurchaseTypeOneTimeLabel.textContent = {{ osWidget.purchase_type_one_time_text | json }};
+osPurchaseTypeOneTimeLabel.classList.add('os__purchase_type_one_time_label');
+osPurchaseTypeOneTime.append(osPurchaseTypeOneTimeLabel);
+if (!{{ product.requires_selling_plan |  json }}) {
+osPurchaseTypeOneTimeInput.checked = true;
+osPurchaseTypeWrapper.append(osPurchaseTypeOneTime)
+}
+var osPurchaseTypeSubscription = document.createElement('div');
+osPurchaseTypeSubscription.classList.add('os__purchase_type_option', 'os__purchase_type_subscription');
+var osPurchaseTypeSubscriptionInput = document.createElement('input');
+osPurchaseTypeSubscriptionInput.type = 'radio';
+osPurchaseTypeSubscriptionInput.name = 'os_purchase_type';
+osPurchaseTypeSubscriptionInput.id = 'subscription';
+osPurchaseTypeSubscriptionInput.value = 'subscription';
+osPurchaseTypeSubscriptionInput.addEventListener('change', () => handlePurchaseTypeChage('subscription'));
+osPurchaseTypeSubscription.append(osPurchaseTypeSubscriptionInput);
+var osPurchaseTypeSubscriptionLabel = document.createElement('label')
+osPurchaseTypeSubscriptionLabel.htmlFor = 'subscription';
+osPurchaseTypeSubscriptionLabel.textContent = {{ osWidget.purchase_type_subscription_text | json }};
+osPurchaseTypeSubscriptionLabel.classList.add('os__purchase_type_subscription_label');
+osPurchaseTypeSubscription.append(osPurchaseTypeSubscriptionLabel);
+if ({{ product.requires_selling_plan |  json }}) {
+osPurchaseTypeSubscriptionInput.checked = true;
+}
+osPurchaseTypeWrapper.append(osPurchaseTypeSubscription)
+osWrapper.append(osPurchaseTypeWrapper);
+var osSellingPlanWrapper = document.createElement('div');
+osSellingPlanWrapper.classList.add('os__selling_plan_wrapper');
+var osSellingPlanSelectLabel = document.createElement('label');
+osSellingPlanSelectLabel.textContent = {{ osWidget.select_plan_text | json }};
+osSellingPlanWrapper.append(osSellingPlanSelectLabel);
+function setSelectedSellingPlan(sellingPlanID) {
+var osPlanInput = document.querySelector('.os__form input[name="selling_plan"]');
+if (osPlanInput) {
+osPlanInput.value = sellingPlanID;
+handlePriceUpdate();
+}
+}
+function handleSellingPlanSelect(selectedPlanID) {
+if (!selectedPlanID) {
+var selectedPlanID = this.event.target.value;
+}
+setSelectedSellingPlan(selectedPlanID);
+handleSetIncompatibilityMessage();
+}
+var osSellingPlanSelect = document.createElement('select');
+osSellingPlanSelect.classList.add('os__selling_plan_select');
+osSellingPlanSelect.addEventListener("change", () => handleSellingPlanSelect());
+function mapSellingPlans() {
+for (var i = 0; i < osSellingPlans.length; i++) {
+var sellingPlan = osSellingPlans[i];
+var osSellingPlanOption = document.createElement('option');
+osSellingPlanOption.classList.add('os__selling_plan_select_option');
+osSellingPlanOption.value = sellingPlan.id;
+osSellingPlanOption.textContent = sellingPlan.name;
+if (i === 0) {
+osSellingPlanOption.selected = true;
+setSelectedSellingPlan(sellingPlan.id);
+}
+osSellingPlanSelect.append(osSellingPlanOption);
+}
+}
+mapSellingPlans();
+osSellingPlanWrapper.append(osSellingPlanSelect);
+osWrapper.append(osSellingPlanWrapper);
+var osVariantWrapper = document.createElement('div');
+osVariantWrapper.classList.add('os__variant_wrapper');
+var osVariantSelectLabel = document.createElement('label');
+osVariantSelectLabel.textContent = {{ osWidget.select_variant_text | json }};
+osVariantWrapper.append(osVariantSelectLabel);
+function checkVariantPlanAllocation(variantID) {
+// Parse the variant id as an int
+var selectedVariantID = parseInt(variantID, 10);
+// Get the plan id
+var osSelectedPlanInput = document.querySelector('.os__form input[name="selling_plan"]');
+var osSelectedPlanInputValue = osSelectedPlanInput.value;
+if (!osSelectedPlanInputValue || osSelectedPlanInputValue === '') {
+return true;
+}
+var selectedPlanID = parseInt(osSelectedPlanInput.value, 10);
+// Default the variant having the selected plan to false
+var variantHasSelectedPlan = false;
+if (selectedPlanID && selectedVariantID) {
+// Loop through all the variants
+for (var i = 0; i < osVariantAllocations.length; i++) {
+var allocation = osVariantAllocations[i];
+var allocationID = parseInt(allocation.id, 10);
+if (selectedVariantID === allocationID) {
+var currentVariantAllocations = allocation.os_allocations;
+// Loop through all the selling plans available to the variant
+for (var s = 0; s < currentVariantAllocations.length; s++) {
+var currentAllocation = currentVariantAllocations[s];
+var currentAllocationID = parseInt(currentAllocation.id_selling_plan, 10);
+if (currentAllocationID === selectedPlanID) {
+// If we find the plan in the current variant the set the variantHasSelectedPlan to true
+variantHasSelectedPlan = true;
+}
+}
+}
+}
+}
+// Return the boolean
+return variantHasSelectedPlan;
+}
+function checkVariantAvailable(variantID) {
+var variant;
+osVariantAllocations.forEach((alloc) => {
+if (alloc.id.toString() === variantID.toString()) {
+variant = alloc;
+}
+})
+return variant.available;
+}
+function getPurchaseType() {
+if (document.querySelector('#ongoing-subscriptions-wrapper.os__is_purchase_type_subscription')) {
+return 'subscription';
+} else if (document.querySelector('#ongoing-subscriptions-wrapper.os__is_purchase_type_one_time')) {
+return 'one_time';
+}
+return false;
+}
+function handleSetIncompatibilityMessage(variantID = null) {
+var osAddToCartButton = document.querySelector('button.os__add_to_cart');
+osAddToCartButton.removeAttribute('disabled');
+if (!variantID) {
+var variantInput = document.querySelector('.os__input_id');
+variantID = variantInput.value;
+}
+var variantHasAllocations = checkVariantAllocations(variantID);
+var body = document.querySelector('body');
+var variantHasPlanAvailable = checkVariantPlanAllocation(variantID);
+var variantAvailable = checkVariantAvailable(variantID);
+var isTypeSubscription = (getPurchaseType() === 'subscription');
+var variantSubscriptionCompatible = true;
+if (isTypeSubscription) {
+variantSubscriptionCompatible =  variantHasAllocations && variantHasPlanAvailable;
+}
+if (variantAvailable && variantSubscriptionCompatible) {
+body.classList.add('os__selected_has_specific_allocation');
+osAddToCartButton.removeAttribute('disabled');
+} else {
+body.classList.remove('os__selected_has_specific_allocation');
+osAddToCartButton.setAttribute('disabled', true);
+}
+}
+function handleSetWidgetVisibility(variantID) {
+if (!variantID) {
+var variantInput = document.querySelector('.os__input_id');
+variantID = variantInput.value;
+}
+var variantHasAllocations = checkVariantAllocations(variantID);
+var body = document.querySelector('body');
+var variantAvailable = checkVariantAvailable(variantID);
+if (variantHasAllocations || variantAvailable) {
+body.classList.remove('os__selected_has_no_allocation');
+body.classList.add('os__selected_has_allocation');
+} else {
+body.classList.add('os__selected_has_no_allocation');
+body.classList.remove('os__selected_has_allocation');
+setDefaultVariantPricing(variantID);
+}
+}
+function setSelectedVariant(variantID) {
+if (variantID) {
+osInputID = document.querySelector('.os__input_id');
+if (osInputID) {
+osInputID.value = variantID;
+handlePriceUpdate();
+handleSetWidgetVisibility(variantID);
+handleSetIncompatibilityMessage(variantID);
+}
+}
+}
+function handleVariantSelect() {
+var selectedID = this.event.target.value;
+setSelectedVariant(selectedID);
+}
+var osVariantSelect = document.createElement('select');
+osVariantSelect.classList.add('os__variant_select');
+osVariantSelect.addEventListener("change", () => handleVariantSelect());
+function mapVariantAllocations() {
+for (var i = 0; i < osVariantAllocations.length; i++) {
+var allocation = osVariantAllocations[i];
+var osVariantAllocationOption = document.createElement('option');
+osVariantAllocationOption.classList.add('os__variant_select_option');
+osVariantAllocationOption.value = allocation.id;
+var allocationTitle = allocation.title;
+if (allocationTitle.toLowerCase() === 'default title') {
+osVariantAllocationOption.textContent = {{ product.title | json }};
+} else {
+osVariantAllocationOption.textContent = allocation.title;
+}
+if (i === 0) {
+osVariantAllocationOption.selected = true;
+setSelectedVariant(allocation.id);
+}
+osVariantSelect.append(osVariantAllocationOption);
+}
+}
+mapVariantAllocations();
+var osProductHasVariants = ({{ product.variants | json }}.length > 1);
+var osShowSingleVariantSelect = {{ osWidget.is_single_variant_select_enabled | json }};
+if (osProductHasVariants || osShowSingleVariantSelect) {
+osVariantWrapper.append(osVariantSelect);
+osWrapper.append(osVariantWrapper);
+}
+var osAddToCartWrapper = document.createElement('div');
+osAddToCartWrapper.classList.add('os__add_to_cart_wrapper');
+if ({{ osWidget.is_quantity_enabled | json }}) {
+var osQuantitySelector = document.createElement('input');
+osQuantitySelector.setAttribute('type', 'number');
+osQuantitySelector.setAttribute('min', '1');
+osQuantitySelector.setAttribute('max', '100');
+osQuantitySelector.value = '1';
+osQuantitySelector.id = 'quantity';
+osQuantitySelector.name = 'quantity';
+osQuantitySelector.classList.add('os__quantity_input');
+osAddToCartWrapper.append(osQuantitySelector);
+}
+var osAddToCartButton = document.createElement('button');
+osAddToCartButton.setAttribute('type', 'submit');
+osAddToCartButton.classList.add('os__add_to_cart');
+osAddToCartButton.textContent = {{ osWidget.add_to_cart_text | json }};
+osAddToCartWrapper.append(osAddToCartButton)
+osForm.append(osAddToCartWrapper)
+var osEnableSubscriptionPolicy = {{ osWidget.enable_policy | json }};
+if (osEnableSubscriptionPolicy) {
+var osSubscriptionPolicyWrapper = document.createElement('div')
+osSubscriptionPolicyWrapper.classList.add('os__subscription_policy_wrapper');
+var osSubscriptionPolicyLink = document.createElement('a');
+osSubscriptionPolicyLink.href = {{ shop.secure_url | json }} + '/policies/subscription-policy';
+osSubscriptionPolicyLink.classList.add('os__subscription_policy_link');
+osSubscriptionPolicyLink.textContent = {{ osWidget.policy_label | json }};
+osSubscriptionPolicyLink.target = '_blank';
+osSubscriptionPolicyWrapper.append(osSubscriptionPolicyLink);
+osForm.append(osSubscriptionPolicyWrapper);
+}
+osWrapper.append(osForm);
+function initiatePricingInfo(variant)
+{
+var variantTextInput = document.querySelector('.os__form input[name="id"]');
+if (variantTextInput) {
+setSelectedVariant(variant.id);
+}
+}
+function initiateProductWidget() {
+// Hide the subscription select menu by default
+osWrapper.classList.add('os__is_purchase_type_one_time');
+document.querySelector(osProductFormSelector).parentElement.prepend(osWrapper);
+// Set the active variant
+initiatePricingInfo(osVariantAllocations[0])
+if ({{ product.requires_selling_plan | json }}) {
+handlePurchaseTypeChage('subscription');
+}
+}
+function handleResponseSuccess() {
+document.querySelector('body').classList.add('os__is_sub_product');
+osActivitySpinner.classList.add('os__visually_hidden');
+osWrapper.classList.remove('os__wrapper_loading');
+initiateProductWidget();
+}
+function handleWidgetWillNotLoad(message) {
+console.info('osLog - Widget will not load: ', message);
+document.querySelector('body').classList.add('os__noload');
+osActivitySpinner.classList.add('os__visually_hidden');
+document.querySelector('.os__price_wrapper_original').classList.remove('os__visually_hidden');
+}
+function init() {
+const encoded = encodeURI(document.referrer || '');
+const url = `https://{{ shop.domain }}/apps/ongoing-subscriptions/widget-settings?_referrer=${encoded}`;
+fetch(url)
+.then((res) => res.json())
+.then((response) => {
+if (response.errors && response.errors.length) {
+handleWidgetWillNotLoad('Response was successful but contained an error message.');
+} else if (!response.is_widget_enabled) {
+handleWidgetWillNotLoad('Widget is not enabled.');
+} else {
+handleResponseSuccess();
+}
+})
+.catch(error => {
+console.error('Response was not successful: ', error);
+handleWidgetWillNotLoad('Response was not successful.');
+});
+}
+{% if skipLoader %}
+handleResponseSuccess();
+{% else %}
+init();
+{% endif %}
+</script>
+{% else %}
+<script>
+</script>
+{% endif %}
+{% endif %}
+{% if template == 'customers/order' %}
+{% assign osCustomerID = customer.id | json %}
+{% assign osIsSubscriptionOrder = false %}
+{% for item in order.line_items %}
+<script>
+</script>
+{% unless item.selling_plan_allocation == nil %}
+{% assign osIsSubscriptionOrder = true %}
+{% endunless %}
+{% endfor %}
+<script>
+if ({{ osIsSubscriptionOrder | json}}) {
+var wrapper = document.querySelector('#ongoing-subscriptions-customer-order-widget');
+wrapper.classList.add('os__subscription_manage_wrapper');
+var header = document.createElement('strong');
+header.textContent = 'This order is part of a subscription'
+wrapper.append(header);
+var content = document.createElement('p');
+content.textContent = 'To manage your subscription status, payment info and to get a full overview of your subscription, visit the following links below.';
+wrapper.append(content);
+var button = document.createElement('button');
+var loginPath = '/apps/ongoing-subscriptions/portal-login?customer_id={{ osCustomerID }}&customer_token={{ osCustomerToken }}';
+button.textContent = 'Edit This Subscription';
+button.onclick = () => window.location.href = `${loginPath}&order_id={{ order.id }}`;
+button.classList.add('os__button_inline');
+wrapper.append(button);
+var link = document.createElement('a');
+link.textContent = 'Your Subscriptions';
+link.href = loginPath;
+try {
+wrapper.append(link);
+} catch {
+}
+} else {
+}
+</script>
+{% endif %}
+{% if template == 'customers/account' %}
+<script>
+function renderBanner() {
+var wrapper = document.querySelector('#ongoing-subscriptions-customer-account-widget');
+wrapper.classList.add('os__subscription_manage_wrapper');
+var header = document.createElement('strong');
+header.textContent = 'Manage Your Subscriptions'
+wrapper.append(header);
+var content = document.createElement('p');
+content.textContent = 'To manage your subscription status, payment info and to get a full overview of your subscription, visit the "Your Subscriptions" link below.';
+wrapper.append(content);
+var button = document.createElement('button');
+var loginPath = '/apps/ongoing-subscriptions/portal-login?customer_id={{ osCustomerID }}&customer_token={{ osCustomerToken }}';
+button.textContent = 'Your Subscriptions';
+button.onclick = () => window.location.href = loginPath;
+wrapper.append(button);
+}
+function handleResponseSuccess(isSubscriptionCustomer) {
+if (isSubscriptionCustomer) {
+renderBanner();
+} else {
+}
+}
+function init() {
+const encoded = encodeURI(document.referrer || '');
+const url = `https://{{ shop.domain }}/apps/ongoing-subscriptions/verify?_referrer=${encoded}&cid={{ customer.id }}`;
+fetch(url)
+.then((res) => res.json())
+.then((response) => {
+handleResponseSuccess(response.customer_is_active);
+})
+.catch((error) => {
+console.error('Verify customer error: ', error);
+});
+}
+init();
+</script>
+{% endif %}
+{% endif %}

@@ -1,0 +1,69 @@
+{% if section.blocks.size > 0 %}
+<div class="product-tabs-bar product-tabs-bar-{{ section.id }}">
+  <div class="psc-tabbar-container psc-tabbar-container-{{ section.id }}">
+    <div class="psc-tabbar psc-tabbar-personal" id="psc-tabbar">
+      <div class="page-width">
+        <div class="psct-inner">
+          {% for block in section.blocks %}
+          {% assign name=block.settings.title | handle %}
+          <div class="psc-tabbar-item {%if forloop.index==1 %}active{%endif%}"  data-name="{{ name }}">
+            {{ block.settings.title }}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="  psc-tabbar-shadow" >
+      <div class="page-width">
+        <div class="psct-inner">
+          {% for block in section.blocks %}
+          {% assign name=block.settings.title | handle %}
+          <div class="psc-tabbar-item  {%if forloop.index==1 %}active{%endif%}" data-name="{{ name }}">
+            {{ block.settings.title }}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product Tabs Bar",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Tbas Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Tabs Item Title",
+			"default": "Overview"
+          },
+          {
+            "type": "text",
+            "id": "title_id",
+            "label": "Tabs Item ID",
+			"default": "overview",
+			"info": "Use all lowercase characters whenever possible. Do not use special characters or Spaces."
+          }
+		]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Product Tabs Bar"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

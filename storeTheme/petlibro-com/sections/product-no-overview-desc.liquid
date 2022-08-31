@@ -1,0 +1,120 @@
+{%- assign customDesc = product.metafields.custom_desc -%}
+<div class="product-desc-contianer">
+ 
+        <div class="psc-tabbar" id="psc-tabbar">
+           <div class="page-width">
+             <div class="psct-inner">
+          {%for block in section.blocks%}
+               {%assign name=block.settings.title|handle%}
+       
+                 {%if name contains "manual"%}{%unless  customDesc.warranty%} {%continue%}{%endunless%}{%endif%}
+               {%if name=="specs" %}{%unless  customDesc.specs%}{%continue%}{%endunless%}{%endif%}
+             {%unless name contains 'overview'%}
+             <div class="psc-tabbar-item {%if forloop.index==1 %}active{%endif%}   " data-index="{{forloop.index}}">
+               {{block.settings.title}}
+          </div>
+              {%endunless%}
+          {%endfor%}
+             </div>
+              </div>
+  </div>
+  <div class="psc-content">
+     {%for block in section.blocks%}
+    {%assign name=block.settings.title | handle%}
+    {%assign status=false%}
+     {%if name=="overview" %}{%unless  product.description!=blank%}   {%assign status=true%}{%continue%}{%endunless%}{%endif%}
+                 {%if name contains "manual"%}{%unless  customDesc.warranty%} {%assign status=true%} {%continue%}{%endunless%}{%endif%}
+               {%if name=="specs" %}{%unless  customDesc.specs%} {%assign status=true%}{%continue%}{%endunless%}{%endif%}
+            
+             <div class="psc-content-item psc-content-item-{{forloop.index}} pscci-{{name}} {%if forloop.index==1 or name contains 'review'%}active{%endif%}" data-index="{{forloop.index}}">
+             {%unless status%}
+               <div class="medium-up--hide ">
+                  {%unless name contains 'overview'%}
+                 <div class="mb-psc-tabbar-item {%if forloop.index==1 or name contains 'review'%}active {%endif%}" data-status="{%if forloop.index==1 or name contains 'review'%}true{%else%}false{%endif%}" data-index="{{ forloop.index}}">
+                   <span>
+                      {{block.settings.title}}
+                   </span>
+                   <span class="icon-box {%if forloop.index==1 or name contains 'review'%} rotate{%endif%}">{%include 'icon-arrow-right'%}</span>
+                 </div>
+                 {%endunless%}
+               </div>
+               {%endunless%}
+               <div class="psc-inner-content-{{ forloop.index}}  psc-inner-content {%if forloop.index==1 or name contains 'review'%}active{%endif%}">
+               {%if name contains 'overview'%}
+         {{product.description}} 
+               {%if customDesc.series%}
+                 <div class="page-width ">
+               <div class="series-container">
+                 <h3 class="title text-center">Series of Products</h3>
+                    <div class="series-inner-container">
+                  {{customDesc.series}}
+                </div>
+                  </div>
+                          </div>
+                {%endif%}
+               {%elsif name contains 'specs'%}
+                {%if customDesc.specs%}
+               <div class="page-width ">
+                 <div class="specs-content">
+               {{customDesc.specs}}
+               </div>
+                   </div>
+                {%endif%}
+                  {%elsif name contains 'manual'%}
+              
+                 <div class="page-width page-width1100">
+                    {%if customDesc.in_the_box %}
+                 <div class="in_the_box-content">
+               {{customDesc.in_the_box}}
+               </div>
+                   {%endif%}
+                    {%if customDesc.warranty %}
+                     <div class="warranty-content">
+               {{customDesc.warranty}}
+               </div>
+                   {%endif%}
+                     {%if customDesc.download %}
+                         <div class="manual-content">
+               {{customDesc.download}}
+               </div>
+                     {%endif%}
+                   </div>
+               
+               
+                  {%elsif name contains 'review'%}
+                   <div class="page-width ">
+             {% comment %}Start automatically added Judge.me widget{% endcomment %}
+  {% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: true, product: product %}
+{% comment %}End automatically added Judge.me widget{% endcomment %}
+                       </div>
+               {%endif%}
+          </div>
+               </div>
+          {%endfor%}
+  </div>
+
+  </div>
+
+
+{% schema %}
+  {
+    "name": "Product desc",
+    "settings": [],
+"blocks": [{
+          "type": "text",
+          "name": "Item",
+          "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Name"
+        }]
+      }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

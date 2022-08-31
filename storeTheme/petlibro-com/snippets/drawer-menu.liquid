@@ -1,0 +1,140 @@
+{%- assign animation_row = 1 -%}
+
+  {%- assign drawer_position = 'left' -%}
+
+
+<div id="NavDrawer" class="drawer drawer--{{ drawer_position }}">
+
+  <div class="drawer__contents">
+    <div class="drawer__fixed-header">
+      <div class="drawer__header appear-delay-{{ animation_row }}">
+        
+        <div class="drawer__close">
+          <button type="button" class="drawer__close-button font-bq js-drawer-close">
+            <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><path d="M19 17.61l27.12 27.13m0-27.12L19 44.74"/></svg>
+            <span class="icon__fallback-text">{{ 'general.drawers.close_menu' | t }}</span>
+          </button>
+        </div>
+        <div class="drawer__search">
+            <div class="site-search-contianer">
+      <a href="{{ routes.search_url }}" class="site-nav__link site-nav__link--icon js-search-header js-no-transition{% if section.settings.main_menu_alignment == 'center' or section.settings.main_menu_alignment == 'center-split' %} large-up--hide{% endif %}">
+    {%render "svg-search"%}
+        <span class="icon__fallback-text">{{ 'general.search.title' | t }}</span>
+      </a>
+          <div class="site-header__search-container transition">
+        <div class="site-header__search">
+        
+            <form action="{{ routes.search_url }}" method="get" id="HeaderSearchForm" class="site-header__search-form" role="search">
+              <input type="hidden" name="type" value="{{ settings.search_type }}">
+            
+              <input type="search" name="q" value="{{ search.terms | escape | replace: '*', '' }}" placeholder="{{ 'general.search.placeholder' | t }}" class="site-header__search-input" aria-label="{{ 'general.search.placeholder' | t }}">
+            <button type="submit" class="text-link site-header__search-btn">
+               {%render "svg-search"%}
+              <span class="icon__fallback-text">{{ 'general.search.submit' | t }}</span>
+              </button> 
+          </form>
+            <button type="button" class="js-search-header-close text-link site-header__search-btn">
+            {%render "svg-close"%}
+              <span class="icon__fallback-text">{{ 'general.accessibility.close_modal' | t | json }}</span>
+            </button>
+        
+        </div>
+        {%- if settings.predictive_search_enabled -%}
+          <div class="predictive-results hide">
+            <div class="page-width">
+              <div id="PredictiveResults"></div>
+              <div class="text-center predictive-results__footer">
+                <button type="button" class="btn btn--small" data-predictive-search-button>
+                  <small>
+                    {{ 'general.search.view_more' | t }}
+                  </small>
+                </button>
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+        </div>
+      </div>
+    </div>
+      <div id="nav-mmenus">
+      <ul class="nav-mmenus-menu">
+        {% for link in main_menu.links %}
+          {%- assign animation_row = animation_row | plus: 1 -%}
+          {%- assign child_list_handle = link.url | handleize | append: forloop.index -%}
+          {%- assign has_dropdown = false -%}
+          {% if link.links != blank %}
+            {%- assign has_dropdown = true -%}
+          {% endif %}
+
+          <li class="mobile-nav__item">
+            {% if has_dropdown %}
+            <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+            {% else %}
+              <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+            {% endif %}
+
+            {% if has_dropdown %}
+                  <ul class="mobile-nav__sublist mobile-nav__child__sublist">
+                    {% for childlink in link.links %}
+                      {%- assign has_sub_dropdown = false -%}
+                      {%- assign grand_child_list_handle = childlink.url | handleize | append: forloop.index -%}
+                      {% if childlink.links != blank %}
+                        {%- assign has_sub_dropdown = true -%}
+                      {% endif %}
+
+                      <li class="mobile-nav__item">
+                          <a href="{{childlink.url}}" class="mobile-nav__faux-link ">{{ childlink.title | escape }}</a>  
+                        {% if has_sub_dropdown %}
+                              <ul class="mobile-nav__grandchildlist">
+                                {% for grandchildlink in childlink.links %}
+                                  <li class="mobile-nav__item">
+                                    <a href="{{ grandchildlink.url }}" class="mobile-nav__link mobile-nav-grandchildlist__link">
+                                      {{ grandchildlink.title }}
+                                    </a>
+                                  </li>
+                                {% endfor %}
+                              </ul>
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+
+      </ul>
+      
+      <div class="drawer-menu-bottom-container">
+          {% if shop.customer_accounts_enabled %}
+      <a class="site-nav__link site-nav__link--icon font-bq" href="  {% if customer %}{{ routes.account_url }}{%else%}{{ routes.account_login_url }}{%endif%}">
+       {%render"svg-account"%}
+          {% if customer %}
+          <span> {{ customer.last_name | t }}</span>
+        {%else%}
+        <span>Login</span>
+        {%endif%}
+       
+      </a>
+    {% endif %}
+      </div>
+    </div>
+    </div>
+</div>
+    <script type="text/javascript">
+      $(function() {
+        $('#nav-mmenus').mmenu({
+          extensions	: [ 'effect-slide', 'pageshadow' ],
+          header		: true,
+          searchfield	: false
+        });
+      });
+    
+
+      $(".navbar-toggle").click(function(){
+      $(".menu-canvasl-login").css("display","block");
+      $(".menu-canvasl-ul").css("display","block");
+    });
+
+    </script>

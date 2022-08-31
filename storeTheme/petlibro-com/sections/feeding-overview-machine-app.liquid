@@ -1,0 +1,64 @@
+
+<div class="feeding_machine_box machine_app_title feeding_model_s">
+  <div class="feeding_machine_a"><span>{{ section.settings.app_title }}</span><img src="{{ "deeding_add_icon.png" | asset_url }}"></div>
+  <ul class="feeding_machine_c">
+    {% for block in section.blocks %}
+      <div class="feeding_machine_item">
+        <img class="lazyload" data-src="{{ block.settings.step_image | img_url: 'master' }}" alt="">
+        <div class="feeding_machine_id">{{block.settings.step_id}}</div>
+        <div class="feeding_machine_text">{{block.settings.step_text}}</div>
+      </div>
+    {% endfor %}
+  </ul>
+</div>
+<script>
+  $('.machine_app_title .feeding_machine_a').click(function(e) {
+    console.log(333)
+    if ($('.machine_app_title').hasClass('machine_active')) {
+      $('.machine_app_title').removeClass('machine_active')
+    } else {
+      $('.machine_app_title').addClass('machine_active')
+    }
+  })
+</script>
+{% schema %}
+{
+  "name": "Feeding Overview M-APP",
+  "settings": [
+    {
+      "type": "text",
+      "id": "app_title",
+      "label": "A Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "app-images",
+      "name": "step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_id",
+          "label": "Step Id"
+        },
+        {
+          "type": "html",
+          "id": "step_text",
+          "label": "Step Text"
+        },
+        {
+          "type": "image_picker",
+          "id": "step_image",
+          "label": "Image",
+          "info": "Image: 1200x"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feeding Overview M-APP"
+    }
+  ]
+}
+{% endschema %}

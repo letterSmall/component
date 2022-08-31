@@ -1,0 +1,97 @@
+{% if product.metafields.custom_desc.product-gallery != blank %}
+
+<div class="product-features swiper">
+  {% if section.settings.title != blank %}<div class="h1 text-center"><strong>{{ section.settings.title }}</strong></div>{% endif %}
+    <div class="swiper-wrapper">
+      {{ product.metafields.custom_desc.product-gallery }}      
+   </div>
+ <div class="swiper-button-prev feature-prev">
+    <svg viewBox="0 0 37 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M23.5 0V16L36.9 8L23.5 0Z"/>
+<path d="M23.4999 7.9H0.399902" stroke-miterlimit="10"/>
+</svg>
+   
+</div>
+    <div class="swiper-button-next feature-next">
+     <svg  viewBox="0 0 37 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.7998 0V16L0.399803 8L13.7998 0Z" />
+<path d="M13.7999 7.9H36.8999" stroke-miterlimit="10"/>
+</svg>
+</div>
+
+  <div class="swiper-pagination feature-pagination"></div>
+  </div>
+   
+
+
+<script type="text/javascript">
+var Swiperproductlist = new Swiper('.product-features',{
+  slidesPerView :1,
+  spaceBetween : 10,
+ centeredSlides : true,
+  watchOverflow: true,
+  autoplay:true,
+   autoHeight: false,
+  loop : true,
+  pagination: {
+      el: '.feature-pagination',
+    clickable :true,
+    },
+    navigation: {
+      nextEl: '.feature-prev',
+      prevEl: '.feature-next',
+    },  
+   breakpoints: { 
+     769: {  
+          slidesPerView: 4,
+          spaceBetween: 10,        
+        },
+     768: {  
+          slidesPerView: 3,
+          spaceBetween: 10,        
+        },
+        590: {  
+          slidesPerView: 5,
+          spaceBetween: 10,
+        
+        }
+  }
+}); 
+  Swiperproductlist.scrollbar.$el.css('background','#f2f2f2');
+  Swiperproductlist.scrollbar.$dragEl.css('background','#757575');
+</script>
+
+{% endif%}
+{% schema %}
+  {
+    "name": "Product Gallery",
+    "class":"product_gallery",
+    "settings": [
+{
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Features"
+      },
+{
+  "type": "paragraph",
+  "content": "use metafield ,Namespace:custom_desc;Key:product-gallery"
+},
+{
+  "type": "paragraph",
+  "content": "<div class=\"swiper-slide\"><img src=\"https://cdn.shopify.com/s/files/1/0599/2094/1239/files/gallery-image01.png?v=1640939910\"><div class=\"text\"><div class=\"h4\">Adventure</div><p>Our most comfortable bike with 16-speed shifting, front suspension & a plush saddle</p></div></div>"
+}
+],
+"presets": [
+      {
+        "name": "Featured Gallery"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

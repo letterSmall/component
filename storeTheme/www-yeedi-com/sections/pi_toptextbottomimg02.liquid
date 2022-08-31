@@ -1,0 +1,65 @@
+<div class="pi_toptextbottomimg">
+  <div class="pi_container">
+    <div class="text-wrapper text-wrapper-margin">
+      {% if section.settings.title != blank %}
+      <h2 class="pi_textoverimage-title">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.content != blank %}
+      <div class="pi_textoverimage-content">{{ section.settings.content }}</div>
+      {% endif %}
+    </div>
+    <div class="image-wrapper">
+      {% if section.settings.image %}
+      <img class="small-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+      {% endif %}
+      {% if section.settings.image_mb != blank %}
+      <img class="medium--up-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+      {% else %}
+      <img class="medium--up-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .collection-twoimage_text{ background:{{section.settings.bg_color}};}
+  .collection-twoimage_text .text-wrapper h2{color:{{section.settings.title_color}}; }
+  .collection-twoimage_text .text-wrapper .text{color:{{section.settings.text_color}}; }
+</style>
+
+{% schema %}
+  {
+    "name": "PI TopText BottomImg02",
+    "settings": [
+          {
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          },{
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1580*800px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：750*px)"
+          }
+     ], 
+    "presets": [
+         {
+            "name": "PI TopText BottomImg02",
+            "category": "Ho-Advance"
+         }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

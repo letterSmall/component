@@ -1,0 +1,154 @@
+<div class="collection-twoimage_text padding6vw">
+  <div class="container">
+    <div class="text-wrapper animation-text">
+    {% if section.settings.title != blank %}
+    <h2 class="h2_36 fadein-0">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.text != blank %}
+    <div class="text fadein-05">{{ section.settings.text }}</div>
+    {% endif %}
+    </div>
+    <div class="image-wrapper">
+    {% for block in section.blocks %}
+    {% if block.settings.image != blank %}
+    <img class=""  src="{{block.settings.image | img_url:'master'}}"/>
+    {% endif %}
+    {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .collection-twoimage_text{ background:{{section.settings.bg_color}};}
+  .collection-twoimage_text .text-wrapper h2{color:{{section.settings.title_color}}; }
+  .collection-twoimage_text .text-wrapper .text{color:{{section.settings.text_color}}; }
+</style>
+
+{% schema %}
+  {
+    "name": "Collection TwoImage Text",
+    "settings": [
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color"
+        }, 
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": {
+            "da": "Overskrift",
+            "de": "Titel",
+            "en": "Heading",
+            "es": "Título",
+            "fi": "Otsake",
+            "fr": "En-tête",
+            "hi": "शीर्षक",
+            "it": "Heading",
+            "ja": "見出し",
+            "ko": "제목",
+            "ms": "Tajuk",
+            "nb": "Overskrift",
+            "nl": "Kop",
+            "pt-BR": "Título",
+            "pt-PT": "Título",
+            "sv": "Rubrik",
+            "th": "ส่วนหัว",
+            "zh-CN": "标题",
+            "zh-TW": "標題"
+          }
+        },
+        {
+          "type": "color",
+          "id": "title_color",
+          "label": "Heading Color",
+          "default": "#3C3C3C"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": {
+            "da": "Tekst",
+            "de": "Text",
+            "en": "Text",
+            "es": "Texto",
+            "fi": "Teksti",
+            "fr": "Texte",
+            "hi": "टेक्स्ट",
+            "it": "Testo",
+            "ja": "テキスト",
+            "ko": "텍스트",
+            "ms": "Teks",
+            "nb": "Tekst",
+            "nl": "Tekst",
+            "pt-BR": "Texto",
+            "pt-PT": "Texto",
+            "sv": "Text",
+            "th": "ข้อความ",
+            "zh-CN": "文本",
+            "zh-TW": "文字"
+          }
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text Color",
+            "default": "#000"
+        }
+     ],
+     "blocks": [
+        {
+            "type": "image",
+            "name": "Image",
+            "settings": [
+             {
+                "type": "image_picker",
+                "id": "image",
+                "label": {
+                  "da": "Billede",
+                  "de": "Foto",
+                  "en": "Image",
+                  "es": "Imagen",
+                  "fi": "Kuva",
+                  "fr": "Image",
+                  "hi": "इमेज",
+                  "it": "Immagine",
+                  "ja": "画像",
+                  "ko": "이미지",
+                  "ms": "Imej",
+                  "nb": "Bilde",
+                  "nl": "Afbeelding",
+                  "pt-BR": "Imagem",
+                  "pt-PT": "Imagem",
+                  "sv": "Bild",
+                  "th": "รูปภาพ",
+                  "zh-CN": "图片",
+                  "zh-TW": "圖片"
+                },
+                "info": "Size: 690px*465px"
+              }
+           ]
+        }
+    ],  
+    "presets": [
+        {
+            "name": "Collection TwoImage Text",
+            "category": "Image",
+            "blocks": [
+                {
+                    "type": "image"
+                },
+                {
+                    "type": "image"
+                }
+            ]
+        }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

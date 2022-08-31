@@ -1,0 +1,197 @@
+{% if section.blocks.size > 0 and section.settings.show_section %}
+<style>
+  {% for block in section.blocks %}
+  {% if block.settings.bg_color != blank %}
+  .lr-image-text-{{ section.id }} .image-text-item-{{ block.id }} .content-container {
+    background-color: {{ block.settings.bg_color }};
+  }
+  {% endif %}
+  {% if block.settings.title_color != blank %}
+  .lr-image-text-{{ section.id }} .image-text-item-{{ block.id }} .content-container .title-box {
+    color: {{ block.settings.title_color }};
+  }
+  {% endif %}
+  .lr-image-text-{{ section.id }} .image-text-item-{{ block.id }} .content-container .separator-box {
+    background-color: {{ section.settings.separator_bg_color }};
+  }
+  {% if block.settings.desc_color != blank %}
+  .lr-image-text-{{ section.id }} .image-text-item-{{ block.id }} .content-container .desc-box {
+    color: {{ block.settings.desc_color }};
+  }
+  {% endif %}
+  {% endfor %}
+</style>
+<div class="lr-image-text lr-image-text-{{ section.id }} {% if section.settings.tab_id != blank %}{{ section.settings.tab_id }}{% endif %}">
+  <div class="lr-image-text-wrapper page-width">
+    {% for block in section.blocks %}
+    <div class="image-text-item image-text-item-{{ block.id }} {% if block.settings.layout == 'left' %}left-image {% else %}right-image {% endif %}">
+      {% capture image_temp %}
+      <div class="item-box image-container">
+        {% if block.settings.pc_image != blank %}
+        <div class="image-container">
+          <img class="lazyload js pad-down--hide"
+               src="{{ block.settings.pc_image | img_url: '1x' }}"
+               srcset="{{ block.settings.pc_image | img_url: '1500x' }}, {{ block.settings.pc_image | img_url: '960x' }}"
+               sizes="(max-width: 960px) 960px, 1500px" 
+               alt=""
+               width="{{ block.settings.pc_image.width }}" 
+               height="{{ block.settings.pc_image.height }}"/>
+          {% if block.settings.mb_image != blank %}
+          <img class="lazyload js pad-up--hide"
+               src="{{ block.settings.mb_image | img_url: '1x' }}"
+               srcset="{{ block.settings.mb_image | img_url: '1500x' }}, {{ block.settings.mb_image | img_url: '960x' }}"
+               sizes="(max-width: 960px) 960px, 1500px" 
+               alt=""
+               width="{{ block.settings.mb_image.width }}" 
+               height="{{ block.settings.mb_image.height }}"/>
+          {% else %}
+          <img class="lazyload js pad-up--hide"
+               src="{{ block.settings.pc_image | img_url: '1x' }}"
+               srcset="{{ block.settings.pc_image | img_url: '1500x' }}, {{ block.settings.pc_image | img_url: '960x' }}"
+               sizes="(max-width: 960px) 960px, 1500px" 
+               alt=""
+               width="{{ block.settings.pc_image.width }}" 
+               height="{{ block.settings.pc_image.height }}"/>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+      {% endcapture %}
+      {% capture content_temp %}
+      <div class="item-box content-container">
+        {% if block.settings.title != blank %}
+        <div class="content-innerbox">
+          <h2 class="title-box">{{ block.settings.title }}</h2>
+          {% if block.settings.show_separator %}
+          <div class="separator-box"></div>
+          {% endif %}
+          {% if block.settings.desc != blank %}
+          <div class="desc-box">{{ block.settings.desc }}</div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+      {% endcapture %}
+
+      {% if block.settings.layout == 'left' %}
+      {{ image_temp }}
+      {{ content_temp }}
+      {% endif %}
+      {% if block.settings.layout == 'right' %}
+      {{ content_temp }}
+      {{ image_temp }}
+      {% endif %}
+      
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Left Right Image Text",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "tab_id",
+        "label": "Tab ID",
+		"default": "overview",
+		"info": "This must be filled in for the first module of the category for Tabs Bar"
+      },
+      {
+        "type": "color",
+        "id": "separator_bg_color",
+        "label": "Separator Background Color",
+        "default":"#000000"
+      }
+	],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image with Text",
+        "settings": [
+          {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Block Background Color",
+            "default":"#ededed"
+          },
+          {
+            "type": "color",
+            "id": "title_color",
+            "label": "Block Title Color",
+            "default":"#000000"
+          },
+          {
+            "type": "color",
+            "id": "desc_color",
+            "label": "Block Description Color",
+            "default":"#000000"
+          },
+          {
+            "type": "image_picker",
+            "id": "pc_image",
+            "label": "PC Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "mb_image",
+            "label": "Mobile Image"
+          },
+		  {
+            "type": "html",
+            "id": "title",
+            "label": "Title",
+			"default": "Master Their Mealtimes<br>Wherever You Are"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_separator",
+            "label": "Show Separator?",
+            "default": true
+          },
+		  {
+            "type": "html",
+            "id": "desc",
+            "label": "Description",
+			"default": "<p>Plan meal portions, diets, and feeding times from anywhere, right from your phone with the easy-to-use Petlibro Lite app.</p>"
+          },
+          {
+            "type": "select",
+            "id": "layout",
+            "label": "Layout",
+            "default": "left",
+            "options": [
+              {
+                "value": "left",
+                "label": "Image on left"
+              },
+              {
+                "value": "right",
+                "label": "Image on right"
+              }
+            ]
+          }
+		]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Left Right Image Text"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

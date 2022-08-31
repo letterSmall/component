@@ -1,0 +1,114 @@
+{% if section.blocks.size > 0 %}
+<style>
+  .page-text-columns-{{ section.id }} .title-container,
+  .page-text-columns-{{ section.id }} .item-title,
+  .page-text-columns-{{ section.id }} .item-desc {
+    color: {{ section.settings.text_color }};
+  }
+  {% for block in section.blocks %}
+  .page-text-columns-{{ section.id }} .column-item-{{ block.id }} .item-title {
+    background-color: {{ block.settings.title_bg_color }};
+  }
+  .page-text-columns-{{ section.id }} .column-item-{{ block.id }} .item-desc {
+    background-color: {{ block.settings.desc_bg_color }};
+  }
+  {% endfor %}
+</style>
+{% assign count = section.blocks.size %}
+{% case count %}
+{% when 1 %}
+{% assign item_width = 'one-whole' %}
+{% when 2 %}
+{% assign item_width = 'one-half' %}
+{% when 3 %}
+{% assign item_width = 'one-third' %}
+{% endcase %}
+
+<div class="page-text-columns page-text-columns-{{ section.id }}">
+  <div class="page-text-columns-wrapper">
+    {% if section.settings.title != blank %}
+    <h2 class="title-container pro-titles">
+      {{ section.settings.title }}
+    </h2>
+    {% endif %}
+    {% if section.blocks.size > 0 %}
+    <div class="columns-container">
+      {% for block in section.blocks %}
+      <div class="column-item column-item-{{ block.id }} {{ item_width }}">
+        {% if block.settings.title != blank %}
+        <h3 class="item-title">{{ block.settings.title }}</h3>
+        {% endif %}
+        {% if block.settings.desc != blank %}
+        <div class="item-desc">{{ block.settings.desc }}</div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Page Text Columns",
+    "settings": [
+   	  {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+		"default": "#000000"
+      },
+	  {
+        "type": "html",
+        "id": "title",
+        "label": "Title",
+		"default": "Velotric Affliate Program"
+      }
+	],
+	"max_blocks": 3,
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text Column",
+        "settings": [
+          {
+            "type": "html",
+            "id": "title",
+            "label": "Title",
+			"default": "Qualifying Afflicate Sites"
+          },
+          {
+            "type": "html",
+            "id": "desc",
+            "label": "Description",
+            "default": "<ul><li>Publishers</li><li>Outdoor & Camping Sites</li><li>Camping, RV, Hiking & Outdoor Forums</li><li>Product Review Sites</li><li>Social Media Sites</li><li>And more, contact us if you aren't sure if you qualify</li></ul>"
+          },
+          {
+            "type": "color",
+            "id": "title_bg_color",
+            "label": "Title Background Color",
+            "default": "#FFBC00"
+          },
+          {
+            "type": "color",
+            "id": "desc_bg_color",
+            "label": "Description Color",
+            "default": "#FAFAFA"
+          }
+		]
+      }
+    ],
+	"presets": [
+      {
+        "name": "Page Text Columns"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

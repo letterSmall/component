@@ -1,0 +1,79 @@
+{% if section.settings.show_section %}
+  <style>
+    .affliate-logo-{{ section.id }} {
+      background-color: {{ section.settings.bg_color }};
+    }
+  </style>
+<div class="affliate-logo affliate-logo-{{ section.id }}">
+    {% if section.settings.pc_image != blank %}
+    <div class="image-container">
+      <img class="lazyload js pad-down--hide"
+           src="{{ section.settings.pc_image | img_url: '1x' }}"
+           srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+           sizes="(max-width: 960px) 960px, 1500px" 
+           alt="PC Affliate Logo Image"
+           width="{{ section.settings.pc_image.width }}" 
+           height="{{ section.settings.pc_image.height }}"/>
+      {% if section.settings.mb_image != blank %}
+      <img class="lazyload js pad-up--hide"
+           src="{{ section.settings.mb_image | img_url: '1x' }}"
+           srcset="{{ section.settings.mb_image | img_url: '1500x' }}, {{ section.settings.mb_image | img_url: '960x' }}"
+           sizes="(max-width: 960px) 960px, 1500px" 
+           alt="Mobile Affliate Logo Image"
+           width="{{ section.settings.mb_image.width }}" 
+           height="{{ section.settings.mb_image.height }}"/>
+      {% else %}
+      <img class="lazyload js pad-up--hide"
+           src="{{ section.settings.pc_image | img_url: '1x' }}"
+           srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+           sizes="(max-width: 960px) 960px, 1500px" 
+           alt="Mobile Affliate Logo Image"
+           width="{{ section.settings.pc_image.width }}" 
+           height="{{ section.settings.pc_image.height }}"/>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Affliate Logo",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#f5fafc"
+      },
+      {
+        "type": "image_picker",
+        "id": "pc_image",
+        "label": "PC Image",
+        "info": "Image Size: 1089*119px"
+      },
+      {
+        "type": "image_picker",
+        "id": "mb_image",
+        "label": "Mobile Image",
+        "info": "Image Size: 934*165px"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Affliate Logo"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

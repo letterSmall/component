@@ -1,0 +1,294 @@
+<div id="section-{{ section.id }}" class="Section" data-section-id="{{ section.id }}" data-section-type="article-list">
+  {%- if blog.articles_count == 0 -%}
+  <div class="EmptyState">
+    <div class="Container">
+      <h1 class="EmptyState__Title Heading u-h5">No Articles found</h1>
+    </div>
+  </div>
+  {%- else -%}
+  <div class="Blog">
+    {%- paginate blog.articles by 12 -%}
+
+        <div class="page-width">
+          <header class="section-header">
+            <h1 class="section-header__title blog-title">
+              {{- blog.title -}}
+            </h1>
+          </header>
+
+          <ol class="press-list">
+			{%- for article in blog.articles -%}
+            {%- assign has_author = false -%}
+            {%- assign has_source = false -%}
+            {%- for tag in article.tags -%}
+                {%- if tag contains '__author:' -%}
+                        {%- assign has_author = true -%}
+                        {%- assign author_name = tag | split: '__author:' | last -%}
+                {%- endif -%}
+                {%- if tag contains '__source:' -%}
+                        {%- assign has_source = true -%}
+                        {%- assign source = tag | split: '__source:' | last -%}
+                {%- endif -%}
+            {%- endfor -%}
+            <li class="press-list-item press-coverage-item">
+              <span class="item-date">{{ article.published_at | time_tag: format: 'month_day_year' }}</span>
+
+              <a class="is-borderless item-meta" href="{{ article.url }}">
+                {% if has_author %}
+                <span class="meta-author"><p>{{ author_name }}</p></span>
+                {% else %}
+                <span class="meta-author"><p>{{ shop.name }}</p></span>
+                {% endif %}
+                <p class="meta-title">{{ article.title }}</p>
+              </a>
+              <div class="item-actions">
+                {% if has_source %}
+                <a class="action-original" href="{{source}}" target="_blank" rel="noopener" >
+                  View Original Article
+                </a>
+                {% endif %}
+                <a class="button is-borderless item-action action-more" href="{{ article.url }}">Read More</a>
+              </div>
+            </li>            
+			{%- endfor -%}
+          </ol>
+        </div>
+
+
+      {%- if paginate.pages > 1 -%}
+          {%- render 'pagination', paginate: paginate -%}
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+  {%- endif -%}
+</div>
+
+<style>
+.press-list {
+    margin: 0;
+    padding: 0;
+}
+.press-list .press-list-item {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    width: 100%;
+    padding: 40px 0;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.press-list .press-list-item:first-of-type {
+    padding-top: 0;
+}
+.press-list .item-date {
+    font-weight: 400;
+    letter-spacing: normal;
+    text-transform: none;
+    line-height: 1.7em;
+    letter-spacing: .04ch;
+    font-size: 15px;
+    color: #999;
+    line-height: 1em;
+}
+.press-list .item-date {
+    width: 13.97849462%;
+}
+
+.press-list .press-list-item {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.press-list .press-coverage-item .item-date {
+    -ms-flex-item-align: start;
+    align-self: flex-start;
+}
+a.is-borderless {
+    border: 0;
+}
+.press-list .item-meta {
+    width: 56.98924731%;
+}
+.press-list .meta-author {
+    font-weight: 400;
+    letter-spacing: normal;
+    text-transform: none;
+    line-height: 1.7em;
+    letter-spacing: .04ch;
+    font-size: 16px;
+}
+.press-list .meta-author p {
+    font-weight: 600;
+    line-height: 1.1em;
+    font-size: 24px;
+    color: #2a4d63;
+    margin-bottom: 10px;
+}
+.press-list .press-coverage-item .meta-title {
+    font-weight: 400;
+    letter-spacing: normal;
+    text-transform: none;
+    line-height: 1.7em;
+    font-size: 14px;
+    margin-bottom: 0;
+    letter-spacing: .025ch;
+    font-size: 16px;
+}
+.press-list .item-actions {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    width: 100%;
+}
+.press-list .item-actions {
+    text-align: right;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 22.58064516%;
+}
+.press-list .action-original {
+cursor: pointer;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .091em;
+    line-height: 1em;
+    border-style: solid;
+    border-width: 1.1px;
+    border-radius: 0;
+    padding: 1.8em 2.8em;
+    text-align: center;
+    text-rendering: optimizeLegibility;
+    text-transform: uppercase;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -webkit-transition: opacity 300ms cubic-bezier(.694,0,.335,1),background-color 300ms cubic-bezier(.694,0,.335,1),color 300ms cubic-bezier(.694,0,.335,1);
+    -o-transition: opacity 300ms cubic-bezier(.694,0,.335,1),background-color 300ms cubic-bezier(.694,0,.335,1),color 300ms cubic-bezier(.694,0,.335,1);
+    transition: opacity 300ms cubic-bezier(.694,0,.335,1),background-color 300ms cubic-bezier(.694,0,.335,1),color 300ms cubic-bezier(.694,0,.335,1);
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
+    opacity: .5;
+    text-align: right;
+    padding: 0;
+    margin: 0;
+    margin-right: 40px;
+    -webkit-transition: opacity 300ms cubic-bezier(.694,0,.335,1);
+    -o-transition: opacity 300ms cubic-bezier(.694,0,.335,1);
+    transition: opacity 300ms cubic-bezier(.694,0,.335,1);
+        color: #000;
+    background-color: transparent;
+    border-color: transparent;
+        margin-right: 0;
+    margin-bottom: 20px;
+}
+.press-list .item-action {
+cursor: pointer;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .091em;
+    line-height: 1em;
+    border-style: solid;
+    border-width: 1.1px;
+    border-radius: 0;
+    padding: 1.8em 2.8em;
+    text-align: center;
+    text-rendering: optimizeLegibility;
+    text-transform: uppercase;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -webkit-transition: opacity 300ms cubic-bezier(.694,0,.335,1),background-color 300ms cubic-bezier(.694,0,.335,1),color 300ms cubic-bezier(.694,0,.335,1);
+    -o-transition: opacity 300ms cubic-bezier(.694,0,.335,1),background-color 300ms cubic-bezier(.694,0,.335,1),color 300ms cubic-bezier(.694,0,.335,1);
+    transition: opacity 300ms cubic-bezier(.694,0,.335,1),background-color 300ms cubic-bezier(.694,0,.335,1),color 300ms cubic-bezier(.694,0,.335,1);
+    color: #fff;
+    background-color: #000;
+    border-color: #000;
+    opacity: .5;
+    text-align: right;
+    padding: 0;
+    margin: 0;
+    margin-right: 40px;
+    -webkit-transition: opacity 300ms cubic-bezier(.694,0,.335,1);
+    -o-transition: opacity 300ms cubic-bezier(.694,0,.335,1);
+    transition: opacity 300ms cubic-bezier(.694,0,.335,1);
+        color: #000;
+    background-color: transparent;
+    border-color: transparent;
+    
+}
+.press-list .item-action:last-of-type {
+    margin: 0;
+}
+
+@media only screen and (max-width: 769px) {
+.press-list .item-date, .press-list .item-meta,.press-list .item-actions {
+    width: 100%;
+}
+
+.press-list .press-list-item {
+    display: block;
+}
+
+.press-list .item-actions {
+    display: block;
+    text-align: left;
+}
+
+.press-list .action-original {
+    margin: 0;
+    margin-right: 20px;
+}
+
+.press-list .item-meta {
+    margin-bottom: 5px;
+    display: block;
+    margin-top: 5px;
+}
+
+.press-list .meta-author {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.press-list .meta-author p {margin: 0;}
+
+.press-list .press-list-item {
+    padding: 20px 0;
+}
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "Blog page",
+  "settings": []
+}
+{% endschema %}

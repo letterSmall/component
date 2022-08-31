@@ -1,0 +1,63 @@
+{% if section.settings.title != blank or section.settings.richtext != blank %}
+<style>
+  .page-richtext-{{ section.id }} {
+    color: {% if section.settings.text_color != blank %}{{ section.settings.text_color }}{% else %}#000000{% endif %};
+  }
+</style>
+
+<div class="page-richtext page-richtext-{{ section.id }}">
+  <div class="page-richtext-wrapper">
+    {% if section.settings.title != blank %}
+    <div class="title-container">
+      <h2 class="title-box pro-titles">{{ section.settings.title }}</h2>
+    </div>
+    {% endif %}
+    {% if section.settings.desc != blank %}
+    <div class="desc-container">
+      {{ section.settings.desc }}
+    </div>
+    {% else %}
+    <div class="desc-container">
+      {{ page.content }}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Page Richtext",
+    "settings": [
+   	  {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+		"default": "#000000"
+      },
+	  {
+        "type": "html",
+        "id": "title",
+        "label": "Title",
+		"default": "Referral Program Terms"
+      },
+      {
+        "type": "html",
+        "id": "desc",
+        "label": "Richtext",
+		"info": "The overall font size of the content is consistent. If the value is empty, this parameter is used page content by default."
+      }
+	],
+	"presets": [
+      {
+        "name": "Page Richtext"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

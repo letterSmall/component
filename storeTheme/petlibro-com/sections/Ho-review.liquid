@@ -1,0 +1,162 @@
+<div class="Horeview-container">
+  <div class="contianer-ho">
+   {% if section.settings.title != blank %}
+    <div class="Horeview--title">{{-section.settings.title-}}</div>
+   {% endif %}
+   <div class="Horeview-box">
+     <div class="swiper-container Horeview-box-ct">
+    <div class="swiper-pagination swiper-pagination-reviews"></div>
+    <div class="swiper-button-prev swiper-button-prev-reviews"><img class="small-hide" alt src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/a4fd3f402903596b6b470bbda44e7c64.png?v=1641373553"><img class="medium--up-hide" alt="" src="{{ "arrow-left.svg" | asset_url }}"></div>
+    <div class="swiper-button-next swiper-button-next-reviews"><img class="small-hide" alt src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_d7d87e0c-8f1d-47e1-abec-b3381b7701aa.png?v=1641373570"><img class="medium--up-hide" alt="" src="{{ "arrow-right.svg" | asset_url }}"></div>
+  <div class="swiper-wrapper">
+  {% for block in section.blocks %}
+    <div class="swiper-slide">
+   <div class="Horeview-item">
+   <div class="Horeview-item_img">
+     {% if block.settings.url %}
+     <a href="{{ block.settings.url }}"> 
+     {% endif %}
+     {% if block.settings.image %}
+     <img class="Horeview-itemimg"  src="{{ block.settings.image | img_url:'master' }}" alt="{{ block.settings.title }}" />
+     {% endif %}
+     {% if block.settings.url %}
+     </a>
+     {% endif %}
+  </div>
+    <div class="Horeview-item_text">
+       {% if block.settings.review_star == 0.5 %}
+       <div class="Horeview-item_text_reviewstar"><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_4d01d579-a273-4dbb-b543-d1f2bca3b711.png?v=1641371740" alt/></div>
+       {% elsif block.settings.review_star == 1 %}
+        <div class="Horeview-item_text_reviewstar"><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/></div>
+       {% elsif block.settings.review_star == 1.5 %}
+       <div class="Horeview-item_text_reviewstar">
+        <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_4d01d579-a273-4dbb-b543-d1f2bca3b711.png?v=1641371740" alt/>
+       </div>
+       {% elsif block.settings.review_star == 2 %}
+       <div class="Horeview-item_text_reviewstar">
+        <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/>
+       </div>
+       {% elsif block.settings.review_star == 2.5 %}
+       <div class="Horeview-item_text_reviewstar">
+        <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_4d01d579-a273-4dbb-b543-d1f2bca3b711.png?v=1641371740" alt/>
+       </div>
+       {% elsif block.settings.review_star == 3 %}
+       <div class="Horeview-item_text_reviewstar">
+        <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/>
+       </div>
+       {% elsif block.settings.review_star == 3.5 %}
+       <div class="Horeview-item_text_reviewstar">
+        <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/> <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/> <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_4d01d579-a273-4dbb-b543-d1f2bca3b711.png?v=1641371740" alt/>
+       </div>
+       {% elsif block.settings.review_star == 4 %}
+       <div class="Horeview-item_text_reviewstar">
+        <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/>
+       </div>
+       {% elsif block.settings.review_star == 4.5 %}
+       <div class="Horeview-item_text_reviewstar">
+        <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_4d01d579-a273-4dbb-b543-d1f2bca3b711.png?v=1641371740" alt/>
+       </div>
+       {% else %}
+       <div class="Horeview-item_text_reviewstar">
+        <img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/><img src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_2.png?v=1641371729" alt/>
+       </div>
+       {% endif %}
+       
+       {% if block.settings.content != blank %}
+       <div class="Horeview-item_text-content">
+     {% if block.settings.url %}
+     <a href="{{ block.settings.url }}"> 
+     {% endif %}
+     {{ block.settings.content }}   
+     {% if block.settings.url %}
+     </a>
+     {% endif %}
+      </div>
+     {% endif %}
+       {% if block.settings.author != blank %}
+       <div class="Horeview-item_text-author">{{ block.settings.author }}</div>
+     {% endif %}
+     </div>
+     
+   </div>
+     </div>
+  {% endfor %}
+    </div>
+     </div>
+  </div>
+  </div>
+  
+</div>
+<script>        
+  var swiper_reviews = new Swiper ('.Horeview-box-ct', {
+    
+    pagination: {
+      el: '.swiper-pagination-reviews',
+      clickable:true,
+    },
+    loop:true,
+    // 如果需要前进后退按钮
+    navigation: {
+      nextEl: '.swiper-button-next-reviews',
+      prevEl: '.swiper-button-prev-reviews',
+    },
+    
+  })        
+  </script>
+
+
+
+
+{% schema %}
+  {
+    "name": "Index Review",
+"class":"pa_tops",
+"settings": [
+     {
+        "type": "text",
+        "id": "title",
+        "label": "title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+       {
+        "type": "image_picker",
+        "id": "image",
+        "label": "image"
+      },{
+  "type": "range",
+  "id": "review_star",
+  "min": 0.5,
+  "max": 5,
+  "step": 0.5,
+  "label": "review_star",
+  "default": 5
+},{
+        "type": "html",
+        "id": "content",
+        "label": "content"
+      },{
+        "type": "text",
+        "id": "author",
+        "label": "author"
+      },{
+        "type": "url",
+        "id": "url",
+        "label": "url"
+      }
+          
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Review",
+        "category": "HO-layout"
+      }
+    ]
+  }
+{% endschema %}

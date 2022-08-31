@@ -1,0 +1,115 @@
+<style>
+  .download-page-filterbar-{{ section.id }} {
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+  @media only screen and (max-width: 790px) {
+    .download-page-filterbar-{{ section.id }} {
+      margin-top: {{ section.settings.mb_margin_top }}px;
+      margin-bottom: {{ section.settings.mb_margin_bottom }}px;
+    }
+  }
+</style>
+
+{% if section.settings.title != blank or section.blocks.size > 0 %}
+<div class="page-filterbar page-filterbar-{{ section.id }} download-page-filterbar download-page-filterbar-{{ section.id }} container">
+  {% if section.settings.title != blank %}
+  <div class="filterbar-title">{{ section.settings.title }}</div>
+  {% endif %}
+  {% if section.blocks.size > 0 %}
+  <div class="filterbar-container">
+    <h2 class="filterbar-item active" data-filterid="all">All</h2>
+    {% for block in section.blocks %}
+    {% if block.settings.title != blank %}
+    <h2 class="filterbar-item" data-filterid="{% if block.settings.filter_id != blank %}{{ block.settings.filter_id }}{% endif %}">{{ block.settings.title }}</h2>
+    {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Download Page Filterbar",
+    "settings": [
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin Top",
+        "default": 60
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin Bottom",
+        "default": 30
+      },
+      {
+        "type": "range",
+        "id": "mb_margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile Margin Top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "mb_margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile Margin Bottom",
+        "default": 20
+      }
+	],
+	"blocks": [
+      {
+        "type": "text",
+        "name": "Filter Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Filter Item Title",
+			"default": "Pet Stories"
+          },
+          {
+            "type": "text",
+            "id": "filter_id",
+            "label": "Filter ID",
+			"default": "pet-stories",
+			"info": "Use all lowercase ids and hyphens(-) between words. Such as: pet-stories"
+          }
+		]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Download Page Filterbar"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

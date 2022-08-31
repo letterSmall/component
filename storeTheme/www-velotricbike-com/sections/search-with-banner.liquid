@@ -1,0 +1,95 @@
+<style>
+ .section-{{section.id}} .h1{
+color:{{ section.settings.title_color }};
+}
+</style>
+<div class="search-width-banner section-{{section.id}}" >  
+    <div class="banner__text-wrap">
+   
+            <div class="banner__text-align ">
+              <div class="banner__text-content" >
+                     <div class="page-width text-center">
+                {%- if section.settings.title != blank -%}
+          <div class="h1 appear-delay{% cycle '','-1','-2','-3','-4' %}">{{ section.settings.title | escape }}</div>
+        {%- endif -%}
+                {% if section.settings.display_search %}
+                {% include 'search-bar'%}
+                {% endif %}
+                </div>
+              </div>
+       
+          </div>
+  </div>
+  
+  <div class="medium-down--hide" data-aos>
+  <div class="image-wrap" style="height: 0; padding-bottom: {{ 100 | divided_by: section.settings.image.aspect_ratio }}%;">
+                  {%- assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  <img class="feature-row__image lazyload"
+                    data-src="{{ img_url }}"
+                    data-widths="[180, 360, 540, 750, 900, 1080]"
+                    data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ section.settings.image.alt }}">
+                </div>
+  </div>
+    <div class="medium-up--hide" data-aos>
+   <div class="image-wrap" style="height: 0; padding-bottom: {{ 100 | divided_by: section.settings.image2.aspect_ratio }}%;">
+                  {%- assign img_url = section.settings.image2 | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  <img class="feature-row__image lazyload"
+                    data-src="{{ img_url }}"
+                    data-widths="[180, 360, 540, 750, 900, 1080]"
+                    data-aspectratio="{{ section.settings.image2.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ section.settings.image2.alt }}">
+                </div>
+        </div>
+</div>
+{% schema %}
+  {
+    "name": "Search width banner",
+    "settings": [
+{
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "how can we help?"
+      },
+{
+        "type": "color",
+        "id": "title_color",
+        "label": "Title Color",
+        "default": "#fff"
+      },
+	  {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image(pc)",
+	    "info":"Images size :1920*260px"
+      },
+      {
+        "type": "image_picker",
+        "id": "image2",
+        "label": "Image(mobile)",
+		"info":"Images size :375*400px"
+      },
+	{
+        "type": "checkbox",
+        "id": "display_search",
+        "label": "display_searchbar",
+		"default": true
+      }
+      ],
+      "presets": [
+            {
+              "name": "Search width banner"
+            }
+          ]
+        }
+{% endschema %}
+
+{% stylesheet %}
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

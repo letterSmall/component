@@ -1,0 +1,58 @@
+<div class="textoverimage-wrapper  imgwithtext-textcontainer" {% if section.settings.bgcolor %}style="background-color:{{section.settings.bgcolor}}"{% endif %}>
+  <div class="contianer-ho">
+        {% if section.settings.banner %}
+    <img class="small-hide" src="{{ section.settings.banner | img_url:'master'  }}" alt/>
+    <img class="medium--up-hide" src="{{ section.settings.banner_mobile | img_url:'master'  }}" alt/>
+    {% endif %}
+  <div class="textoverimage-textcontainer">
+    {% if section.settings.title != blank %}
+  <div class="textoverimage-title">{{  section.settings.title }}</div>
+    {% endif %}
+    {% if section.settings.url != blank %}
+  <a class="textoverimage-btn" href="{{ section.settings.url }}">{{  section.settings.urltext }}</a>
+    {% endif %}
+  </div>
+
+  </div>
+ </div>
+
+  
+{% schema %}
+  {
+   "name": "Index TextOverImage",
+"class":"pa_tops",
+   "settings": [
+      {
+        "type": "image_picker",
+        "id": "banner",
+        "label": "banner"
+      },{
+        "type": "image_picker",
+        "id": "banner_mobile",
+        "label": "banner(mobile)"
+      },{
+        "type": "color",
+        "id": "bgcolor",
+        "label": "Background Color"
+      },{
+        "type": "html",
+        "id": "title",
+        "label": "Title"
+      },{
+        "type": "url",
+        "id": "url",
+        "label": "url"
+      },{
+        "type": "text",
+        "id": "urltext",
+        "label": "button text"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index TextOverImage",
+        "category": "HO-layout"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,66 @@
+<ul class="list--inline pagination">
+    {% unless paginate.previous.is_link %}
+        <li aria-hidden="true">
+            <button class="btn btn--narrow btn--prev" disabled>
+                <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.58779 4.89105L3.66093 4.96192L3.56013 4.97645L3.05321 5.04949L3.02877 5.05301L3.01111 5.03574L0.96503 3.03359L0.92847 2.99781L0.965069 2.96208L3.01115 0.964226L3.0288 0.946993L3.05321 0.950511L3.56013 1.02355L3.66107 1.0381L3.58775 1.10899L1.6341 2.99789L3.58779 4.89105ZM5.03488 4.89113L5.1074 4.96173L5.00726 4.97643L4.50956 5.04947L4.48505 5.05307L4.46733 5.03574L2.42125 3.03359L2.38469 2.99781L2.42129 2.96208L4.46737 0.964226L4.48508 0.946937L4.50956 0.95053L5.00726 1.02357L5.10754 1.03829L5.03484 1.1089L3.09015 2.99789L5.03488 4.89113Z" fill="black" stroke="black" stroke-width="0.1"/>
+</svg>
+
+              {% comment %}
+                <span class="icon_text">{{ 'general.pagination.previous' | t }}</span>
+               {% endcomment %}
+            </button>
+        </li>
+    {% else %}
+        <li>
+            <a href="{{ paginate.previous.url }}" class="btn btn--narrow btn--prev" aria-label="link">
+               <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.58779 4.89105L3.66093 4.96192L3.56013 4.97645L3.05321 5.04949L3.02877 5.05301L3.01111 5.03574L0.96503 3.03359L0.92847 2.99781L0.965069 2.96208L3.01115 0.964226L3.0288 0.946993L3.05321 0.950511L3.56013 1.02355L3.66107 1.0381L3.58775 1.10899L1.6341 2.99789L3.58779 4.89105ZM5.03488 4.89113L5.1074 4.96173L5.00726 4.97643L4.50956 5.04947L4.48505 5.05307L4.46733 5.03574L2.42125 3.03359L2.38469 2.99781L2.42129 2.96208L4.46737 0.964226L4.48508 0.946937L4.50956 0.95053L5.00726 1.02357L5.10754 1.03829L5.03484 1.1089L3.09015 2.99789L5.03488 4.89113Z" fill="black" stroke="black" stroke-width="0.1"/>
+</svg>
+
+              {% comment %}
+                <span class="icon_text">{{ 'general.pagination.previous' | t }}</span>
+              {% endcomment %}
+            </a>
+        </li>
+    {% endunless %}
+    {% for part in paginate.parts %}
+        {% if part.is_link %}
+            <li>
+                <a href="{{ part.url }}" class="pagination-link" aria-label="link">{{ part.title }}</a>
+            </li>
+        {% else %}
+            {% if part.title == paginate.current_page %}
+                <li><span class="pagination-link pagination--current">{{ part.title }}</span></li>
+            {% else %}
+                <li><span class="pagination-link">{{ part.title }}</span></li>
+            {% endif %}
+        {% endif %}
+  {% endfor %}
+
+  {% unless paginate.next.is_link %}
+  <li aria-hidden="true">
+    <button class="btn btn--narrow btn--next" disabled>
+      {% comment %}
+      <span class="icon_text">{{ 'general.pagination.next' | t }}</span>
+      {% render 'icon-chevron-right' %}
+      {% endcomment %}
+      <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.41221 4.89105L2.33907 4.96192L2.43987 4.97645L2.94679 5.04949L2.97123 5.05301L2.98889 5.03574L5.03497 3.03359L5.07153 2.99781L5.03493 2.96208L2.98885 0.964226L2.9712 0.946993L2.94679 0.950511L2.43987 1.02355L2.33893 1.0381L2.41225 1.10899L4.3659 2.99789L2.41221 4.89105ZM0.965122 4.89113L0.892602 4.96173L0.99274 4.97643L1.49044 5.04947L1.51495 5.05307L1.53267 5.03574L3.57875 3.03359L3.61531 2.99781L3.57871 2.96208L1.53263 0.964226L1.51492 0.946937L1.49044 0.95053L0.99274 1.02357L0.892461 1.03829L0.965162 1.1089L2.90985 2.99789L0.965122 4.89113Z" fill="black" stroke="black" stroke-width="0.1"/>
+      </svg>
+    </button>
+  </li>
+  {% else %}
+  <li>
+    <a href="{{ paginate.next.url }}" class="btn btn--narrow btn--next" aria-label="link">
+      {% comment %}
+      <span class="icon_text">{{ 'general.pagination.next' | t }}</span>
+      {% render 'icon-chevron-right' %}
+      {% endcomment %}
+      <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2.41221 4.89105L2.33907 4.96192L2.43987 4.97645L2.94679 5.04949L2.97123 5.05301L2.98889 5.03574L5.03497 3.03359L5.07153 2.99781L5.03493 2.96208L2.98885 0.964226L2.9712 0.946993L2.94679 0.950511L2.43987 1.02355L2.33893 1.0381L2.41225 1.10899L4.3659 2.99789L2.41221 4.89105ZM0.965122 4.89113L0.892602 4.96173L0.99274 4.97643L1.49044 5.04947L1.51495 5.05307L1.53267 5.03574L3.57875 3.03359L3.61531 2.99781L3.57871 2.96208L1.53263 0.964226L1.51492 0.946937L1.49044 0.95053L0.99274 1.02357L0.892461 1.03829L0.965162 1.1089L2.90985 2.99789L0.965122 4.89113Z" fill="black" stroke="black" stroke-width="0.1"/>
+      </svg>
+    </a>
+  </li>
+    {% endunless %}
+</ul>

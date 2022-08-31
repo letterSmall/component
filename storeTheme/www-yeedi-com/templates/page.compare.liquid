@@ -1,0 +1,265 @@
+{% section 'page-compare-template' %}
+<style>
+@font-face {
+    font-family: 'Acre';
+  	src: url('{{ "acre.eot" | asset_url }}');
+    src: url('{{ "acre.eot" | asset_url }}') format('embedded-opentype'),
+         url('{{ "acre.woff2" | asset_url }}') format('woff2'),
+         url('{{ "acre.woff" | asset_url }}') format('woff'),
+         url('{{ "acre.ttf" | asset_url }}') format('truetype'),
+         url('{{ "acre.svg#JonathanBallAcreMedium" | asset_url }}') format('svg');
+}
+
+:root {
+    --label-color: #5ac3df;
+    --h-color: #366178;
+    --accent-color: #f1806d;
+    --font-family: Acre;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+#compareVac .header-section {
+    text-align: center;
+}
+
+.ctable-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ctable-wrapper .ctable {
+    width: 20%;
+    text-align: center;
+    padding: 0 8px;
+}
+
+.compare-table .meta {
+    background: #5ac3df;
+    display: inline-block;
+    padding: 5px 20px;
+    margin-bottom: 18px;
+    line-height: 1;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: var(--font-family);
+    border-radius: 50px;
+}
+
+.ctable-wrapper .ctable + .ctable {
+    border-left: 1px solid #ccc;
+}
+
+.compare-table .h4 {
+    font-family: var(--font-family);
+    line-height: 1;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    height: 36px;
+}
+a.btn.slim {
+  	font-family: var(--font-family);
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 12px;
+}
+.compare-table img {
+    height: 200px;
+}
+
+.compare-table .price {
+    font-family: var(--font-family);
+    line-height: 1;
+    font-size: 18px;
+}
+
+.ctable-wrapper .product-single__form {
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
+
+.ctable-wrapper .product-single__form .add-to-cart {
+    padding: 8px 20px;
+    font-family: var(--font-family);
+    line-height: 1;
+    font-size: 16px;
+}
+#compareVac .header-section h3 {
+    font-family: var(--font-family);
+    margin: 20px 0px 40px;
+}
+.compare-table .body {
+    text-align: left;
+}
+.compare-table .price {
+    font-weight: bold;
+}
+.compare-table .body p {
+    font-family: var(--font-family);
+    line-height: 1;
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+.compare-table .body p strong {
+    color: #5ac3df;
+    font-weight: bold;
+    font-size: 18px;
+    width: 100%;
+    display: block;
+    position: relative;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    margin-top: 20px;
+}
+
+.compare-table .body p strong:after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #cbd5db;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+}
+
+.compare-table .body p em {
+    font-style: normal;
+    padding-left: 10px;
+    position: relative;
+}
+.compare-table .body p em:before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: #343334;
+    position: absolute;
+    top: 6px;
+    border-radius: 100%;
+    left: 0;
+}
+.ctable-wrapper {
+    flex-wrap: nowrap;
+}
+
+.ctable-wrapper .ctable {
+    min-width: 200px;
+    flex: 1 1 200px;
+}
+.mobile_only {
+    display: none;
+}
+@media only screen and (max-width: 768px) {
+.mobile_only {
+    display: block;
+}
+.compare-table .ctable {
+    width: 50%;
+    background: none;
+    padding: 0;
+    min-width: 50%;
+    flex: 1 1 50%;
+}
+
+.ctable-wrapper {
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.compare-table .ctable {
+    display: none;
+}
+
+#SelectorWrapper_1, #SelectorWrapper_2 {
+    display: block;
+    padding: 0 10px;
+}
+
+#compareVac .page-width {
+    padding: 0 5px;
+}
+
+.compare-table .meta {
+    display: none;
+}
+
+.compare-table img {
+    height: 130px;
+}
+
+.compare-table .h4 {
+    font-size: 14px;
+}
+
+.compare-table .price {
+    font-size: 16px;
+}
+
+.ctable-wrapper .product-single__form .add-to-cart {
+    font-size: 13px;
+}
+
+.compare-table .body p strong {
+    font-size: 13px;
+}
+
+.compare-table .body p {
+    font-size: 11px;
+    margin-bottom: 8px;
+}
+
+.ctable_select.mobile_only {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ctable_select.mobile_only select {
+    width: 50%;
+    padding-left: 15px;
+}
+.ctable_select select {
+    border-bottom: 1px solid #c7c7c7;
+    border-top: 1px solid #c7c7c7;
+}
+
+#compareVac .header-section h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+}
+#SelectorWrapper_1 .body p:nth-child(6) {
+    margin-bottom: 31px;
+}
+
+#SelectorWrapper_2 .body p:nth-child(6) {
+    margin-bottom: 44px;
+}
+
+#SelectorWrapper_1 .body p:nth-child(14) {
+    margin-bottom: 33px;
+}
+
+#SelectorWrapper_3 .body p:nth-child(14) {
+    margin-bottom: 32px;
+}
+
+#SelectorWrapper_5 .body p:nth-child(14) {
+    margin-bottom: 56px;
+}
+
+</style>
+
+<script>
+document.getElementById('CSelect1').addEventListener('change', function() {
+  document.getElementById('SelectorWrapper_1').innerHTML = document.getElementById('Selector_' + this.value).innerHTML;
+});
+document.getElementById('CSelect2').addEventListener('change', function() {
+  document.getElementById('SelectorWrapper_2').innerHTML = document.getElementById('Selector_' + this.value).innerHTML;
+});
+</script>

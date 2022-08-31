@@ -1,0 +1,167 @@
+<div class="spjoinyeedi-container">
+  {% if section.settings.title != blank  %}
+   <div class="spjoinyeedi_title">{{ section.settings.title }}</div>
+   {% endif %}
+
+   <div class="spjoinyeedi_topblock">
+    <div class="swiper-button-prev swiperspj_prev"><img class="" src="https://cdn.shopifycdn.net/s/files/1/0524/3643/5101/files/Rectangle_61.png?v=1648623162"></div>
+    <div class="swiper-button-next swiperspj_next"><img class="" src="https://cdn.shopifycdn.net/s/files/1/0524/3643/5101/files/Rectangle_62.png?v=1648623164"></div>
+   <div class="swiper-container swipertopblock">
+    <div class="swiper-wrapper">
+   {% for block in section.blocks %}
+    <div class="swiper-slide">
+   {% if block.settings.title != blank  %}
+   <div class="spjointopblock_title">{{ block.settings.title }}</div>
+   {% endif %}
+      {% if block.settings.content != blank  %}
+   <div class="spjointopblock_content">{{ block.settings.content }}</div>
+   {% endif %}
+      {% if block.settings.btn_text != blank  %}
+   <a class="spjointopblock_btn" href="{{ block.settings.btn_url }}">{{ block.settings.btn_text }}<img class="" src="https://cdn.shopifycdn.net/s/files/1/0524/3643/5101/files/Arrow_1_1.png?v=1648623160"></a>
+   {% endif %}
+   </div>
+   {% endfor %}
+      </div>
+    </div>
+  </div>
+  
+  <div class="joinsocial-wrapper">{%- render 'footer-logo-social' -%}  </div>
+  
+  <div class="spjoinyeedi_bottomblock">
+
+    <div class="spbottomblock-item swiper-container swiper-no-swiping">
+           <div class="swiper-pagination pa_spjbottomblock"></div>
+      <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+      <div class="swiper-slide">
+        {% if block.settings.image  %}
+        <div class="pa_spjbo-img"> <img class="lazyload"  src="{{ block.settings.image | img_url:'10x' }}" data-src="{{ block.settings.image | img_url:'master' }}" alt=" " /></div>
+        {% endif %}
+       </div>
+      {% endfor %}
+        </div>
+     </div>
+  </div>
+
+
+
+
+
+</div>
+
+
+
+<script>
+    $(function() {
+      
+          var swiperjoinbotblock = new Swiper('.spbottomblock-item', {
+
+      loop:true,
+      spaceBetween : 40,
+     slidesPerView : 2.7,
+       centeredSlides : true,
+       pagination: {
+      el: '.swiper-pagination',
+         clickable:true,
+    },
+      breakpoints: { 
+
+    768: {  
+      slidesPerView: 2.4,
+     spaceBetween: 30,
+
+    },
+        550: {  
+      slidesPerView: 1.8,
+     spaceBetween: 15,
+
+    }
+  },
+    });
+      
+    var swiperjointopblock = new Swiper('.swipertopblock', {
+    loop:true,
+      centeredSlides : true,
+      slidesPerView: 1,
+      navigation: {
+      nextEl: '.swiperspj_next',
+      prevEl: '.swiperspj_prev',   
+
+    },
+      thumbs: {
+        swiper: swiperjoinbotblock,
+      },
+//         on: {
+//     slideChange: function(){
+//       let index=this.activeIndex;
+//       console.log(index);
+//       swiperjoinbotblock.slideTo(index,1000);
+//     }
+//   },
+    });
+swiperjoinbotblock.slideTo(2,1000);
+
+    });
+</script>
+
+
+
+<!-- <style>
+#shopify-section-{{ section.id }}{
+ background: {{ section.settings.background_color }};
+  
+}
+  </style> -->
+
+{% schema %}
+  {
+    "name": "SpringSale JoinYeedi",
+"settings": [
+     {
+        "type": "color",
+        "id": "background_color",
+        "label": "background_color"
+      },{
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+       {
+        "type": "image_picker",
+        "id": "image",
+        "label": "image"
+      },{
+        "type": "text",
+        "id": "title",
+        "label": "title"
+      },{
+        "type": "html",
+        "id": "content",
+        "label": "content"
+      },{
+        "type": "text",
+        "id": "btn_text",
+        "label": "btn_text"
+      },{
+        "type": "url",
+        "id": "btn_url",
+        "label": "btn_url"
+      }
+          
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SpringSale JoinYeedi",
+        "category": "HO-layout"
+      }
+    ]
+  }
+{% endschema %}

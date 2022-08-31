@@ -1,0 +1,346 @@
+ <div class="Springonsale-container"> 
+{% if section.settings.title %}
+  <div class="Springonsale-title"><img src="https://cdn.shopifycdn.net/s/files/1/0524/3643/5101/files/Vector_1.png?v=1648628968" alt/><span>{{ section.settings.title }}</span></div> 
+  {% endif %}
+<div class="Springonsale-box medium-down--hide">
+
+     {% for block in section.blocks %}
+    <div class="Springonsale-wrapper {% if block.settings.position == 'right' %}Springonsale-right{% else %} pringonsale-left{% endif %}">
+  <div class="Springonsale-box-img">
+   {% if block.settings.more_url %}
+    <a href="{{ block.settings.more_url }}">
+   {% endif %}
+    {% if block.settings.image %}
+    <img src="{{ block.settings.image | img_url:'master' }}"/>
+   {% endif %}
+   {% if block.settings.more_url %}
+    </a>
+   {% endif %}
+    
+  </div>
+  
+  
+  <div class="Springonsale-box-text">
+    
+    {% if block.settings.image_tag %}
+    <img class="Springonsale-box-imgtag" src="{{ block.settings.image_tag | img_url:'master' }}"/>
+   {% endif %}
+    {% if block.settings.title != blank%}
+    <div class="Springonsale-box-title">{{block.settings.title}}</div>
+    {% endif %}
+            {% if block.settings.oldprice != blank%}
+    <div class="Springonsale-box-oldprice">{{block.settings.oldprice}}</div>
+    {% endif %}
+        {% if block.settings.price != blank%}
+    <div class="Springonsale-box-price">{{block.settings.price}}</div>
+    {% endif %}
+    
+
+    
+    {% if block.settings.content != blank%}
+    <div  class="Springonsale-box-content">{{block.settings.content}}</div>
+    {% endif %}
+    
+    <div  class="Springonsale-box-btnbox">
+      
+      
+      
+  {% if block.settings.buy_text != blank%}
+      
+  {% assign product = all_products[block.settings.product] %}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+   {%- capture form_id -%}AddToCartForm-{{ section_id }}-{{ product.id }}{%- endcapture -%}
+     <div class="Springonsale-box-buy satcb_quick_buy satcb_qb_bottom_right btn_ho"><div data-handle="/collections/all-vacuum/products/{{product.handle}}"><span class="satcb_glyphicon satcb_glyphicon-shopping-cart">Add&nbsp;to&nbsp;Cart</span></div></div> 
+
+       {% endif %}
+      
+       {% if block.settings.more_text != blank%}
+      <a class="Springonsale-box-more btn_ho02" href="{{product.url}}"><span>{{block.settings.more_text}}</span></a>
+       {% endif %}
+    </div>
+  </div>
+
+  </div>
+  
+    {% endfor %}
+
+  
+
+
+</div>
+   
+ <div class="Springonsale-box large-up--hide">
+   <div class="swiper-container Springonsalepro-box">
+      <div class="swiper-pagination swiper-pagination-salepro"></div>
+     <div class="swiper-wrapper">
+
+     {% for block in section.blocks %}
+   <div class="swiper-slide"> 
+    <div class="Springonsale-wrapper {% if block.settings.position == 'right' %}Springonsale-right{% else %} pringonsale-left{% endif %}">
+  <div class="Springonsale-box-img">
+   {% if block.settings.more_url %}
+    <a href="{{ block.settings.more_url }}">
+   {% endif %}
+    {% if block.settings.image %}
+    <img src="{{ block.settings.image | img_url:'master' }}"/>
+   {% endif %}
+   {% if block.settings.more_url %}
+    </a>
+   {% endif %}
+    
+  </div>
+  
+  
+  <div class="Springonsale-box-text">
+    
+    {% if block.settings.image_tag %}
+    <img class="Springonsale-box-imgtag" src="{{ block.settings.image_tag | img_url:'master' }}"/>
+   {% endif %}
+    {% if block.settings.title != blank%}
+    <div class="Springonsale-box-title">{{block.settings.title}}</div>
+    {% endif %}
+            {% if block.settings.oldprice != blank%}
+    <div class="Springonsale-box-oldprice">{{block.settings.oldprice}}</div>
+    {% endif %}
+        {% if block.settings.price != blank%}
+    <div class="Springonsale-box-price">{{block.settings.price}}</div>
+    {% endif %}
+    
+
+    
+    {% if block.settings.content != blank%}
+    <div  class="Springonsale-box-content">{{block.settings.content}}</div>
+    {% endif %}
+    
+    <div  class="Springonsale-box-btnbox">
+      
+      
+      
+  {% if block.settings.buy_text != blank%}
+      
+  {% assign product = all_products[block.settings.product] %}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+   {%- capture form_id -%}AddToCartForm-{{ section_id }}-{{ product.id }}{%- endcapture -%}
+      
+      
+{% form 'product', product, id: form_id, class: 'product-single__form' %}
+  {%- assign enable_dynamic_buttons = false -%}
+  {% if show_dynamic_checkout and template != 'product.preorder' %}
+    {%- assign enable_dynamic_buttons = true -%}
+  {% endif %}
+
+  {% if enable_dynamic_buttons %}
+    <div class="payment-buttons">
+  {% endif %}
+
+    {%- liquid
+      assign default_text = 'products.product.add_to_cart' | t
+      assign button_text = 'products.product.add_to_cart' | t
+      if template == 'product.preorder'
+        assign default_text = 'products.product.preorder' | t
+        assign button_text = 'products.product.preorder' | t
+      endif
+      unless current_variant.available
+        assign button_text = 'products.product.sold_out' | t
+      endunless
+    -%}
+
+    <button
+      {% if product.empty? %}type="button"{% else %}type="submit"{% endif %}
+      name="add"
+      data-add-to-cart
+      class="Springonsale-box-buy btn_ho add-to-cart{% if enable_dynamic_buttons and product.selling_plan_groups.size == 0 %} add-to-cart--secondary{% endif %}"
+      {% unless current_variant.available %} disabled="disabled"{% endunless %}>
+      <span data-add-to-cart-text data-default-text="{{ default_text }}">
+       Add to Cart
+      </span>
+    </button>
+
+    {% if enable_dynamic_buttons %}
+      {{ form | payment_button }}
+    {% endif %}
+
+  {% if enable_dynamic_buttons %}
+    </div>
+  {% endif %}
+
+  <div class="shopify-payment-terms product__policies">{{ form | payment_terms }}</div>
+
+  <select name="id" data-product-select class="product-single__variants no-js">
+    {%- for variant in product.variants -%}
+      {% if variant.available %}
+        <option {% if variant == product.selected_or_first_available_variant %}
+          selected="selected" {% endif %}
+          value="{{ variant.id }}">
+          {{ variant.title }} - {{ variant.price | money_with_currency }}
+        </option>
+      {% else %}
+        <option disabled="disabled">
+          {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+        </option>
+      {% endif %}
+    {%- endfor -%}
+  </select>
+
+  <textarea data-variant-json class="hide" aria-hidden="true" aria-label="Product JSON">
+    {{ product.variants | json }}
+  </textarea>
+  {% if product.options.size > 1 %}
+    <textarea data-current-variant-json class="hide" aria-hidden="true" aria-label="Variant JSON">
+      {{ current_variant | json }}
+    </textarea>
+  {% endif %}
+{% endform %}
+      
+       {% endif %}
+      
+       {% if block.settings.more_text != blank%}
+      <a class="Springonsale-box-more btn_ho02" href="{{product.url}}"><span>{{block.settings.more_text}}</span></a>
+       {% endif %}
+    </div>
+  </div>
+
+  </div>
+       </div>
+    {% endfor %}
+     </div>
+  </div>
+
+
+</div>  
+   
+</div>
+
+<script>
+  $(function() {
+    var spsalepro = new Swiper('.Springonsalepro-box', {
+      slidesPerView: 1,
+      spaceBetween: 0,
+      autoHeight: true,
+      pagination: {
+      el: '.swiper-pagination-salepro',
+        clickable:true,
+    },
+      breakpoints: { 
+
+    550: {  
+      slidesPerView: 1,
+    }
+  },
+      
+    });
+    
+   });
+</script>
+
+<script>
+  $(function(){
+
+      
+    
+    if($(window).width() < 551){
+      
+      $(".Springonsale-box-content").each(function(){
+        
+        if ($(this).find("li").length > 3){
+      $(this).find("li").eq(3).before($('<div class="next-allspan"><span class="">More<img src="https://cdn.shopifycdn.net/s/files/1/0524/3643/5101/files/Polygon_34.png?v=1649240855"/></span></div>'));
+      $(this).find(".next-allspan").nextAll().hide();
+    }
+
+      });
+             $(".next-allspan").click(function(){
+       $(this).hide();
+       $(this).nextAll().slideDown();
+      
+    });
+    
+    }
+
+    
+    
+
+    });
+
+</script> 
+{% schema %}
+
+  {
+    "name": "Spring On Sale",
+    "settings": [
+         {
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          }   
+      
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "product"
+          },{
+        "type": "select",
+        "id": "position",
+        "label": "Image Position",
+          "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "left"
+          },
+          {
+            "value": "right",
+            "label": "right"
+          }
+        ]
+      },{
+            "type": "image_picker",
+            "id": "image",
+            "label": "image(Recommended size：1050*675px)"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "text",
+            "id": "oldprice",
+            "label": "oldprice"
+          },{
+            "type": "text",
+            "id": "price",
+            "label": "price"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          },{
+            "type": "image_picker",
+            "id": "image_tag",
+            "label": "image_tag"
+          },{
+            "type": "text",
+            "id": "buy_text",
+            "label": "buy_text"
+          },{
+            "type": "text",
+            "id": "more_text",
+            "label": "more_text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Spring On Sale",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+

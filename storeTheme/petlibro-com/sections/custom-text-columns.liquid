@@ -1,0 +1,164 @@
+{% if section.settings.show_section != blank and section.blocks.size > 0 %}
+<style>
+    .custom-text-columns-{{ section.id }} .title-box {
+    color: {{ section.settings.title_color }};
+  }
+  .custom-text-columns-{{ section.id }} .desc-box {
+    color: {{ section.settings.desc_color }};
+  }
+  .custom-text-columns-{{ section.id }} .separator-box {
+    background-color: {{ section.settings.separator_color }};
+  }
+</style>
+
+<div class="custom-text-columns custom-text-columns-{{ section.id }} {% if section.settings.tab_id != blank %}{{ section.settings.tab_id }}{% endif %}">
+  <div class="text-columns-container page-width">
+    <div class="text-columns-wrapper">
+      {% for block in section.blocks %}
+      {% if block.settings.block_link != blank %}
+      <a href="{{ block.settings.block_link }}" class="column-item">
+        {% else %}
+        <div class="column-item">
+          {% endif %}
+
+          {% if block.settings.pc_image != blank %}
+          <div class="image-container">
+            <img class="lazyload js pad-down--hide"
+                 src="{{ block.settings.pc_image | img_url: '1x' }}"
+                 srcset="{{ block.settings.pc_image | img_url: '1500x' }}, {{ block.settings.pc_image | img_url: '960x' }}"
+                 sizes="(max-width: 960px) 960px, 1500px" 
+                 alt=""
+                 width="{{ block.settings.pc_image.width }}" 
+                 height="{{ block.settings.pc_image.height }}"/>
+            {% if section.settings.mb_image != blank %}
+            <img class="lazyload js pad-up--hide"
+                 src="{{ block.settings.mb_image | img_url: '1x' }}"
+                 srcset="{{ block.settings.mb_image | img_url: '1500x' }}, {{ block.settings.mb_image | img_url: '960x' }}"
+                 sizes="(max-width: 960px) 960px, 1500px" 
+                 alt=""
+                 width="{{ block.settings.mb_image.width }}" 
+                 height="{{ block.settings.mb_image.height }}"/>
+            {% else %}
+            <img class="lazyload js pad-up--hide"
+                 src="{{ block.settings.pc_image | img_url: '1x' }}"
+                 srcset="{{ block.settings.pc_image | img_url: '1500x' }}, {{ block.settings.pc_image | img_url: '960x' }}"
+                 sizes="(max-width: 960px) 960px, 1500px" 
+                 alt=""
+                 width="{{ block.settings.pc_image.width }}" 
+                 height="{{ block.settings.pc_image.height }}"/>
+            {% endif %}
+          </div>
+          {% endif %}
+          {% if block.settings.title != blank %}
+          <div class="content-container">
+            <h2 class="title-box">{{ block.settings.title }}</h2>
+            {% if block.settings.show_separator %}
+            <div class="separator-box"></div>
+            {% endif %}
+            {% if block.settings.desc != blank %}
+            <div class="desc-box">{{ block.settings.desc }}</div>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          {% if block.settings.block_link != blank %}
+          </a>
+        {% else %}
+        </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Custom Text Columns",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "tab_id",
+        "label": "Tab ID",
+		"default": "overview",
+		"info": "This must be filled in for the first module of the category for Tabs Bar"
+      },
+      {
+        "type": "color",
+        "id": "title_color",
+        "label": "Title Color",
+        "default":"#000000"
+      },
+      {
+        "type": "color",
+        "id": "separator_color",
+        "label": "Separator Color",
+        "default":"#000000"
+      },
+      {
+        "type": "color",
+        "id": "desc_color",
+        "label": "Description Color",
+        "default":"#000000"
+      }
+	],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text Columns",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "pc_image",
+            "label": "PC Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "mb_image",
+            "label": "Mobile Image"
+          },
+          {
+            "type": "html",
+            "id": "title",
+            "label": "Title",
+            "default": "Preserve Routine with <br>a Comforting Call"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_separator",
+            "label": "Show Separator?",
+            "default": true
+          },
+          {
+            "type": "html",
+            "id": "desc",
+            "label": "Description",
+            "default": "<p>Pets love routine. That’s why that call to eat is crucial. The two-way voice system helps you reassure your pets with your voice and hear their happy woofs and meows.</p>"
+          },
+          {
+            "type": "url",
+            "id": "block_link",
+            "label": "Block Link"
+          }
+		]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Custom Text Columns"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

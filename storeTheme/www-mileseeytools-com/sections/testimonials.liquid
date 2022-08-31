@@ -1,0 +1,256 @@
+{%- style -%}
+  .testimonials-{{ section.id }} { 
+    background:{{ section.settings.color_bg}};
+  }
+  .testimonials-{{ section.id }} .section-header h2,.testimonials-{{ section.id }} .rte-setting{ color: {{ section.settings.color_text }};}
+  .testimonials-{{ section.id }} .review-swiper-button-prev,
+  .testimonials-{{ section.id }} .review-swiper-button-next{ background:{{ section.settings.color_arrow_bg }};}
+}
+{%- endstyle -%}
+
+<div
+  class="text-center testimonials-section testimonials-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="testimonials"
+  data-aos>
+  {%- if section.settings.title != blank -%}
+    <div class="page-width">
+      <div class="section-header">
+        <h2>{{ section.settings.title | escape }}</h2>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+  <div id="testimonials-wrapper">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        {%- for block in section.blocks -%}
+        <div class="swiper-slide">
+            <div class="stars-wrapper">
+              {%- render 'icon-svg',icon_svg: 'one_star' -%}
+              {%- render 'icon-svg',icon_svg: 'one_star' -%}
+              {%- render 'icon-svg',icon_svg: 'one_star' -%}
+              {%- render 'icon-svg',icon_svg: 'one_star' -%}
+              {%- render 'icon-svg',icon_svg: 'one_star' -%}
+            </div>
+            {%- if block.settings.image != blank or block.settings.author != blank -%}
+            <div class="testimonial-meta">
+              {%- if block.settings.testimonial != blank -%}
+              <div class="rte-setting text-spacing">
+                {{ block.settings.testimonial }}
+              </div>
+              {%- endif -%}
+              
+              {%- if block.settings.image != blank -%}
+              <img class="review-customer-icon" src="{{ block.settings.image |img_url: 'master' }}" alt="{{ block.settings.image.alt }}"/>
+              {%- endif -%}
+
+              {% if block.settings.author != blank %}
+              <div class="author">— {{ block.settings.author | escape }}</div>
+              {% endif %}
+            </div>
+            {%- endif -%}
+
+        </div>
+        {%- endfor -%}
+      </div>
+      <div class="pc-show">
+      <div class="swiper-button-prev fcw-swiper-button-prev review-swiper-button-prev">{%- render 'icon-svg',icon_svg: 'product-switch-arrow' -%}</div>
+      <div class="swiper-button-next fcw-swiper-button-next review-swiper-button-next">{%- render 'icon-svg',icon_svg: 'product-switch-arrow' -%}</div>
+      </div>
+      <div class="mb-show"><div class="swiper-pagination swiper-pagination-new"></div></div>
+    </div>
+    </div>
+  {%- endif -%}
+  
+  {%- if section.settings.image01 != blank or section.settings.image02 != blank or section.settings.image03 != blank or section.settings.image04 != blank or section.settings.image05 != blank or section.settings.image06 != blank or section.settings.image07 != blank -%}
+    <div class="logo-wrapper">
+      {%- if section.settings.image01 != blank -%}
+      <img class="logo-icon" src="{{ section.settings.image01 |img_url: 'master' }}" alt="{{ section.settings.image01.alt }}"/>
+      {%- endif -%}
+      {%- if section.settings.image02 != blank -%}
+      <img class="logo-icon" src="{{ section.settings.image02 |img_url: 'master' }}" alt="{{ section.settings.image02.alt }}"/>
+      {%- endif -%}
+      {%- if section.settings.image03 != blank -%}
+      <img class="logo-icon" src="{{ section.settings.image03 |img_url: 'master' }}" alt="{{ section.settings.image03.alt }}"/>
+      {%- endif -%}
+      {%- if section.settings.image04 != blank -%}
+      <img class="logo-icon" src="{{ section.settings.image04 |img_url: 'master' }}" alt="{{ section.settings.image04.alt }}"/>
+      {%- endif -%}
+      {%- if section.settings.image05 != blank -%}
+      <img class="logo-icon" src="{{ section.settings.image05 |img_url: 'master' }}" alt="{{ section.settings.image05.alt }}"/>
+      {%- endif -%}
+      {%- if section.settings.image06 != blank -%}
+      <img class="logo-icon" src="{{ section.settings.image06 |img_url: 'master' }}" alt="{{ section.settings.image06.alt }}"/>
+      {%- endif -%}
+      {%- if section.settings.image07 != blank -%}
+      <img class="logo-icon" src="{{ section.settings.image07 |img_url: 'master' }}" alt="{{ section.settings.image07.alt }}"/>
+      {%- endif -%}
+    </div>
+      {%- endif -%}
+
+</div>
+
+<style>
+  .no-margin-testimonials{margin-top:{{section.settings.margin_top | append:'px'}} !important; }
+  .testimonials-section .testimonial-meta{ max-width:48.75vw;margin:0 auto; padding: 30px 0; font-size: 1.04167vw;}
+  .testimonials-section .rte-setting{ position: relative;padding: 0 5vw;}
+  /*.testimonials-section .icon-quote{position: absolute;top: 20px;}
+  .testimonials-section .icon-quote svg{width:1.823vw}*/
+  @media(max-width: 768px){
+    .testimonials-section .rte-setting{padding: 0 5vw 20px;}
+    /*.testimonials-section .icon-quote svg{ width: 6vw;}*/
+  }
+</style>
+
+<script> 
+  var proSwiper = new Swiper('#testimonials-wrapper .swiper-container',{
+    slidesPerView : 1.8,
+    watchSlidesVisibility: true,
+    centeredSlides: true,
+    /*autoplay: {
+      delay: 6000,
+    },*/
+    loop: true,
+    watchOverflow: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+		nextEl: '.review-swiper-button-next',
+		prevEl: '.review-swiper-button-prev',
+	},
+    breakpoints: { 
+      768: { 
+        slidesPerView : 1,
+      }
+    }
+  })
+  
+</script>
+
+{% schema %}
+  {
+    "name": "Testimonials New",
+    "class": "no-margin-testimonials",
+    "max_blocks": 10,
+    "settings": [
+  	  {
+        "type":"range",
+        "id":"margin_top",
+        "min":0,
+        "max":60,
+        "step":5,
+        "unit":"px",
+        "label":"margin top space",
+        "default":0
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Professional solutions, by professional users."
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Section Background",
+        "default": "#F1F7F9"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#1c1d1d"
+      },
+      {
+        "type": "color",
+        "id": "color_arrow_bg",
+        "label": "Arrow Background Color",
+        "default": "#E3EDF0"
+      },
+      {
+        "type": "image_picker",
+        "id": "image01",
+        "label": "Logo Icon01",
+        "info": "height:60px"
+      },
+      {
+        "type": "image_picker",
+        "id": "image02",
+        "label": "Logo Icon02",
+        "info": "height:60px"
+      },
+      {
+        "type": "image_picker",
+        "id": "image03",
+        "label": "Logo Icon03",
+        "info": "height:60px"
+      },
+      {
+        "type": "image_picker",
+        "id": "image04",
+        "label": "Logo Icon04",
+        "info": "height:60px"
+      },
+      {
+        "type": "image_picker",
+        "id": "image05",
+        "label": "Logo Icon05"
+      },
+      {
+        "type": "image_picker",
+        "id": "image06",
+        "label": "Logo Icon06",
+        "info": "height:60px"
+      },
+      {
+        "type": "image_picker",
+        "id": "image07",
+        "label": "Logo Icon07",
+        "info": "height:60px"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "testimonials",
+        "name": "Testimonials",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Customer Logo Icon",
+            "info":"Size:70px*70px"
+          },
+          {
+            "type": "richtext",
+            "id": "testimonial",
+            "label": "Text",
+            "default": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>"
+          },
+          {
+            "type": "text",
+            "id": "author",
+            "label": "Author",
+            "default": "Author name"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonials New",
+        "blocks": [
+          {
+            "type": "testimonials"
+          },
+          {
+            "type": "testimonials"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

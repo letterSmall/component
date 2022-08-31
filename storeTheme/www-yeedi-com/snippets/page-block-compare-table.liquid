@@ -1,0 +1,127 @@
+<div id="compareVac" class="compare-table versioned">
+  <div class="page-width">
+    {% if block.settings.heading != blank or block.settings.subtitle != blank%}
+    <div class="header-section">
+    	{% if block.settings.heading != blank %}
+      		<h3>{{ block.settings.heading }}</h3>
+      	{% endif %}
+      	{% if block.settings.subtitle != blank%}
+      		<div class="subtitle">{{ block.settings.subtitle }}</div>
+      	{% endif %}
+    </div>
+    {% endif %}
+    <div class="ctable_select mobile_only">
+      <select id="CSelect1">
+        {% for i in (1..5) %}
+        {% assign meta = 'meta' | append: i %}
+        <option {% if i == 1 %}selected="selected" {% endif %}value="{{i}}">{{ block.settings[meta] }}</option>
+        {% endfor %}
+      </select>
+
+      <select id="CSelect2">
+        {% for i in (1..5) %}
+        {% assign meta = 'meta' | append: i %}
+        <option {% if i == 2 %}selected="selected" {% endif %}value="{{i}}">{{ block.settings[meta] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="ctable-wrapper">
+    {% for i in (1..5) %}
+    	{% assign meta = 'meta' | append: i %}
+    	{% assign title = 'title' | append: i %}
+    	{% assign image = 'image' | append: i %}
+    	{% assign price = 'price' | append: i %}
+    	{% assign body = 'body' | append: i %}
+      	{% assign product = 'product' | append: i %}
+    	{% assign product_main = all_products[block.settings[product]] %}
+    	<div class="ctable" id="SelectorWrapper_{{i}}">
+
+          <div class="meta">{{ block.settings[meta] }}</div>
+          <img src="{{ block.settings[image] | img_url: 'master' }}" />
+          <h4 class="h4">{{ block.settings[title] }}</h4>
+          <div class="price">{{ block.settings[price] }}</div>
+			{% if block.settings[product] != blank %}
+                {% capture form_id %}AddToCartForm-co{{i}}{% endcapture %}
+                {% form 'product', product_main, id: form_id, class: 'product-single__form' %}
+                    <select name="id" class="product-single__variants no-js">
+                      {%- for variant in product_main.variants -%}
+                        {% if variant.available %}
+                          <option {% if variant == product_main.selected_or_first_available_variant %}
+                            selected="selected" {% endif %}
+                            value="{{ variant.id }}">
+                            {{ variant.title }} - {{ variant.price | money_with_currency }}
+                          </option>
+                        {% else %}
+                          <option disabled="disabled">
+                            {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                          </option>
+                        {% endif %}
+                      {%- endfor -%}
+                    </select>
+
+                    {%- liquid
+                      assign default_text = 'products.product.add_to_cart' | t
+                      assign button_text = 'products.product.add_to_cart' | t
+                      unless product_main.selected_or_first_available_variant.available
+                        assign button_text = 'Coming Soon'
+                      endunless
+                    -%}
+                    <button {% unless product_main.selected_or_first_available_variant.available %}type="button" disabled="disabled"{% else %}type="submit"{% endunless %} class="btn add-to-cart">{{ button_text }}</button>
+                {% endform %}
+          		<a href="{{product_main.url}}" class="btn slim">View Product</a>
+          	{% endif %}
+          <div class="body">{{ block.settings[body] }}</div>
+    	</div>
+    {% endfor %}
+    </div>
+
+    <div id="ctable-content" style="display: none;">
+    {% for i in (1..5) %}
+    	{% assign meta = 'meta' | append: i %}
+    	{% assign title = 'title' | append: i %}
+    	{% assign image = 'image' | append: i %}
+    	{% assign price = 'price' | append: i %}
+    	{% assign body = 'body' | append: i %}
+      	{% assign product = 'product' | append: i %}
+    	{% assign product_main = all_products[block.settings[product]] %}
+    	<div class="ctable" id="Selector_{{i}}">
+
+          <div class="meta">{{ block.settings[meta] }}</div>
+          <img src="{{ block.settings[image] | img_url: 'master' }}" />
+          <h4 class="h4">{{ block.settings[title] }}</h4>
+          <div class="price">{{ block.settings[price] }}</div>
+			{% if block.settings[product] != blank %}
+                {% capture form_id %}AddToCartForm-co{{i}}{% endcapture %}
+                {% form 'product', product_main, id: form_id, class: 'product-single__form' %}
+                    <select name="id" class="product-single__variants no-js">
+                      {%- for variant in product_main.variants -%}
+                        {% if variant.available %}
+                          <option {% if variant == product_main.selected_or_first_available_variant %}
+                            selected="selected" {% endif %}
+                            value="{{ variant.id }}">
+                            {{ variant.title }} - {{ variant.price | money_with_currency }}
+                          </option>
+                        {% else %}
+                          <option disabled="disabled">
+                            {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                          </option>
+                        {% endif %}
+                      {%- endfor -%}
+                    </select>
+
+                    {%- liquid
+                      assign default_text = 'products.product.add_to_cart' | t
+                      assign button_text = 'products.product.add_to_cart' | t
+                      unless product_main.selected_or_first_available_variant.available
+                        assign button_text = 'products.product.sold_out' | t
+                      endunless
+                    -%}
+                    <button {% unless product_main.selected_or_first_available_variant.available %}type="button" disabled="disabled"{% else %}type="submit"{% endunless %} class="btn add-to-cart">{{ button_text }}</button>
+                {% endform %}
+          	{% endif %}
+          <div class="body">{{ block.settings[body] }}</div>
+    	</div>
+    {% endfor %}
+    </div>
+  </div>
+</div>

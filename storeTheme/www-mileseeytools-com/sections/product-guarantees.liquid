@@ -1,0 +1,104 @@
+{% if section.blocks.size > 0 %}
+<div class="product-guarantees product-guarantees-{{ section.id }}">
+    <div class="product-guarantees-wrapper">
+      {% for block in section.blocks %}
+      <div class="product-guarantees_item" {{ block.shopify_attributes }}>
+        {% if block.settings.icon_svg  %}
+        <span class="custom-image">{{block.settings.icon_svg }}</span>
+        {% endif %}
+        
+        {% if block.settings.icon != blank %}
+        <img class="custom-image" src="{{block.settings.icon | img_url: 'master'}}">
+        {% endif %}
+        <div class="custom-content">
+          {% if block.settings.title != blank %}
+          <h5>{{ block.settings.title }}</h5>
+          {% endif %}
+          {% if block.settings.body != blank %}
+          <div class="description">{{ block.settings.body }}</div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+<style>
+  .product-guarantees-{{ section.id }}{ background: {{ section.settings.bg_color }};}
+  .product-guarantees-{{ section.id }} .product-guarantees_item h5,
+  .product-guarantees-{{ section.id }} .product-guarantees_item .description{color: {{ section.settings.color }};}
+  .product-guarantees-{{ section.id }} .product-guarantees_item h5{ font-size:14px; text-transform: none; margin: 8px 0 3px;}
+  .product-guarantees-{{ section.id }} .product-guarantees_item .description{ font-size:12px;}
+  @media (max-width: 768px) {
+    .product-guarantees-wrapper{  
+      max-width: 60vw;
+      flex-direction: column;
+      padding: 1rem 0 0.5rem;
+    }
+    .product-guarantees_item{ display: flex; align-items: center; text-align: left; margin-bottom: 10px;}
+    .product-guarantees_item span svg{
+      margin-right: 4vw;
+      width: 8vw !important;
+      height: 8vw !important;
+    }
+    .product-guarantees-{{ section.id }} .product-guarantees_item h5{ margin: 5px 0 0;}
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Product guarantees",
+    "settings": [
+      {
+        "type":"color",
+        "id":"bg_color",
+        "label":"Section Background Color",
+        "default":"#2F2F2F"
+      },
+      {
+        "type":"color",
+        "id":"color",
+        "label":"Text Color",
+        "default":"#FFF"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "guarantee",
+        "name": "Product guarantee",
+        "limit": 4,
+        "settings": [
+          {
+            "type":"html",
+            "id":"icon_svg",
+            "label":"Icon Svg",
+            "info":"Use svg code"
+          },
+          {
+            "type": "image_picker",
+            "id": "icon",
+            "label": "Icon Png",
+            "info": "Just Choose between PNG and SVG"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+          {
+            "type": "textarea",
+            "id": "body",
+            "label": "Body"
+          }
+        ]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Product guarantees",
+		"category": "text"
+      }
+   ]
+  }
+{% endschema %}

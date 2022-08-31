@@ -1,0 +1,156 @@
+<div class="container">
+<div class="advantages-wrapper">
+  <div class="left-part">
+    <h2 class="left-title">{{section.settings.title}}</h2>
+    <div class="left-content">
+      <p>{{section.settings.content}}</p>
+      {% if section.settings.btn_link !=  blank %}
+      <a class="btn btn--primary btn240 pc-show" href="{{section.settings.btn_link }}">{{section.settings.btn}}</a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="right-part">
+    <div class="pc-show">
+      <div class="swiper-button-next swiper-button-next-advantages">{%- render 'icon-svg',icon_svg: 'advantages-arrow' -%}</div>
+      <div class="swiper-button-prev swiper-button-prev-advantages">{%- render 'icon-svg',icon_svg: 'advantages-arrow' -%}</div>
+    </div>
+    <div class="swiper-container-advantages">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+        <div class="item swiper-slide">
+          <div class="theme_color number">
+            {{ block.settings.number }}
+          </div>
+          <div class="right-title">
+            {{block.settings.title}}
+          </div>
+          <div class="right-text">{{block.settings.text}}</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+      {% if section.settings.btn_link !=  blank %}
+    <div class="mb-show">
+      <a class="btn btn--primary btn240" href="{{section.settings.btn_link }}">{{section.settings.btn}}</a>
+    </div>
+      {% endif %}
+  </div>
+</div>
+</div>
+
+<style>
+  .section-advantages{ background: {{ section.settings.bg_color }}; padding:7vw 0;}
+  .advantages-wrapper,.advantages-wrapper .left-title{ color: {{ section.settings.text_color }};}
+  .advantages-wrapper .left-part{ background: url({{ section.settings.image | img_url :"master" }}) no-repeat center center;}
+  @media (max-width: 768px){
+    .section-advantages{padding: 5vw 0 8vw;}
+    .advantages-wrapper .left-part{ background-size: contain; }
+    .advantages-wrapper .left-title{ font-size: 10.2vw; }
+    .advantages-wrapper .left-content{ font-size: 3.73vw;line-height: 1.5;}
+  }
+</style>
+
+<script>
+  var swiper2 = new Swiper('.swiper-container-advantages', {
+    spaceBetween: 20,
+    slidesPerView: 3,
+    navigation: {
+      nextEl: '.swiper-button-next-advantages',
+      prevEl: '.swiper-button-prev-advantages',
+	},
+    breakpoints: { 
+      1250: {  slidesPerView: 2.3 },
+      768: {  slidesPerView: 1.65, spaceBetween: 10}
+    }
+  })
+  
+  // same height
+  $(function(){
+    var maxheight = 0;
+    $(".section-advantages .right-part .item").each(function(){
+      if(maxheight < $(this).height()) 
+        maxheight = $(this).height();
+    });
+    $(".section-advantages .right-part .item").css({"height": maxheight + 60 + "px"});
+  });
+</script>
+{% schema %}
+  {
+    "name": "Advantages",
+    "class": "section-advantages",
+    "settings": [
+      {
+        "type": "image_picker",
+        "label": "Left Background Image",
+        "id": "image",
+        "info": "Size: 240px*360px"
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Left title"
+      },
+      {
+        "type": "html",
+        "id": "content",
+        "label": "Left content"
+      },
+      {
+        "type": "text",
+        "id": "btn",
+        "label": "Button"
+      },
+      {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Button Link"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#fff"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Section Background Color",
+        "default": "#000"
+      }
+	],
+    "blocks":[
+      {
+        "type":"text",
+        "name":"item",
+        "settings":[
+          {
+            "type": "text",
+            "id": "number",
+            "label": "Number"
+          },{
+            "type": "textarea",
+            "id": "title",
+            "label": "Title"
+          },{
+            "type": "textarea",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Advantages",
+		"category": "text"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

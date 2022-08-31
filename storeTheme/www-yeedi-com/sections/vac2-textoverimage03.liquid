@@ -1,0 +1,103 @@
+
+<div class="vactxtoverimg-container03">
+  {% if section.settings.image %}
+  <div>
+  <img class="small-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  <img class="medium--up-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+  </div>
+{% endif %}
+   <div class="vactxtoverimg-text03">
+  {% if section.settings.title != blank %}
+  <div class="vactxtoverimg-title">{{ section.settings.title }}</div>
+  {% endif %}
+  {% if section.settings.content != blank %}
+  <div class="vactxtoverimg-content medium-down--hide">{{ section.settings.content }}</div>
+  <div class="vactxtoverimg-content large-up--hide">{{ section.settings.content_mb }}</div>
+  {% endif %}
+     
+  <div class="vactxtoverimg-botimgbox">
+  {% if section.settings.appimage01 %}
+    <div class="vactxt-bot-imgbox">
+     <img class="" src="{{ section.settings.appimage01 | img_url:'master' }}"/>
+      <div class="vactxt-bot-imgbox-title">{{ section.settings.appimagetitle01}}</div>
+    </div>
+  {% endif %}
+     
+  {% if section.settings.appimage02 %}
+     <div class="vactxt-bot-imgbox">
+       <img class="" src="{{ section.settings.appimage02 | img_url:'master' }}"/>
+        <div class="vactxt-bot-imgbox-title">{{ section.settings.appimagetitle02}}</div>
+    </div>
+  {% endif %}
+     
+  {% if section.settings.appimage03 %}
+     <div class="vactxt-bot-imgbox">
+       <img class="" src="{{ section.settings.appimage03 | img_url:'master' }}"/>
+        <div class="vactxt-bot-imgbox-title">{{ section.settings.appimagetitle03}}</div>
+    </div>
+  {% endif %}
+   </div>  
+      
+  </div>
+
+  
+</div>
+{% schema %}
+  {
+    "name": "Vac2pro Textoverimage03",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：750*px)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "richtext",
+            "id": "content",
+            "label": "content"
+          },{
+            "type": "html",
+            "id": "content_mb",
+            "label": "content_mb"
+          },{
+            "type": "image_picker",
+            "id": "appimage01",
+            "label": "App Image01"
+          },{
+            "type": "text",
+            "id": "appimagetitle01",
+            "label": "App Imagetitle01"
+          },{
+            "type": "image_picker",
+            "id": "appimage02",
+            "label": "App Image02"
+          },{
+            "type": "text",
+            "id": "appimagetitle02",
+            "label": "App Imagetitle02"
+          },{
+            "type": "image_picker",
+            "id": "appimage03",
+            "label": "App Image03"
+          },{
+            "type": "text",
+            "id": "appimagetitle03",
+            "label": "App Imagetitle03"
+          }
+    ],
+
+    "presets": [
+      {
+        "name": "Vac2pro Textoverimage03",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

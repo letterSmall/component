@@ -1,0 +1,166 @@
+<div class="bg-text-link">
+  {% for block in section.blocks %}
+  {% if block.settings.image %}
+  <img class="hide-mb lazyload" src="{{ block.settings.image |img_url: '10x' }}" data-src={{ block.settings.image |img_url: 'master' }} alt=""/>
+  {% endif %}
+  
+  {% if block.settings.image_mb %}
+  <img class="hide-pc lazyload" src="{{ block.settings.image_mb |img_url: '10x' }}" data-src="{{ block.settings.image_mb |img_url: 'master' }}" alt=""/>
+  {% else %}
+   <img class="hide-pc lazyload" src="{{ block.settings.image |img_url: '10x' }}" data-src="{{ block.settings.image |img_url: 'master' }}" alt=""/>
+  {% endif %}
+
+  <div class="bg-text-wrapper animation-text">
+    <div class="container">
+      <div class="bg-text-box">
+        {% if block.settings.title != blank %}
+        <h2 class="fadein-0">{{ block.settings.title }}</h2>
+        {% endif %}
+
+        {% if block.settings.text != blank %}
+        <p class="fadein-05">{{ block.settings.text }}</p>
+        {% endif %}
+
+        {% if block.settings.btn != blank and block.settings.link != blank %}
+        <a class="btn btn--primary btn240 fadein-1" href="{{ block.settings.link }}"> {{ block.settings.btn }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <style>
+    .bg-text-link h2,.bg-text-link p{color:{{ block.settings.text_color}};}
+    .bg-text-link p{ font-size:1.25vw; line-height: 1.5;}
+    @media (min-width: 769px){
+      .bg-text-wrapper{
+        position: absolute;
+        left: 0;
+        top:50%;
+        transform: translateY(-50%);
+        width:100%;
+      }
+      .bg-text-box{max-width:43vw;}
+    }
+    /* @media only screen and (min-width: 1400px){
+      .bg-text-wrapper{
+        position: absolute;
+        left: calc((100% - 1390px)/2);;
+        top:50%;
+        transform: translateY(-50%);
+        
+      }
+    }
+   @media (max-width: 1599px) and (min-width: 1200px){
+      .bg-text-wrapper{ left:110px;}
+      }
+    @media (min-width: 769px) and (max-width: 1399px){
+      .bg-text-wrapper{
+        position: absolute;
+        left: {{ block.settings.content_x_position | append: '%' }};
+        top:50%;
+        transform: translate(-{{ block.settings.content_x_position | append: '%' }}, -50%);
+        max-width:43vw;
+      }
+    }*/
+    @media (max-width: 768px){
+      .bg-text-wrapper{ background:{{ block.settings.text_bg_color}};text-align: center; padding: 30px 15px;}
+    }
+  </style>
+  {% endfor %}
+</div>
+
+<style>
+  .no-margin-section{
+    margin-top:{{section.settings.margin_top | append:'px'}} !important; 
+  }
+  .bg-text-link{ position: relative; }
+  .bg-text-wrapper h2{ font-size: 3.65vw;line-height: 1; }
+  .bg-text-link img{width:100%; height: auto;}
+  .bg-text-link .btn{  margin-top: 10px;}
+</style>
+
+{% schema %}
+  {
+    "name": "Background and Text",
+    "class": "no-margin-section",
+    "settings": [
+      {
+        "type":"range",
+        "id":"margin_top",
+        "min":0,
+        "max":60,
+        "step":5,
+        "unit":"px",
+        "label":"margin top space",
+        "default":0
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Background Image PC",
+            "info": "Size: 1920px*800px"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Background Image Mobile",
+            "info": "Size: 750px*468px"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },{
+            "type": "textarea",
+            "id": "text",
+            "label": "Text"
+          },{
+            "type": "color",
+            "id": "text_color",
+            "label": "Title and Text Color",
+            "default": "#fff"
+          },{
+            "type": "color",
+            "id": "text_bg_color",
+            "label": "Title and Text Background Color on Mobile",
+            "default": "#282D1F"
+          },{
+            "type": "text",
+            "id": "btn",
+            "label": "Button Text",
+            "default": "Shop Now"
+          },{
+            "type": "url",
+            "id": "link",
+            "label": "Button Link"
+          },{
+            "type": "range",
+            "id": "content_x_position",
+            "min": 0,
+            "max": 80,
+            "step": 1,
+            "unit": "%",
+            "label": "Content horizontal position",
+            "default": 14
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Background and Text",
+        "category": "text"
+ 
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

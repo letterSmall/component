@@ -1,0 +1,319 @@
+{% include 'setting-spacing' %}
+
+{% for block in section.blocks %}
+    {%- assign halo = block.settings -%}
+    {% case block.type %}
+        {% when 'copyright' %}
+            {% capture copyright %}
+                {% if halo.enable_multiple_currencies %}
+                <div class="navUser-item navUser-currency">
+                  {% render 'dropdown-currency' %}
+                </div>
+                <div class="currency-groups">
+
+                </div>
+                {% endif %}
+                <div class="footer-copyright">
+                    <small class="copyright-content">
+                        {{ halo.copyright_1 }}
+                    </small>
+                </div>
+                <div class="footer-copyright">
+                    <small class="copyright-content">
+                        {{ halo.copyright_2 }}
+                    </small>
+                </div>
+            {% endcapture %}
+        {% when 'payment_methods' %}
+            {% capture payment_methods %}
+                <ul class="payment-methods">
+                    {% assign payment_string = '1,2,3,4,5,6,7,8,9,10' %}
+                    {% assign methods = payment_string | split: ',' %}
+                    {% for method in methods %}
+                        {%- assign current_method_icon = method | prepend: 'payment_image_' -%}
+                        {% if halo[current_method_icon] != blank %}
+                        <li>
+                            <img class="payment-image lazyload"
+                                src="{{ 'loading.svg' | asset_url }}"
+                                data-src="{{ halo[current_method_icon] | img_url: 'x32', format: 'jpg' }}"
+                                alt="" data-image>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endcapture %}
+        {% when 'newsletter' %}
+            {% capture newsletter %}
+            <div class="footer-owner">
+                <div class="container footer-owner-content">
+                  {% if halo.enable_newsletters %}
+                  <div class="newsletter">
+                    {% if halo.title %}
+                    <h2 class="footer-info-heading">{{ halo.title }}</h2>
+                    {% endif %}
+                    <div class="newsletterSubscription">
+                      {% render 'newsletter-form-2' %}
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% if halo.enable_social %}
+                  <div class="social_list">
+                    {% render 'social-media' %}
+                  </div>
+                  {% endif %}
+                </div>
+            </div>
+            {% endcapture %}
+    {% endcase %}
+{% endfor %}
+<div class="site-footer-top">
+{% if newsletter %}
+    {{ newsletter }}
+{% endif %}
+</div>
+<footer class="site-footer halo_footer-default" data-section-type="footer">
+    <div class="halo_footer_top">
+        <div class="container">
+            <div class="footer-info footer-row-flex">
+                {% for block in section.blocks %}
+                    {%- assign halo = block.settings -%}
+                    {% case block.type %}
+                        {% when 'contact_owner' %}
+                            <div class="footer-col footer-col-first">
+                                <div class="footer-content-left">
+                                    {% if halo.logo_footer != blank %}
+                                        <img class="logo-image lazyload"
+                                        src="{{ 'loading.svg' | asset_url }}"
+                                        data-src="{{ halo.logo_footer | img_url: 'x132' }}"
+                                        alt="" data-image>
+                                    {% endif %}
+                                    {{ halo.contact_description }}
+                                </div>
+                            </div>
+
+                        {% when 'link_list' %}
+                            <div class="footer-col footer-col--small footer-col--mobile">
+                                {%- assign footer_infolist = halo.menu -%}
+                                {% if halo.title %}
+                                    <p class="footer-info-heading">{{ halo.title }}</p>
+                                {% endif %}
+                                <ul class="footer-info-list">
+                                    {% for link in linklists[footer_infolist].links %}
+                                        <li class="footer-info-item">
+                                            <a href="{{ link.url }}" {% if link.current %} aria-current="page"{% endif %} aria-label="link" {% if link.title contains "Privacy Policy" %} rel="nofollow"{% endif %}>
+                                                {{ link.title | escape }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                    {% endcase %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+  
+    {% if copyright or payment_methods %}
+  <div class="halo_footer_bottom">
+            <div class="container">
+                {% if copyright %}
+                    <div class="item">
+                        {{ copyright }}
+                    </div>
+                {% endif %}
+                {% if payment_methods %}
+                    <div class="item">
+                        {{ payment_methods }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</footer>
+{% if settings.enable_backtotop %}
+    <div id="back-to-top">
+        <a href="javascript:void(0)" aria-label="link">{% render 'icon-chevron-up' %}</a>
+    </div>
+{% endif %}
+
+<style>
+  .site-footer-top .footer-owner{ background: url({{ section.settings.image | img_url :"master" }}) no-repeat center center;}
+  @media (max-width: 768px){
+    .site-footer-top .footer-owner{ 
+      background: url({{ section.settings.image_mb | img_url :"master" }}) no-repeat center center;
+      padding: 12vw 0;
+          background-size: cover;
+    }
+  }
+</style>
+
+{% schema %}
+    {
+        "name": "Footer",
+        "settings": [
+           { 
+              "type": "image_picker",
+              "label": "Footer Top Background image on PC",
+              "id": "image",
+              "info": "Size: 1920px*500px"
+           },{ 
+              "type": "image_picker",
+              "label": "Footer Top Background image on Mobile",
+              "id": "image_mb",
+              "info": "Size: 750px*526px"
+           }
+         ],
+        "blocks": [
+            {
+                "type": "contact_owner",
+                "name": "Contact Owner",
+                "limit": 1,
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "logo_footer",
+                        "label": "Upload Logo"
+                    },
+                    {
+                        "type": "textarea",
+                        "id": "contact_description",
+                        "label": "Description"
+                    }
+                ]
+            },
+            {
+                "type": "link_list",
+                "name": "Menu Vertical",
+                "limit": 4,
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Heading",
+                        "default": "Shop"
+                    },
+                    {
+                        "type": "link_list",
+                        "id": "menu",
+                        "label": "Menu",
+                        "default": "footer"
+                    }
+                ]
+            },
+            {
+                "type": "newsletter",
+                "name": "Newsletter & Social",
+                "limit": 1,
+                "settings": [
+                    {
+                        "type": "checkbox",
+                        "id": "enable_social",
+                        "label": "Enable Social",
+                        "default": true
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "enable_newsletters",
+                        "label": "Enable Newsletters",
+                        "default": true
+                    },
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Heading",
+                        "info": "Subscribers will be added to your “accepts marketing” [customer list.](/admin/customers?query=&accepts_marketing=1)",
+                        "default": "Newsletters Sign Up"
+                    }
+                    
+                ]
+            },
+            {
+                "type": "copyright",
+                "name": "Copyright (footer bottom)",
+                "limit": 1,
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "copyright_1",
+                        "label": "Copyright 1",
+                        "default": "©2020 Glassos Demo. All Rights Reserved. Powered by Shopify."
+                    },
+                    {
+                        "type": "text",
+                        "id": "copyright_2",
+                        "label": "Copyright 2",
+                        "default": "Shopify Themes by HaloThemes.com"
+                    },
+                    {
+                        "type": "checkbox",
+                        "id": "enable_multiple_currencies",
+                        "label": "Enable currency?",
+                        "default": true
+                    }
+                ]
+            },
+            {
+                "type": "payment_methods",
+                "name": "Payments (footer bottom)",
+                "limit": 1,
+                "settings": [
+                    {
+                        "type" : "header",
+                        "content" : "Payments Image",
+                        "info": "Recommended Image: Width x Height (32 x 32)px"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "payment_image_1",
+                        "label": "Payment methods 1"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "payment_image_2",
+                        "label": "Payment methods 2"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "payment_image_3",
+                        "label": "Payment methods 3"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "payment_image_4",
+                        "label": "Payment methods 4"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "payment_image_5",
+                        "label": "Payment methods 5"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "payment_image_6",
+                        "label": "Payment methods 6"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "payment_image_7",
+                        "label": "Payment methods 7"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "payment_image_8",
+                        "label": "Payment methods 8"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "payment_image_9",
+                        "label": "Payment methods 9"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "payment_image_10",
+                        "label": "Payment methods 10"
+                    }
+                ]
+            }
+        ]
+    }
+{% endschema %}

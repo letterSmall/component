@@ -1,0 +1,58 @@
+<div class="section-how-it-work-list">
+  <div class="back-to-link" >
+    <a href="/pages/how-it-work">  <img src="https://cdn.shopifycdn.net/s/files/1/0252/5197/1119/files/copy_6.png?v=1646183865">How It Works</a>
+  </div>
+  <div class="title">{{section.settings.title}}</div>
+  <div class="items-wrapper">
+    {% for block in section.blocks %}
+    <div class="item" >
+        <a  class="item-inner" href="{{block.settings.link}}">
+      <div class="image-wrapper">
+        <img src="{{block.settings.image | img_url:'master'}}" class="item-image">
+      </div>
+      <div class="item-title">{{block.settings.title}}</div>
+        </a>
+          </div>
+   
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "How it work list",
+    "settings": [
+	  {
+        "type":"html",
+        "id":"title",
+        "label":"Title"
+      }
+	],
+	"blocks":[
+      {
+        "type": "item",
+        "name": "Item",
+        "settings":[
+          {
+            "type":"image_picker",
+            "id":"image",
+            "label":"Image"
+          },{
+            "type":"text",
+            "id":"title",
+            "label":"Title"
+          },{
+            "type":"url",
+            "id":"link",
+            "label":"Link"
+          }
+      	]
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

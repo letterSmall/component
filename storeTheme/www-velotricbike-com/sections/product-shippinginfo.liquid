@@ -1,0 +1,60 @@
+
+
+
+<div class="proshippinginfo-container">
+  <div class="page-width">
+  <div class="proshippinginfo-box">
+   {% for block in section.blocks %}
+  <div class="proshippinginfo-item">
+    {% if block.settings.image %}
+    <div class="proshippinginfo-item-img"><img alt src="{{ block.settings.image | img_url:'master' }}"/></div>
+   {% endif %}
+    <div class="proshippinginfo-item-text">
+      <div class="proshippinginfo-item-title">{{block.settings.title}}</div>
+    <div class="proshippinginfo-item-subtitle">{{block.settings.subtitle}}</div>
+    </div>
+   </div>
+   {% endfor %}
+  </div>
+  </div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Shippinginfo",
+    "settings": [
+
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：144*70px)"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "subtitle",
+            "label": "subtitle"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Shippinginfo",
+        "category": "Ho-Advance"
+
+      }
+    ]
+  }
+{% endschema %}
+

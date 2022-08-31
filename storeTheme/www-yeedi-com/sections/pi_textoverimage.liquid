@@ -1,0 +1,81 @@
+<div class="pi_textoverimage-container">
+   {% if section.settings.image %}
+    <img class="small-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+    {% endif %}
+    {% if section.settings.image_mb != blank %}
+    <img class="medium--up-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+    {% else %}
+    <img class="medium--up-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+    {% endif %}
+
+  <div class="pi_textoverimage-text {% if section.settings.position == 'center' %} pi_textoverimage-text_center {% endif %}">
+    {%- if section.settings.button_label != blank -%}
+    <a href="{{ section.settings.button_link }}" class="btn">
+      {{ section.settings.button_label }}
+    </a>
+    {%- endif -%}
+    {% if section.settings.title != blank %}
+    <h2 class="pi_textoverimage-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.content != blank %}
+    <div class="pi_textoverimage-content">{{ section.settings.content }}</div>
+    {% endif %}
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "PI Textoverimage",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：750*px)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          },{
+            "type": "select",
+            "id": "position",
+            "label": "Text Position on Mobile",
+            "default": "left",
+            "options": [
+                {
+                  "value": "left",
+                  "label": "Left"
+                },
+                {
+                  "value": "center",
+                  "label": "Center"
+                }
+             ]
+          },
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button label"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button link"
+          }
+    ],
+    "presets": [
+      {
+        "name": "PI Textoverimage",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,121 @@
+{% unless limit %}
+  {%- assign limit = main_menu.links.size -%}
+{% endunless %}
+{% unless offset %}
+  {%- assign offset = 0 -%}
+{% endunless %}
+
+<ul
+  class="site-nav site-navigation medium-down--hide"
+  {% unless disable_aria %}  id="site-navigation"
+    role="navigation" aria-label="Primary"
+  {% endunless %}>
+  {% for link in main_menu.links limit: limit offset: offset %}
+    {%- assign has_dropdown = false -%}
+    {% if link.links != blank %}
+      {%- assign has_dropdown = true -%}
+    {% endif %}
+
+    <li data-name="{{link.handle}}"
+      class="site-nav__item site-nav__expanded-item  site-nav__expanded-item-{{link.handle}} {% if has_dropdown %} site-nav--has-dropdown{% endif %}{% unless template == 'index' %}{% if link.active %} site-nav--active{% endif %}{% endunless %}"
+      {% if has_dropdown %}aria-haspopup="true"{% endif %}>
+
+      <a href="{{ link.url }}" class="site-nav__link{% if has_dropdown %} site-nav__link--has-dropdown{% endif %}">
+        {{ link.title }}{% comment %}{% if has_dropdown %}
+        <span class="i-chevron-down first-sni-icon">
+       {%render 'icon-chevron-down'%}
+        </span>{% endif %}{% endcomment %}</a>
+      {% if has_dropdown %}
+        <ul class="site-nav__dropdown {%if link.handle=="shop" or link.handle=="products" %} text-left{%else%}text-center{%endif%}">
+          <div class="snd-inner">
+            <div class="sndi-left">
+          {% for childlink in link.links %}
+                  {%assign childlink_num=forloop.index%}
+            {%- assign has_sub_dropdown = false -%}
+            {% if childlink.links != blank %}
+              {%- assign has_sub_dropdown = true -%}
+            {% endif %}
+
+            <li  data-index="{{childlink_num}}"  class=" transition sndt-{{ childlink.title | handle }} {% if childlink.active %}site-nav--active{% endif %} sndt-{{forloop.index}} {% if has_sub_dropdown %} site-nav__deep-dropdown-trigger{% endif %}">
+              <a href="{{ childlink.url }}" class="site-nav__dropdown-link site-nav__dropdown-link--second-level {% if has_sub_dropdown %} site-nav__dropdown-link--has-children{% endif %}">
+                {{ childlink.title | escape }}
+                {% if has_sub_dropdown %}
+<!--    <span class="i-chevron-down second-sni-icon">
+       {%render 'icon-chevron-down'%}
+        </span> -->
+                {% endif %}
+              </a>
+           
+            </li>
+          {% endfor %}
+           </div>
+            <div class="sndi-right">
+                 {% for childlink in link.links %}
+              {%assign childlink_num=forloop.index%}
+            {%- assign has_sub_dropdown = false -%}
+            {% if childlink.links != blank %}
+              {%- assign has_sub_dropdown = true -%}
+            {% endif %}
+              {% if  has_sub_dropdown%}
+              <div class="has_sub_dropdown-box  has_sub_dropdown-box-{{childlink_num}}" data-parent="{{ childlink.title | handle }}">
+                <div class="hsdb-inner">
+                <ul class="site-nav__deep-dropdown site-nav__deep-dropdown-{{forloop.index}} ">
+                  {% for grandchildlink in childlink.links %}
+                   {%assign grandchildlink_num=forloop.index%}
+                    <li class="transition " data-index="{{grandchildlink_num}}" data-parindex="{{childlink_num}}">
+                      <a href="{{ grandchildlink.url }}" class="site-nav__dropdown-link " >{{ grandchildlink.title | escape }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              
+                <ul class="site-nav__deep-dropdown-image-box">
+                  {% for grandchildlink in childlink.links %}
+                  {%assign grandchildlink_handle=grandchildlink.handle%}
+              {%assign grandchildlink_num=forloop.index%}
+                  {%for block in section.blocks%}
+                  {%assign block_handle=block.settings.title|handle%}
+                   
+                  {%if block_handle==grandchildlink_handle%}
+                    <li class="snddib-li snddib-li-{{ childlink_num}}-{{grandchildlink_num}}">
+                    <a href="{{ grandchildlink.url }}">
+                 
+               
+                        <div class="image-wrap animation-delay-{{ forloop.index | times: 3 }}"
+            style="height: 0; padding-bottom: {{ 100 | divided_by: block.settings.image.aspect_ratio }}%;"
+            >
+            {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <img class="grid-product__image lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[180, 360, 540, 720, 900, 1080]"
+                data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                data-sizes="auto"
+          style=" aspect-ratio:{{block.settings.image.aspect_ratio}}"
+                alt="{%if block.settings.image.alt!=blank%}{{ block.settings.image.alt | escape }}{%else%}{{block_handle}}{%endif%}">
+            <noscript>
+              <img class="grid-product__image lazyloaded"
+                src="{{ block.settings.image | img_url: '400x' }}"
+                alt="{%if block.settings.image.alt!=blank%}{{ block.settings.image.alt | escape }}{%else%}{{block_handle}}{%endif%}">
+            </noscript>
+          </div>
+                      
+                      
+                      </a>
+                    </li>
+                  
+                  {%endif%}
+                  {%endfor%}
+                  
+                  {% endfor %}
+                </ul>
+                   </div>
+                  </div>
+              {% endif %}
+            
+          {% endfor %}
+            </div>
+          </div>
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>

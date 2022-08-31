@@ -1,0 +1,82 @@
+
+<div class="vactxtoverimg-container vactxtoverimg-container02">
+  {% if section.settings.image %}
+  <div>
+  <img class="small-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  <img class="medium--up-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+  </div>
+{% endif %}
+    <div class="vactxtoverimg-text vactxtoverimg-text02 {% if section.settings.classname != blank %}{{section.settings.classname }}{% endif %}">
+  {% if section.settings.title != blank %}
+  <div class="vactxtoverimg-title">{{ section.settings.title }}</div>
+  {% endif %}
+  {% if section.settings.content != blank %}
+  <div class="vactxtoverimg-content small-hide">{{ section.settings.content }}</div>
+        <div class="vactxtoverimg-content medium--up-hide">{{ section.settings.content_mobile }}</div>
+  {% endif %}
+      
+  </div>
+
+  
+</div>
+<style>
+  #shopify-section-{{section.id}}{
+    color:{{section.settings.fontcolor}}
+  }
+  
+  
+ {% if section.settings.classname != blank %}
+  #shopify-section-{{section.id}} .{{section.settings.classname}}{
+    width:31vw;
+  }
+   #shopify-section-{{section.id}} .{{section.settings.classname}} .vactxtoverimg-content {
+    padding-right: 2vw;
+}
+ {% endif %}
+  
+  
+</style>
+{% schema %}
+  {
+    "name": "Vac2pro Textoverimage02",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：750*px)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "richtext",
+            "id": "content",
+            "label": "content"
+          },{
+            "type": "richtext",
+            "id": "content_mobile",
+            "label": "content mobile"
+          },{
+            "type": "color",
+            "id": "fontcolor",
+            "label": "fontcolor",
+            "default": "#101820" 
+          },{
+            "type": "text",
+            "id": "classname",
+            "label": "Customize Class"
+          }
+    ],
+
+    "presets": [
+      {
+        "name": "Vac2pro Textoverimage02",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

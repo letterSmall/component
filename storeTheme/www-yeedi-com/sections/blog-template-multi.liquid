@@ -1,0 +1,644 @@
+<div data-section-id="{{ section.id }}" data-section-type="blog">
+
+  <div class="blog_banner">
+    <div class="page-width">
+      <h1>{{ section.settings.blog_title }}</h1>
+    </div>
+  </div>
+
+  {% assign categories = section.settings.blog_categories | split: ',' %}
+  {% if categories.size > 1 and section.settings.blog_show_categories %}
+    <div class="page-width mobile-full">
+      <ul class="category_list">
+      {% for c in categories %}
+        {% assign category =  c | strip %}
+        {% assign category_handle =  category | handle %}
+        <li><a{% if blog.handle == category_handle %} class="active"{% endif %} href="/blogs/{{ category_handle }}">{{ category }}</a></li>
+      {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {%- assign featured_count = 1 -%}
+  {%- for article in blog.articles -%}
+    {% if article.tags contains "__featured" %}
+        {% if featured_count == 1 %}
+          {%- assign feature_post1 = article -%}
+        {% endif %}
+        {% if featured_count == 2 %}
+          {%- assign feature_post2 = article -%}
+        {% endif %}
+        {% if featured_count == 3 %}
+          {%- assign feature_post3 = article -%}
+        {% endif %}
+        {% if featured_count == 4 %}
+          {%- assign feature_post4 = article -%}
+        {% endif %}
+        {%- assign featured_count = featured_count | plus: 1 -%}
+    {% endif %}
+    {% if featured_count > 4 %}
+      {% break %}
+    {% endif %}
+  {%- endfor -%}
+
+  {% if feature_post1 != blank %}
+  <div class="page-width page-content min">
+    <div class="featured-posts medium-down--show large-up--hide" data-aos>
+      {% if feature_post1 != blank %}
+      <div class="featured-post">
+          {%- if feature_post1.image -%}
+            {%- assign img_url = feature_post1.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <a href="{{ feature_post1.url }}">
+              <img class="image-fit lazyload"
+                  src="{{ feature_post1.image | img_url: '1080x' }}"
+                  data-src="{{ img_url }}"
+                  data-widths="[720, 900, 1080]"
+                  data-aspectratio="{{ feature_post1.image.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="{{ feature_post1.image.alt | escape }}">
+            </a>
+          {%- endif -%}
+        <h3 class="feature1_title"><a href="{{ feature_post1.url }}">{{ feature_post1.title }}</a></h3>
+      </div>
+      {% endif %}
+      {% if feature_post2 != blank %}
+      <div class="featured-post">
+        {%- if feature_post2.image -%}
+          {%- assign img_url = feature_post2.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+          <a href="{{ feature_post2.url }}">
+          <img class="image-fit lazyload"
+              data-src="{{ img_url }}"
+              data-widths="[720, 900, 1080]"
+              data-aspectratio="{{ feature_post2.image.aspect_ratio }}"
+              data-sizes="auto"
+              alt="{{ feature_post2.image.alt | escape }}">
+          </a>
+        {%- endif -%}
+        <h3 class="feature2_title"><a href="{{ feature_post2.url }}">{{ feature_post2.title }}</a></h3>
+      </div>
+      {% endif %}
+      {% if feature_post3 != blank %}
+        <div class="featured-post">
+          {%- if feature_post3.image -%}
+            {%- assign img_url = feature_post3.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <a href="{{ feature_post3.url }}">
+            <img class="image-fit lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[720, 900, 1080]"
+                data-aspectratio="{{ feature_post3.image.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ feature_post3.image.alt | escape }}">
+            </a>
+          {%- endif -%}
+          <h3 class="feature3_title"><a href="{{ feature_post3.url }}">{{ feature_post3.title }}</a></h3>
+        </div>
+      {% endif %}
+      {% if feature_post4 != blank %}
+        <div class="featured-post">
+          {%- if feature_post4.image -%}
+            {%- assign img_url = feature_post4.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <a href="{{ feature_post4.url }}">
+            <img class="image-fit lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[720, 900, 1080]"
+                data-aspectratio="{{ feature_post4.image.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ feature_post4.image.alt | escape }}">
+            </a>
+          {%- endif -%}
+          <h3 class="feature4_title"><a href="{{ feature_post4.url }}">{{ feature_post4.title }}</a></h3>
+        </div>
+      {% endif %}
+    </div>
+  
+    <div class="featured-posts medium-down--hide" data-aos>
+      {% if feature_post1 != blank %}
+      <div class="featured-post">
+          {%- if feature_post1.image -%}
+            {%- assign img_url = feature_post1.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <a href="{{ feature_post1.url }}">
+              <img class="image-fit lazyload"
+                  data-src="{{ img_url }}"
+                  data-widths="[720, 900, 1080]"
+                  data-aspectratio="{{ feature_post1.image.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="{{ feature_post1.image.alt | escape }}">
+            </a>
+          {%- endif -%}
+        <h3 class="feature1_title"><a href="{{ feature_post1.url }}">{{ feature_post1.title }}</a></h3>
+      </div>
+      {% endif %}
+
+      {% if feature_post2 != blank %}
+      <div class="featured-post">
+        {% if feature_post2 != blank %}
+        <div class="featured-post{% if feature_post3 == blank %} max-height{% endif %}">
+          {%- if feature_post2.image -%}
+            {%- assign img_url = feature_post2.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+            <a href="{{ feature_post2.url }}">
+            <img class="image-fit lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[720, 900, 1080]"
+                data-aspectratio="{{ feature_post2.image.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ feature_post2.image.alt | escape }}">
+            </a>
+          {%- endif -%}
+          <h3 class="feature2_title"><a href="{{ feature_post2.url }}">{{ feature_post2.title }}</a></h3>
+        </div>
+        {% endif %}
+        {% if feature_post3 != blank %}
+        <div class="featured-subs">
+          {% if feature_post3 != blank %}
+            <div class="featured-post">
+              {%- if feature_post3.image -%}
+                {%- assign img_url = feature_post3.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                <a href="{{ feature_post3.url }}">
+                <img class="image-fit lazyload"
+                    data-src="{{ img_url }}"
+                    data-widths="[720, 900, 1080]"
+                    data-aspectratio="{{ feature_post3.image.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ feature_post3.image.alt | escape }}">
+                </a>
+              {%- endif -%}
+              <h3 class="feature3_title"><a href="{{ feature_post3.url }}">{{ feature_post3.title }}</a></h3>
+            </div>
+          {% endif %}
+          {% if feature_post4 != blank %}
+            <div class="featured-post">
+              {%- if feature_post4.image -%}
+                {%- assign img_url = feature_post4.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                <a href="{{ feature_post4.url }}">
+                <img class="image-fit lazyload"
+                    data-src="{{ img_url }}"
+                    data-widths="[720, 900, 1080]"
+                    data-aspectratio="{{ feature_post4.image.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ feature_post4.image.alt | escape }}">
+                </a>
+              {%- endif -%}
+              <h3 class="feature4_title"><a href="{{ feature_post4.url }}">{{ feature_post4.title }}</a></h3>
+            </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+
+  <div class="page-width page-content">
+
+    {%- paginate blog.articles by 10 -%}
+    <div class="grid grid--uniform with-border">
+      
+    {%- for article in blog.articles -%}
+    {% assign skip_post = false %}
+    {%- for tag in article.tags -%}
+      {% if tag contains "__featured" %}
+        {% assign skip_post = true %}
+      {% endif %}
+    {%- endfor -%}
+
+      {% if skip_post %}{% continue %}{% endif %}
+      <div class="grid__item medium-up--one-half aos-init aos-animate blog_post" data-aos="row-of-2">
+        {%- if article.image -%}
+          <div class="image-wrap">
+            <a href="{{ article.url }}">
+              {%- assign img_url = article.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+              <img class="image-fit lazyload image-rounded"
+                  data-src="{{ img_url }}"
+                  data-widths="[720, 900, 1080]"
+                  data-aspectratio="{{ article.image.aspect_ratio }}"
+                  data-sizes="auto"
+                  alt="{{ article.image.alt | escape }}">
+              <noscript>
+                <img class="image-fit lazyloaded image-rounded" src="{{ article.image | img_url: '600x' }}" alt="{{ article.title | escape }}">
+              </noscript>
+            </a>
+          </div>
+        {%- endif -%}
+              
+        <h2 class="h4">
+          <a href="{{ article.url }}">{{ article.title }}</a>
+        </h2>
+        <div class="article__meta">
+          {%- if section.settings.blog_show_author -%}
+            <div class="article__author">By {{ article.author }}</div>
+          {%- endif -%}
+
+          {%- if section.settings.blog_show_date -%}
+            {% assign dateStart = article.published_at | date: '%s' %}
+            {% assign nowTimestamp = 'now' | date: '%s' %}
+            {% assign diffSeconds = nowTimestamp | minus: dateStart %}
+            {% assign diffDays = diffSeconds | divided_by: 3600 | divided_by: 24 %}
+            <div class="article__date">{% if diffDays == 0 %}Today{% else %}{{ diffDays }} days ago{% endif %}</div>
+          {%- endif -%}
+        </div>
+
+        <div class="article__tags">
+          {%- if article.tags.size > 0 -%}
+            {%- for tag in article.tags -%}
+              {% if tag contains "_" %}{% continue %}{% endif %}
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}"># {{ tag }}</a>
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+      </div>
+    {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      {%- render 'pagination', paginate: paginate -%}
+    {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+  
+</div>
+
+<style>
+.blog_banner {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.blog_banner h1 {
+    margin: 0;
+}
+.category_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.featured-posts {
+    height: 430px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.featured-posts .featured-post {
+    flex: 1 0 auto;
+}
+.featured-posts .featured-post .featured-post {
+    height: 215px;
+}
+
+.featured-subs {
+    height: 215px;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.featured-posts .featured-subs .featured-post {
+    flex: 1 0 auto;
+}
+.featured-posts > .featured-post {
+    width: 50%;
+    height: 100%;
+}
+
+.featured-posts .featured-subs .featured-post {
+    width: 50%;
+}
+.featured-posts > .featured-post {
+    padding: 5px;
+}
+
+.featured-posts .featured-post .image-fit {
+    border-radius: 16px;
+    display: block;
+    overflow: hidden;
+    height: 100%;
+}
+.featured-posts .featured-post {
+    position: relative;
+}
+
+.featured-posts .featured-post h3 {
+    position: absolute;
+    margin: 0;
+    bottom: 35px;
+    z-index: 3;
+    left: 30px;
+    color: #fff;
+}
+
+.featured-posts > .featured-post:first-child > a:before {
+    content: '';
+    position: absolute;
+    width: calc(100% - 10px);
+    height: 100%;
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgb(0 0 0) 100%);
+    left: 5px;
+    top: 0;
+    z-index: 2;
+    border-radius: 16px;
+}
+.featured-posts > .featured-post .featured-post > a:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgb(0 0 0) 100%);
+    left: 0;
+    top: 0;
+    z-index: 2;
+    border-radius: 16px;
+}
+.featured-posts .featured-post h3.feature1_title {
+    font-size: calc(var(--typeHeaderSize)*0.75);
+}
+.featured-posts .featured-post h3.feature2_title {
+    font-size: calc(var(--typeHeaderSize)*0.70);
+    bottom: 25px;
+    left: 20px;
+}
+.featured-posts .featured-post h3.feature3_title, .featured-posts .featured-post h3.feature4_title {
+    font-size: calc(var(--typeHeaderSize)*0.50);
+    bottom: 25px;
+    left: 20px;
+}
+
+.featured-posts .featured-post h3 {
+    padding-right: 20px;
+}
+
+.featured-posts .featured-subs .featured-post:first-child {
+    margin-right: 2.5px;
+}
+.featured-posts .featured-subs .featured-post:last-child {
+    margin-left: 2.5px;
+}
+.image-rounded {
+    border-radius: 16px;
+}
+
+.blog_post {
+    overflow: hidden;
+    display: block;
+}
+
+.blog_post .h4 {
+    margin: 15px 0;
+}
+
+.blog_post .article__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+}
+
+.blog_post .article__author, .blog_post .article__date {
+    margin: 0;
+    font-style: normal;
+    font-size: 12px;
+    color: #919191;
+    text-transform: none !IMPORTANT;
+    letter-spacing: 0 !important;
+    line-height: 1 !IMPORTANT;
+}
+
+.blog_post .article__date {
+    margin: 0;
+    position: relative;
+    padding-left: 10px;
+}
+
+.blog_post .article__author {
+    margin-right: 10px;
+}
+
+.blog_post .article__date:before {
+    content: '';
+    height: 7px;
+    width: 1px;
+    background: #919191;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+.article__tags {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.article__tags a {
+    background: #5bc3df;
+    color: #fff;
+    margin-right: 15px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 10px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+.blog_post {
+    padding-bottom: 30px;
+}
+.grid.grid--uniform.with-border {
+    margin-left: -60px;
+}
+
+.grid__item.blog_post {
+    padding-left: 60px;
+}
+
+.grid__item.blog_post:nth-child(2n):before {
+    content: '';
+    background: rgb(226,226,226);
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    left: 30px;
+    top: 0;
+}
+
+.grid__item.blog_post {
+    position: relative;
+}
+body {
+    background: #f6fafd;
+}
+.image-wrap {
+    background: transparent;
+}
+.category_list li {
+    margin: 0;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.category_list a.active {
+    color: #00c8ff;
+    line-height: 1;
+    font-weight: bold;
+}
+.category_list a {
+    color: #222a32;
+    font-family: var(--typeSubHeaderPrimary),var(--typeHeaderFallback);
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.page-width {
+    position: relative;
+}
+
+.page-content + .page-content {
+    padding-top: 0;
+}
+.featured-posts .featured-post h3 a {
+    color: #fff;
+}
+.page-content.min {
+    padding-top: 40px;
+}
+.featured-posts .featured-subs .featured-post {
+    height: 100% !IMPORTANT;
+}
+
+.featured-subs {
+    padding: 5px 0;
+}
+.featured-posts .featured-post .featured-post.max-height {
+    height: 100%;
+}
+@media only screen and (min-width: 590px) {
+[data-section-type="blog"] .page-width {
+    padding-left: 85px;
+    padding-right: 85px;
+}
+}
+
+@media only screen and (max-width: 769px) {
+.category_list {
+    margin: 0;
+    width: 100%;
+    background: #fff;
+    box-shadow: none;
+    padding: 25px 30px;
+    overflow-x: auto;
+  justify-content: flex-start;
+}
+.blog_banner {
+    text-align: center;
+    padding: 25px 0;
+}
+.page-width.mobile-full {
+    padding: 0;
+}
+
+.featured-posts .featured-post {
+    width: 100%;
+}
+
+.featured-posts {
+    display: block;
+    height: auto;
+    min-height: 160px;
+}
+
+.featured-post > a:before {
+    height: 100% !IMPORTANT;
+    content: '';
+    position: absolute;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,0) 30%, rgb(0 0 0) 100%);
+    left: 5px;
+    top: 0;
+    z-index: 2;
+    border-radius: 16px;
+}
+.featured-posts .featured-post h3 {
+    bottom: 20px;
+}
+.page-content.min {
+    padding-top: 25px;
+    margin-bottom: 20px;
+}
+.featured-posts .featured-post h3 {
+    font-size: calc(var(--typeHeaderSize)*0.55) !important;
+}
+.featured-posts {
+    overflow: visible;
+}
+
+.featured-post > a {
+    display: block;
+    overflow: hidden;
+}
+.featured-posts .featured-post a {
+    position: relative;
+    padding: 5px;
+}
+
+.featured-posts .featured-post {
+    padding: 0;
+    position: static;
+}
+.featured-posts .featured-post .image-fit {
+    height: 100%;
+}
+}
+</style>
+
+{% schema %}
+  {
+    "name": "Blog pages",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "blog_show_categories",
+        "label": "Show Categories"
+      },
+      {
+        "type": "text",
+        "id": "blog_title",
+        "label": "Blog Title",
+        "default": "Yeedi Blog"
+      },
+      {
+        "type": "textarea",
+        "id": "blog_categories",
+        "label": "Blog Categories"
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_tags",
+        "label": "Show tags"
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_date",
+        "label": "Show date",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "blog_show_author",
+        "label": "Show author"
+      }
+    ]
+  }
+{% endschema %}

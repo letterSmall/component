@@ -1,0 +1,414 @@
+     
+    
+/************  CSS Trade in Code starts here  ********/
+.sm-tradein-popup-box-main-wrapper .popup-arrow-down {
+    float: right;
+    margin-top: 8px;
+    margin-left: 8px;
+}
+.sm-tradein-popup-box .info-text-inr {
+    width: 100%;
+}
+#sm_help_trigger .sm-tradein-lighygrey-info-icon {
+    margin-right: 3px;
+    margin-bottom: -2px;
+}
+.sm-tradein-popup-box.info-text{
+    background: #F9FCFF;
+    border: 1.5px solid rgba(50, 77, 97, 0.5);
+    border-radius: 10px;
+  	padding: 18px 18px 18px 50px;
+  	align-items: initial;
+  	margin-bottom:30px;
+}
+#sm_avail_tradein{
+  	cursor:pointer;
+}
+.sm-tradein-popup-box.info-text#sm_availed_tradein{
+ 	padding-left:18px;
+}
+.sm-tradein-popup-box-main-wrapper {
+    position: relative;
+}
+.sm-tradein-popup-box-main-wrapper #sm_arrow_down {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 24px;
+    height: auto
+  	cursor: pointer;
+  	padding: 2px;
+}
+.sm-tradein-popup-box.info-text p{
+  margin-bottom:5px;
+  font-size:14px;
+  letter-spacing:0px;
+  font-family: 'Acre';
+  font-style: normal;
+  font-weight: 300;
+}
+.sm-tradein-popup-box .info-icon {
+    margin-right: 12px;
+    margin-top: 3px;
+    position: absolute;
+    left: 15px;
+    top: 16px;
+}
+.sm-tradein-popup-box .sm-info-box-tradein-link a{
+    font-family: 'Acre';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 30px;
+    text-decoration-line: underline;
+    color: #75C1DC;
+}
+.sm_popup_container .copy_code_msg {
+    background: #324D61;
+    border: 2px solid #324D61;
+    text-align: center;
+    padding: 6px 5px;
+}
+.sm_popup_container .copy_code_msg p {
+    margin-bottom: 0;
+    color: #fff;
+}
+.sm_popup_container .copied_code-txt {
+    font-family: 'Acre';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 30px;
+    color: #324D61;
+}
+.sm_popup_container .copied_code-txt span{
+  text-decoration: underline;
+}
+.sm-tradein-popup-box .info-text-inr h5 {
+    margin-bottom: 10px;
+    line-height: 1.5;
+  	padding-right: 22px;
+}
+.sm-tradein-popup-box .info-text-inr img {
+    margin-bottom: -2px;
+}
+  
+/****** popup  *************/
+  
+.sm-tradein-popup select option {
+    font-size: 18px;
+}
+.tradein_form_errors {
+    font-family: 'Acre';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 12px;
+    color: #E38674;
+  	display: block;
+    margin-top: 6px;
+} 
+.tradein_inp_errors {
+    background-color: rgba(227, 134, 116, 0.1) !important;
+    border: 1px solid #E38674 !important;
+    color: #E38674;
+  	background-image: url(//cdn.shopify.com/s/files/1/0564/6309/8016/t/22/assets/sm-popup-dropdown-arrow-red.png);
+    background-repeat: no-repeat;
+    background-position: right 10px top 20px;
+}
+.sm-tradein-popup .popup {
+  background: #FAFCFE;
+  border-radius: 10px;
+  padding: 50px 30px;
+  box-shadow: rgb(0 0 0 / 24%) 0px 1px 3px;
+  position: absolute;
+  z-index: 25;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 900px !important;
+  display: none;
+  width: 93%;
+  overflow-y: auto;
+  height: auto;
+  max-height: 100%;
+  max-height: calc(100vh - 100px);
+}
+.sm_popup_container{
+  max-width: 640px !important;
+  margin: auto;
+}
+.sm-tradein-popup-box .info-icon img {
+    min-width: 18px;
+}
+.sm-tradein-popup .popup-fieldset-wrap select, .sm-tradein-popup .popup-fieldset-wrap input {
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    height: 50px;
+    border: 0;
+}
+.sm-tradein-popup .popup-fieldset-wrap .btn{
+  max-width: 400px;
+  width: 100%;
+  display: block;
+  margin: auto;
+}
+.sm-tradein-popup .popup-fieldset-wrap .field__input-wrapper {
+    margin-bottom: 30px;
+}
+.sm-tradein-popup .popup-fieldset-wrap label.field__label {
+    text-transform: none;
+}
+.sm-tradein-popup .popup-fieldset-wrap label.field__label small{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 18px;
+    color: rgba(50, 77, 97, 0.5);
+    letter-spacing: 0;
+  	display: inline-block;
+  	vertical-align: middle;
+}
+.sm-tradein-popup .popup-fieldset-wrap label.field__label small span{
+  	font-size: 10px;
+    text-decoration-line: underline;
+}
+.sm-tradein-popup .field__input-wrapper.field__input_select_date select {
+    width: 110px;
+}
+.sm-tradein-popup .popTitle h3 {
+    margin-bottom: 10px;
+}
+.sm-tradein-popup .popTitle small {
+    margin-bottom: 25px;
+    font-family: 'Acre';
+    font-weight: 400;
+    font-size: 16px;
+}
+.sm-tradein-popup .sr_info_box {
+    border: 1px solid #324D61;
+    padding: 12px 18px;
+  	margin-bottom:30px;
+}
+  
+.sm-tradein-popup #sm_help_text{
+ 	display: none; 
+}
+.sm-tradein-popup .sr_info_box h4 {
+    margin-bottom: 10px;
+}
+.sm-tradein-popup .sr_info_box p {
+    margin-bottom: 0px;
+  	font-family: Acre;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 30px;
+
+}
+.sm-tradein-popup .copy_code_wrap input {
+    background: #FFFFFF;
+    border: 2px solid #324D61;
+    border-radius: 0;
+    width: 50%;
+    text-align: center;
+  	flex:1;
+}
+.sm-tradein-popup .copy_code_button {
+    background-color: #324D61;
+    color: #fff;
+  
+    width: 50%;
+  
+  	flex: 1;
+  
+  	height: 50px;
+  
+}
+.sm-tradein-popup .copy_code_wrap{
+  	display: flex;
+}
+.sm-tradein-popup .copy_code_title small{
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.sm-tradein-popup .btn-faded {
+    opacity: 50%;
+}
+.sm-tradein-popup .copy_code_wrap input::-webkit-input-placeholder { /* Edge */
+  opacity: 1;
+}
+
+.sm-tradein-popup .copy_code_wrap input:-ms-input-placeholder { /* Internet Explorer */
+  opacity: 1;
+}
+
+.sm-tradein-popup .copy_code_wrap input::placeholder {
+  opacity: 1;
+}
+.sm_popup_container .popup-fieldset-wrap .field__label{
+  font-family: 'Acre';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.8px;
+}
+.sm-tradein-popup .popup-close:after {
+width: 30px;
+content: url('sm_popup_cross.png');
+position: fixed;
+right: 20px;
+top: 20px;
+font-size: 20px;
+line-height: 30px;
+cursor: pointer;
+}
+.sm-tradein-popup .popup-btn {
+cursor: pointer;
+}
+.sm-tradein-popup.popup-overlay {
+position: fixed;
+height: 100%;
+width: 100% !important;
+top: 0;
+right: 0;
+bottom: 0;
+left: 0;
+background: rgba(0, 0, 0, 0.6);
+display: none;
+z-index: 100;
+}
+select.tradein-popup-custom-select1.tradein-select-default1, select.tradein-popup-custom-select2.tradein-select-default2, select.tradein-popup-custom-select3.tradein-select-default3 {
+  color: rgba(50, 77, 97, 0.5);
+}
+  
+  
+@media only screen and (max-width: 767px) {
+.sm-tradein-popup .copy_code_msg p {
+    font-size: 14px;
+}
+.sm-tradein-popup .popup {
+padding: 55px 15px;
+margin-top: 20px;
+margin-bottom: 20px;
+}
+.sm-tradein-popup #sm_help_text h4 {
+    font-size: 16px;
+    line-height: 18px;
+}
+.sm-tradein-popup #sm_help_text p{
+    font-size: 14px;
+    line-height: 20px;
+}
+.sm-tradein-popup .sm_popup_container .popTitle h3 {
+    font-size: 20px;
+    line-height: 24px;
+}
+.sm-tradein-popup .sm_popup_container .popTitle small {
+    font-size: 14px;
+    line-height: 20px;
+}
+.sm-tradein-popup .sm_popup_container .popup-fieldset-wrap .field__label {
+    font-size: 15px;
+}
+.sm-tradein-popup .field__input-wrapper.field__input_select_date select {
+    width: 49%;
+}
+.sm-tradein-popup .popup-fieldset-wrap select, .sm-tradein-popup .popup-fieldset-wrap input {
+    font-size: 14px;
+}
+#sm_popup_with_form {
+    text-align: center;
+}
+.sm-tradein-popup .copy_code_wrap {
+    display: block;
+}
+.sm-tradein-popup .copy_code_wrap input, .sm-tradein-popup .copy_code_button {
+    width: 100%;
+}
+.sm-tradein-popup .copy_code_button{
+  padding:10px;
+}
+}
+@media only screen and (min-width: 1024px) {
+.sm-tradein-btn{
+ opacity:0.5; 
+}
+.sm-tradein-btn:hover{
+ opacity:1; 
+}
+}
+
+  
+.sm-tradein-popup .s-hidden {
+  visibility: hidden;
+  padding-right: 10px;
+}
+
+.sm-tradein-popup .select {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  font: normal 11px/22px Arial, Sans-Serif;
+  color: black;
+  border: 1px solid #ccc;
+}
+
+.sm-tradein-popup .styledSelect {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: white;
+  padding: 0 10px;
+  font-weight: bold;
+}
+
+.sm-tradein-popup .styledSelect:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-color: black transparent transparent transparent;
+  position: absolute;
+  top: 9px;
+  right: 6px;
+}
+
+.sm-tradein-popup .styledSelect:active,
+sm-tradein-popup .styledSelect.active {
+  background-color: #eee;
+}
+
+.sm-tradein-popup .options {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  z-index: 999;
+  margin: 0 0;
+  padding: 0 0;
+  list-style: none;
+  border: 1px solid #ccc;
+  background-color: white;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.sm-tradein-popup .options li {
+  padding: 0 6px;
+  margin: 0 0;
+  padding: 0 10px;
+}
+
+.sm-tradein-popup .options li:hover {
+  background-color: #39f;
+  color: white;
+}
+
+
+/************  CSS Trade in Code ends here  ********/ 

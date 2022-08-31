@@ -1,0 +1,236 @@
+
+  {% for block in section.blocks %}
+<div class="bg-text-link">
+  <div class="bg-text-wrapper animation-text bg-text-wrapper-{{ block.id }}">
+    <div class="container">
+      <div class="product-bg-text-wrapper product-bg-text-{{ block.settings.layout }}">
+        <div class="bg-text-box">
+          {% if block.settings.title != blank %}
+          <h2 class="fadein-0">{{ block.settings.title }}</h2>
+          {% endif %}
+
+          {% if block.settings.text != blank %}
+          <p class="fadein-05">{{ block.settings.text }}</p>
+          {% endif %}
+
+          {% if block.settings.btn != blank and block.settings.link != blank %}
+          <a class="btn btn--primary btn240 fadein-1" href="{{ block.settings.link }}"> {{ block.settings.btn }}</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% if block.settings.image %}
+  <img class="hide-mb lazyload" src="{{ block.settings.image |img_url: '10x' }}" data-src={{ block.settings.image |img_url: 'master' }} alt=""/>
+  {% endif %}
+
+  {% if block.settings.image_mb %}
+  <img class="hide-pc lazyload" src="{{ block.settings.image_mb |img_url: '10x' }}" data-src="{{ block.settings.image_mb |img_url: 'master' }}" alt=""/>
+  {% else %}
+  <img class="hide-pc lazyload" src="{{ block.settings.image |img_url: '10x' }}" data-src="{{ block.settings.image |img_url: 'master' }}" alt=""/>
+  {% endif %}
+
+  <style>
+    .bg-text-wrapper-{{ block.id }} h2,.bg-text-wrapper-{{ block.id }} p{color:{{ block.settings.text_color}};}
+    .bg-text-wrapper-{{ block.id }} h2{text-transform: none; }
+    .bg-text-link p{ font-size:1.25vw; line-height: 1.5;}
+    .product-bg-text-wrapper{ display: flex;}
+    .product-bg-text-left{ justify-content: flex-start; }
+    .product-bg-text-center{ justify-content: center;}
+    .product-bg-text-right{ justify-content: flex-end;}
+    @media (min-width: 769px){
+      .bg-text-wrapper{
+        position: absolute;
+        left: 0;
+        top:50%;
+        transform: translateY(-50%);
+        width:100%;
+      }
+      .bg-text-box{max-width:43vw;}
+    }
+    
+    @media (max-width: 768px){
+      .bg-text-wrapper-{{ block.id }}{ background:{{ block.settings.text_bg_color}};text-align: center; padding: 45px 15px;}
+      .bg-text-wrapper-{{ block.id }} h2,.bg-text-wrapper-{{ block.id }} p{ color:{{ block.settings.mb_text_color }}; }
+    }
+  </style>
+  </div>
+
+  {% endfor %}
+
+<style>
+  .no-margin-section{
+    margin-top:{{section.settings.margin_top | append:'px'}} !important; 
+  }
+  .bg-text-link{ position: relative; }
+  .bg-text-wrapper h2{ font-size:1.875vw;line-height: 1.2; }
+  .bg-text-link img{width:100%; height: auto;}
+  .bg-text-link .btn{  margin-top: 10px;}
+</style>
+
+{% schema %}
+  {
+    "name": "Background and Text",
+    "class": "no-margin-section",
+    "settings": [
+      {
+        "type":"range",
+        "id":"margin_top",
+        "min":0,
+        "max":60,
+        "step":5,
+        "unit":"px",
+        "label":"margin top space",
+        "default":0
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Background Image PC",
+            "info": "Size: 1920px*800px"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Background Image Mobile",
+            "info": "Size: 750px*468px"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "Title"
+          },{
+            "type": "html",
+            "id": "text",
+            "label": "Text"
+          },{
+            "type": "color",
+            "id": "text_color",
+            "label": "Title and Text Color On PC",
+            "default": "#fff"
+          },{
+            "type": "color",
+            "id": "mb_text_color",
+            "label": "Title and Text Color On Mobile",
+            "default": "#fff"
+          },{
+            "type": "color",
+            "id": "text_bg_color",
+            "label": "Mobile Title/Text Background Color",
+            "default": "#282D1F"
+          },{
+            "type": "text",
+            "id": "btn",
+            "label": "Button Text",
+            "default": "Shop Now"
+          },{
+            "type": "url",
+            "id": "link",
+            "label": "Button Link"
+          }, {
+            "type": "select",
+            "id": "layout",
+            "label": {
+              "da": "Justering af billede",
+              "de": "Fotoausrichtung",
+              "en": "Text Position",
+              "es": "Alineación de imagen",
+              "fi": "Kuvan tasaus",
+              "fr": "Alignement de l'image",
+              "hi": "इमेज पंक्तिबद्ध करना",
+              "it": "Allineamento immagine",
+              "ja": "画像アラインメント",
+              "ko": "이미지 정렬",
+              "ms": "Penjajaran imej",
+              "nb": "Bildejustering",
+              "nl": "Afbeelding uitlijnen",
+              "pt-BR": "Alinhamento da imagem",
+              "pt-PT": "Alinhamento da imagem",
+              "sv": "Bildjustering",
+              "th": "การจัดวางรูปภาพ",
+              "zh-CN": "图片对齐方式",
+              "zh-TW": "圖片對齊"
+            },
+            "default": "left",
+            "options": [
+              {
+                "value": "left",
+                "label": {
+                  "da": "Venstre",
+                  "de": "Links",
+                  "en": "Left",
+                  "es": "Izquierda",
+                  "fi": "Vasen",
+                  "fr": "Gauche",
+                  "hi": "बाएँ",
+                  "it": "Sinistra",
+                  "ja": "左",
+                  "ko": "왼쪽",
+                  "ms": "Kiri",
+                  "nb": "Venstre",
+                  "nl": "Links",
+                  "pt-BR": "Esquerda",
+                  "pt-PT": "Esquerda",
+                  "sv": "Vänster",
+                  "th": "ด้านซ้าย",
+                  "zh-CN": "左侧",
+                  "zh-TW": "左方"
+                }
+              },
+              {
+                "value": "center",
+                "label": {
+                  "en": "Center",
+                  "zh-CN": "中间",
+                  "zh-TW": "中间"
+                }
+              },
+              {
+                "value": "right",
+                "label": {
+                  "da": "Højre",
+                  "de": "Rechts",
+                  "en": "Right",
+                  "es": "Derecha",
+                  "fi": "Oikea",
+                  "fr": "Droite",
+                  "hi": "दाएँ",
+                  "it": "Destra",
+                  "ja": "右",
+                  "ko": "오른쪽",
+                  "ms": "Kanan",
+                  "nb": "Høyre",
+                  "nl": "Rechts",
+                  "pt-BR": "Direita",
+                  "pt-PT": "Direita",
+                  "sv": "Höger",
+                  "th": "ด้านขวา",
+                  "zh-CN": "右侧",
+                  "zh-TW": "右方"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Background Text",
+        "category": "text"
+ 
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

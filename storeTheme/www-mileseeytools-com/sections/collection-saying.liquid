@@ -1,0 +1,180 @@
+{%- style -%}
+  .testimonials-{{ section.id }} { 
+    background:{{ section.settings.color_bg}};
+  }
+  .collection-saying .section-header h2,.collection-saying .rte-setting{ color: {{ section.settings.color_text }};}
+  .collection-saying .review-swiper-button-prev,
+  .collection-saying .review-swiper-button-next{ background:{{ section.settings.color_arrow_bg }};}
+}
+{%- endstyle -%}
+
+<div
+  class="text-center testimonials-section testimonials-{{ section.id }} collection-saying"
+  data-section-id="{{ section.id }}"
+  data-section-type="testimonials"
+  data-aos>
+  {%- if section.settings.title != blank -%}
+    <div class="page-width">
+      <div class="section-header">
+        <h2>{{ section.settings.title | escape }}</h2>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if section.blocks.size > 0 -%}
+  <div id="testimonials-wrapper">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        {%- for block in section.blocks -%}
+        <div class="swiper-slide">
+            <div class="stars-wrapper">
+              {%- render 'icon-svg',icon_svg: 'one_star' -%}
+              {%- render 'icon-svg',icon_svg: 'one_star' -%}
+              {%- render 'icon-svg',icon_svg: 'one_star' -%}
+              {%- render 'icon-svg',icon_svg: 'one_star' -%}
+              {%- render 'icon-svg',icon_svg: 'one_star' -%}
+            </div>
+            {%- if block.settings.image != blank or block.settings.author != blank -%}
+            <div class="testimonial-meta">
+              {%- if block.settings.testimonial != blank -%}
+              <div class="rte-setting text-spacing">
+                {{ block.settings.testimonial }}
+              </div>
+              {%- endif -%}
+              
+              {%- if block.settings.image != blank -%}
+              <img class="review-customer-icon" src="{{ block.settings.image |img_url: 'master' }}" alt="{{ block.settings.image.alt }}"/>
+              {%- endif -%}
+
+              {% if block.settings.author != blank %}
+              <div class="author">— {{ block.settings.author | escape }}</div>
+              {% endif %}
+            </div>
+            {%- endif -%}
+
+        </div>
+        {%- endfor -%}
+      </div>
+      <div class="pc-show">
+      <div class="swiper-button-prev fcw-swiper-button-prev review-swiper-button-prev">{%- render 'icon-svg',icon_svg: 'product-switch-arrow' -%}</div>
+      <div class="swiper-button-next fcw-swiper-button-next review-swiper-button-next">{%- render 'icon-svg',icon_svg: 'product-switch-arrow' -%}</div>
+      </div>
+      <div class="mb-show"><div class="swiper-pagination swiper-pagination-new"></div></div>
+    </div>
+    </div>
+  {%- endif -%}
+ 
+</div>
+
+<style>
+  .no-margin-testimonials{margin-top:{{section.settings.margin_top | append:'px'}} !important; }
+  .collection-saying .testimonial-meta{margin:0 auto; max-width: 32.75vw; padding: 30px 0; font-size: 1.04167vw;line-height: 1.5;}
+  .collection-saying .rte-setting{ position: relative;padding: 0 2vw; }
+  @media(max-width: 768px){
+    .collection-saying .rte-setting{padding: 0 5vw 20px;}
+  }
+</style>
+
+<script> 
+  var proSwiper = new Swiper('.testimonials-{{ section.id }} #testimonials-wrapper .swiper-container',{
+    slidesPerView : 1.8,
+    watchSlidesVisibility: true,
+    centeredSlides: true,
+    /*autoplay: {
+      delay: 6000,
+    },*/
+    loop: true,
+    watchOverflow: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+		nextEl: '.review-swiper-button-next',
+		prevEl: '.review-swiper-button-prev',
+	},
+    breakpoints: { 
+      768: { 
+        slidesPerView : 1,
+      }
+    }
+  })
+  
+</script>
+
+{% schema %}
+  {
+    "name": "Collection Saying",
+    "class": "no-margin-testimonials",
+    "max_blocks": 10,
+    "settings": [
+  	  {
+        "type":"range",
+        "id":"margin_top",
+        "min":0,
+        "max":60,
+        "step":5,
+        "unit":"px",
+        "label":"margin top space",
+        "default":0
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Professional solutions, by professional users."
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Section Background",
+        "default": "#F1F7F9"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#1c1d1d"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "saying",
+        "name": "Saying",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Customer Logo Icon",
+            "info":"Size:65px*65px"
+          },
+          {
+            "type": "richtext",
+            "id": "testimonial",
+            "label": "Text",
+            "default": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>"
+          },
+          {
+            "type": "text",
+            "id": "author",
+            "label": "Author",
+            "default": "Author name"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Saying",
+        "blocks": [
+          {
+            "type": "saying"
+          },
+          {
+            "type": "saying"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

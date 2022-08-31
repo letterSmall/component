@@ -1,0 +1,121 @@
+
+<div class="feeding_step_box media_pc">
+  <div class="step_home_title">
+    <h3 class="step_title_h">{{section.settings.step_title | default: ''}}</h3>
+    <h5 class="step_subtitle">{{section.settings.step_subtitle | default: ''}}</h5>
+    <img class="lazyload" data-src="{{ section.settings.step_image_pc | img_url: 'master' }}" alt="">
+  </div>
+  <div class="feeding_steps_num feeding_model_s">
+    {% for block in section.blocks %}
+      <div class="step_num">
+        <img class="lazyload" data-src="{{ block.settings.step_image_pc | img_url: 'master' }}" alt="">
+        <h3 class="step_h3">{{block.settings.step_id}}</h3>
+        <div class="feeding_model_title">
+          <h3 class="model_title_h">{{block.settings.step_title | default: ''}}</h3>
+          <div class="feeding_model_title_line"></div>
+          <h5 class="model_subtitle">{{block.settings.step_subtitle | default: ''}}</h5>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+<div class="feeding_step_box media_mb swiper-container">
+  <div class="feeding_steps_num feeding_model_s swiper-wrapper">
+    <div class="step_home_title swiper-slide">
+      <h3 class="step_title_h">{{section.settings.step_title | default: ''}}</h3>
+      <h5 class="step_subtitle">{{section.settings.step_subtitle | default: ''}}</h5>
+      <img class="lazyload" data-src="{{ section.settings.step_image_mobile | img_url: 'master' }}" alt="">
+    </div>
+    {% for block in section.blocks %}
+      <div class="step_num swiper-slide">
+        <h3 class="step_h3">{{block.settings.step_id}}</h3>
+        <div class="feeding_model_title">
+          <h3 class="model_title_h">{{block.settings.step_title | default: ''}}</h3>
+          <div class="feeding_model_title_line"></div>
+          <h5 class="model_subtitle">{{block.settings.step_subtitle | default: ''}}</h5>
+        </div>
+        <img class="lazyload" data-src="{{ block.settings.step_image_mobile | img_url: 'master' }}" alt="">
+      </div>
+    {% endfor %}
+  </div>
+  <!-- Add Arrows -->
+  <div class="button_prev_steps"><img class="small-hide" alt src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/a4fd3f402903596b6b470bbda44e7c64.png?v=1641373553"><img class="medium--up-hide" alt="" src="{{ "arrow-left.svg" | asset_url }}"></div>
+  <div class="button_next_steps"><img class="small-hide" alt src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy_d7d87e0c-8f1d-47e1-abec-b3381b7701aa.png?v=1641373570"><img class="medium--up-hide" alt="" src="{{ "arrow-right.svg" | asset_url }}"></div>
+</div>
+<script>
+  var swiper = new Swiper('.swiper-container', {
+    navigation: {
+      nextEl: '.button_next_steps',
+      prevEl: '.button_prev_steps',
+    },
+  });
+</script>
+{% schema %}
+{
+  "name": "Feeding Overview Splitter",
+  "settings": [
+    {
+      "type": "html",
+      "id": "step_title",
+      "label": "Title"
+    },
+    {
+      "type": "html",
+      "id": "step_subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "image_picker",
+      "id": "step_image_pc",
+      "label": "PC Image",
+      "info": "Image: 1440x600"
+    },
+    {
+      "type": "image_picker",
+      "id": "step_image_mobile",
+      "label": "Mobile Image",
+      "info": "Image: 750x600"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step-content",
+      "name": "step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_id",
+          "label": "step Id"
+        },
+        {
+          "type": "html",
+          "id": "step_title",
+          "label": "step Title"
+        },
+        {
+          "type": "html",
+          "id": "step_subtitle",
+          "label": "step Subtitle"
+        },
+        {
+          "type": "image_picker",
+          "id": "step_image_pc",
+          "label": "PC Image",
+          "info": "Image: 875x875"
+        },
+        {
+          "type": "image_picker",
+          "id": "step_image_mobile",
+          "label": "Mobile Image",
+          "info": "Image: 695x900"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feeding Overview Splitter"
+    }
+  ]
+}
+{% endschema %}

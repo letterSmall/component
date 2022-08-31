@@ -1,0 +1,120 @@
+{% if product.metafields.custom_desc.featured_review  != blank %}
+<div class="features-review-section">
+  <div class="page-width">
+  {% if section.settings.title != blank %}<div class="h1 text-center"><strong>{{ section.settings.title }}</strong></div>{% endif %}
+  <div class="features-review swiper">
+    <div class="swiper-wrapper">
+      {% assign featured_reviews =product.metafields.custom_desc.featured_review |  split: '[item]' %}
+      {% for review in featured_reviews %}
+      {% assign review_items =review |  split: '[end]' %}
+      <div class="reviewAll swiper-slide">
+
+          <div class="tenways">
+
+              <div class="review_in">
+                <div class="text">{{ review_items[0]}}</div>
+           <div class="video_review">
+            <div class="product__media">
+              <iframe src="https://www.youtube.com/embed/{{ review_items[3]}}?enablejsapi=1" class="js-youtube" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+            </div>
+          </div>
+                <div class="html">
+                  {{ review_items[1]}}
+                </div>
+              </div>
+              <div class="rte">
+                {{ review_items[2]}}
+              </div>
+          </div>
+
+
+
+
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="swiper-pagination review-pagination"></div>
+  </div>
+
+
+      <div class="swiper-button-prev review-prev">
+<!--       <svg viewBox="0 0 37 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23.5 0V16L36.9 8L23.5 0Z"/>
+        <path d="M23.4999 7.9H0.399902" stroke-miterlimit="10"/>
+      </svg> -->
+<img alt src="https://cdn.shopifycdn.net/s/files/1/0599/2094/1239/files/Vector_2.png?v=1651298798">
+    </div>
+    <div class="swiper-button-next review-next">
+<!--       <svg  viewBox="0 0 37 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.7998 0V16L0.399803 8L13.7998 0Z" />
+        <path d="M13.7999 7.9H36.8999" stroke-miterlimit="10"/>
+      </svg> -->
+      <img alt src="https://cdn.shopifycdn.net/s/files/1/0599/2094/1239/files/Vector_1_1f555293-422b-4f33-9019-4dba680dea33.png?v=1651298798">
+    </div>
+</div>
+</div>
+<script type="text/javascript">
+  var Swiperproductlist = new Swiper('.features-review',{
+    slidesPerView :3,
+    spaceBetween : 20,
+//     centeredSlides : true,
+    watchOverflow: true,
+    autoplay:false,
+    autoHeight: false,
+    loop : true,
+    pagination: {
+      el: '.review-pagination',
+      clickable :true,
+    },
+    navigation: {
+      nextEl: '.review-next',
+      prevEl: '.review-prev',
+    },
+    breakpoints: {
+      1: {
+        slidesPerView: 1,
+        spaceBetween: 0
+      },
+      550:{
+        slidesPerView: 2,
+        spaceBetween: 20
+      },
+      992: {
+        slidesPerView: 3,
+        spaceBetween: 20
+      }
+    }
+
+
+  });
+
+</script>
+
+{% endif%}
+{% schema %}
+{
+"name": "Product Featured Review",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Heading",
+"default": "What Online Reviewers Say"
+}
+],
+"presets": [
+{
+"name": "Product Featured Review"
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+
+

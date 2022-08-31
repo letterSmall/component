@@ -1,0 +1,188 @@
+<div class="account-item-content">
+<div class="page-width page-content">
+  <div class="grid">
+
+    <div class="grid__item medium-up--one-third medium-up--push-one-third">
+
+      <header class="section-header">
+        <h1 class="section-header__title">{{ 'customer.login.title' | t }}</h1>
+      </header>
+
+      <div class="note note--success hide" id="ResetSuccess">
+        {{ 'customer.recover_password.success' | t }}
+      </div>
+
+      <div id="CustomerLoginForm" class="form-vertical">
+        {% form 'customer_login',id:"customer_login" ,class:"CustomerLoginForm"%}
+
+          {{ form.errors | default_errors }}
+
+        <div class="input-box">
+          <label for="CustomerEmail" class="form-label">{{ 'customer.login.email' | t }}</label>
+          <input type="email" name="customer[email]" id="CustomerEmail" class="input-full{% if form.errors contains 'email' %} error{% endif %}" autocorrect="off" autocapitalize="off" autofocus>
+          <div class="error-tips email-error-tips hide">  Please enter a valid email address</div>
+      
+        </div>
+          {% if form.password_needed %}
+        <div class="input-box psw-box">
+              <label for="CustomerPassword" class="form-label">{{ 'customer.login.password' | t }}</label>       
+          <input type="password" value="" name="customer[password]" id="CustomerPassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}">
+          <div class="error-tips password-error-tips  hide"> Password is incorrect, please try again</div> 
+        </div>
+          {% endif %}
+
+        
+        <div class="input-box rpsw-box">
+       
+           <input id="rememberPsw" type="checkbox"  class="hide"> <label id="label" for="rememberPsw" class="rememberPsw"> Remember me</label>
+          <a href="#recover" id="RecoverPassword" class="js-no-transition">
+                  {{ 'customer.login.forgot_password' | t }}
+                </a>
+        </div>
+          <p >
+            <input type="button " readonly  class="btn submit-btn btn--full btn--no-animate" onclick="return checkForm('customer_login');" value="{{ 'customer.login.sign_in' | t }}">
+          </p>
+          <p class="text-center">{{ 'layout.customer.create_account' | t | customer_register_link }}</p>
+
+        {% endform %}
+      </div>
+
+      <div id="RecoverPasswordForm" class="hide">
+
+        <h2>{{ 'customer.recover_password.title' | t }}</h2>
+        <p>{{ 'customer.recover_password.subtext' | t }}</p>
+
+
+        <div class="form-vertical">
+          {% form 'recover_customer_password' %}
+
+            {{ form.errors | default_errors }}
+
+            {% if form.posted_successfully? %}
+              <span class="hide reset-password-success"></span>
+            {% endif %}
+
+            <div class="input-box">
+            <label for="RecoverEmail"  class="form-label">{{ 'customer.recover_password.email' | t }}</label>
+            <input type="email" value="" name="email" id="RecoverEmail" class="input-full" autocorrect="off" autocapitalize="off">
+          </div>
+            <div class="text-center">
+            <p>
+              <input type="submit" class=" btn submit-btn btn--full btn--no-animate" value="{{ 'customer.recover_password.submit' | t }}">
+            </p>
+            <button type="button" id="HideRecoverPasswordLink" class="text-link delete-btn">{{ 'customer.recover_password.cancel' | t }}</button>
+          </div>
+          {% endform %}
+        </div>
+
+      </div>
+
+      {% if shop.checkout.guest_login %}
+        <hr class="hr--clear">
+
+        <h1>{{ 'customer.login.guest_title' | t }}</h1>
+        <hr class="hr--small">
+
+        {% form 'guest_login' %}
+          <input type="submit" class="btn" value="{{ 'customer.login.guest_continue' | t }}">
+        {% endform %}
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  
+function checkForm(name){
+   event.preventDefault();
+  let form=name,checkFormFlag=true;
+  let email_val=$(`#${form}`).find('#CustomerEmail').val(),
+      password_val=$(`#${form}`).find('#CustomerPassword').val();
+  let  email_reg = /^([a-zA-Z]|[0-9]|[a-zA-Z]+\.[a-zA-Z])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+     
+      if(email_reg.test(email_val)){
+      $('.email-error-tips').addClass('hide');
+        checkFormFlag = true;
+      }else{
+			$('.email-error-tips').removeClass('hide');
+        checkFormFlag = false;
+		}
+  
+  if(password_val=="" || typeof(password_val) == "undefined"){
+  	$('.password-error-tips').removeClass('hide');
+        checkFormFlag = false;
+  }
+  else{
+    $('.password-error-tips').addClass('hide');
+        checkFormFlag = true;
+   
+  }
+    
+let  isSave = $('#rememberPsw').prop("checked")||"";
+  if(isSave){
+    setCookie('user',email_val,7); 
+        setCookie('pswd',password_val,7);
+  }
+  
+ 
+  if(checkFormFlag){
+   $(`#${form}`).submit();
+  }
+		}
+
+window.onload = function(){
+    var oForm = document.getElementById('customer_login');
+    var oUser = document.getElementById('CustomerEmail');
+    var oPswd = document.getElementById('CustomerPassword');
+    var oRemember = document.getElementById('rememberPsw');
+    //页面初始化时，如果帐号密码cookie存在则填充
+  
+  
+  console.log(getCookie('user'));
+  
+    if(getCookie('user') && getCookie('pswd')){
+      oUser.value=getCookie('user');
+      oPswd.value=getCookie('pswd');
+      oRemember.checked = true;
+      
+      $('#customer_login .input-box').addClass('active');
+    }
+    //复选框勾选状态发生改变时，如果未勾选则清除cookie
+    oRemember.onchange = function(){
+      if(!this.checked){
+        delCookie('user');
+        delCookie('pswd');
+      }
+    };
+    
+  };
+  //设置cookie
+  function setCookie(name,value,day){
+    var date = new Date();
+    date.setDate(date.getDate() + day);
+    document.cookie = name + '=' + value + ';expires='+ date;
+  };
+  //获取cookie
+  function getCookie(name){
+    var reg = RegExp(name+'=([^;]+)');
+    var arr = document.cookie.match(reg);
+    if(arr){
+      return arr[1];
+    }else{
+      return '';
+    }
+  };
+  //删除cookie
+  function delCookie(name){
+    setCookie(name,null,-1);
+  };
+
+$('.mask-box-outer .cancel-btn').click(function(){
+ $('.mask-box-outer').fadeOut();
+})
+
+
+
+  </script>

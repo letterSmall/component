@@ -1,0 +1,77 @@
+<div class="section-how-it-work">
+  <div class="banner-wrapepr">
+    <img src="{{section.settings.image | img_url:'master'}}" class="image pc">
+    <img src="{{section.settings.image_mb | img_url:'master'}}" class="image mb">
+    <div class="text-wrapper">
+      <div class="title">{{section.settings.title}}</div>
+      <div class="content">{{section.settings.content}}</div>
+    </div>
+  </div>
+ <div class="items-wrapper-outer">
+    <div class="items-wrapper">
+       <div class="items-wrapper-inner">
+    {% for block in section.blocks %}
+    <a class="item" href="{{block.settings.link}}">
+     <div class="item-inner">
+        <div class="image-wrapper">
+        <img src="{{block.settings.image | img_url:'master'}}" class="item-image">
+      </div>
+      <div class="item-title">{{block.settings.title}}</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+       </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "How it work",
+    "settings": [
+	  {
+        "type":"image_picker",
+        "id":"image",
+        "label":"Image"
+      },{
+        "type":"image_picker",
+        "id":"image_mb",
+        "label":"Image Mobile"
+      },{
+        "type":"html",
+        "id":"title",
+        "label":"Title"
+      },{
+        "type":"html",
+        "id":"content",
+        "label":"Content"
+      }
+	],
+	"blocks":[
+      {
+        "type": "item",
+        "name": "Item",
+        "settings":[
+          {
+            "type":"image_picker",
+            "id":"image",
+            "label":"Image"
+          },{
+            "type":"html",
+            "id":"title",
+            "label":"Title"
+          },{
+            "type":"url",
+            "id":"link",
+            "label":"Link"
+          }
+      	]
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

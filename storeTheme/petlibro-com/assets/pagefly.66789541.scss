@@ -1,0 +1,1076 @@
+/* PageFly Element Styles */
+						.bQJNGd { display: inline-flex; }
+.bQJNGd .pf-countdown__inner { display: flex; text-align: center; }
+.bQJNGd .pf-countdown__inner > div { display: flex; flex-direction: column; }
+.lcHmGL { word-break: break-word; }
+.lcHmGL span { font-weight: inherit; text-decoration: inherit; }
+.lcHmGL i { margin-right: 0.3em; }
+.jrwOpx { font-family: FontAwesome !important; }
+.jakOsZ { display: inline-block; vertical-align: middle; }
+.jakOsZ img { width: 100%; border-radius: inherit; }
+.bgMQOP { position: relative; }
+.jklmHY { padding: var(--pf-s-lg); }
+@media (max-width: 1199px) and (min-width: 992px) {
+  .jklmHY { padding: var(--pf-s-md); }
+}
+@media (max-width: 991px) and (min-width: 768px) {
+  .jklmHY { padding: var(--pf-s-sm); }
+}
+@media (max-width: 767px) {
+  .jklmHY { padding: var(--pf-s-xs); }
+}
+.fTyjzF { position: relative; }
+.eYzxUD { margin: 0 calc(-1 * var(--pf-s-lg)); }
+@media (max-width: 1199px) and (min-width: 992px) {
+  .eYzxUD { margin: 0 calc(-1 * var(--pf-s-md)); }
+}
+@media (max-width: 991px) and (min-width: 768px) {
+  .eYzxUD { margin: 0 calc(-1 * var(--pf-s-sm)); }
+}
+@media (max-width: 767px) {
+  .eYzxUD { margin: 0 calc(-1 * var(--pf-s-xs)); }
+}
+.kKFcHj { position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
+.bjKdkd__parallax { position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
+.bjKdkd { padding: 15px 0px; position: relative; }
+.cbrLgP > span:last-child { line-height: inherit; display: block; margin-right: 0px !important; }
+#editor-dnd-wrapper .cbrLgP span + span[contenteditable] { display: block; }
+#editor-dnd-wrapper .cbrLgP span + span[contenteditable]:empty::after { display: inline; }
+.cbrLgP ol, .cbrLgP ul { list-style-position: inside; }
+.cbrLgP blockquote { font-size: inherit; }
+.kpEQWN.pfs--topLeft { display: flex; align-items: flex-start; justify-content: flex-start; }
+.kpEQWN.pfs--topCenter { display: flex; align-items: flex-start; justify-content: center; }
+.kpEQWN.pfs--topRight { display: flex; align-items: flex-start; justify-content: flex-end; }
+.kpEQWN.pfs--middleLeft { display: flex; align-items: center; justify-content: flex-start; }
+.kpEQWN.pfs--center { display: flex; align-items: center; justify-content: center; }
+.kpEQWN.pfs--middleRight { display: flex; align-items: center; justify-content: flex-end; }
+.kpEQWN.pfs--bottomLeft { display: flex; align-items: flex-end; justify-content: flex-start; }
+.kpEQWN.pfs--bottomCenter { display: flex; align-items: flex-end; justify-content: center; }
+.kpEQWN.pfs--bottomRight { display: flex; align-items: flex-end; justify-content: flex-end; }
+.kCAYOZ { visibility: hidden; }
+.kCAYOZ.pf-slider-wrapper { overflow: hidden; position: relative; }
+.kCAYOZ.pf-slider-wrapper:hover .nav-style-2, .kCAYOZ.pf-slider-wrapper:hover .nav-style-4 { opacity: 1; }
+.kCAYOZ.pf-slider-wrapper:hover .nav-style-2.pf-prev-nav, .kCAYOZ.pf-slider-wrapper:hover .nav-style-4.pf-prev-nav { left: 20px; }
+.kCAYOZ.pf-slider-wrapper:hover .nav-style-2.pf-next-nav, .kCAYOZ.pf-slider-wrapper:hover .nav-style-4.pf-next-nav { right: 20px; }
+.kCAYOZ.pf-slider-wrapper:hover .nav-style-3 { opacity: 1; }
+.kCAYOZ.pf-slider-wrapper:hover .nav-style-3.pf-prev-nav { left: 0px; }
+.kCAYOZ.pf-slider-wrapper:hover .nav-style-3.pf-next-nav { right: 0px; }
+.kCAYOZ.pf-slider-mouse-event-off > * { pointer-events: none; }
+.kCAYOZ .pf-slider-inner { overflow: hidden; }
+.kCAYOZ .pf-slider-slide { will-change: contents; position: absolute; transform: translate3d(100%, 0px, 0px); overflow: hidden; top: 0px; }
+.kCAYOZ .pf-slider-nav { position: absolute; z-index: 999; cursor: pointer; border: 0px; background: transparent; top: 50%; transform: translateY(-50%); padding: 0px; transition: all 0.3s ease 0s; }
+.kCAYOZ .pf-slider-nav:focus { outline: 0px; }
+.kCAYOZ .pf-slider-nav::before { font-size: 14px; color: rgb(255, 255, 255); font-family: FontAwesome; }
+.kCAYOZ .pf-slider-nav.nav-style-1 { width: 40px; height: 40px; line-height: 40px; justify-content: center; background: rgba(0, 0, 0, 0.4); border-radius: 100%; }
+.kCAYOZ .pf-slider-nav.nav-style-1:hover { background: rgb(0, 0, 0); }
+.kCAYOZ .pf-slider-nav.nav-style-1.pf-prev-nav { left: 20px; }
+.kCAYOZ .pf-slider-nav.nav-style-1.pf-next-nav { right: 20px; }
+.kCAYOZ .pf-slider-nav.nav-style-2, .kCAYOZ .pf-slider-nav.nav-style-4, .kCAYOZ .pf-slider-nav.nav-style-5 { width: 40px; height: 40px; line-height: 40px; justify-content: center; background: rgb(3, 3, 3); border-radius: 3px; opacity: 0; }
+.kCAYOZ .pf-slider-nav.nav-style-2:hover, .kCAYOZ .pf-slider-nav.nav-style-4:hover, .kCAYOZ .pf-slider-nav.nav-style-5:hover { background: rgb(23, 23, 23); }
+.kCAYOZ .pf-slider-nav.nav-style-2.pf-prev-nav, .kCAYOZ .pf-slider-nav.nav-style-4.pf-prev-nav, .kCAYOZ .pf-slider-nav.nav-style-5.pf-prev-nav { left: 40px; }
+.kCAYOZ .pf-slider-nav.nav-style-2.pf-next-nav, .kCAYOZ .pf-slider-nav.nav-style-4.pf-next-nav, .kCAYOZ .pf-slider-nav.nav-style-5.pf-next-nav { right: 40px; }
+.kCAYOZ .pf-slider-nav.nav-style-3 { padding: 20px; text-shadow: rgb(0, 0, 0) 0px 0px 1px; opacity: 0; }
+.kCAYOZ .pf-slider-nav.nav-style-3::before { font-size: 24px; }
+.kCAYOZ .pf-slider-nav.nav-style-3.pf-prev-nav { left: 40px; }
+.kCAYOZ .pf-slider-nav.nav-style-3.pf-next-nav { right: 40px; }
+.kCAYOZ .pf-slider-nav.nav-style-5 { top: auto; bottom: 5%; opacity: 1; }
+.kCAYOZ .pf-slider-nav.nav-style-5.pf-prev-nav { right: 62px; border-radius: 3px 0px 0px 3px; }
+.kCAYOZ .pf-slider-nav.nav-style-5.pf-next-nav { right: 20px; border-radius: 0px 3px 3px 0px; }
+.kCAYOZ .pf-slider-nav-disabled { pointer-events: none; }
+.kCAYOZ .pf-slider-pagination { position: absolute; bottom: 15px; left: 0px; width: 100%; padding: 0px; margin: 0px; text-align: center; z-index: 1; }
+.kCAYOZ .pf-slider-pagination li { display: inline-block; margin: 0px 5px; background: rgb(187, 187, 187); opacity: 1; transition: all 0.3s ease 0s; cursor: pointer; }
+.kCAYOZ .pf-slider-pagination li.active, .kCAYOZ .pf-slider-pagination li:hover { background: rgb(33, 33, 33); }
+.kCAYOZ .pf-slider-pagination.pagination-style-1 li { width: 20px; height: 5px; }
+.kCAYOZ .pf-slider-pagination.pagination-style-2 li { position: relative; width: 8px; height: 8px; background: transparent; }
+.kCAYOZ .pf-slider-pagination.pagination-style-2 li::after { position: absolute; content: ""; left: -2px; top: -2px; width: 12px; height: 12px; border: 1px solid rgb(33, 33, 33); border-radius: 50%; }
+.kCAYOZ .pf-slider-pagination.pagination-style-2 li.active { background: rgb(33, 33, 33); border-radius: 50%; }
+.kCAYOZ .pf-slider-pagination.pagination-style-3 li { position: relative; width: 16px; height: 16px; border: 2px solid rgb(255, 255, 255); background: transparent; border-radius: 50%; }
+.kCAYOZ .pf-slider-pagination.pagination-style-3 li.active::after { position: absolute; content: ""; top: 3px; left: 3px; right: 3px; bottom: 3px; width: 6px; border: 2px solid rgb(255, 255, 255); border-radius: 100%; }
+.eYCUoW { display: flex; }
+.eYCUoW > div:first-child { display: flex; flex-flow: column wrap; position: relative; justify-content: center; align-items: center; min-width: 100px; }
+.eYCUoW > div:first-child .sc-qYsMX { padding: 0px 1rem; flex: 1 1 0%; }
+.hnPNQA { cursor: pointer; line-height: 1; border: none; color: rgb(23, 43, 77); padding: 12px 20px; text-align: center; text-decoration: none; appearance: none; outline: 0px; background: rgb(240, 242, 243); display: flex; align-items: center; white-space: nowrap; width: 100%; }
+.hnPNQA i { margin-right: 0.3em; }
+@media (max-width: 768px) {
+  .hnPNQA i { margin-top: 5px !important; margin-bottom: 5px !important; }
+}
+@media (max-width: 767px) {
+  .hnPNQA i { flex-flow: column; }
+}
+.hnPNQA [data-pf-tab-active="true"] { background: rgb(209, 213, 219); }
+.hnPNQA:hover, .hnPNQA:active, .hnPNQA:focus, .hnPNQA span { color: inherit; text-decoration: inherit; }
+.eXHXkH { padding: 20px; background: rgb(250, 251, 251); border: 2px solid rgb(209, 213, 219); }
+.fnmilh { display: inline-block; }
+.fnmilh[contenteditable="true"] { user-select: text; }
+.fnmilh { vertical-align: baseline; word-break: break-word; }
+.fnmilh:focus { outline: none; }
+.fnmilh::after { display: inline; }
+						/* PageFly Styles */
+						
+@media all {
+	.__pf .pf-67fec848 {
+		width: 80px;
+		 height: auto;
+	}
+	.__pf .pf-8e06abd4 {
+		font-size: 18px;
+	}
+	.__pf .pf-649320e5 {
+		font-size: 18px;
+	}
+	.__pf .pf-cd64ba5c {
+		font-size: 18px;
+	}
+	.__pf .pf-e7f0972f {
+		font-size: 18px;
+	}
+	.__pf .pf-a81567fe {
+		font-size: 18px;
+	}
+	.__pf .pf-48e949b1 {
+		width: 80px;
+		 height: auto;
+	}
+	.__pf .pf-0d4249ba {
+		font-size: 30px;
+		 font-weight: 600;
+		 display: inline-block;
+		 padding: 15px 20px;
+		 color: rgb(255, 255, 255);
+		 margin-top: 0px;
+		 margin-bottom: 20px;
+		 text-align: left;
+		 line-height: 23px;
+		 background-color: rgb(232, 138, 56);
+	}
+	.__pf .pf-efdb055c {
+		color: rgb(255, 255, 255);
+		 font-size: 70px;
+		 font-weight: 700;
+		 margin-top: 0px;
+		 margin-bottom: 0px;
+		 display: inline-block;
+		 text-align: left;
+		 letter-spacing: 0px;
+		 border-style: none;
+	}
+	.__pf .pf-055caa87 {
+		padding-top: 0px;
+		 min-height: 1px;
+		 margin-top: -80px;
+	}
+	.__pf .pf-aa874b51 {
+		margin-bottom: 55px;
+		 text-align: left;
+	}
+	.__pf .pf-fcf210ff {
+		color: rgb(255, 255, 255);
+		 font-size: 20px;
+		 font-weight: 700;
+		 margin-top: 0px;
+		 margin-bottom: 20px;
+	}
+	.__pf .pf-10ffa5f1 > div > div > span {
+		font-size: 60px;
+		 line-height: 1em;
+		 color: rgb(255, 255, 255);
+		 font-family: Poppins;
+		 font-weight: 600;
+		 margin-bottom: 10px;
+		 margin-left: 30px;
+		 margin-right: 30px;
+	}
+	.__pf .pf-10ffa5f1 > div > div > label {
+		margin-top: 5px;
+		 margin-bottom: 0px;
+		 font-size: 16px;
+		 line-height: 1em;
+		 font-family: Poppins;
+		 color: rgb(183, 183, 183);
+	}
+	.__pf .pf-0d4d74dd {
+		background-color: rgb(46, 46, 46);
+		 text-align: center;
+		 padding-top: 10px;
+		 padding-bottom: 10px;
+		 margin-left: 250px;
+		 margin-right: 250px;
+		 border-style: none;
+	}
+	.__pf .pf-74ddc105 {
+		padding-top: 240px;
+		 padding-bottom: 0px;
+		 background-size: cover;
+		 background-position: 50% 100%;
+		 background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-25dd3cb5--PetlibroHalloweenBanner1366x6282X.jpg?v=1603853965");
+	}
+	.__pf .pf-583e4946 {
+		text-align: center;
+		 padding-left: 20px;
+		 padding-right: 20px;
+		 font-size: 25px;
+		 margin-top: 5px;
+		 margin-bottom: 5px;
+	}
+	.__pf .pf-16db1710 {
+		text-align: center;
+		 padding-left: 20px;
+		 padding-right: 20px;
+		 font-size: 16px;
+		 margin-top: 5px;
+		 margin-bottom: 5px;
+	}
+	.__pf .pf-1d58b0a0 {
+		text-align: center;
+		 padding-left: 20px;
+		 padding-right: 20px;
+		 font-size: 16px;
+		 line-height: 30px;
+		 margin-top: 5px;
+		 margin-bottom: 0px;
+	}
+	.__pf .pf-ec7b1a47 {
+		margin-top: -10px;
+		 margin-bottom: -30px;
+	}
+	.__pf .pf-d3f82cef {
+		background-color: rgb(46, 46, 46);
+		 background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-3cb57248--Petlibro21366x4482X.jpg?v=1603854000");
+	}
+	.__pf .pf-e90af7e8 {
+		font-size: inherit;
+		 color: rgb(232, 138, 56);
+	}
+	.__pf .pf-c1c092fa {
+		font-size: 30px;
+		 font-weight: 600;
+		 color: rgb(255, 255, 255);
+		 margin-top: 0px;
+		 margin-bottom: 50px;
+	}
+	.__pf .pf-666dff99 {
+		font-size: 20px;
+		 margin-top: 0px;
+		 padding-top: 0px;
+	}
+	.__pf .pf-2fb9e374[data-pf-tab-active="true"] {
+		background: rgb(209, 213, 219);
+	}
+	.__pf .pf-2fb9e374 {
+		font-family: Poppins;
+		 font-size: 20px;
+		 margin-right: 20px;
+		 color: rgb(232, 138, 56);
+		 background-color: rgb(28, 28, 28);
+		 border-style: none;
+	}
+	.__pf .pf-2fb9e374:hover {
+		color: rgb(232, 138, 56);
+		 background-color: rgb(28, 28, 28);
+	}
+	.__pf .pf-2fb9e374[data-pf-tab-active="true"] {
+		color: rgb(255, 255, 255);
+		 background-color: rgb(28, 28, 28);
+	}
+	.__pf .pf-e3741985[data-pf-tab-active="true"] {
+		background: rgb(209, 213, 219);
+	}
+	.__pf .pf-e3741985 {
+		color: rgb(232, 138, 56);
+		 margin-right: 20px;
+		 font-size: 20px;
+		 background-color: rgb(28, 28, 28);
+		 border-style: none;
+	}
+	.__pf .pf-e3741985:hover {
+		color: rgb(232, 138, 56);
+		 background-color: rgb(28, 28, 28);
+	}
+	.__pf .pf-e3741985[data-pf-tab-active="true"] {
+		background-color: rgb(28, 28, 28);
+		 color: rgb(255, 255, 255);
+	}
+	.__pf .pf-1985fe35[data-pf-tab-active="true"] {
+		background: rgb(209, 213, 219);
+	}
+	.__pf .pf-1985fe35 {
+		color: rgb(232, 138, 56);
+		 margin-right: 20px;
+		 font-size: 20px;
+		 background-color: rgb(28, 28, 28);
+	}
+	.__pf .pf-1985fe35:hover {
+		color: rgb(232, 138, 56);
+		 background-color: rgb(28, 28, 28);
+	}
+	.__pf .pf-1985fe35[data-pf-tab-active="true"] {
+		background-color: rgb(28, 28, 28);
+		 color: rgb(255, 255, 255);
+	}
+	.__pf .pf-89ed7801[data-pf-tab-active="true"] {
+		background: rgb(209, 213, 219);
+	}
+	.__pf .pf-89ed7801 {
+		color: rgb(232, 138, 56);
+		 margin-right: 20px;
+		 font-size: 20px;
+		 background-color: rgb(28, 28, 28);
+	}
+	.__pf .pf-89ed7801[data-pf-tab-active="true"] {
+		background-color: rgb(28, 28, 28);
+		 color: rgb(255, 255, 255);
+	}
+	.__pf .pf-881c4842 {
+		width: 300px;
+		 height: auto;
+	}
+	.__pf .pf-d2965f41 {
+		margin-left: 20px;
+		 margin-right: 20px;
+		 width: 300px;
+		 height: auto;
+	}
+	.__pf .pf-5f417d7e {
+		width: 300px;
+		 height: auto;
+	}
+	.__pf .pf-927460b4 {
+		border-style: none;
+		 border-width: 2px;
+		 border-color: rgb(209, 213, 219);
+		 background-color: rgb(28, 28, 28);
+		 margin-right: -30px;
+	}
+	.__pf .pf-ca377c47 {
+		width: 300px;
+		 height: auto;
+	}
+	.__pf .pf-60b49668 {
+		border-style: none;
+		 border-width: 2px;
+		 background-color: rgb(28, 28, 28);
+	}
+	.__pf .pf-6f026f02 {
+		width: 300px;
+		 height: auto;
+	}
+	.__pf .pf-6f0270d1 {
+		margin-left: 20px;
+		 margin-right: 20px;
+		 width: 300px;
+		 height: auto;
+	}
+	.__pf .pf-4fb9881c {
+		background-color: rgb(28, 28, 28);
+		 border-style: none;
+	}
+	.__pf .pf-70d1197d {
+		width: 300px;
+		 height: auto;
+	}
+	.__pf .pf-197df5ed {
+		margin-left: 20px;
+		 margin-right: 20px;
+		 width: 300px;
+		 height: auto;
+	}
+	.__pf .pf-c5456f02 {
+		background-color: rgb(28, 28, 28);
+		 border-style: none;
+	}
+	.__pf .pf-fe3568bd {
+		width: 100%;
+	}
+	.__pf .pf-6ad511e0 > nav > .nav-item {
+		color: black;
+		 display: inline-block;
+		 padding: 0.5em 1em;
+		 font-weight: bold;
+		 border-width: 1px 1px 2px;
+		 text-decoration: none;
+		 border-bottom-style: solid;
+		 border-bottom-color: transparent;
+	}
+	.__pf .pf-6ad511e0 > div:last-child > div {
+		display: none;
+	}
+	.__pf .pf-f59d71a5 {
+		padding-top: 45px;
+		 padding-bottom: 45px;
+		 background-color: rgb(28, 28, 28);
+	}
+	.__pf .pf-7318f23a {
+		font-weight: 500;
+		 margin: 0px -180px 35px;
+		 color: rgb(255, 255, 255);
+		 font-size: 20px;
+		 text-align: center;
+		 line-height: 40px;
+	}
+	.__pf .pf-72586306 {
+		font-weight: 500;
+		 letter-spacing: 1.5px;
+		 margin-top: 0px;
+		 margin-bottom: 15px;
+		 color: rgb(132, 132, 132);
+		 font-size: 15px;
+	}
+	.__pf .pf-63066136 {
+		text-align: center;
+		 margin-left: 270px;
+		 margin-right: 270px;
+	}
+	.__pf .pf-6136483b {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-bcd3a699 {
+		font-weight: 500;
+		 margin: 0px -180px 35px;
+		 color: rgb(255, 255, 255);
+		 font-size: 20px;
+	}
+	.__pf .pf-968d1840 {
+		font-weight: 500;
+		 letter-spacing: 1.5px;
+		 margin-top: 0px;
+		 margin-bottom: 15px;
+		 color: rgb(132, 132, 132);
+		 font-size: 15px;
+	}
+	.__pf .pf-18404349 {
+		text-align: center;
+		 margin-left: 270px;
+		 margin-right: 270px;
+	}
+	.__pf .pf-43490390 {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-79b8367b {
+		font-weight: 500;
+		 margin: 0px -180px 35px;
+		 color: rgb(255, 255, 255);
+		 font-size: 20px;
+		 text-align: center;
+		 line-height: 40px;
+	}
+	.__pf .pf-81f79dc8 {
+		font-weight: 500;
+		 letter-spacing: 1.5px;
+		 margin-top: 0px;
+		 margin-bottom: 15px;
+		 color: rgb(132, 132, 132);
+		 font-size: 15px;
+	}
+	.__pf .pf-9dc8331d {
+		text-align: center;
+		 margin-left: 270px;
+		 margin-right: 270px;
+	}
+	.__pf .pf-331da336 {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-a3366754 {
+		height: 360px;
+		 line-height: 40px;
+	}
+	.__pf .pf-79b82136 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-dd3cb572--Petlibro11366x4482X.jpg?v=1603853980");
+		 background-size: cover;
+		 padding-top: 30px;
+		 padding-bottom: 30px;
+		 background-position: 50% 50%;
+	}
+	.__pf .pf-c105bf4e {
+		font-size: inherit;
+		 color: rgb(232, 138, 56);
+	}
+	.__pf .pf-f36e602f {
+		font-size: 30px;
+		 font-weight: 600;
+		 color: rgb(255, 255, 255);
+		 margin-top: 0px;
+		 margin-bottom: 50px;
+	}
+	.__pf .pf-4e17b535 {
+		margin: 330px 20px 20px;
+		 color: rgb(255, 255, 255);
+		 font-weight: 600;
+		 font-size: 20px;
+	}
+	.__pf .pf-b535870f {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-689a351c--wafflethetabby3.jpg?v=1603773068");
+		 background-size: cover;
+		 background-position: 50% 50%;
+		 background-repeat: repeat;
+	}
+	.__pf .pf-522232c2 {
+		margin: 330px 20px 20px;
+		 color: rgb(255, 255, 255);
+		 font-weight: 600;
+		 font-size: 20px;
+	}
+	.__pf .pf-32c27ba3 {
+		background-size: cover;
+		 background-position: 50% 50%;
+		 background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-4946f968--bellaandbuttons-Edited.jpg?v=1603866926");
+	}
+	.__pf .pf-fdec0ba7 {
+		margin: 330px 20px 20px;
+		 color: rgb(255, 255, 255);
+		 font-weight: 600;
+		 font-size: 20px;
+	}
+	.__pf .pf-0ba7e983 {
+		background-size: cover;
+		 background-position: 50% 50%;
+		 background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-19a7779e--halloween-kitandkat.jpg?v=1603940400");
+	}
+	.__pf .pf-ab7ead35 {
+		margin: 330px 20px 20px;
+		 color: rgb(255, 255, 255);
+		 font-weight: 600;
+		 font-size: 20px;
+	}
+	.__pf .pf-ad35e02f {
+		background-size: cover;
+		 background-position: 50% 50%;
+		 background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-779e0274---34.png?v=1603940594");
+	}
+	.__pf .pf-58e921b0 {
+		margin: 330px 20px 20px;
+		 color: rgb(255, 255, 255);
+		 font-family: Poppins;
+		 font-weight: 600;
+		 font-size: 20px;
+	}
+	.__pf .pf-21b01728 {
+		background-size: cover;
+		 background-position: 50% 50%;
+		 background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-a7779e02---33.png?v=1603940556");
+	}
+	.__pf .pf-172893b4 {
+		height: 384px;
+	}
+	.__pf .pf-b1231a22 {
+		background-color: rgb(28, 28, 28);
+		 padding-top: 95px;
+		 padding-bottom: 95px;
+	}
+	.__pf .pf-8aeb5d4f {
+		margin-bottom: 15px;
+		 width: 50px;
+		 height: auto;
+	}
+	.__pf .pf-164af08e {
+		font-size: 20px;
+		 font-weight: 500;
+		 color: rgb(255, 255, 255);
+		 margin-top: 0px;
+		 margin-bottom: 10px;
+	}
+	.__pf .pf-f08e9141 {
+		background-color: rgb(46, 46, 46);
+		 padding: 30px 10px;
+	}
+	.__pf .pf-91410934 {
+		margin-bottom: 15px;
+		 width: 50px;
+		 height: auto;
+	}
+	.__pf .pf-8039c5b5 {
+		font-size: 20px;
+		 font-weight: 500;
+		 color: rgb(255, 255, 255);
+		 margin-top: 0px;
+		 margin-bottom: 10px;
+	}
+	.__pf .pf-c5b59cab {
+		background-color: rgb(46, 46, 46);
+		 padding: 30px 10px;
+	}
+	.__pf .pf-9cabd9d2 {
+		margin-bottom: 15px;
+		 width: 50px;
+		 height: auto;
+	}
+	.__pf .pf-d36e7ee2 {
+		font-size: 20px;
+		 font-weight: 500;
+		 color: rgb(255, 255, 255);
+		 margin-top: 0px;
+		 margin-bottom: 10px;
+	}
+	.__pf .pf-7ee2786c {
+		background-color: rgb(46, 46, 46);
+		 padding: 30px 10px;
+	}
+	.__pf .pf-786ceb9a {
+		text-align: center;
+	}
+	.__pf .pf-eb9a3eb0 {
+		padding-top: 45px;
+		 padding-bottom: 45px;
+		 background-color: rgb(28, 28, 28);
+	}
+}
+@media only screen and (max-width: 767px) {
+	.__pf .pf-0d4249ba {
+		font-size: 15px;
+		 margin-bottom: 20px;
+		 padding: 5px;
+	}
+	.__pf .pf-efdb055c {
+		font-size: 29px;
+	}
+	.__pf .pf-055caa87 {
+		margin-top: 0px;
+	}
+	.__pf .pf-aa874b51 {
+		margin-bottom: 30px;
+	}
+	.__pf .pf-fcf210ff {
+		font-size: 13px;
+	}
+	.__pf .pf-10ffa5f1 > div > div > span {
+		font-size: 25px;
+		 margin-left: 20px;
+		 margin-right: 20px;
+	}
+	.__pf .pf-10ffa5f1 > div > div > label {
+		font-size: 11px;
+	}
+	.__pf .pf-0d4d74dd {
+		margin-left: 0px;
+		 margin-right: 0px;
+	}
+	.__pf .pf-74ddc105 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-8bbb25dd--PetlibroHalloweenBanner2X.jpg?v=1603853953&selected");
+		 padding-top: 50px;
+	}
+	.__pf .pf-583e4946 {
+		font-size: 20px;
+	}
+	.__pf .pf-16db1710 {
+		font-size: 14px;
+		 line-height: 20px;
+	}
+	.__pf .pf-1d58b0a0 {
+		font-size: 14px;
+		 line-height: 20px;
+	}
+	.__pf .pf-d3f82cef {
+		font-size: 30px;
+	}
+	.__pf .pf-c1c092fa {
+		font-size: 20px;
+	}
+	.__pf .pf-666dff99 {
+		font-size: 16px;
+	}
+	.__pf .pf-2fb9e374 {
+		font-size: 12px;
+	}
+	.__pf .pf-2fb9e374[data-pf-tab-active="true"] {
+		font-size: 12px;
+	}
+	.__pf .pf-e3741985 {
+		font-size: 12px;
+		 padding-left: 20px;
+	}
+	.__pf .pf-e3741985[data-pf-tab-active="true"] {
+		padding-left: 20px;
+		 font-size: 12px;
+	}
+	.__pf .pf-1985fe35 {
+		font-size: 12px;
+	}
+	.__pf .pf-1985fe35[data-pf-tab-active="true"] {
+		font-size: 12px;
+	}
+	.__pf .pf-89ed7801 {
+		font-size: 12px;
+		 background-color: rgb(28, 28, 28);
+	}
+	.__pf .pf-89ed7801[data-pf-tab-active="true"] {
+		font-size: 12px;
+	}
+	.__pf .pf-881c4842 {
+		width: 80px;
+		 height: auto;
+		 margin-left: 20px;
+	}
+	.__pf .pf-d2965f41 {
+		width: 80px;
+		 height: auto;
+		 margin-left: 5px;
+		 margin-right: 5px;
+	}
+	.__pf .pf-5f417d7e {
+		width: 80px;
+		 height: auto;
+		 margin-left: 20px;
+		 margin-top: 5px;
+	}
+	.__pf .pf-ca377c47 {
+		width: 80px;
+		 height: auto;
+		 padding-left: 0px;
+		 margin-left: 20px;
+	}
+	.__pf .pf-6f026f02 {
+		width: 80px;
+		 height: auto;
+		 padding-left: 0px;
+		 margin-left: 20px;
+	}
+	.__pf .pf-6f0270d1 {
+		width: 80px;
+		 height: auto;
+		 margin-left: 5px;
+		 margin-right: 5px;
+	}
+	.__pf .pf-70d1197d {
+		width: 80px;
+		 height: auto;
+		 margin-left: 20px;
+	}
+	.__pf .pf-197df5ed {
+		width: 80px;
+		 height: auto;
+		 margin-left: 5px;
+		 margin-right: 5px;
+	}
+	.__pf .pf-7318f23a {
+		font-size: 14px;
+		 margin-bottom: 20px;
+		 margin-left: 0px;
+		 margin-right: 0px;
+		 text-align: center;
+		 line-height: 20px;
+	}
+	.__pf .pf-72586306 {
+		font-size: 13px;
+	}
+	.__pf .pf-63066136 {
+		margin-left: 0px;
+		 margin-right: 0px;
+	}
+	.__pf .pf-6136483b {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-bcd3a699 {
+		font-size: 14px;
+		 margin-bottom: 20px;
+		 line-height: 20px;
+		 margin-left: 0px;
+		 margin-right: 0px;
+	}
+	.__pf .pf-968d1840 {
+		font-size: 13px;
+	}
+	.__pf .pf-18404349 {
+		margin-left: 0px;
+		 margin-right: 0px;
+	}
+	.__pf .pf-43490390 {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-79b8367b {
+		font-size: 14px;
+		 margin-bottom: 20px;
+		 margin-left: 0px;
+		 margin-right: 0px;
+		 line-height: 20px;
+	}
+	.__pf .pf-81f79dc8 {
+		font-size: 13px;
+	}
+	.__pf .pf-9dc8331d {
+		margin-left: 0px;
+		 margin-right: 0px;
+	}
+	.__pf .pf-331da336 {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-a3366754 {
+		height: 250px;
+	}
+	.__pf .pf-79b82136 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-dd3cb572--Petlibro11366x4482X.jpg?v=1603853980&selected");
+	}
+	.__pf .pf-f36e602f {
+		font-size: 20px;
+	}
+	.__pf .pf-b535870f {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-689a351c--wafflethetabby3.jpg?v=1603773068&selected");
+	}
+	.__pf .pf-32c27ba3 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-4946f968--bellaandbuttons-Edited.jpg?v=1603866926&selected");
+	}
+	.__pf .pf-0ba7e983 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-19a7779e--halloween-kitandkat.jpg?v=1603940400&selected");
+	}
+	.__pf .pf-ad35e02f {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-779e0274---34.png?v=1603940594&selected");
+	}
+	.__pf .pf-21b01728 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-a7779e02---33.png?v=1603940556&selected");
+	}
+	.__pf .pf-172893b4 {
+		height: 400px;
+	}
+	.__pf .pf-b1231a22 {
+		padding-top: 40px;
+		 padding-bottom: 40px;
+	}
+	.__pf .pf-8aeb5d4f {
+		width: 50px;
+		 height: auto;
+	}
+	.__pf .pf-164af08e {
+		font-size: 15px;
+	}
+	.__pf .pf-91410934 {
+		width: 50px;
+		 height: auto;
+	}
+	.__pf .pf-8039c5b5 {
+		font-size: 15px;
+	}
+	.__pf .pf-9cabd9d2 {
+		width: 50px;
+		 height: auto;
+	}
+	.__pf .pf-d36e7ee2 {
+		font-size: 15px;
+	}
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+	.__pf .pf-8e06abd4 {
+		font-size: 16px;
+	}
+	.__pf .pf-649320e5 {
+		font-size: 16px;
+	}
+	.__pf .pf-cd64ba5c {
+		font-size: 16px;
+	}
+	.__pf .pf-e7f0972f {
+		font-size: 16px;
+	}
+	.__pf .pf-a81567fe {
+		font-size: 16px;
+	}
+	.__pf .pf-74ddc105 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-25dd3cb5--PetlibroHalloweenBanner1366x6282X.jpg?v=1603853965&selected");
+	}
+	.__pf .pf-6136483b {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-43490390 {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-331da336 {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-a3366754 {
+		height: 360px;
+	}
+	.__pf .pf-79b82136 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-dd3cb572--Petlibro11366x4482X.jpg?v=1603853980&selected");
+	}
+	.__pf .pf-b535870f {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-689a351c--wafflethetabby3.jpg?v=1603773068&selected");
+	}
+	.__pf .pf-32c27ba3 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-4946f968--bellaandbuttons-Edited.jpg?v=1603866926&selected");
+	}
+	.__pf .pf-0ba7e983 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-19a7779e--halloween-kitandkat.jpg?v=1603940400&selected");
+	}
+	.__pf .pf-ad35e02f {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-779e0274---34.png?v=1603940594&selected");
+	}
+	.__pf .pf-21b01728 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-a7779e02---33.png?v=1603940556&selected");
+	}
+	.__pf .pf-172893b4 {
+		height: 380px;
+	}
+}
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	.__pf .pf-efdb055c {
+		font-size: 60px;
+	}
+	.__pf .pf-fcf210ff {
+		font-size: 18px;
+	}
+	.__pf .pf-10ffa5f1 > div > div > span {
+		font-size: 40px;
+	}
+	.__pf .pf-0d4d74dd {
+		margin-left: 100px;
+		 margin-right: 100px;
+	}
+	.__pf .pf-74ddc105 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-8bbb25dd--PetlibroHalloweenBanner2X.jpg?v=1603853953&selected");
+	}
+	.__pf .pf-d3f82cef {
+		font-size: 60px;
+	}
+	.__pf .pf-c1c092fa {
+		font-size: 25px;
+	}
+	.__pf .pf-2fb9e374 {
+		font-size: 16px;
+	}
+	.__pf .pf-2fb9e374[data-pf-tab-active="true"] {
+		font-size: 16px;
+	}
+	.__pf .pf-e3741985 {
+		font-size: 16px;
+	}
+	.__pf .pf-e3741985[data-pf-tab-active="true"] {
+		font-size: 16px;
+	}
+	.__pf .pf-1985fe35 {
+		font-size: 16px;
+	}
+	.__pf .pf-1985fe35[data-pf-tab-active="true"] {
+		font-size: 16px;
+	}
+	.__pf .pf-89ed7801 {
+		font-size: 16px;
+	}
+	.__pf .pf-89ed7801[data-pf-tab-active="true"] {
+		font-size: 16px;
+	}
+	.__pf .pf-881c4842 {
+		width: 120px;
+		 height: auto;
+	}
+	.__pf .pf-d2965f41 {
+		width: 120px;
+		 height: auto;
+	}
+	.__pf .pf-5f417d7e {
+		width: 120px;
+		 height: auto;
+	}
+	.__pf .pf-ca377c47 {
+		width: 120px;
+		 height: auto;
+	}
+	.__pf .pf-6f026f02 {
+		width: 120px;
+		 height: auto;
+	}
+	.__pf .pf-6f0270d1 {
+		width: 120px;
+		 height: auto;
+	}
+	.__pf .pf-70d1197d {
+		width: 120px;
+		 height: auto;
+	}
+	.__pf .pf-197df5ed {
+		width: 120px;
+		 height: auto;
+	}
+	.__pf .pf-7318f23a {
+		margin-left: 0px;
+		 margin-right: 0px;
+		 line-height: 26px;
+		 font-size: 18px;
+	}
+	.__pf .pf-63066136 {
+		margin-left: 70px;
+		 margin-right: 70px;
+	}
+	.__pf .pf-6136483b {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-bcd3a699 {
+		margin-left: 0px;
+		 margin-right: 0px;
+		 line-height: 26px;
+		 font-size: 18px;
+	}
+	.__pf .pf-18404349 {
+		margin-left: 70px;
+		 margin-right: 70px;
+	}
+	.__pf .pf-43490390 {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-79b8367b {
+		margin-left: 0px;
+		 margin-right: 0px;
+		 line-height: 26px;
+		 font-size: 16px;
+	}
+	.__pf .pf-81f79dc8 {
+		margin-top: -30px;
+	}
+	.__pf .pf-9dc8331d {
+		margin-left: 70px;
+		 margin-right: 70px;
+	}
+	.__pf .pf-331da336 {
+		background-size: cover;
+		 background-repeat: no-repeat;
+	}
+	.__pf .pf-a3366754 {
+		height: 240px;
+	}
+	.__pf .pf-79b82136 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-dd3cb572--Petlibro11366x4482X.jpg?v=1603853980&selected");
+	}
+	.__pf .pf-f36e602f {
+		font-size: 25px;
+	}
+	.__pf .pf-b535870f {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-689a351c--wafflethetabby3.jpg?v=1603773068&selected");
+	}
+	.__pf .pf-32c27ba3 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-4946f968--bellaandbuttons-Edited.jpg?v=1603866926&selected");
+	}
+	.__pf .pf-0ba7e983 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-19a7779e--halloween-kitandkat.jpg?v=1603940400&selected");
+	}
+	.__pf .pf-ad35e02f {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-779e0274---34.png?v=1603940594&selected");
+	}
+	.__pf .pf-58e921b0 {
+		font-size: 18px;
+	}
+	.__pf .pf-21b01728 {
+		background-image: url("https://cdn.shopify.com/s/files/1/0252/5197/1119/t/4/assets/pf-a7779e02---33.png?v=1603940556&selected");
+	}
+	.__pf .pf-172893b4 {
+		height: 380px;
+	}
+	.__pf .pf-164af08e {
+		font-size: 16px;
+	}
+	.__pf .pf-8039c5b5 {
+		font-size: 16px;
+	}
+	.__pf .pf-d36e7ee2 {
+		font-size: 16px;
+	}
+}
+						
+
+ 

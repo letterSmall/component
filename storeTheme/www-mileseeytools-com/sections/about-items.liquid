@@ -1,0 +1,62 @@
+{% if section.blocks.size > 0 %}
+<div class="container">
+  <div class="about-number-wrapper">
+    {% for block in section.blocks %}
+    <div class="about-col-item">
+      {% if block.settings.title != blank %}
+      <div class="title">{{ block.settings.title }}</div>
+      {% endif %}
+      {% if block.settings.number != blank %}
+      <div class="number">{{ block.settings.number }}</div>
+      {% endif %}
+      {% if block.settings.text != blank %}
+      <div class="text">{{ block.settings.text }}</div>
+      {% endif %}
+    </div>
+    {%endfor%}
+  </div>
+</div>
+{% if section.settings.image %}
+<div class="about-number-imgage">
+  <img src="{{ section.settings.image |img_url: 'master' }}" alt=""/>
+</div>
+{% endif %}
+{% endif%}
+
+{% schema %}
+{
+  "name": "About Items and Image",
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "Image",
+      "id": "image",
+      "info": "Size:880px*560px"
+    }
+   ],
+  "max_blocks":4,
+  "blocks":[
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "html",
+          "id": "number",
+          "label": "Number"
+        },
+        {
+          "type": "html",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

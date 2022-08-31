@@ -1,0 +1,117 @@
+{% if section.settings.show_block  %}
+  <div class="Shippingho-outbottombox">
+  <div class="Shipcontent-nrbox">
+   {% for block in section.blocks %}
+    <div class="Shipcontent-item">
+      {% if block.settings.title != blank %}
+      <div class="Shipcontent-title">{{ block.settings.title  }}<img {% if forloop.first %}class="active"{% endif %}  alt src="https://cdn.shopifycdn.net/s/files/1/0252/5197/1119/files/copy_4.png?v=1646816095"/></div>
+      {% endif %}
+      {% if block.settings.content != blank %}
+      <div class="Shipcontent-content" {% unless forloop.first %}style="display:none"{% endunless %}>{{ block.settings.content }}</div>
+      {% endif %}
+    </div>
+
+  {% endfor %}
+</div>
+
+{% if section.settings.title !=blank %}
+<div class="Shipcontent-midtitle">{{section.settings.title}}</div>
+{% endif %}
+
+  {% if section.settings.logo01 or section.settings.logo02 or section.settings.logo03 %}
+     <div class="Shipcontent-midlogo">
+    {% if section.settings.logo01 %}
+      <img alt src="{{ section.settings.logo01 | img_url:'master' }}"/> 
+    {% endif %}
+       {% if section.settings.logo02 %}
+      <img alt src="{{ section.settings.logo02 | img_url:'master' }}"/> 
+    {% endif %}
+       {% if section.settings.logo03 %}
+      <img alt src="{{ section.settings.logo03 | img_url:'master' }}"/> 
+    {% endif %}
+    </div>
+ {% endif %}
+{% if section.settings.bottomtext !=blank %}
+<div class="Shipcontent-bottomtext">{{section.settings.bottomtext}}</div>
+{% endif %}
+
+<script>
+  $(function() { 
+    $(".Shipcontent-title").click(function(){
+      if( $(this).next(".Shipcontent-content").is(":hidden")){
+        $(this).find("img").addClass("active");
+      }else{
+        $(this).find("img").removeClass("active");
+      }
+
+      $(this).next(".Shipcontent-content").stop().slideToggle();
+    });    
+
+  });
+</script> 
+</div>
+{% endif %}
+
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Content",
+    "settings": [
+         {
+            "type": "checkbox",
+            "id": "show_block",
+            "label": "show_block?",
+             "default":true
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "image_picker",
+            "id": "logo01",
+            "label": "logo01"
+          },{
+            "type": "image_picker",
+            "id": "logo02",
+            "label": "logo02"
+          },{
+            "type": "image_picker",
+            "id": "logo03",
+            "label": "logo03"
+          },{
+            "type": "richtext",
+            "id": "bottomtext",
+            "label": "bottomtext"
+          }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "image",
+        "settings": [
+           {
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Content",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+

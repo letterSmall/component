@@ -1,0 +1,81 @@
+{%assign product=all_products[product]%}
+
+{%- liquid
+    assign on_sale = false
+    if product.compare_at_price > product.price
+      assign on_sale = true
+    endif
+    -%}
+
+   
+{%- assign preview_image = product.featured_media.preview_image -%}
+{%assign product_image=product_image|default:preview_image%}
+{%- assign img_url = product_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+<div class="image">
+      <div class="feature-row__image-wrapper js {%if product_image.aspect_ratio!=1%}get_zheng{%endif%}"
+          style="max-width:{{product_image.width}}px "> 
+          <div style="padding-top:{{ 1 | divided_by: product_image.aspect_ratio | times: 100}}%;"
+              data-image-loading-animation> 
+<img  class="feature-row__image "
+src="{{ product_image |img_url:'master'}}"
+
+alt="{{ product_image.alt | escape }}">
+          </div>
+      </div>
+</div>
+
+<div class="pcwi-bottom   {%if product.handle==product_current%}current{%endif%}">
+<div class="product-name">
+    {%if product_title!=blank%}
+    {{product_title}}
+{%else%}
+{{product.title}}
+{%endif%}
+</div>
+<div class="product-price-box">
+{%if section.settings.product_price%}
+{{section.settings.product_price}}
+{%else%}
+<div class="grid-product__price">
+  {%- if on_sale -%}
+    <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+    <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>
+    <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+  {%- endif -%}
+  {%- if product.price_varies -%}
+    {%- assign price = product.price_min | money -%}
+    <span {% if on_sale %}class="sale-price"{% endif %}>
+      {{ 'products.general.from_text_html' | t: price: price }}
+    </span>
+  {%- else -%}
+    <span {% if on_sale %}class="sale-price"{% endif %}>
+      {{ product.price  | money }}
+    </span>
+  {%- endif -%}
+
+  {%- assign product_variant = product.selected_or_first_available_variant -%}
+  {%- if product_variant.unit_price_measurement -%}
+    <div class="product__unit-price">
+      {%- capture unit_price_base_unit -%}
+        {%- if product_variant.unit_price_measurement -%}
+          {%- if product_variant.unit_price_measurement.reference_value != 1 -%}
+            {{ product_variant.unit_price_measurement.reference_value }}
+          {%- endif -%}
+          {{ product_variant.unit_price_measurement.reference_unit }}
+        {%- endif -%}
+      {%- endcapture -%}
+
+      {{ product_variant.unit_price | money }}/{{ unit_price_base_unit }}
+    </div>
+  {%- endif -%}
+</div>
+{%endif%}
+  </div>
+<div class="product_url">
+  {%if product.handle==product_current%}
+  <span>(Current Model)</span>
+  {%else%}
+  <a href="{{product.url}}">Learn More</a>
+  {%endif%}
+</div>
+</div>

@@ -1,0 +1,133 @@
+
+  {% if section.settings.text_color %}
+<style>
+  .banner-width-video-{{ section.id }} .TextMask_title,.banner-width-video-{{ section.id }} p,.banner-width-video-{{ section.id }} .BlockHero_cta a{
+    color:{{section.settings.text_color}};
+  }
+  .banner-width-video-{{ section.id }}  .icon-arrow-right{
+    background-color:{{section.settings.text_color}};
+  }
+  </style>
+  {% endif %}
+  
+<div class="banner-width-video banner-width-video-{{ section.id }}">
+  <div class="BlockHero_container">
+    <div class="Slider_container">
+      <div class="BlockHero_sliderInner">
+        <div class="Slider_track">
+          <div class="BlockHero_heroItem">
+            <div class="container__ugImL"><span>
+              {%- assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                    <img class=" hero__image--{{ block.id }} lazyload"
+                      src="{{ section.settings.image | img_url: '300x' }}"
+                      data-src="{{ img_url }}"
+                      data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ section.settings.image.alt | escape }}">
+              </span></div>
+            <div class="BlockHero_content">
+          <div class="BlockHero_contentInner">
+            {% if section.settings.title != blank %}<h1 class="TextMask_title">{{ section.settings.title }}</h1>{% endif %}
+            {% if section.settings.subheading != blank %}<div class="BlockHero_body">{{ section.settings.subheading }}</div>{% endif %}
+            {% if section.settings.link_text != blank %}<div class="BlockHero_cta">
+              <a {% if section.settings.link != blank %}href="{{ section.settings.link }}"{% else %} onclick="return false;"{% endif%}>
+                <span class="icon-arrow-right"><svg width="11" height="19" viewBox="0 0 11 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 18L9.23022 10.227C9.64806 9.83239 9.64806 9.16761 9.23022 8.77299L1 1" stroke="black" stroke-width="2" stroke-linecap="round"/>
+                  </svg></span>
+
+                {{ section.settings.link_text }}</a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+          </div>
+          <div class="BlockHero_heroItem">
+            <div class="VideoBackground_container">
+              <video class="VideoBackground_video" type="video/mp4" volume="0" muted="" loop="" playsinline="" preload="none" autoplay="true">
+                {% if section.settings.video_address != blank %}
+                <source src="{{ section.settings.video_address }}" type="video/mp4">
+                {% else %}
+                <source src="https://videos.ctfassets.net/l595fda2nfqd/32yHSMCatteSoLz3ALF9io/f604f225a81a3a1e25e4d6f635ef22d1/Ep01_HomeTeaser.mp4" type="video/mp4">
+                {% endif %}
+              </video>
+              <button class="VideoBackground_pauseBtn"><svg class="PauseIcon_container VideoBackground_playSvg" viewBox="0 0 17 16"><rect x="11" y="1" width="5" height="14" stroke-width="1.8"></rect><rect x="1" y="1" width="5" height="14" stroke-width="1.8"></rect></svg></button>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+   $(".VideoBackground_pauseBtn").click(function(){         
+          let cur_video =$(".VideoBackground_video")[0];
+          if(cur_video.paused){
+            cur_video.play();
+            $(".VideoBackground_pauseBtn").html('<svg viewBox="0 0 17 16"><rect x="11" y="1" width="5" height="14" stroke-width="1.8"></rect><rect x="1" y="1" width="5" height="14" stroke-width="1.8"></rect></svg>');
+            
+          }else{
+            cur_video.pause();
+            $(".VideoBackground_pauseBtn").html('<svg viewBox="0 0 13 16"><g transform="matrix(1,0,0,1,-7.80447,-3.06453)"><path d="M8.943,3.857L19.337,10.792C19.485,10.891 19.485,11.109 19.337,11.208L8.943,18.143C8.777,18.254 8.554,18.135 8.554,17.935L8.554,4.065C8.554,3.865 8.777,3.746 8.943,3.857Z"></path></g></svg>');
+            
+          }              
+        })
+</script>
+{% schema %}
+  {
+    "name": "Banner with video",
+    "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+ {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Heading",
+      "default": "Choose <br>your <br>Adventure."
+    },
+
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>A bike that will turn every journey,  path and  road into a joy</p>"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Slide link"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Slide link text",
+      "default": "see more"
+    },
+    {
+      "type": "text",
+      "id": "video_address",
+      "label": "video file address"
+    }
+],
+"presets": [
+    {
+      "category": "Image",
+      "name": "Banner with video"
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

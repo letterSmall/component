@@ -1,0 +1,63 @@
+ {%if section.settings.show_shipping%}
+            <div class="product-shipping-container" id="psc" data-start="{{section.settings.shipping_start_time}}" data-interval="{{section.settings.shipping_interval}}">
+           <div class="right-content">{{section.settings.shipping_text}} <span class="text"> <span class="start_time" id="fromDate"></span> - <span class="end_time" id="toDate"></span></span>
+            
+              </div>
+            </div>
+{%endif%}
+
+
+  <script src="{{ 'datejs.js' | asset_url }}" ></script>
+
+<script>
+  
+  $(document).ready(function(){
+    setInterval(function(){
+     var fromDate = Date.today().addDays({{section.settings.shipping_start_time}});
+  var toDate = Date.today().addDays({{section.settings.shipping_start_time|plus:section.settings.shipping_interval}});
+  document.getElementById('fromDate').innerHTML = fromDate.toString('M/d');
+  document.getElementById('toDate').innerHTML = toDate.toString('M/d/yyyy');
+  
+    },1000)
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+//   let shipping_el= $('#psc'), shipping_time_set =shipping_el.data('start'), delivery_time_set = shipping_el.data('interval'),
+//     delivery_time_set2=parseInt(shipping_time_set) +parseInt(delivery_time_set);
+// let timeSetInterval = setInterval("getShippingDate()", 1000);
+
+// console.log(shipping_time_set,delivery_time_set);
+
+// function getShippingDate(){
+//   let shipping_time="",delivery_time="";
+// 	let cur=new Date(); 
+// 	const shippingDate=new Date(cur.getTime()+(shipping_time_set*24*3600*1000));
+// 	const shipping_Date=shippingDate.toLocaleDateString().split('/');
+// 	const shippingMon=shipping_Date[1]<10?`0${shipping_Date[1]}`:shipping_Date[1];
+  
+//   shipping_time=`${shippingMon}/${shipping_Date[2]}/${shipping_Date[0]}`;
+  
+  
+  
+//   const deliveryDate=new Date(cur.getTime()+(delivery_time_set2*24*3600*1000));
+// 	const delivery_Date=deliveryDate.toLocaleDateString().split('/');
+// 	const deliveryMon=delivery_Date[1]<10?`0${delivery_Date[1]}`:delivery_Date[1];
+  
+//   delivery_time=`${deliveryMon}/${delivery_Date[2]}/${delivery_Date[0]}`;
+  
+  
+//   $('#sst').text(shipping_time);
+  
+//    $('#set').text(delivery_time);
+  
+// }
+  
+
+
+  </script>

@@ -1,0 +1,54 @@
+
+<div class="feeding_app_box">
+  <div class="feeding_app_mb_title media_mb">
+    <h3 class="model_title_h">{{section.settings.app_title | default: ''}}</h3>
+    <div class="feeding_model_title_line"></div>
+  </div>
+  <img class="lazyload media_pc" data-src="{{ section.settings.image_pc | img_url: 'master' }}" alt="">
+  <img class="lazyload media_mb" data-src="{{ section.settings.image_mobile | img_url: 'master' }}" alt="">
+  <div class="feeding_model_title media_pc">
+    <h3 class="model_title_h">{{section.settings.app_title | default: ''}}</h3>
+    <div class="feeding_model_title_line"></div>
+    <h5 class="model_subtitle">{{section.settings.app_subtitle | default: ''}}</h5>
+    <img class="feeding_app_icon" src="{{ "app_control.png" | asset_url }}" />
+  </div>
+  <div class="feeding_app_mb_icon media_mb">
+    <img class="feeding_app_icon" src="{{ "app_control.png" | asset_url }}" />
+    <h5 class="model_subtitle">{{section.settings.app_subtitle | default: ''}}</h5>
+  </div>
+</div>
+
+{% schema %} 
+{
+  "name": "Feeding Overview App",
+  "settings": [
+    {
+      "type": "html",
+      "id": "app_title",
+      "label": "Title"
+    },
+    {
+      "type": "html",
+      "id": "app_subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_pc",
+      "label": "Image",
+      "info": "Image: 1920x"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Image",
+      "info": "Image: 1024x"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feeding Overview App"
+    }
+  ]
+}
+{% endschema %}

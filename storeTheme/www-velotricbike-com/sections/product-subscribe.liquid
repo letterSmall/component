@@ -1,0 +1,63 @@
+
+<div class="prosubscribe-container">
+  <div class="page-width">
+    <div class="prosubscribe-wrap">
+  <div class="prosubscribe-text">
+  {% if section.settings.title != blank %}
+  <div class="prosubscribe-title">{{ section.settings.title }}</div>
+  {% endif %}
+  {% if section.settings.content != blank %}
+  <div class="prosubscribe-content small-hide">{{ section.settings.content }}</div>
+  {% endif %}
+  </div>
+    <div class="prosubscribe-form">
+        {% form 'customer', id: 'newsletter-product' %}
+        {% if form.posted_successfully? %}
+          <div class="note note--success">{{ 'general.newsletter_form.newsletter_confirmation' | t }}</div>
+        {% endif %}
+          {% if form.errors %}
+            {{ form.errors | default_errors }}
+          {% endif %}
+
+        <label for="Email-{{ block.id }}" class="hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>
+        <input type="hidden" name="contact[tags]" value="prospect,newsletter">
+        <input type="hidden" name="contact[context]" value="footer">
+        <div class="pros__newsletter">
+          <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="Enter your email address" name="contact[email]" id="Email-{{ block.id }}" class="footer__newsletter-input pronewsletter-input" autocorrect="off" autocapitalize="off">
+          <button type="submit" class="pro_newsletter-btn" name="commit">
+            <span>{{ 'general.newsletter_form.submit' | t }}</span>
+          </button>
+        </div>
+      {% endform %}
+        {% if section.settings.content != blank %}
+  <div class="prosubscribe-content medium--up-hide">{{ section.settings.content }}</div>
+  {% endif %}
+  </div>
+  </div>
+</div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Product Subscribe",
+    "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          }
+    ],
+
+    "presets": [
+      {
+        "name": "Product Subscribe",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

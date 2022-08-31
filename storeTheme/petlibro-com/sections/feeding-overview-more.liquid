@@ -1,0 +1,50 @@
+
+<div class="feeding_product_more feeding_model_s">
+  {% for block in section.blocks %}
+    <div class="feeding_more_item">
+      <img class="lazyload" data-src="{{ block.settings.more_image | img_url: 'master' }}" alt="">
+      <div class="feeding_model_title">
+        <h3 class="model_title_h">{{block.settings.more_title | default: ''}}</h3>
+        <div class="feeding_model_title_line"></div>
+        <h5 class="model_subtitle">{{block.settings.more_subtitle | default: ''}}</h5>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% schema %} 
+{
+  "name": "Feeding Overview More",
+  "settings": [
+  ],
+  "blocks": [
+    {
+      "type": "product-more",
+      "name": "more",
+      "settings": [
+        {
+          "type": "html",
+          "id": "more_title",
+          "label": "More Title"
+        },
+        {
+          "type": "html",
+          "id": "more_subtitle",
+          "label": "More Subtitle"
+        },
+        {
+          "type": "image_picker",
+          "id": "more_image",
+          "label": "Image",
+          "info": "Image: 1400x1400"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feeding Overview More"
+    }
+  ]
+}
+{% endschema %}

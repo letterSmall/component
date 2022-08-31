@@ -1,0 +1,163 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.2.2/photoswipe.min.css" integrity="sha512-aKJqqX25Ch6C/Gae4xBq5gDKhUS2QcNrPoAxqy4fbLr9CqGq7uo/i0aRuti1TUYpZxjXuOr90cTP/aD9WY8CLQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{%- if section.settings.space_around -%}
+<div class="index-section">
+{%- endif -%}
+{%- unless section.settings.full_width -%}
+  <div class="page-width">
+{%- endunless -%}
+
+    {%- if section.settings.title != blank -%}
+        <div class="h1 text-center">{{ section.settings.title }}</div>
+    {%- endif -%}
+    <div class="grid-gallery--wrap pswp-gallery" {{ block.shopify_attributes }} id="gallery--custom-icon-colors">
+        {%- for block in section.blocks -%}
+            {%- case block.type -%}
+            {%- when 'image' -%}
+            {%- assign gimgfull = block.settings.image_full -%}
+            <a class="grid-gallery--grid-item"
+                href="{{ gimgfull | img_url: '1300x' }}"
+                data-pswp-width="1220"
+                data-pswp-height="642.84"
+                target="_blank">
+            {%- if block.settings.image != blank -%}
+                {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                <img class="lazyload"
+                    data-src="{{ img_url }}"
+                    data-widths="[360, 540, 720, 900, 1080]"
+                    data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                    data-sizes="auto"
+                    alt="{{ block.settings.image.alt }}">
+                <noscript>
+                    <img class="lazyloaded" src="{{ block.settings.image | img_url: '400x' }}" alt="{{ block.settings.image.alt }}">
+                </noscript>
+            {%- else -%}
+                {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+            </a>
+            {%- endcase -%}
+        {%- endfor -%}
+    </div>
+
+    {%- if section.blocks.size == 0 -%}
+        <div class="page-width">
+        <div class="grid">
+            <div class="grid__item">
+            <div class="rte">
+                {{ 'home_page.onboarding.no_content' | t }}
+            </div>
+            </div>
+        </div>
+    </div>
+    {%- endif -%}
+
+    <div class="text-center custom-content-buttons">
+        {%- if section.settings.btn_1_text != blank and section.settings.btn_1_link != blank -%}
+        <div><a class="btn" href="{{ section.settings.btn_1_link }}">{{ section.settings.btn_1_text }}</a></div>
+        {%- endif -%}
+        {%- if section.settings.btn_2_text != blank and section.settings.btn_2_link != blank -%}
+        <div><a class="btn btn-secondary" href="{{ section.settings.btn_2_link }}">{{ section.settings.btn_2_text }}</a></div>
+        {%- endif -%}
+    </div>
+
+{%- unless section.settings.full_width -%}
+  </div>
+{%- endunless -%}
+{%- if section.settings.space_around -%}
+  </div>
+{%- endif -%}
+
+
+<script type="module">
+    import PhotoSwipeLightbox from 'https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.2.2/photoswipe-lightbox.esm.js';
+
+    const leftArrowSVGString = '<svg aria-hidden="true" class="pswp__icn" width="14" height="23" viewBox="0 0 14 23" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 0.999997L2 11L12.4 21.4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>';
+    const options = {
+        arrowPrevSVG: leftArrowSVGString,
+        arrowNextSVG: leftArrowSVGString,
+        counter: false,
+        zoom: false,
+        showHideAnimationType: 'fade',
+        // to apply styles just to this instance of PhotoSwipe
+        mainClass: 'pswp--custom-icon-colors',
+
+        gallery: '#gallery--custom-icon-colors',
+        children: 'a',
+        pswpModule: () => import('https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.2.2/photoswipe.esm.js')
+    };
+    const lightbox = new PhotoSwipeLightbox(options);
+    lightbox.init();
+</script>
+
+
+{% schema %}
+  {
+    "name": "Grid gallery",
+    "class": "section--grid-gallery",
+    "max_blocks": 5,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full page width",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "space_around",
+        "label": "Add spacing above and below",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "text",
+        "id": "btn_1_text",
+        "label": "Button 1 text"
+      },
+      {
+        "type": "url",
+        "id": "btn_1_link",
+        "label": "Button 1 link"
+      },
+      {
+        "type": "text",
+        "id": "btn_2_text",
+        "label": "Button 2 text"
+      },
+      {
+        "type": "url",
+        "id": "btn_2_link",
+        "label": "Button 2 link"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_full",
+            "label": "Full Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Grid gallery",
+        "blocks": [
+
+        ]
+      }
+    ]
+  }
+{% endschema %}

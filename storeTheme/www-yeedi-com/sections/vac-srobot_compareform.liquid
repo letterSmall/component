@@ -1,0 +1,336 @@
+{% if section.blocks.size > 0  %}
+  <style>
+  {% assign size = section.blocks.size | minus : 1  %}
+  {% assign list_width =  80 | divided_by: size | append : '%'%}
+  .compare-list{
+  width:{{ list_width}};
+  }
+  .compare-list.compare-list-lhead{
+  width:20%;
+  }
+  </style>
+ 
+<div class=" site-padding">
+  {% if  section.settings.title != blank %}<h2 class="title50 text-center">
+{{ section.settings.title }}
+</h2>
+   {% endif %}
+    <div class="vac-srobot_compareformbox">
+  <div class="vac-srobot_compareform">
+    <div class="compareform-wrapper">    
+                 <div class="compare-list compare-list-lhead">
+                   <div class="compare-item compare-item-firsttd" data-index="1">
+                     <div class="img-wrapper"><img src="https://cdn.shopifycdn.net/s/files/1/0524/3643/5101/files/vac2-default.png?v=1659340616"></div>
+                   </div>
+    <div class="compare-item boldfont" data-index="2"><strong>Vacuum</strong></div>
+                   <div class="compare-item" data-index="3">Suction Power</div>
+                    <div class="compare-item" data-index="4">Dustbin Capacity</div>
+                    <div class="compare-item" data-index="5">Runtime</div>
+                    <div class="compare-item" data-index="6">Tangle-Free Brush</div>
+    <div class="compare-item boldfont" data-index="7"><strong>Mop</strong></div>    
+                   <div class="compare-item" data-index="8">Mop</div>
+                   <div class="compare-item" data-index="9">Water Tank</div>
+    <div class="compare-item boldfont" data-index="10"><strong>Smart</strong></div>   
+                  <div class="compare-item" data-index="11">Carpet Detector</div> 
+                   <div class="compare-item" data-index="12">Anti Drop & Anti-Collision Sensors</div> 
+                   <div class="compare-item" data-index="13">Auto Recharge & Resume Cleaning</div> 
+                   <div class="compare-item" data-index="14">Voice Control</div> 
+                   <div class="compare-item" data-index="15">App</div> 
+                   <div class="compare-item" data-index="16">Auto Carpet Turbo Mode</div> 
+                   <div class="compare-item" data-index="17">Smart Mapping</div> 
+    <div class="compare-item boldfont" data-index="18"><strong>3D Obstacle Avoidance</strong></div>
+    <div class="compare-item boldfont" data-index="19"><strong>Self-Empty</strong></div>  
+    
+    
+                    </div>
+                {%- for block in section.blocks -%}
+                  <div class="compare-list">
+                <div class="compare-item compare-item-firsttd" data-index="1">  
+                    {% if block.settings.image != blank %}
+                   <div class="img-wrapper">
+                     <img src="{{ block.settings.image | img_url:'220x220' }}"/>
+                   </div>
+                   {% endif %}
+                   {% if block.settings.title != blank %}<div class="compare-item-title">{{block.settings.title}}</div>{% endif %}
+                   {% if block.settings.featured != blank %}<div class="compare-item-featured">{{block.settings.featured}}</div>{% endif %}
+               </div>
+                  <div class="compare-item-box">
+                   <div class="compare-item bg-blue" data-index="2"></div>
+                      {% if block.settings.suction_power != blank %}
+                        <div class="compare-item" data-index="3">{{block.settings.suction_power}}</div>
+                        {% endif %}
+                      {% if block.settings.dustbin_capacity != blank %}
+                        <div class="compare-item" data-index="4">{{block.settings.dustbin_capacity}}</div>
+                        {% endif %}
+                     {% if block.settings.runtime != blank %}
+                        <div class="compare-item" data-index="5">{{block.settings.runtime}}</div>
+                        {% endif %}
+    
+        <div class="compare-item" data-index="6"> {% if block.settings.tangle_freebrush == 'no' %} {% include 'icon-no' %}  {% else %}{% include 'icon-yes' %}{% endif %}</div>
+                    <div class="compare-item bg-blue" data-index="7"></div>
+                    {% if block.settings.mop != blank %}
+                        <div class="compare-item" data-index="8">{{block.settings.mop}}</div>
+                        {% endif %}
+                   {% if block.settings.water_tank != blank %}
+                        <div class="compare-item" data-index="9">{{block.settings.water_tank}}</div>
+                        {% endif %}
+                  <div class="compare-item bg-blue" data-index="10"></div>
+                      <div class="compare-item" data-index="11"> {% if block.settings.carpet_detector == 'no' %} {% include 'icon-no' %} {% else %}{% include 'icon-yes' %}{% endif %}</div>
+                     <div class="compare-item" data-index="12"> {% if block.settings.anti_drop == 'no' %} {% include 'icon-no' %} {% else %}{% include 'icon-yes' %}{% endif %}</div>
+                    <div class="compare-item" data-index="13"> {% if block.settings.auto_recharge == 'no' %} {% include 'icon-no' %}  {% else %}{% include 'icon-yes' %}{% endif %}</div>
+                    
+                  {% if block.settings.voice_control != blank %}
+                        <div class="compare-item" data-index="14">{{block.settings.voice_control}}</div>
+                        {% endif %}
+                  {% if block.settings.app != blank %}
+                        <div class="compare-item" data-index="15">{{block.settings.app}}</div>
+                        {% endif %}
+                  
+                         <div class="compare-item" data-index="16"> {% if block.settings.auto_carpet_turbro == 'no' %} {% include 'icon-no' %} {% else %}{% include 'icon-yes' %}{% endif %}</div>
+                     <div class="compare-item" data-index="17"> {% if block.settings.smart_mapping == 'no' %} {% include 'icon-no' %}  {% else %}{% include 'icon-yes' %}{% endif %}</div>
+                      <div class="compare-item" data-index="18"> {% if block.settings.obstacle == 'no' %} {% include 'icon-no' %} {% else %}{% include 'icon-yes' %}{% endif %}</div>
+                   {% if block.settings.self_empty != blank %}
+                        <div class="compare-item" data-index="19">{{block.settings.self_empty}}</div>
+                        {% endif %}
+                     </div>
+                  </div>
+                {%- endfor -%}
+    
+     </div>
+        </div> </div>
+      </div>
+      <script>
+      function autoTableHeight(){
+
+        $('.compare-list-lhead .compare-item').each(function(){
+let that=this;
+let index=$(that).data('index');
+let el_height_list=[];
+ $(`.compare-list .compare-item[data-index='${index}']`).each(function(){
+    let that2=this;
+    let el_height=$(that2).outerHeight();
+    el_height_list.push(el_height);
+
+}); 
+let  max = Math.max.apply(null, el_height_list);
+ $(`.compare-list .compare-item[data-index='${index}']`).css('min-height',`${max}px`);
+})
+}
+
+
+        autoTableHeight();
+  $(window).resize(function() {
+  autoTableHeight();
+});
+    </script>
+  {% endif %}
+      {% schema %}
+        {
+          "name": "Vac srobot Compare Form",
+          "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          }],
+          "blocks": [
+              {
+                "type": "text",
+                "name": "item",
+                "settings": [
+                  {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Image(Recommended size：220px*)"
+                  },
+                  {
+                    "type": "text",
+                    "id": "title",
+                    "label": "title"
+                  },
+                  {
+                    "type": "text",
+                    "id": "featured",
+                    "label": "featured text"
+                  },
+                  {
+                    "type": "header",
+                    "content": "Vacuum"
+                  },
+                  {
+                    "type": "text",
+                    "id": "suction_power",
+                    "label": "Suction Power"
+                  },
+                  {
+                    "type": "text",
+                    "id": "dustbin_capacity",
+                    "label": "Dustbin Capacity"
+                  },
+                  {
+                    "type": "text",
+                    "id": "runtime",
+                    "label": "Runtime"
+                  },
+                  {
+                    "type": "select",
+                    "id": "tangle_freebrush",
+                    "label": "Tangle-Free Brush",
+                    "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "NO"
+                    }
+                    ],
+                  "default": "no"
+                  },
+                  {
+                    "type": "header",
+                    "content": "Mop"
+                  },
+                  {
+                    "type": "text",
+                    "id": "mop",
+                    "label": "Mop"
+                  },
+                  {
+                    "type": "text",
+                    "id": "water_tank",
+                    "label": "Water Tank"
+                  },
+                  {
+                    "type": "header",
+                    "content": "Smart"
+                  },
+                  {
+                    "type": "select",
+                    "id": "carpet_detector",
+                    "label": "Carpet Detector",
+                    "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
+                "default": "yes"
+                  },
+                  {
+                    "type": "select",
+                    "id": "anti_drop",
+                    "label": "Anti Drop & Anti-Collision Sensors",
+                    "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
+                "default": "yes"
+                  },
+                  {
+                    "type": "select",
+                    "id": "auto_recharge",
+                    "label": "Auto Recharge & Resume Cleaning",
+                    "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
+                "default": "yes"
+                  },
+                  {
+                    "type": "text",
+                    "id": "voice_control",
+                    "label": "Voice Control"
+                  },
+                  {
+                    "type": "text",
+                    "id": "app",
+                    "label": "App"
+                  },
+                  {
+                    "type": "select",
+                    "id": "auto_carpet_turbro",
+                    "label": "Auto Carpet Turbo Mode",
+                    "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
+                "default": "yes"
+                  },
+                  {
+                    "type": "select",
+                    "id": "smart_mapping",
+                    "label": "Smart Mapping",
+                    "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
+                "default": "yes"
+                  },
+                  {
+                    "type": "header",
+                    "content": "3D Obstacle Avoidance"
+                  },
+                  {
+                    "type": "select",
+                    "id": "obstacle",
+                    "label": "3D Obstacle Avoidance",
+                    "options": [
+                    {
+                      "value": "yes",
+                      "label": "Yes"
+                    },
+                    {
+                      "value": "no",
+                      "label": "No"
+                    }
+                  ],
+                "default": "no"
+                  },
+                  {
+                    "type": "text",
+                    "id": "self_empty",
+                    "label": "Self-Empty"
+                  }
+                  
+                ]
+              }
+           ],
+          "presets": [
+            {
+              "name": "Vac srobot Compare Form",
+              "category": "Ho-Advance"
+            }
+          ]
+        }
+      {% endschema %}
+      

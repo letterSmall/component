@@ -1,0 +1,286 @@
+{% if section.blocks.size > 0 %}
+
+<style>
+  {% if section.settings.divider_color != blank %}
+  .section-divider {
+    background-color: {{ section.settings.divider_color }};
+  }
+  {% endif %}
+  {% if section.settings.bg_color != blank %}
+  .left-right-image-text-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+    {% if section.settings.text_color != blank %}
+    color: {{ section.settings.text_color }};
+    {% endif %}
+  }
+  {% endif %}
+  {% if section.settings.margin_bottom != blank %}
+  .left-right-image-text-{{ section.id }} .image-text-item {
+    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 791px) {
+    .left-right-image-text-{{ section.id }} .image-text-item {
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+  }
+  {% endif %}
+</style>
+
+{% if section.settings.show_divider %}
+<div class="section-divider"></div>
+{% endif %}
+
+<div class="left-right-image-text left-right-image-text-{{ section.id }} {% if section.settings.mb_fullscreen %}mb-fullscreen{% endif %}">
+  {% if section.settings.heading != blank %}
+  <h2 class="section-title page-width">{{ section.settings.heading }}</h2>
+  {% endif %}
+  
+  <div class="left-right-container page-width">
+    {% for block in section.blocks %}
+
+    {% capture image_temp %}
+    {% if block.settings.image != blank %}
+    {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+    <div class="item-image-box item-box">
+      <img class="image lazyload"
+           data-src="{{ img_url }}"
+           data-widths="[180, 360, 540, 750, 900, 1080]"
+           data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+           data-sizes="auto"
+           alt="{{ block.settings.image.alt }}"
+           width="{{ block.settings.image.width }}"
+           height="{{ block.settings.image.height }}">
+    </div>
+    {% endif %}
+    {% endcapture %}
+
+    {% capture content_temp %}
+    {% if block.settings.title != blank %}
+    <div class="item-content-box item-box">
+      <h3 class="content-title">{{ block.settings.title }}</h3>
+      {% if block.settings.point_desc != blank or  block.settings.text_desc != blank %}
+      <div class="content-desc">
+        {% if block.settings.point_desc != blank %}
+        {{ block.settings.point_desc }}
+        {% endif %}
+        {% if block.settings.text_desc != blank %}
+        {{ block.settings.text_desc }}
+        {% endif %}
+      </div>
+      {% endif %}
+      {% if block.settings.show_button %}
+      <div class="content-button">
+        {% if block.settings.button_type == 'link' and block.settings.button_link != blank %}
+        <a class="button-link link-btn" href="{{ block.settings.button_link }}">{{ block.settings.button_text }}</a>
+        {% endif %}
+        {% if block.settings.button_type == 'popup' %}
+        <div class="button-link popup-btn">{{ block.settings.button_text }}</div>
+        <div class="newsletter-container">
+          <div class="button-box">x</div>
+          <div class="form-box">
+            {% form 'customer', id: 'contact-us-newsletter' %}
+            {% if form.posted_successfully? %}
+            <div class="note note--success">{{ 'general.newsletter_form.newsletter_confirmation' | t }}</div>
+            {% endif %}
+            {% if form.context == 'email' %}
+            {% if form.errors %}
+            {{ form.errors | default_errors }}
+            {% endif %}
+            {% endif %}
+
+            <label for="Email-{{ block.id }}" class="hidden-label">{{ 'general.newsletter_form.newsletter_email' | t }}</label>
+            <input type="hidden" name="contact[tags]" value="prospect,newsletter">
+            <input type="hidden" name="contact[context]" value="email">
+            <div class="footer__newsletter">
+              <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="contact[email]" id="Email-{{ block.id }}" class="footer__newsletter-input" autocorrect="off" autocapitalize="off">
+              <button type="submit" class="footer__newsletter-btn" name="commit">
+                <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-email" viewBox="0 0 64 64"><path d="M63 52H1V12h62zM1 12l25.68 24h9.72L63 12M21.82 31.68L1.56 51.16m60.78.78L41.27 31.68"/></svg>
+                <span class="icon__fallback-text">{{ 'general.newsletter_form.submit' | t }}</span>
+              </button>
+            </div>
+            {% endform %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endcapture %}
+
+    <div class="image-text-item image-text-item-{{ block.id }} {% if block.settings.layout == 'image_first' %}left-image {% else %}left-text {% endif %}">
+      {% if block.settings.layout == 'image_first' %}
+      {{ image_temp }}
+      {{ content_temp }}
+      {% else %}
+      {{ content_temp }}
+      {{ image_temp }}
+      {% endif %}
+    </div>
+    
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<script>
+  $(function(){
+    $(".popup-btn").click(function(){
+      $(".newsletter-container").css("display","block");
+    });
+    $(".newsletter-container .button-box").click(function(){
+      $(this).parent(".newsletter-container").css("display", "none");
+    });
+    //     $("body").click(function(evt){
+    //       if($(evt.target).parent(".newsletter-container").length==0 && $(evt.target).parents(".newsletter-container").length==0 && $(evt.target).closest(".button-link").length==0){
+    //         $(".newsletter-container").css("display","none");
+    //       }
+    //     });
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Left Right Image Text",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_divider",
+        "label": "Show Divider"
+      },
+      {
+        "type": "color",
+        "id": "divider_color",
+        "label": "Divider Color",
+        "default": "#3C435B"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#111431"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin Bottom",
+        "default": 60
+      },
+      {
+        "type": "checkbox",
+        "id": "mb_fullscreen",
+        "label": "Mobile Fullscreen",
+		"default": true
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Circolo Technology and Content Platform"
+      }
+	],
+    "blocks": [
+      {
+        "type": "image_text",
+        "name": "Image Text",
+        "settings": [
+          {
+            "type": "select",
+            "id": "layout",
+            "options": [
+              {
+                "value": "image_first",
+                "label": "Image On Left"
+              },
+              {
+                "value": "text_first",
+                "label": "Image On Right"
+              }
+            ],
+            "default": "image_first",
+            "label": "Image Layout"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+			"info": "Image Size: 600*400px"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Image With Text"
+          },
+          {
+            "type": "html",
+            "id": "point_desc",
+            "label": "Point Description",
+			"default": "<ul><li>Join live Zoom meetings</li><li>Enjoy immersive video calls</li></ul>",
+			"info": "Point description template. If this parameter is not required, clear the default values of the input box"
+          },
+          {
+            "type": "html",
+            "id": "text_desc",
+            "label": "Description",
+            "default": "<p>We work with your business or organization to create content and provide a customized experience to help you better service your users.</p>",
+			"info": "Text description content. If this parameter is not required, clear the default values of the input box"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_button",
+            "label": "Show Button"
+          },
+          {
+            "type": "select",
+            "id": "button_type",
+            "options": [
+              {
+                "value": "link",
+                "label": "Link To"
+              },
+              {
+                "value": "popup",
+                "label": "Pop Up"
+              }
+            ],
+            "default": "link",
+            "label": "Button Type"
+          },
+          {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button Text",
+            "default": "Contact Us"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Left Right Image Text"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,248 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="page-width product-detail-tab">
+    {%- for block in section.blocks -%}
+      {% assign content = '' %}
+      {% assign text =block.settings.text %}
+      {% assign handle = block.settings.content %}
+
+      {% if block.type == 'other' %}
+        {% if block.settings.title != blank and block.settings.content != blank %}
+          <div class="collapsibles-wrapper collapsibles-wrapper--border-bottom">
+            <button
+              type="button"
+              class="label collapsible-trigger collapsible-trigger-btn collapsible-trigger-btn--borders collapsible--auto-height{% if force_open %} is-open{% endif %}"
+              aria-controls="Product-content-{{ block.id }}"
+              {% if force_open %}
+                aria-expanded="true"
+              {% endif %}
+            >
+              <h2>
+                <strong>{{ block.settings.title }}</strong>
+              </h2>
+              <small>{{ block.settings.text }}</small>
+              <span
+                class="collapsible-trigger__icon  collapsible-trigger__icon--open"
+                role="presentation"
+              >
+                <span class="minus">-</span> <span class="plus">+</span>
+              </span>
+            </button>
+            <div
+              id="Product-content-{{ block.id }}"
+              class="collapsible-content collapsible-content--all{% if force_open %} is-open{% endif %}"
+              {% if force_open %}
+                style="height: auto;"
+              {% endif %}
+            >
+              <div class="collapsible-content__inner rte">
+                {{ block.settings.content }}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% else %}
+        {% case handle %}
+          {% when 'option1' %}
+            {% if product.metafields.custom_desc.motion != blank %}
+              {% assign content = product.metafields.custom_desc.motion  | prepend:"<div class='product-motion swiper'><div class='swiper-button-prev motion-prev'><svg viewBox='0 0 37 16' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M13.7998 0V16L0.399803 8L13.7998 0Z'/><path d='M13.7999 7.9H36.8999' stroke-miterlimit='10'/></svg></div><div class='swiper-button-next motion-next'><svg viewBox='0 0 37 16' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M23.5 0V16L36.9 8L23.5 0Z' /><path d='M23.4999 7.9H0.399902'  stroke-miterlimit='10'/></svg></div><div class='swiper-wrapper'>" | append:"</div></div>" %}
+            {% endif %}
+          {% when 'option2' %}
+            {% if product.metafields.custom_desc.specifications != blank %}
+              {% assign content =  product.metafields.custom_desc.specifications  | prepend: "<div class='spec-content'>" | append:"</div>" %}
+            {% endif %}
+          {% else %}
+            {% if product.metafields.custom_desc.geoetry != blank %}
+              {% assign content = product.metafields.custom_desc.geoetry  | prepend: "<div class='geoetry-content'>" | append:"</div>" %}
+            {% endif %}
+        {% endcase %}
+        {% assign title =  block.settings.title %}
+        {% if content != blank %}
+          {%- render 'detail-tab', id: block.id, text:text, title: title, content: content -%}
+        {% endif %}
+      {% endif %}
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+<script type="text/javascript">
+    if($(".product-motion").length > 0){
+  var Swiperproductlist = new Swiper('.product-motion',{
+    slidesPerView :1,
+    autoplay:true,
+    spaceBetween : 10,
+    centeredSlides : false,
+    watchOverflow: true,
+    loop : false,
+      navigation: {
+        nextEl: '.motion-prev',
+        prevEl: '.motion-next',
+      },
+
+     breakpoints: {
+          590: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+          }
+    }
+  });
+    }
+</script>
+
+<script type="text/javascript">
+  var imgsObj = $(".product-features .swiper-slide img");//Image to be enlarged
+
+  if(imgsObj){
+    coverLayer(0);
+  $.each(imgsObj,function(){
+
+    $(this).click(function(){
+
+      var currImg = $(this);
+      coverLayer(1);
+      var tempContainer = $('<div class=tempContainer></div>');
+      with(tempContainer){
+        appendTo("body");
+        var windowWidth=$(window).width();
+        var windowHeight=$(window).height();
+
+        var orignImg = new Image();
+        orignImg.src =currImg.attr("src") ;
+        var currImgWidth= orignImg.width;
+        var currImgHeight = orignImg.height;
+        var close_str='<button type="button" class="tempContainer__close-button "><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><path d="M19 17.61l27.12 27.13m0-27.12L19 44.74"></path></svg><span class="icon__fallback-text">Close menu</span></button>'
+        if(currImgWidth<windowWidth){
+          if(currImgHeight<windowHeight){
+            var topHeight=(windowHeight-currImgHeight)/2;
+            if(topHeight>35){
+              topHeight=topHeight-35;
+              css('top',topHeight);
+            }else{
+              css('top',0);
+            }
+            html('<div class="tempContainerbox"><img border=0 src=' + currImg.attr('src') + '>'+close_str+'</div>');
+          }else{
+            css('top',0);
+            html('<div class="tempContainerbox"><img border=0 src=' + currImg.attr('src') + ' height='+windowHeight+ '>'+close_str+'</div>');
+          }
+        }else{
+          var currImgChangeHeight=(currImgHeight*windowWidth)/currImgWidth;
+          if(currImgChangeHeight<windowHeight){
+            var topHeight=(windowHeight-currImgChangeHeight)/2;
+            if(topHeight>35){
+              topHeight=topHeight-35;
+              css('top',topHeight);
+            }else{
+              css('top',0);
+            }
+            html('<div class="tempContainerbox"><img border=0 src=' + currImg.attr('src') + ' width='+windowWidth+ '>'+close_str+'</div>');
+          }else{
+            css('top',0);
+            html('<div class="tempContainerbox"><img border=0 src=' + currImg.attr('src') + ' width='+windowWidth+'; height='+windowHeight+ '>'+close_str+'</div>');
+          }
+        }
+      }
+      tempContainer.click(function(){
+        $(this).remove();
+        coverLayer(0);
+        });
+    });
+  });
+  }
+
+
+  function coverLayer(tag){
+  with($('.over')){
+    if(tag==1){
+      css('height',$(document).height());
+      css('display','block');
+      css('opacity',1);
+      css("background-color","#fff");
+    }
+    else{
+      css('display','none');
+    }
+  }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Product detail tab",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "text"
+        },
+        {
+          "type": "select",
+          "id": "content",
+          "label": "Content",
+          "options": [
+            {
+              "value": "option1",
+              "label": "LIFE IN MOTION"
+            },
+            {
+              "value": "option2",
+              "label": "Technical Specifications"
+            },
+            {
+              "value": "option3",
+              "label": "Geometry"
+            }
+          ],
+          "default": "option1"
+        }
+      ]
+    },
+    {
+      "type": "other",
+      "name": "other",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "text"
+        },
+        {
+          "type": "html",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product detail tab",
+      "blocks": [
+        {
+          "type": "text"
+        },
+        {
+          "type": "text"
+        },
+        {
+          "type": "text"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

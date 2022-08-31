@@ -1,0 +1,94 @@
+{% if section.settings.show_section %}
+<div class="affliate-how-become affliate-how-become-{{ section.id }}">
+  <div class="affliate-how-become-wrapper">
+  {% if section.settings.title != blank %}
+    <h2 class="title-box pro-titles">{{ section.settings.title }}</h2>
+  {% endif %}
+  {% if section.settings.desc != blank or section.settings.pc_image != blank %}
+    <div class="desc-image-container">
+      {% if section.settings.desc != blank %}
+        <div class="desc-box normal-text">
+          {{ section.settings.desc }}
+        </div>
+      {% endif %}
+      {% if section.settings.pc_image != blank %}
+      <div class="image-box">
+          <img class="lazyload js pad-down--hide"
+           src="{{ section.settings.pc_image | img_url: '1x' }}"
+           srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+           sizes="(max-width: 960px) 960px, 1500px" 
+           alt="PC How Become Image"
+           width="{{ section.settings.pc_image.width }}" 
+           height="{{ section.settings.pc_image.height }}"/>
+          {% if section.settings.mb_image != blank %}
+          <img class="lazyload js pad-up--hide"
+               src="{{ section.settings.mb_image | img_url: '1x' }}"
+               srcset="{{ section.settings.mb_image | img_url: '1500x' }}, {{ section.settings.mb_image | img_url: '960x' }}"
+               sizes="(max-width: 960px) 960px, 1500px" 
+               alt="Mobile How Become Image"
+               width="{{ section.settings.mb_image.width }}" 
+               height="{{ section.settings.mb_image.height }}"/>
+          {% else %}
+          <img class="lazyload js pad-up--hide"
+               src="{{ section.settings.pc_image | img_url: '1x' }}"
+               srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+               sizes="(max-width: 960px) 960px, 1500px" 
+               alt="Mobile How Become Image"
+               width="{{ section.settings.pc_image.width }}" 
+               height="{{ section.settings.pc_image.height }}"/>
+          {% endif %}
+      {% endif %}
+    </div>
+    </div>
+  {% endif %}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Affliate How Become",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "pc_image",
+        "label": "PC Image",
+        "info": "Image Size: 1114*673px"
+      },
+      {
+        "type": "image_picker",
+        "id": "mb_image",
+        "label": "Mobile Image",
+        "info": "Image Size: 1004*590px"
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title",
+        "default": "How Do I <br class='mb-br'>Become a Partner?"
+      },
+      {
+        "type": "html",
+        "id": "desc",
+        "label": "Description"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Affliate How Become"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

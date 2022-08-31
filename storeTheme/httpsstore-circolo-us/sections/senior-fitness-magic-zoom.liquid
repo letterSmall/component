@@ -1,0 +1,70 @@
+<div class="senior-fitness-magic-zoom-contianer">
+ <div class="page-width">
+    {%if section.settings.title!=blank%}
+  <div class="title">
+    {{section.settings.title}}
+  </div>
+  {%endif%}
+  
+  <div class="image">
+     {% if section.settings.image %}
+  <img class="lazyload small-hide"  data-src="{{ section.settings.image | img_url:'master' }}"  />
+  <img class="lazyload medium--up-hide"  data-src="{{ section.settings.image_mb | img_url:'master' }}"/>
+{% endif %}
+  </div>
+  
+  <div class="sfmzc-bottom">
+  {%for block in section.blocks%}
+    <div class="item">
+      <span> {{block.settings.content}}</span>
+    </div>
+    {%endfor%}
+  </div>
+  </div>
+             
+</div>
+
+
+{% schema %}
+  {
+    "name": "Magic zoom",
+    "settings": [
+ {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+{
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*500px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：700*536px)"
+          }
+],
+  "blocks": [{
+        "type": "product",
+        "name": "Product",
+        "settings": [
+       
+        {
+            "type": "textarea",
+            "id": "content",
+            "label": "Content" 
+          }
+     ]
+    }],
+ "presets": [{
+      "name": "Magic zoom",
+      "category": "Image"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,133 @@
+<div class="color-optimization-wrapper">
+  <section class="container section-color-optimization">
+    <h2 class="color-optimization-title">{{ section.settings.title }}</h2>
+    <div class="color-optimization-text">{{ section.settings.text }}</div>
+    <div class="mobile-tag">Tap to Enhance</div>
+    <div class="section-video">
+      <div class="circle">
+        <div class="tap-to-enhance">Tap to Enhance<br>{%- render 'icon-svg',icon_svg: 'color-video-arrow' -%}</div>
+        <div class="enhance-on">Enhance ON</div>
+      </div>
+      <div class="shield"></div>
+      <video draggable="false" src="{{ section.settings.video_link }}" autoplay="" loop="" playsinline="" muted=""></video>
+    </div>
+    <a href="{{ section.settings.btn_link }}" class="btn color-optimization-btn">{{ section.settings.btn_text }}</a>
+  </section>
+</div>
+<script src="{{ 'TweenMax.min.js' | asset_url }}" defer="defer"></script>
+<script>
+  // home video 
+  $(document).ready(function() {
+    //hover for active//
+    var i = 0, timeOut = 0;
+    $('.section-video').on('mousedown touchstart', function(e) {
+      $(this).addClass('active');
+//       timeOut = setInterval(function(){
+//         console.log(i++);
+//       }, 100);
+    }).bind('mouseup mouseleave touchend', function() {
+      $(this).removeClass('active');
+//       clearInterval(timeOut);
+    });
+
+    //mousemove//
+    var $circle = $('.circle');
+    function moveCircle(e) {
+      TweenLite.to($circle, 0.3, {
+        css: {
+          left: e.pageX,
+          top: e.pageY
+        }
+      });
+    }
+    $(window).on('mousemove', moveCircle);
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Color Optimization Tgy",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "COLOR OPTIMIZATION TECHNOLOGY"
+      },
+      {
+        "type": "text",
+        "id": "text",
+        "label": "Description",
+        "default": "“See the obstacles clearly, and then overcome them with sure stride.”"
+      },
+      {
+        "type": "url",
+        "id": "video_link",
+        "label": "Video Link"
+      },
+      {
+        "type": "text",
+        "id": "btn_text",
+        "label": "Button Text",
+        "default": "Discover"
+      },
+      {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Button Link"
+      }
+    ],
+    "presets": [
+      {
+        "name": {
+          "da": "Color Optimization Video",
+          "de": "Color Optimization Video",
+          "en": "Color Optimization Video",
+          "es": "Color Optimization Video",
+          "fi": "Color Optimization Video",
+          "fr": "Vidéo",
+          "hi": "वीडियो",
+          "it": "Video",
+          "ja": "動画",
+          "ko": "동영상",
+          "ms": "Video",
+          "nb": "Video",
+          "nl": "Video",
+          "pt-BR": "Vídeo",
+          "pt-PT": "Vídeo",
+          "sv": "Video",
+          "th": "วิดีโอ",
+          "zh-CN": "视频",
+          "zh-TW": "影片"
+        },
+        "category": {
+          "da": "Video",
+          "de": "Video",
+          "en": "Video",
+          "es": "Video",
+          "fi": "Video",
+          "fr": "Vidéo",
+          "hi": "वीडियो",
+          "it": "Video",
+          "ja": "動画",
+          "ko": "동영상",
+          "ms": "Video",
+          "nb": "Video",
+          "nl": "Video",
+          "pt-BR": "Vídeo",
+          "pt-PT": "Vídeo",
+          "sv": "Video",
+          "th": "วิดีโอ",
+          "zh-CN": "视频",
+          "zh-TW": "影片"
+        }
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

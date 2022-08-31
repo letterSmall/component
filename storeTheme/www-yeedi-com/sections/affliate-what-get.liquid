@@ -1,0 +1,219 @@
+{% if section.settings.show_section %}
+<style>
+  .affliate-get-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+</style>
+<div class="affliate-get affliate-get-{{ section.id }}">
+  <div class="affliate-get-wrapper">
+    {% if section.settings.title != blank %}
+      <h2 class="title-box pro-titles">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.blocks.size > 0 %}
+      <div class="getlist-container">
+        {% for block in section.blocks %}
+          {% if block.type == 'image_block' %}
+            <div class="getlist-item getlist-image-item getlist-item-{{ forloop.index }}">
+              {% if block.settings.image != blank or block.settings.title != blank %}
+              <div class="left-container">
+                {% if block.settings.image != blank %}
+                  <div class="image-box">
+                    {% if block.settings.title != blank %}
+                    <h3 class="content-title pad-up--hide">{{ block.settings.title }}</h3>
+                    {% endif %}
+                    <div class="inner-image">
+                      <img class="lazyload js"
+                         src="{{ block.settings.image | img_url: '1x' }}"
+                         data-src="{{ block.settings.image | img_url: 'master' }}"
+                         alt="Group Image"
+                         width="{{ block.settings.image.width }}" 
+                         height="{{ block.settings.image.height }}"/>
+                    </div>
+                  </div>
+                {% endif %}
+                {% if block.settings.title != blank %}
+                <div class="content-box">
+                  <h3 class="content-title pad-down--hide">{{ block.settings.title }}</h3>
+                  {% if block.settings.desc != blank %}
+                    <div class="content-desc normal-text">{{ block.settings.desc }}</div>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+              {% endif %}
+              {% if block.settings.image_one != blank %}
+              <div class="right-container">
+                <div class="image-group-item">
+                  <img class="lazyload js"
+                       src="{{ block.settings.image_one | img_url: '1x' }}"
+                       data-src="{{ block.settings.image_one | img_url: 'master' }}"
+                       alt="Group Image"
+                       width="{{ block.settings.image_one.width }}" 
+                       height="{{ block.settings.image_one.height }}"/>
+                </div>
+                {% if block.settings.image_two != blank %}
+                <div class="image-group-item">
+                  <img class="lazyload js"
+                       src="{{ block.settings.image_two | img_url: '1x' }}"
+                       data-src="{{ block.settings.image_two | img_url: 'master' }}"
+                       alt="Group Image"
+                       width="{{ block.settings.image_two.width }}" 
+                       height="{{ block.settings.image_two.height }}"/>
+                </div>
+                {% endif %}
+                {% if block.settings.image_three != blank %}
+                <div class="image-group-item">
+                  <img class="lazyload js"
+                       src="{{ block.settings.image_three | img_url: '1x' }}"
+                       data-src="{{ block.settings.image_three | img_url: 'master' }}"
+                       alt="Group Image"
+                       width="{{ block.settings.image_three.width }}" 
+                       height="{{ block.settings.image_three.height }}"/>
+                </div>
+                {% endif %}
+              </div>
+              {% endif %}
+            </div>
+          {% endif %}
+          {% if block.type == 'text_block' %}
+            <div class="getlist-item getlist-text-item getlist-item-{{ forloop.index }}">
+              {% if block.settings.image != blank or block.settings.title != blank %}
+              <div class="left-container">
+                {% if block.settings.image != blank %}
+                  <div class="image-box">
+                    {% if block.settings.title != blank %}
+                    <h3 class="content-title pad-up--hide">{{ block.settings.title }}</h3>
+                    {% endif %}
+                    <div class="inner-image">
+                      <img class="lazyload js"
+                         src="{{ block.settings.image | img_url: '1x' }}"
+                         data-src="{{ block.settings.image | img_url: 'master' }}"
+                         alt="Group Image"
+                         width="{{ block.settings.image.width }}" 
+                         height="{{ block.settings.image.height }}"/>
+                    </div>
+                  </div>
+                {% endif %}
+                {% if block.settings.title != blank %}
+                <div class="content-box">
+                  <h3 class="content-title pad-down--hide">{{ block.settings.title }}</h3>
+                  {% if block.settings.desc != blank %}
+                    <div class="content-desc normal-text">{{ block.settings.desc }}</div>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Affliate What Will Get",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title",
+        "default": "What I'll Get?"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image_block",
+        "name": "Image Block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Image Size: 320*320px"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+			"default": "Benefits"
+          },
+          {
+            "type": "html",
+            "id": "desc",
+            "label": "Description",
+			"default": "<ul><li>5% Commission For Every Conversion</li><li>First-Hand Product Launches and Promotion Updates</li><li>30-Day  Cookies</li></ul>"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_one",
+            "label": "Image One",
+            "info": "Image Size: 496*496px"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_two",
+            "label": "Image Two",
+            "info": "Image Size: 496*496px"
+          },
+          {
+            "type": "image_picker",
+            "id": "image_three",
+            "label": "Image Three",
+            "info": "Image Size: 496*496px"
+          }
+		]
+      },
+      {
+        "type": "text_block",
+        "name": "Text Block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Image Size: 320*320px"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+			"default": "Benefits"
+          },
+          {
+            "type": "html",
+            "id": "desc",
+            "label": "Description",
+			"default": "<ul><li>5% Commission For Every Conversion</li><li>First-Hand Product Launches and Promotion Updates</li><li>30-Day  Cookies</li></ul>"
+          }
+		]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Affliate What Will Get"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

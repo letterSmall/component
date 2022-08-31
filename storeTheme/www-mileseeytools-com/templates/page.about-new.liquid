@@ -1,0 +1,49 @@
+<!-- <div class="container">
+    {% render 'breadcrumb' %}
+    <div class="page">
+        {% if settings.enable_multilang and page.content contains '[lang2]' %}
+        <div class="rte lang1">
+          {{ page.content | split: '[lang2]' | first }}
+      </div>
+      <div class="rte lang2">
+          {{ page.content | split: '[lang2]' | last }}
+      </div>
+      {% else %}
+      <div class="rte">
+          {{ page.content | split: '[lang2]' | first }}
+      </div>
+      {% endif %}
+    </div>
+</div> -->
+
+
+<div class="about-page">
+  {% section 'about-tab' %}
+  <div class="about-tab-content active" data-index="0">
+    {% section 'about-image-text' %}
+    {% section 'about-items' %}
+  </div>
+  
+  <div class="about-tab-content" data-index="1">
+    {% section 'about-company-profile' %}
+  </div>
+  
+  <div class="about-tab-content" data-index="2">
+    {% section 'about-development-path' %}
+  </div>
+  
+  <div class="about-tab-content about-tab-content-video" data-index="3">
+    {% section 'about-corporate-video' %}
+  </div>
+  
+</div>
+
+<script>
+  $(".about-tab-wrapper .about-tab-item").click(function(){
+    let index = $(this).index();
+    $(this).addClass("active").siblings().removeClass("active");
+    $(`.about-tab-content[data-index=${index}]`).addClass("active").siblings().removeClass("active");
+  });
+ 
+</script>
+

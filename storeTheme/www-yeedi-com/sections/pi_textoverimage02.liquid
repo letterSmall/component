@@ -1,0 +1,79 @@
+<div class="pi_textoverimage-container pi_textoverimage_img-container">
+   {% if section.settings.image %}
+    <img class="small-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+    {% endif %}
+    {% if section.settings.image_mb != blank %}
+    <img class="medium--up-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+    {% else %}
+    <img class="medium--up-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+    {% endif %}
+  <div class="pi_textoverimage-text {% if section.settings.position == 'center' %} pi_textoverimage-text_center {% endif %}">
+    {% if section.settings.title != blank %}
+    <div class="pi_textoverimage-title">{{ section.settings.title }}</div>
+    {% endif %}
+    {% if section.settings.content != blank %}
+    <div class="pi_textoverimage-content">{{ section.settings.content }}</div>
+    {% endif %}
+
+    <div class="pi_textoverimage-botimgbox">
+      {% if section.settings.appimage01 %}
+      <div class="bot-imgbox">
+        <img class="medium-down--hide" src="{{ section.settings.appimage01 | img_url:'master' }}"/>
+      </div>
+      {% endif %}
+    </div>  
+
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "PI Textoverimage Image",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：750*px)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          },{
+            "type": "image_picker",
+            "id": "appimage01",
+            "label": "Image"
+          },{
+            "type": "select",
+            "id": "position",
+            "label": "Text Position on Mobile",
+            "default": "left",
+            "options": [
+                {
+                  "value": "left",
+                  "label": "Left"
+                },
+                {
+                  "value": "center",
+                  "label": "Center"
+                }
+             ]
+          }
+    ],
+
+    "presets": [
+      {
+        "name": "PI Textoverimage Image",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

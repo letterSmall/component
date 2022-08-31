@@ -1,0 +1,206 @@
+<div class="site-padding">
+  {%- if section.blocks.size > 0 -%}
+    <div id="testimonials-wrapper">
+      <div class="swiper-container">
+         <div class="swiper-wrapper">
+        {%- for block in section.blocks -%}
+          <div class="swiper-slide">
+            <div class="testimonials-item">
+
+              {%- if block.settings.review_image != blank -%}
+               <div class="review-image">
+                 <img src="{{ block.settings.review_image | img_url: 'master'}}" class="" alt="{{ block.settings.review_image.alt }}"/>
+               </div>
+              {%- endif -%}
+
+              {%- if  block.settings.testimonial != blank -%}
+              <div class="review-content">
+                {%- if block.settings.title != blank -%}
+                <h2 class="title50">{{ block.settings.title }}</h2>
+                {%- endif -%}
+                
+               {%- if block.settings.icon == '5-stars' -%}
+                <span class="stars-wrapper">
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                </span>
+                {%- elsif block.settings.icon == '4.5-stars' -%}
+                <span class="stars-wrapper">
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'half_star' -%}
+                </span>
+                {%- elsif block.settings.icon == '4-stars' -%}
+                <span class="stars-wrapper">
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star_hollow' -%}
+                </span>
+                {%- elsif block.settings.icon == '3-stars' -%}
+                <span class="stars-wrapper">
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star_hollow' -%}
+                  {%- render 'icon-svg',icon_svg: 'one_star_hollow' -%}
+                </span>
+                {%- endif -%}
+
+                {%- if block.settings.review_title != blank -%}
+                <div class="title30">{{ block.settings.review_title }}</div>
+                {%- endif -%}
+                  
+                {%- if block.settings.testimonial != blank -%}
+                <div class="text">{{ block.settings.testimonial }}</div>
+                {%- endif -%}
+
+                {%- if block.settings.author != blank -%}
+                <span class="author">{{ block.settings.author | escape }}</span>
+                {%- endif -%}
+              </div>
+              {%- endif -%}
+              
+            </div>
+          </div>
+        {%- endfor -%}
+        </div>
+       <div class="hide-mb">
+        <div class="swiper-button-prev review-swiper-button-prev">
+          <svg width="12" height="22" viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.9593 1.64044L1.2959 10.9161L10.9669 20.9707" stroke="#A3BAC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="swiper-button-next review-swiper-button-next">
+          <svg width="13" height="23" viewBox="0 0 13 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.56122 21.2283L11.2246 11.9527L1.55358 1.8981" stroke="#A3BAC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+            
+      <div class="hide-pc">
+        <div class="swiper-pagination swiper-pagination-review"></div>
+      </div>
+      </div>
+
+    </div>
+  {%- endif -%}
+      
+</div>
+
+<script> 
+  var proSwiper = new Swiper('#testimonials-wrapper .swiper-container',{
+    slidesPerView : 1,
+    watchSlidesVisibility: true,
+    watchOverflow: true,
+    spaceBetween : 15,
+//     centeredSlides: true,
+//     autoplay: {
+//       delay: 6000,
+//     },
+//     loop: true,
+    navigation: {
+		nextEl: '.review-swiper-button-next',
+		prevEl: '.review-swiper-button-prev',
+	},
+    breakpoints: { 
+      768: { 
+        pagination: {
+          el: '.swiper-pagination-review',
+          clickable: true,
+        }
+      }
+    }
+  })
+</script>
+
+{% schema %}
+  {
+    "name": "Vac srobot Reviews",
+    "class": "vac_srobot_reviews",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "reviews",
+        "name": "Reviews",
+        "settings": [
+           {
+              "type": "text",
+              "id": "title",
+              "label": "Heading",
+              "default": "Customer reviews"
+            },
+           {
+            "type": "image_picker",
+            "label": "Review Image",
+            "id": "review_image",
+            "info": "Size: 750px*650px"
+          },
+          {
+            "type": "select",
+            "id": "icon",
+            "label": "Icon",
+            "default": "5-stars",
+            "options": [
+              {
+                "value": "none",
+                "label": "None"
+              },
+              {
+                "value": "5-stars",
+                "label": "5 stars"
+              },
+              {
+                "value": "4.5-stars",
+                "label": "4.5 stars"
+              },
+              {
+                "value": "4-stars",
+                "label": "4 stars"
+              },
+              {
+                "value": "3-stars",
+                "label": "3 stars"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "review_title",
+            "label": "Review Title"
+          },
+          {
+            "type": "richtext",
+            "id": "testimonial",
+            "label": "Review Content"
+          },
+          {
+            "type": "text",
+            "id": "author",
+            "label": "Author",
+            "default": "Author's name"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vac srobot Reviews",
+        "blocks": [
+          {
+            "type": "reviews"
+          },
+          {
+            "type": "reviews"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

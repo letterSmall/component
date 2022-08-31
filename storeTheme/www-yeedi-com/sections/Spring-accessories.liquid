@@ -1,0 +1,153 @@
+<div class="sp-accessories-contianer">
+
+  {% if section.settings.title %}
+  <div class="sp-accessories-title"><img src="https://cdn.shopifycdn.net/s/files/1/0524/3643/5101/files/Vector_1.png?v=1648628968" alt/><span>{{ section.settings.title }}</span></div> 
+  {% endif %}
+<div class="sp-accessories-prowp">
+      <div class="swiper-button-prev swiperacc_prev"><img class="" src="https://cdn.shopifycdn.net/s/files/1/0524/3643/5101/files/Rectangle_61.png?v=1648623162"></div>
+    <div class="swiper-button-next swiperacc_next"><img class="" src="https://cdn.shopifycdn.net/s/files/1/0524/3643/5101/files/Rectangle_62.png?v=1648623164"></div>
+
+    <div class="swiper-container sp-accessories-probox">
+        <div class="swiper-pagination swiper-pagination-access large-up--hide"></div>
+     <div class="swiper-wrapper">
+   {% for block in section.blocks %}
+      <div class="swiper-slide"> 
+  {% assign product = all_products[block.settings.product] %}
+  {% assign current_variant = product.selected_or_first_available_variant %}
+  
+  <div class="sp-accessories_item">
+        {% if block.settings.toplable != blank %}
+    <div class="sp-accessories_item_toplable"><span>{{ block.settings.toplable }}</span><img src="https://cdn.shopifycdn.net/s/files/1/0524/3643/5101/files/10.png?v=1648628486" alt/></div>
+    {% endif %}
+    <div class="sp-accessories_item_bottom">
+
+    <a href="{{ product.url }}">
+
+   {% if block.settings.image %}
+      <div class="sp-accessories_item_imgbox"><img class="sp-accessories_item_img"  src="{{ block.settings.image |img_url: 'master' }}" alt=""/></div>
+      
+    {% else %}  
+      <div class="sp-accessories_item_imgbox"><img class="sp-accessories_item_img"  src="{{ product.featured_image |img_url: 'master' }}" alt=""/></div>
+  {% endif %}
+    </a> 
+  <div class="bottom-spproboxtext">
+    {% if block.settings.title %}
+    <div class="sp-accessories_item_title"> <a href="{{ product.url }}">{{ block.settings.title }}</a></div>
+    {% else %}
+      <div class="sp-accessories_item_title"> <a href="{{ product.url }}">{{ product.title }}</a></div>
+    {% endif %}
+      {% if block.settings.subtitle %}
+    <div class="sp-accessories_item_subtitle">{{ block.settings.subtitle }}</div>
+    {% endif %}
+    <div class="sp-accessories_item-money"><span class="cpmpare-price-wm">{{ block.settings.price }}</span><span class="old-price-wm">{{ block.settings.old_price }}</span></div>
+    
+ 
+    </div>
+    </div>
+   </div>
+      </div>
+  {% endfor %}
+      </div>
+ </div>
+  </div>
+    
+    
+    
+  {% if section.settings.button_url %}
+  <div class="spaccessories-wrapper">  <a class="btn_ho02" href="{{ section.settings.button_url }}"><span>{{ section.settings.button }}</span></a> </div>
+  {% endif %}  
+    
+    
+
+
+</div>
+
+<script>
+  $(function() {
+    var mattressmb = new Swiper('.sp-accessories-probox', {
+      slidesPerView: 3,
+      spaceBetween: 38,
+      loop:true,
+      navigation: {
+      nextEl: '.swiperacc_next',
+      prevEl: '.swiperacc_prev',   
+
+    },
+      pagination: {
+      el: '.swiper-pagination-access',
+        clickable:true,
+    },
+      breakpoints: { 
+
+    768: {  
+      slidesPerView: 2,
+       spaceBetween: 20,
+
+    },
+    500: {  
+      slidesPerView: 1.4,
+      spaceBetween: 20,
+    }
+  },
+      
+    });
+    
+   });
+</script>
+{% schema %}
+  {
+    "name": "SpringSale Accessories",
+    "settings": [
+           {
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "text",
+            "id": "button",
+            "label": "button"
+          },{
+            "type": "url",
+            "id": "button_url",
+            "label": "button_url"
+          }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "text",
+            "id": "toplable",
+            "label": "Pecent"
+          },{
+            "type": "product",
+            "id": "product",
+            "label": "product"
+          },{
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：390*390px)"
+          },{
+            "type": "text",
+            "id": "price",
+            "label": "price"
+          },{
+            "type": "text",
+            "id": "old_price",
+            "label": "old_price"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "SpringSale Accessories",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+

@@ -1,0 +1,89 @@
+
+{%- assign first_3d_model = product.media | where: "media_type", "model" | first -%}
+{%- if first_3d_model -%}
+
+  <script type="application/json" id="ProductJSON-{{ product.id }}">
+    {{ product.media | where: 'media_type', 'model' | json }}
+  </script>
+{%- endif -%}
+
+{%- assign selected_variant = product.selected_variant -%}
+{%- unless section.settings.show_featured_media -%}
+  {%- assign selected_variant = product.selected_or_first_available_variant -%}
+{%- endunless -%}
+
+<script>
+  window._themeProducts = window._themeProducts || {}
+  window._themeProducts[{{ product.id }}] = {
+    has_3d_model: {%- if first_3d_model -%}true{%- else -%}false{%- endif -%},
+    id: {{ product.id }},
+    title: {{ product.title | json }},
+    available: {{ product.available | json }},
+    handle: {{ product.handle | json }},
+    variants: {{ product.variants | json }},
+    options: {{ product.options_with_values | json }},
+    selected_or_first_available_variant: {{ product.selected_or_first_available_variant | json }},
+    selected_variant: {{ selected_variant | json }},
+    media: {{ product.media | json }},
+    featured_image: {{ product.featured_image | json }},
+    aspect_ratio: {{ product.featured_image.aspect_ratio | json }},
+    images: {{ product.images | json }},
+    price: {{ product.price | json }},
+  };
+  {%- for variant in product.variants -%}
+    window._themeProducts[{{ product.id }}].variants[{{forloop.index0}}].inventory_quantity = {{variant.inventory_quantity}};
+  {%- endfor -%}
+</script>
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<script type="application/ld+json">
+{
+       "@context": "http://schema.org/",
+       "@type": "Product",
+  	   "url": "{{shop.secure_url | escape}}{{ product.url | escape }}",
+  	   "name": "{{ product.title | escape }}",
+       "image": "https:{{ product.featured_image.src | img_url: 'master' }}",
+       "description": "{{ product.description | escape }}",
+       "brand": {
+           "@type": "Brand",
+           "name": "{{ product.vendor }}"
+       },           
+       "sku": "{{ product.variants.first.sku }}",
+       "mpn": "{{ product.variants.first.sku }}",
+       "gtin": "{{ product.metafields.facts.gtin }}",
+       {% if product.metafields.stamped.reviews_count and product.metafields.stamped.reviews_count != "0" %}
+       "review": {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": {{ product.metafields.stamped.reviews_average | round:2 }},
+          "reviewCount": {{ product.metafields.stamped.reviews_count }},
+          "bestRating": "5",
+          "worstRating": 1
+        },
+        "author": {
+          "@type": "Organization",
+          "name": "{{ shop.name }}"
+        }
+        },
+         "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": {{ product.metafields.stamped.reviews_average | round:2 }},
+        "reviewCount": {{ product.metafields.stamped.reviews_count }}
+        },
+      {%- endif -%}
+       "offers": {
+           "@type": "Offer",
+           "priceCurrency" : {{ cart.currency.iso_code | json }},
+           "price": "{{ current_variant.price | money_without_currency }}",
+           "availability": "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+           "priceValidUntil": {{'now' | date: '%s' | plus: 1400000 | date: '%d-%m-%Y' | uri_encode | replace: '+', '%20' | json}},
+           "seller": {
+               "@type": "Organization",
+                "name": "{{ shop.name }}"
+           },
+           "url": "{{shop.secure_url | escape}}{{ product.url | escape }}"
+       }
+      }
+  
+}
+</script>

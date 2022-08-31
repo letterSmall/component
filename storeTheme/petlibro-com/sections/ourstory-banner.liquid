@@ -1,0 +1,43 @@
+{% if section.settings.show_block %}
+<div class="ourstory-banner-container">
+{% if section.settings.image %}
+  <img class="spsmall-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  <img class="ipadup-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+{% endif %}
+  {% if section.settings.title != blank %}
+  <div class="ourstory-banner-title">{{ section.settings.title }}</div>
+  {% endif %}
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Banner", 
+    "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_block",
+            "label": "show this block?",
+            "default": true
+          },{
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*600px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：750*640px)"
+          },{
+            "type": "richtext",
+            "id": "title",
+            "label": "title"
+          }
+    ],
+
+    "presets": [
+      {
+        "name": "Banner",
+        "category": "other"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,181 @@
+<style>
+  .page-header-{{ section.id }} .title-box,
+  .page-header-{{ section.id }} .subtitle-box,
+  .page-header-{{ section.id }} .desc-box {
+    color: {{ section.settings.text_color }};
+  }
+  .page-header-{{ section.id }} .title-wrapper {
+    width: {{ section.settings.max_width }}%;
+  }
+  @media only screen and (min-width: 591px) {
+    .page-header-{{ section.id }} .title-wrapper {
+      left: {{ section.settings.pc_left }}%;
+      top: {{ section.settings.pc_top }}%;
+    }
+  }
+  @media only screen and (max-width: 590px) {
+    .page-header-{{ section.id }} .title-wrapper {
+      left: {{ section.settings.mb_left }}%;
+      top: {{ section.settings.mb_top }}%;
+    }
+  }
+</style>
+<div class="page-header page-header-{{ section.id }}">
+  {% if section.settings.pc_image != blank %}
+  <img class="lazyload js image-item mb-down--hide"
+       src="{{ section.settings.pc_image | img_url: '1x' }}"
+       srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+       sizes="(max-width: 960px) 960px, 1500px" 
+       alt=""
+       width="{{ section.settings.pc_image.width }}" 
+       height="{{ section.settings.pc_image.height }}"/>
+  {% endif %}
+  {% if section.settings.mb_image != blank %}
+  <img class="lazyload js image-item mb-up--hide"
+       src="{{ section.settings.mb_image | img_url: '1x' }}"
+       srcset="{{ section.settings.mb_image | img_url: '1500x' }}, {{ section.settings.mb_image | img_url: '960x' }}"
+       sizes="(max-width: 960px) 960px, 1500px" 
+       alt=""
+       width="{{ section.settings.mb_image.width }}" 
+       height="{{ section.settings.mb_image.height }}"/>
+  {% else %}
+  <img class="lazyload js image-item mb-up--hide"
+       src="{{ section.settings.pc_image | img_url: '1x' }}"
+       srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+       sizes="(max-width: 960px) 960px, 1500px" 
+       alt=""
+       width="{{ section.settings.pc_image.width }}" 
+       height="{{ section.settings.pc_image.height }}"/>
+  {% endif %}
+  <div class="title-wrapper">
+    {% if section.settings.title %}
+    <h2 class="title-box">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.subtitle != blank %}
+    <h3 class="subtitle-box pro-titles">{{ section.settings.subtitle }}</h3>
+    {% endif %}
+    {% if section.settings.desc != blank %}
+    <div class="desc-box">{{ section.settings.desc }}</div>
+    {% endif %}
+    {% if section.settings.button_text != blank and section.settings.button_url != blank %}
+    <a class="button-link" href="{{ section.settings.button_url }}">{{ section.settings.button_text }}</a>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Page Header",
+    "settings": [
+   	  {
+        "id": "text_color",
+        "type": "color",
+        "label": "Text Color",
+		"default": "#ffffff"
+      },
+      {
+        "id": "pc_image",
+        "type": "image_picker",
+        "label": "PC Image",
+		"info": "Image Size: 2880*1016px"
+      },
+      {
+        "id": "mb_image",
+        "type": "image_picker",
+        "label": "Mobile Image",
+		"info": "Image Size: 856*1356px"
+      },
+	  {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+		"default": "Partner With Us"
+      },
+	  {
+        "type": "html",
+        "id": "subtitle",
+        "label": "Subtitle",
+		"default": "Give $100, Get $100"
+	  },
+	  {
+        "type": "html",
+        "id": "desc",
+        "label": "Description",
+		"default": "<p>We’re always excited to team up with new content creators and affiliates.</p>"
+	  },
+	  {
+        "type": "text",
+        "id": "button_text",
+        "label": "Button Text",
+		"default": "JOIN NOW"
+      },
+	  {
+        "type": "url",
+        "id": "button_url",
+        "label": "Button Link"
+      },
+      {
+        "type": "range",
+        "id": "pc_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "PC Top Position",
+        "default": 65
+      },
+      {
+        "type": "range",
+        "id": "pc_left",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "PC Left Position",
+        "default": 8
+      },
+      {
+        "type": "range",
+        "id": "mb_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Mobile Top Position",
+        "default": 75
+      },
+      {
+        "type": "range",
+        "id": "mb_left",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Mobile Left Position",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "max_width",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "PC Max Width",
+        "default": 35
+      }
+	],
+	"presets": [
+      {
+        "name": "Page Header",
+        "category": "image"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

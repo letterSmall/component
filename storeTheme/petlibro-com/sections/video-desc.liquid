@@ -1,0 +1,61 @@
+{% if section.settings.display %}
+  <div class="video-desc-kei">
+    <div class="video-desc-kei-box">
+      <div class="video-desc-kei-box-a">
+        <span>{{ section.settings.title}}</span>
+        <span class="video-title-line xpmcc">—</span>
+        <p>{{ section.settings.description}}</p>
+      </div>
+      <div class="video-desc-kei-box-b">
+        <video width="100%" height="auto"
+          type="video/mp4"
+          src="{{ section.settings.videourl}}" controls=""
+          loop="" playsinline="" autoplay="" 
+          disablepictureinpicture=""></video>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+    
+
+
+{% schema %}
+  {
+    "name": "Video Description Section",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "display",
+        "label": "display?",
+        "default": true
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "html",
+        "id": "description",
+        "label": "Description"
+      },
+      
+      {
+        "type": "html",
+        "id": "videourl",
+        "label": "Video url"
+      }
+	],
+   "presets": [
+      {
+		"name": "Video Description Section"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

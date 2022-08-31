@@ -1,0 +1,165 @@
+
+<link rel="stylesheet" href="{{ 'tradein.css' | asset_url | split: '?' | first }}">
+<style>
+  .sm-tradein-popup .copy_code_button {
+  	background-color: #324D61;
+    color: #fff;
+  	flex: 1;
+  
+  	height: 50px;
+  
+}
+.sm-tradein-popup .copy_code_wrap input {
+    
+  	flex:1;
+}
+</style>
+
+<!----  Trade in code starts here  ---->
+<div class="sm-tradein-popup-box-main-wrapper">
+  <img class="popup-arrow-down" id="sm_arrow_down" src="{{ 'arrow-down.png' | asset_url }}" alt="icon" />
+  <div class="sm-tradein-popup-box info-text" id="sm_avail_tradein">
+    <div class="popup-btn">
+      <span class="info-icon"><img src="{{ 'circle_arrow.png' | asset_url }}" alt="icon" /></span>
+      <div class="info-text-inr">
+        <h5>Trade in with yeedi</h5>
+        <p>Enjoy up to $118 discount.</p>
+      </div>
+    </div>
+    <small class="sm-info-box-tradein-link" style="display:none" id="sm_text_down">
+      <a href="/pages/yeedi-trade-in" target="_blank">See how trade-in works</a>
+    </small>
+  </div>
+</div>
+
+<div class="sm-tradein-popup-box info-text"  id="sm_availed_tradein" style="display:none;">
+  <div class="popup-btn"> 
+    <span class="info-icon">
+      <img width="22px;" src="{{ 'info_icon_selected.png' | asset_url }}" alt="icon" />
+    </span>
+    <div class="info-text-inr">
+      <h5>You’ve got <span class="sm_fixed_discount"  style="display: none">$</span><span class="sm_discounted_amount"></span><span class="sm_percentage_discount" style="display: none">% off</span> in trade-in value.
+        <!--  <img src="{{ 'info_icon_blue.png' | asset_url }}" alt="icon" /> --></h5> 
+      <p class="copied_code-txt">Your code is: <span class="sm_discount_coupon"></span> .</p>
+      <p>Paste your discount code during checkout and we’ll deduce the value from your payment!</p>
+
+    </div>
+  </div>
+  <small class="sm-info-box-tradein-link">
+    <a href="/pages/yeedi-trade-in" target="_blank">  
+      <!-- <img src="{{ 'info_icon_small.png' | asset_url }}" alt="icon" /> -->
+      See how trade-in works
+    </a>
+  </small>
+</div>
+<!----  Trade in code ends here  ---->
+
+
+<!----- Popup 1 code starts here ---->     
+
+<div class="sm-tradein-popup popup-overlay" id="sm_tradein_popup_1">
+  <div class="popup popup-content">
+    <div class="sm_popup_container" id="sm_popup_tradein_code">
+      <!-- Put your page handle between the 'page.' and '.content' -->
+      <div class="popTitle text-center">
+        <h3>Which product model do you have?</h3>
+        <small>Enter the model name, purchase date and serial number of your trade-in.</small>
+      </div>
+      <form method="post" name="tradein_form" id="tradein_form">
+        <input type="hidden" id="tradein_product_id" value="{{product.id}}" />
+        <div class="popup-fieldset-wrap">
+          <div class="field__input-wrapper">
+            <label class="field__label" for="checkout_email_or_phone">Which model do you have?</label>
+            <select name="model" id="input_model" class="tradein-popup-custom-select1 sm_tradein_input_model" >
+              <option value="" disabled selected>Select One</option>
+              <option value="k650">k650</option>
+              <option value="k600">k600</option>
+              <option value="k700">k700</option>
+              <option value="vac">Yeedi vac</option>
+              <option value="vac max">Vac max</option>
+              <option value="vac staion">Vac station</option>
+            </select>
+          </div>
+          <div class="field__input-wrapper field__input_select_date">
+            <label class="field__label" for="checkout_email_or_phone">When did you purchase it?</label>
+            <select name="purchase_date_month"  class="tradein-popup-custom-select2 sm_tradein_input_purchase_date">
+              <option value="" disabled selected>Month</option>
+              <option value="01">JAN</option>
+              <option value="02">FEB</option>
+              <option value="03">MAR</option>
+              <option value="04">APR</option>
+              <option value="05">MAY</option>
+              <option value="06">JUN</option>
+              <option value="07">JUL</option>
+              <option value="08">AUG</option>
+              <option value="09">SEP</option>
+              <option value="10">OCT</option>
+              <option value="11">NOV</option>
+              <option value="12">DEC</option>
+            </select>
+            <select name="purchase_date_year"  id="input_purchase_date"  class="tradein-popup-custom-select3 sm_tradein_input_purchase_date" >
+              <option value="" disabled selected>Year</option>
+              {% for i in (2020..2022) reversed %}
+              <option value="{{i}}" >{{ i }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field__input-wrapper">
+            <label class="field__label" for="checkout_email_or_phone">Please enter the serial number:
+              <small> <span  id="sm_help_trigger"><img class="sm-tradein-lighygrey-info-icon" src="{{ 'sm-tradein-info-icon-lightgrey.png' | asset_url }}" alt="icon" />How to find your serial number</span></small>
+            </label>
+            <input type="text" name="serial_number"  id="input_serial_number"  class="sm_tradein_input_serial_number"  value="" placeholder="Serial Number" >
+          </div>
+          <div class="sr_info_box" id="sm_help_text" >
+            <h4>How to find your serial number.</h4>
+            <p>On the vacuum, remove the water tank and dustbin, you can see the SN.<br/>
+              On the app, Enter map surface > click the upper right corner > scroll down and see the SN.</p>
+          </div>
+          <div class="field__input-wrapper">
+            <label class="field__label" for="checkout_email_or_phone">Please enter your email address:</label>
+            <input type="text" name="email"  id="input_email"  class="sm_tradein_input_email"  value="" placeholder="Email" >
+          </div>
+          <button type="submit" id="tradein_submit_button" class="btn sm-tradein-btn">Next</button>
+        </div>
+      </form>
+
+    </div>
+
+    <div class="sm_popup_container" id="sm_popup_with_form" style="display:none;">
+      <!-- Put your page handle between the 'page.' and '.content' -->
+      <div class="popTitle copy_code_title">
+        <h3>You’ve got <span class="sm_fixed_discount"  style="display: none">$</span><span class="sm_discounted_amount"></span><span class="sm_percentage_discount" style="display: none">% off</span> trade-in value</h3>
+        <!-- <h5>You’ve got <span class="sm_discounted_amount"></span> in trade-in value.</h5> -->
+        <small>Copy the code and use at check-out.</small>
+      </div>
+      <form>
+        <div class="popup-fieldset-wrap">
+          <div class="field__input-wrapper">
+            <div class="copy_code_wrap">
+              <input type="text" class="sm_discount_coupon" value="" placeholder="OOOOOO" >
+              <button class="copy_code_button" id="sm_copy_code" >Copy Code</button>
+            </div>
+            <div class="copy_code_msg" style="display:none";>
+              <p>Copied! Just paste it at checkout.</p>
+            </div>
+          </div>
+          <button type="button" class="btn popup-close-btn sm-tradein-btn" id="sm_ontinue_shopping_button">Continue Shopping</button>
+        </div>
+      </form>
+
+    </div>
+
+    {{ pages.put-your-page-handle-here.content }}
+    <span class="popup-close"></span>
+
+  </div>
+</div>
+
+
+<!----- Popup 1 code ends here ---->
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ 'tradein.js' | asset_url }}" defer="defer"></script>
+
+              		 

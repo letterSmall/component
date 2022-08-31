@@ -1,0 +1,24 @@
+<div id="mediaReviews"></div>
+
+<script>
+  $(function(){
+    var currentUrl= "https://event.yeedi.com/pages/media-reviews";
+    fetch(currentUrl,{
+      credentials:'same-origin',
+      method: 'GET'
+    }).then(function(response){
+      response.text().then(function(content){
+        var tempElement = document.createElement('div');
+        tempElement.innerHTML= content;
+        document.querySelector('#mediaReviews').innerHTML = tempElement.querySelector('#mediaReviews').innerHTML;
+        
+        setTimeout(()=>{
+                   var tag = document.createElement('script');
+        tag.src = "https://cdn.shopifycdn.net/s/files/1/0628/1307/7757/files/media-reviews.js?v=1657522590";
+        var firstScriptTag =document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag,firstScriptTag);
+      },10);
+      });
+    });
+  });
+</script>

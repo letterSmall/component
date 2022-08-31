@@ -1,0 +1,113 @@
+{%if section.settings.image_type=="single"%}
+<div class="Hologolist-container">
+  <div class="contianer-ho">
+   <div class="Hologolist-box">
+  {% for block in section.blocks %}
+   <div class="Hologolist-item">
+     {% if block.settings.url %}
+     <a href="{{ block.settings.url }}"> 
+     {% endif %}
+     {% if block.settings.image %}
+     <img class="Hologolist-itemimg"  src="{{ block.settings.image | img_url:'master' }}" alt="{{ block.settings.title }}" />
+     {% endif %}
+     {% if block.settings.url %}
+     </a>
+     {% endif %}
+   </div>
+  {% endfor %}     
+  </div>
+  </div>
+  
+</div>
+{%else%}
+ <div class="Hologolist-overallitem">
+    {% if section.settings.title != blank %}
+      <div class="home_block_title">{{-section.settings.title-}}</div>
+    {% endif %}
+      {% if section.settings.overall_url %}
+     <a href="{{ block.settings.overall_url }}"> 
+     {% endif %}
+       <div class="small--hide">
+      <img class="Hologolist-overallimg"  src="{{ section.settings.overall_image | img_url: 'master' }}" alt="{{ section.settings.title }}" />
+       </div>
+       <div class="medium-up--hide mb_home_page_icon">
+          {% for block in section.blocks %}
+            <img src="{{ block.settings.image | img_url:'310x' }}"/>
+          {% endfor %}  
+       </div>
+         {% if section.settings.overall_url %}
+     </a> 
+     {% endif %}
+     </div>
+
+ {%endif%}
+
+
+{% schema %}
+  {
+    "name": "Index Logo List",
+"class":"pa_tops",
+"settings": [
+  {
+    "type": "text",
+    "id": "title",
+    "label": "title"
+  },
+ {
+      "type": "select",
+      "id": "image_type",
+      "label": "Image type",
+      "default": "single",
+      "options": [
+        {
+          "value": "single",
+          "label": "Single"
+        },
+        {
+          "value": "overall",
+          "label": "Overall"
+        }
+      ]
+    },
+  {
+        "type": "image_picker",
+        "id": "overall_image",
+        "label": "Overall image"
+      },
+ {
+        "type": "image_picker",
+        "id": "overall_image_mb",
+        "label": "Overall image(mb)"
+      },
+{
+        "type": "url",
+        "id": "overall_url",
+        "label": "Overall url"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+       {
+        "type": "image_picker",
+        "id": "image",
+        "label": "image"
+      },{
+        "type": "url",
+        "id": "url",
+        "label": "url"
+      }
+          
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Logo List",
+        "category": "HO-layout"
+      }
+    ]
+  }
+{% endschema %}

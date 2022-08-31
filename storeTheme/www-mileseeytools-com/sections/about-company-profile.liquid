@@ -1,0 +1,68 @@
+<h3 class="h2_36 about-content-title">{{ section.settings.title }}</h3>
+{% if section.blocks.size > 0 %}
+<div class="container">
+  <div class="about-profile-wrapper">
+    {% for block in section.blocks %}
+    <div class="about-profile-left">
+      {% if block.settings.title_left != blank %}
+      <div class="title">{{ block.settings.title_left }}</div>
+      {% endif %}
+    </div>
+    <div class="about-profile-right">
+       {% if block.settings.title_right != blank %}
+      <h1 class="title">{{ block.settings.title_right }}</h1>
+      {% endif %}
+      {% if block.settings.text != blank %}
+      <div class="text">{{ block.settings.text }}</div>
+      {% endif %}
+      {% if block.settings.tips != blank %}
+      <div class="tips">{{ block.settings.tips }}</div>
+      {% endif %}
+    </div>
+    {%endfor%}
+  </div>
+</div>
+{% endif%}
+
+{% schema %}
+{
+  "name": "About Company Profile",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Company Profile"
+     }
+   ],
+  "max_blocks":4,
+  "blocks":[
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "html",
+          "id": "title_left",
+          "label": "Left Title"
+        },
+        {
+          "type": "text",
+          "id": "title_right",
+          "label": "Right Title"
+        },
+        {
+          "type": "html",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "html",
+          "id": "tips",
+          "label": "Tips"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

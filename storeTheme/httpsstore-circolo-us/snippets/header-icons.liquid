@@ -1,0 +1,41 @@
+
+{%-style-%}
+@media only screen and (max-width: 768px){
+  .byone-site-icons{
+    float:right
+  }
+}
+.header-icon-img{
+  margin-top:2px;
+  width:30px;
+  height:30px;
+}
+{%-endstyle-%}
+<div class="site-nav site-nav--icons byone-site-icons">
+  <div class="site-nav__icons">
+    <a href="{{ routes.cart_url }}" class="site-nav__link site-nav__link--icon js-drawer-open-cart js-no-transition" aria-controls="CartDrawer" data-icon="{{ settings.cart_icon }}">
+      <span class="cart-link">
+        {%- if settings.cart_icon == 'bag' -%}
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-bag" viewBox="0 0 64 64"><g fill="none" stroke="#000" stroke-width="2"><path d="M25 26c0-15.79 3.57-20 8-20s8 4.21 8 20"/><path d="M14.74 18h36.51l3.59 36.73h-43.7z"/></g></svg>
+        {%- elsif settings.cart_icon == 'bag-minimal' -%}
+<!--           <img class='header-icon-img' src={{"index_cart.png"| asset_url | split: '?' | first }} alt="cart"> -->
+        
+        <svg class="pad-down--hide" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M8.75 6.95392C8.75 5.20364 10.1907 3.75883 12 3.75883C13.8093 3.75883 15.25 5.20364 15.25 6.95392C15.25 7.43961 15.6418 7.83333 16.125 7.83333C16.6082 7.83333 17 7.43961 17 6.95392C17 4.20362 14.7471 2 12 2C9.25295 2 7 4.20362 7 6.95392C7 7.43961 7.39175 7.83333 7.875 7.83333C8.35825 7.83333 8.75 7.43961 8.75 6.95392ZM3.70497 8.66672C2.60461 8.66672 1.79268 9.78647 2.04686 10.9535L4.14175 20.5715C4.32414 21.4089 5.01031 22.0001 5.79987 22.0001H18.2001C18.9897 22.0001 19.6759 21.4089 19.8582 20.5715L21.9531 10.9535C22.2073 9.78647 21.3954 8.66672 20.295 8.66672H3.70497ZM5.79987 20.1424L3.70497 10.5244H20.295L18.2001 20.1424H5.79987Z" fill="#A1ACBD"/>
+        </svg>
+
+        <svg class="pad-up--hide" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M11.45 8.93545C11.45 6.48507 13.467 4.46235 16 4.46235C18.533 4.46235 20.5499 6.48507 20.5499 8.93545C20.5499 9.61541 21.0984 10.1666 21.7749 10.1666C22.4515 10.1666 22.9999 9.61541 22.9999 8.93545C22.9999 5.08506 19.8458 2 16 2C12.1541 2 9 5.08506 9 8.93545C9 9.61541 9.54845 10.1666 10.225 10.1666C10.9015 10.1666 11.45 9.61541 11.45 8.93545ZM4.38695 11.3334C2.84645 11.3334 1.70976 12.9011 2.06561 14.5348L4.99844 28.0001C5.25377 29.1724 6.21441 30 7.31978 30H24.6801C25.7854 30 26.7461 29.1724 27.0014 28.0001L29.9342 14.5348C30.2901 12.9011 29.1534 11.3334 27.6129 11.3334H4.38695ZM7.31978 27.3993L4.38695 13.9341L27.6129 13.9341L24.6801 27.3993L7.31978 27.3993Z" fill="white"/>
+        </svg>
+
+          {% comment %} <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-bag-minimal" viewBox="0 0 64 64"><path stroke="null" id="svg_4" fill-opacity="null" stroke-opacity="null" fill="null" d="M11.375 17.863h41.25v36.75h-41.25z"/><path stroke="null" id="svg_2" d="M22.25 18c0-7.105 4.35-9 9.75-9s9.75 1.895 9.75 9"/></svg> {% endcomment %}
+        {%- else -%}
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-cart" viewBox="0 0 64 64"><path d="M14 17.44h46.79l-7.94 25.61H20.96l-9.65-35.1H3"/><circle cx="27" cy="53" r="2"/><circle cx="47" cy="53" r="2"/></svg>
+
+        {%- endif -%}
+        <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
+        <span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}"></span>
+      </span>
+    </a>
+  </div>
+</div>

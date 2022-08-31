@@ -1,0 +1,118 @@
+<div class="site-padding">
+  <div class="vac-featured-product-wrapper">
+   {% if section.settings.image != blank %}
+    <div class="img-wrapper">
+      <img src="{{ section.settings.image | img_url:'master' }}"/>
+    </div>
+    {% endif %}
+    
+     <div class="text-wrapper">
+      {% if section.settings.title != blank %}
+      <h2 class="title50">{{ section.settings.title }}</h2>
+      {% endif %}
+      
+      {% if section.settings.content != blank %}
+      <div class="text">{{ section.settings.content }}</div>
+      {% endif %}
+        
+      {% if section.settings.code != blank %}
+      <div class="code-wrapper">
+        <img src="https://cdn.shopify.com/s/files/1/0524/3643/5101/files/code-icon.png?v=1659083851">
+        <div class="text"><span>Use promo code: {{ section.settings.code }}</span><button class="discount_copytext" data-clipboard-text="{{ section.settings.code }}" aria-label="Copied!">COPY</button></div>
+        
+      </div>
+      {% endif %}
+        
+      <div class="btn-wrapper">
+      {% if section.settings.btn_link01 != blank %}
+        <a class="btn_link" target="_blank" href="{{ section.settings.btn_link01 }}" >{{ section.settings.btn01 }} from <img src="https://cdn.shopify.com/s/files/1/0524/3643/5101/files/ebay.png?v=1659082500"></a>
+      {% endif %}
+          
+      {% if section.settings.btn_link02 != blank %}
+        <a class="btn_link" target="_blank" href="{{ section.settings.btn_link02 }}" >{{ section.settings.btn02 }} from <img src="https://cdn.shopify.com/s/files/1/0524/3643/5101/files/amazon.png?v=1659082499"></a>
+      {% endif %}
+
+      {% if section.settings.btn_link03 != blank %}
+        <a class="btn_link" target="_blank" href="{{ section.settings.btn_link03 }}" >{{ section.settings.btn03 }} from <img src="https://cdn.shopify.com/s/files/1/0524/3643/5101/files/walmart.png?v=1659082500"></a>
+      {% endif %}
+      </div>
+  </div>
+</div>
+  
+</div>
+
+{{ 'clipboard.min.js' | asset_url | script_tag }}
+    <script>    
+      var copytext_icon = document.querySelector('.discount_copytext');
+      copytext_icon.addEventListener('click', () => {
+      var clipboard = new ClipboardJS(".discount_copytext");
+      copytext_icon.innerHTML = "Copied!";
+
+      clipboard.on('success', function(e) {
+        console.log('copied!', e.text);
+        e.clearSelection();
+      });
+
+      clipboard.on('error', function(e) {
+        console.log('No copied!');
+      });
+
+      })
+    </script>
+
+{% schema %}
+  {
+    "name": "Vac srobot FProduct",
+    "settings": [
+      {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：500*px)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          },{
+            "type": "html",
+            "id": "code",
+            "label": "Code"
+          },{
+              "type": "html",
+              "id": "btn01",
+              "label": "Ebay Button Text"
+            },{
+              "type": "url",
+              "id": "btn_link01",
+              "label": "Ebay Button Link"
+            },
+            {
+              "type": "html",
+              "id": "btn02",
+              "label": "Amazon Button Text"
+            },{
+              "type": "url",
+              "id": "btn_link02",
+              "label": "Amazon Button Link"
+            },
+            {
+              "type": "html",
+              "id": "btn03",
+              "label": "Walmart Button Text"
+            },{
+              "type": "url",
+              "id": "btn_link03",
+              "label": "Walmart Button Link"
+            }
+    ],
+    "presets": [
+      {
+        "name": "Vac srobot FProduct",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

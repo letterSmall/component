@@ -1,0 +1,304 @@
+<div class="testimonials-container" style="background-color:{{section.settings.bg_color}}">
+{% if section.settings.divider %}<div class="section--divider">{% endif %}
+
+<div
+  class="page-width text-{{ section.settings.align_text }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="testimonials">
+  {% if section.settings.title != blank %}
+    <div class="section-header">
+      <h2 class="section-header__title">{{ section.settings.title | escape }}</h2>
+    </div>
+  {% endif %}
+
+  {% if section.blocks.size > 0 %}
+<!--     <div class="testimonials-wrapper">
+      <div class="testimonials-slider" id="Testimonials-{{ section.id }}" data-count="{{ section.blocks.size }}">
+        {% for block in section.blocks %}
+          <div
+            class="testimonials-slide testimonials-slide--{{ block.id }}"
+            data-aos="row-of-{{ section.blocks.size }}"
+            {{ block.shopify_attributes }}>
+            <blockquote class="testimonials-slider__text">
+              <span class="quote-icon"><svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-quote" viewBox="0 0 41 35"><path d="M10.208 17.711h6.124v16.332H0V21.684C0 8.184 5.444.956 16.332 0v6.125c-4.083 1.14-6.124 4.414-6.124 9.82v1.766zm24.498 0h6.124v16.332H24.498V21.684C24.498 8.184 29.942.956 40.83 0v6.125c-4.083 1.14-6.124 4.414-6.124 9.82v1.766z" fill="#000" fill-rule="evenodd"/></svg></span>
+              {% if block.settings.testimonial != blank %}
+                <div class="rte-setting text-spacing">{{ block.settings.testimonial }}</div>
+              {% endif %}
+              {% if block.settings.image != blank %}
+                <div
+                  class="image-wrap text-spacing testimonail-image{% if section.settings.round_images %} testimonail-image--round{% endif %}">
+                  {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  <img class="lazyload"
+                      data-src="{{ img_url }}"
+                      data-widths="[180, 360, 540, 720, 900, 1080]"
+                      data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ block.settings.image.alt }}">
+                </div>
+              {% endif %}
+              {% if block.settings.author != blank %}
+                <cite>{{ block.settings.author | escape }}</cite>
+              {% endif %}
+            </blockquote>
+          </div>
+        {% endfor %}
+      </div>
+    </div> -->
+  {%assign ts_num=0%}
+   {%for block in section.blocks%}
+    {%assign ts_num=ts_num|plus:1%}
+  {%endfor%}
+  
+  <div class="small--hide">
+  <div class="testimonials-content">
+    <div class="tc-swiper-container swiper-container">
+  <div class="swiper-wrapper">
+    {%for block in section.blocks%}
+    <div class="swiper-slide">  
+     <h3 class="tc-text-content">
+        {{block.settings.testimonial}}
+      </h3>
+    </div> 
+    {%endfor%}
+  </div>
+</div>
+  </div>
+  
+  <div class="testimonials-bottom">
+      {%for block in section.blocks%}
+     {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+     {%- assign active_img_url = block.settings.active_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+    <div class="image {%if forloop.index==1%}active{%endif%}" style="width:{{block.settings.image_width}}%" data-index="{{forloop.index}}">
+      
+      <div class="normal-img transition">
+            <img class=" lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[180, 360, 540, 720, 900, 1080]"
+                data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                data-sizes="auto"
+                    style="aspect-ratio:{{ block.settings.image.aspect_ratio }}"
+                alt="{{ block.settings.image.alt | escape }}">
+           </div>
+         {%if block.settings.active_image!=blank%}
+          <div class="active-img transition">
+            <img class=" lazyload"
+                data-src="{{ active_img_url }}"
+                data-widths="[180, 360, 540, 720, 900, 1080]"
+                data-aspectratio="{{ block.settings.active_image.aspect_ratio }}"
+                data-sizes="auto"
+                    style="aspect-ratio:{{ block.settings.active_image.aspect_ratio }}"
+                alt="{{ block.settings.active_image.alt | escape }}">
+           </div>
+         {%endif%}
+          </div>
+     
+    {%endfor%}
+  </div>
+   </div>
+  
+  <div class="medium-up--hide">
+     <div class="tcmb-swiper-container swiper-container">
+  <div class="swiper-wrapper">
+    {%for block in section.blocks%}
+    <div class="swiper-slide">  
+     <h3 class="tc-text-content">
+        {{block.settings.testimonial}}
+      </h3>
+         {%- assign active_img_url = block.settings.image_mb | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+       {%if block.settings.active_image!=blank%}
+      <div class="active-image-box">
+          <div class="active-img transition">
+            <img class=" lazyload"
+                data-src="{{ active_img_url }}"
+                data-widths="[180, 360, 540, 720, 900, 1080]"
+                data-aspectratio="{{ block.settings.image_mb.aspect_ratio }}"
+                data-sizes="auto"
+                      style="aspect-ratio:{{ block.settings.image_mb.aspect_ratio }}"
+                alt="{{ block.settings.image_mb.alt | escape }}">
+           </div>
+        </div> 
+         {%endif%}
+    </div> 
+    {%endfor%}
+  </div>
+       <div class="swiper-pagination"></div>
+</div>
+  </div>
+  
+  
+  
+  {% endif %}
+</div>
+
+{% if section.settings.divider %}</div>{% endif %}
+ </div>
+
+
+<script>
+  var tcSwiper = new Swiper('.tc-swiper-container', {
+    observer:true,
+    observeParents:true,
+    allowTouchMove: false,
+})
+  
+    var tcmbSwiper = new Swiper('.tcmb-swiper-container', {
+    observer:true,
+    observeParents:true,
+      {%if ts_num<=1%}
+    allowTouchMove: false,
+      {%endif%}
+      pagination: {
+    el: '.swiper-pagination',
+  },
+      {%if section.settings.change_every!="0"%}
+      autoplay : {
+        delay:{{section.settings.change_every |times:1000}}
+  },
+        {%endif%}
+})
+  
+  var tcAnimateEl=0; var tcAnimateTime="";
+
+
+$('.testimonials-bottom .image').hover(function(){
+let obj=this;
+tcAnimateEl=$(this).index(); 
+ clearInterval(tcAnimateTime);
+  tcAnimate(obj);
+},function(){
+ inittcAnimateFunction();
+})
+    
+function tcAnimate(obj){
+    let index=$(obj).data('index');
+    $(obj).addClass('active').siblings().removeClass('active');
+     tcSwiper.slideTo(index-1,0, false);
+}
+ 
+
+function inittcAnimateFunction(){
+ tcAnimateTime=setInterval(function(){ 
+  let obj=$(`.testimonials-bottom .image:eq(${tcAnimateEl})`);
+  tcAnimate(obj);
+  if(tcAnimateEl==$('.testimonials-bottom .image').length-1){
+   tcAnimateEl=0;
+  }
+  else{
+    tcAnimateEl++;
+  }
+
+}, 5000);
+}
+inittcAnimateFunction();
+  
+  </script>
+
+
+{% schema %}
+  {
+    "name": "Testimonials",
+    "class": "index-section",
+    "max_blocks": 9,
+    "settings": [
+ {
+        "type": "color",
+        "id": "bg_color",
+        "label": "background color",
+        "default": "#fafafa"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Testimonials"
+      },
+      {
+        "type": "select",
+        "id": "align_text",
+        "label": "Text alignment",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Centered"
+          }
+        ]
+      },
+     
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "Show section divider",
+        "default": false
+      },
+{
+"type": "range",
+"id": "change_every",
+"label": "Change every",
+"min": 0,
+"max": 10,
+"step": 1,
+"unit": "sec",
+"default": 5
+}
+    ],
+     "blocks": [
+      {
+        "type": "testimonial",
+        "name": "Testimonial",
+        "settings": [
+          {
+            "type": "html",
+            "id": "testimonial",
+            "label": "Text",
+            "default": "Add customer reviews and testimonials to showcase your store’s happy customers."
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+ {
+            "type": "image_picker",
+            "id": "active_image",
+            "label": "Active image"
+          },
+ {
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image for mobile"
+          },
+            {
+      "type": "text",
+      "id": "image_width",
+      "label": "Image width",
+     
+      "info": "Unit:%",
+      "default": "20"
+    }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Testimonials",
+        "category": "Text",
+        "blocks": [
+          {
+            "type": "testimonial"
+          },
+          {
+            "type": "testimonial"
+          },
+          {
+            "type": "testimonial"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

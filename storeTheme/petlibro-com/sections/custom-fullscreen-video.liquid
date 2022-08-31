@@ -1,0 +1,229 @@
+{% if section.settings.bg_color != blank %}
+<style>
+  .home-fullscreen-video-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+</style>
+{% endif %}
+
+<div class="custom-fullscreen-video custom-fullscreen-video-{{ section.id }} home-fullscreen-video home-fullscreen-video-{{ section.id }} {% if section.settings.video_autoplay %}autoplay {% endif %} {% if section.settings.tab_id != blank %}{{ section.settings.tab_id }}{% endif %}" data-section-id="{{ section.id }}">
+  {% if section.settings.title != blank %}
+  <div class="page-width">
+    <header class="section-header">
+      <h2 class="section-header__title pro-titles">
+        {{ section.settings.title }}
+      </h2>
+      {% if section.settings.subtitle != blank %}
+      <div class="section-header__subtitle pro-subtitles">
+        {{ section.settings.subtitle }}
+      </div>
+      {% endif %}
+    </header>
+  </div>
+  {% endif %}
+  <div class="home-fullscreen-video-wrapper">
+    <div class="video-container video-container-{{ section.id }}">
+      {% if section.settings.pc_image != blank or section.settings.mb_image != blank %}
+      <div class="video-overlap-image" data-section-id="{{ section.id }}">
+        <img class="lazyload js small--hide image"
+             src="{{ section.settings.pc_image | img_url: '1x' }}"
+             srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+             sizes="(max-width: 960px) 960px, 1500px" 
+             alt=""
+             width="{{ section.settings.pc_image.width}}" 
+             height="{{ section.settings.pc_image.height }}"/>
+        {% if section.settings.mb_image != blank %}
+        <img class="lazyload js medium-up--hide image"
+             src="{{ section.settings.mb_image | img_url: '1x' }}"
+             srcset="{{ section.settings.mb_image | img_url: '1500x' }}, {{ section.settings.mb_image | img_url: '960x' }}"
+             sizes="(max-width: 960px) 960px, 1500px" 
+             alt=""
+             width="{{ section.settings.mb_image.width}}" 
+             height="{{ section.settings.mb_image.height }}"/>
+        {% else %}
+        <img class="lazyload js medium-up--hide image"
+             src="{{ section.settings.pc_image | img_url: '1x' }}"
+             srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+             sizes="(max-width: 960px) 960px, 1500px" 
+             alt=""
+             width="{{ section.settings.pc_image.width}}" 
+             height="{{ section.settings.pc_image.height }}"/>
+        {% endif %}
+        {% if section.settings.video_url != blank %}
+        {% if section.settings.show_playbtn %}
+        <div class="play-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="94" height="110" viewBox="0 0 94 110" fill="none"><path id="play-icon" fill-rule="evenodd" style="fill:#FFFFFF" transform="translate(-8 8)  rotate(90 55 47)" opacity="0.6" d="M17.44,94L92.56,94C96.14,94 99.45,92.08 101.23,88.97C103.02,85.87 103,82.04 101.19,78.95L63.63,14.75C61.84,11.69 58.55,9.8 55,9.8C51.45,9.8 48.16,11.69 46.37,14.75L8.81,78.95C7,82.04 6.98,85.87 8.77,88.97C10.55,92.08 13.86,94 17.44,94Z " /></svg>
+        </div>
+        {% endif %}
+        <div class="media-box">
+          <!--   Youtube   -->
+          {% if section.settings.video_type == 'youtube' %}
+          {% if section.settings.video_url contains 'youtube.com/watch' %}
+          {% assign video_id = section.settings.video_url | split: 'v=' %}
+          {% assign video_id = video_id[1] | split: '&' | first %}
+          <div
+               id="fullscreenYoutube-{{section.id}}"
+               class="video-div media-item youtube-media-item"
+               data-type="youtube"
+               data-video-id="{{ video_id }}"
+               data-section-id="{{ section.id }}"></div>
+          {% endif %}
+
+          {% if section.settings.video_url contains 'youtu.be/' %}
+          {% assign video_id = section.settings.video_url | split: '.be/' %}
+          {% assign video_id = video_id[1] | split: '&' | first %}
+          <div
+               id="fullscreenYoutube-{{section.id}}"
+               class="video-div media-item youtube-media-item"
+               data-type="youtube"
+               data-video-id="{{ video_id }}"
+               data-section-id="{{ section.id }}"></div>
+          {% endif %}
+          {% endif %}
+
+          <!--   MP4   -->
+          {% if section.settings.video_type == 'mp4' %}
+          <video class="media-item fullscreen-myMPFour mpf-media-item" id="fullscreen-myMPFour-{{ section.id }}" data-section-id="{{ section.id }}" preload loop muted controls webkit-playsinline playsinline>
+            <source src="{{ section.settings.video_url }}" type="video/mp4" />
+          </video>
+          {% endif %}
+          
+          {% if section.settings.video_type == 'vimeo' %}
+          {% assign video_id = section.settings.video_url | split: 'vimeo.com/' %}
+          {% assign video_id = video_id[1] | split: '&' | first %}
+          <!--           <div id="vimeo-player-{{ section.id }}" class="video-div media-item vimeo-media-item" data-plyr-provider="vimeo" data-plyr-embed-id="{{ video_id }}"></div> -->
+          <div class="video-div media-item vimeo-media-item" id="vimeo-player-{{ section.id }}">
+            <iframe id="vimeo-media-iframe"
+                    class="vimeo-media-iframe" src="https://player.vimeo.com/video/{{ video_id }}?loop=false&byline=false&portrait=false&title=false&speed=true&transparent=0&gesture=media"
+                    allowfullscreen
+                    allowtransparency
+                    allow="autoplay"></iframe>
+          </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script src="https://player.vimeo.com/api/player.js" async></script>
+<script>
+    $(function(){
+      $(`.custom-fullscreen-video .video-overlap-image`).click(function(){
+        var sectionId = $(this).attr("data-section-id");
+        if($(`.custom-fullscreen-video-${sectionId} #fullscreen-myMPFour-${sectionId}`).length > 0) {
+          var fullscreenMyMPFour = document.getElementById(`fullscreen-myMPFour-${sectionId}`);
+          $(this).find('img').css("opacity","0");
+          $(this).find('.play-btn').css("display","none");
+          $(`.custom-fullscreen-video-${sectionId} .video-container-${sectionId} .media-box`).css("display","block");
+          if(fullscreenMyMPFour.paused){
+            fullscreenMyMPFour.play();
+            return false;
+          }else {
+            fullscreenMyMPFour.pause();
+            return false;
+          }
+        }
+        if($(`.custom-fullscreen-video-${sectionId} #vimeo-player-${sectionId}`).length > 0) {
+          var iframe = document.getElementById(`vimeo-media-iframe`);
+          var vimeoPlayer = new Vimeo.Player(iframe);
+          $(this).find('img').css("opacity","0");
+          $(this).find('.play-btn').css("display","none");
+          $(`.custom-fullscreen-video-${sectionId} .video-container-${sectionId} .media-box`).css("display","block");
+          vimeoPlayer.play();
+          vimeoPlayer.setVolume(0.1);
+        }
+      });
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Custom Fullscreen Video",
+    "settings": [
+      {
+        "type": "text",
+        "id": "tab_id",
+        "label": "Tab ID",
+		"default": "overview",
+		"info": "This must be filled in for the first module of the category for Tabs Bar"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Title"
+      },
+      {
+        "type": "html",
+        "id": "subtitle",
+        "label": "Section Subtitle"
+	  },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#1a1a1a"
+      },
+      {
+        "type": "image_picker",
+        "id": "pc_image",
+        "label": "PC Image",
+        "info": "Image Size: 1920*967px"
+      },
+      {
+        "type": "image_picker",
+        "id": "mb_image",
+        "label": "Mobile Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_playbtn",
+        "label": "Show Play Button",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "video_autoplay",
+        "label": "Video Autoplay"
+      },
+      {
+        "type": "select",
+        "id": "video_type",
+        "label": "Video Type",
+        "default": "youtube",
+        "options": [
+          {
+            "value": "mp4",
+            "label": "MP4"
+          },
+          {
+            "value": "youtube",
+            "label": "Youtube"
+          },
+          {
+            "value": "vimeo",
+            "label": "Vimeo"
+          }
+        ]
+      },
+      {
+        "type": "url",
+        "id": "video_url",
+        "label": "Youtube Video Link or MP4 or Vimeo Video Link"
+      }
+	],
+   "presets": [
+      {
+		"name": "Custom Fullscreen Video"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

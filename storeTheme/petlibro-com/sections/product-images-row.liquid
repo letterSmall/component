@@ -1,0 +1,104 @@
+{% if section.blocks.size > 0 %}
+<div class="product-images-row product-images-row-{{ section.id }}">
+  <div class="pro-images-row-container page-width">
+    <div class="image-rows-wrapper">
+    {% for block in section.blocks %}
+    {% if block.settings.image != blank %}
+        <div class="image-item">
+          <img class="lazyload js image"
+              src="{{ block.settings.image | img_url: '1x' }}"
+              srcset="{{ block.settings.image | img_url: '1500x' }}, {{ block.settings.image | img_url: '960x' }}"
+              sizes="(max-width: 960px) 960px, 1500px" 
+              alt="Image"
+              width="{{ block.settings.image.width}}" 
+              height="{{ block.settings.image.height }}"/>
+          {% if block.settings.link != blank %}
+            <a class="btn button-link" href="{{ block.settings.link }}">{{ block.settings.button_label }}</a>
+            {% endif %}
+        </div>
+    {% endif %}
+    {% endfor %}
+    </div>
+
+    {% comment %}
+    <div class="slide-btn prev-btn">
+      <svg width="17" height="34" viewBox="0 0 17 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2L14 17L2 32" stroke="#fbfbfb" stroke-width="4"></path>
+      </svg>
+    </div>
+    <div class="slide-btn next-btn">
+      <svg width="17" height="34" viewBox="0 0 17 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2L14 17L2 32" stroke="#fbfbfb" stroke-width="4"></path>
+      </svg>
+    </div>
+    {% endcomment %}
+  </div>
+</div>
+<script>
+// $(function(){
+//   if($(window).width() <= 820) {
+//      $('.product-images-row .image-rows-wrapper').slick({
+//         infinite: true,
+//         slidesToShow: 1,
+//         slidesToScroll: 1,
+//         autoplay: true,
+//         autoplaySpeed: 5000,
+//         arrows: true,
+//         prevArrow: $(`.prev-btn`),
+//         nextArrow: $(`.next-btn`)
+//       });
+//   }
+// });
+</script>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product Images Row",
+    "settings": [],
+	"max_blocks": 2,
+    "blocks": [
+      {
+        "type": "image_item",
+        "name": "Image Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Image Size: 825*800px"
+          },
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button Label",
+            "default": "Single Pot"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Button Link",
+            "default": "/"
+          }
+		]
+      }
+    ],
+     "presets": [
+        {
+          "name": "Product Images Row",
+          "blocks": [
+            {
+              "type": "image_item"
+            },
+            {
+              "type": "image_item"
+            }
+          ]
+        }
+     ]
+  }
+{% endschema %}
+{% stylesheet %}
+{% endstylesheet %}
+{% javascript %}
+{% endjavascript %}

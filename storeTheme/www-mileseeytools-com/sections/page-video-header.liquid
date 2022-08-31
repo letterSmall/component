@@ -1,0 +1,107 @@
+<style>
+  {% if section.settings.title_color != blank %}
+  .page-{{ page.template_suffix }}-header.page-header-{{ section.id }} .header-title-box {
+    color: {{ section.settings.title_color }};
+  }
+  {% endif %}
+  {% if section.settings.desc_color != blank %}
+  .page-{{ page.template_suffix }}-header.page-header-{{ section.id }} .header-desc-box,
+  .page-{{ page.template_suffix }}-header.page-header-{{ section.id }} .header-desc-box p {
+    color: {{ section.settings.desc_color }};
+  }
+  {% endif %}
+</style>
+<div class="page-header page-video-header page-header-{{ section.id }}">
+  {% if section.settings.pc_image != blank %}
+  {%- assign pc_img_url = section.settings.pc_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+  <img class="feature-row__image lazyload hide-mb"
+       src="{{ section.settings.pc_image | img_url: 'master' }}"
+       data-src="{{ pc_img_url }}"
+       data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+       data-aspectratio="{{ section.settings.pc_image.aspect_ratio }}"
+       data-sizes="auto"
+       alt="{{ section.settings.pc_image.alt | escape }}">
+  {% endif %}
+  {% if section.settings.mb_image != blank %}
+  {%- assign mb_img_url = section.settings.mb_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+  <img class="feature-row__image lazyload hide-pc"
+       src="{{ section.settings.mb_image | img_url: 'master' }}"
+       data-src="{{ mb_img_url }}"
+       data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+       data-aspectratio="{{ section.settings.mb_image.aspect_ratio }}"
+       data-sizes="auto"
+       alt="{{ section.settings.mb_image.alt | escape }}">
+  {% endif %}
+  <div class="header-content-box">
+    {% if section.settings.title != blank %}
+    <div class="header-title-box hide-mb">{{ section.settings.title }}</div>
+    {% if section.settings.mb_title != blank %}
+    <div class="header-title-box hide-pc">{{ section.settings.mb_title }}</div>
+    {% else %}
+    <div class="header-title-box hide-pc">{{ section.settings.title }}</div>
+    {% endif %}
+    {% endif %}
+    {% if section.settings.description != blank %}
+    <div class="header-desc-box">{{ section.settings.description }}</div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Page Video Header",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "pc_image",
+        "label": "PC Image",
+        "info": "Image Size: 1920*400px"
+      },
+      {
+        "type": "image_picker",
+        "id": "mb_image",
+        "label": "Mobile Image",
+        "info": "Image Size: 750*400px"
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "html",
+        "id": "mb_title",
+        "label": "Mobile Title"
+      },
+      {
+        "type": "color",
+        "id": "title_color",
+        "label": "Title Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "html",
+        "id": "description",
+        "label": "Description",
+		"default": "<p>See What Mileseey Is Always Chasing For</p>"
+      },
+      {
+        "type": "color",
+        "id": "desc_color",
+        "label": "Description Color",
+        "default": "#ffffff"
+      }
+	],
+	"presets": [
+      {
+        "name": "Page Video Header"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

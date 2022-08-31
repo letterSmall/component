@@ -1,0 +1,105 @@
+<div class="promotion-slider-wrapper">
+  <h2>{{section.settings.title}}</h2>
+  <div class="content_wrapper swiper-container">
+    <div class="swiper-wrapper">
+      {%for block in section.blocks%}
+      <div class="item swiper-slide">
+        <div class="item_wrapper">
+          <img src="{{block.settings.img | img_url:'500x'}}">
+          {% if block.settings.date != blank %}
+          <div class="text_wrapper">
+            <p>{{block.settings.text}}</p>
+            <span class="text_date">{{block.settings.date}}</span>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+    <div class="swiper-button-next promotion-next">
+      <svg width="17" height="34" viewBox="0 0 17 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2L14 17L2 32" stroke="white" stroke-width="4"/>
+      </svg>
+    </div>
+    <div class="swiper-button-prev promotion-prev">
+      <svg width="17" height="34" viewBox="0 0 17 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2L14 17L2 32" stroke="white" stroke-width="4"/>
+      </svg>
+    </div>
+  </div>	
+</div>
+
+<script> 
+  var proSwiper = new Swiper('.promotion-slider-wrapper .content_wrapper',{
+    slidesPerView : 3.5,
+    slidesPerGroup : 1,
+    spaceBetween: 20,
+    watchSlidesVisibility: true,
+    centeredSlides: true,
+    loop: true,
+    watchOverflow: true,
+    navigation: {
+		nextEl: '.promotion-next',
+		prevEl: '.promotion-prev',
+	},
+    breakpoints: { 
+      820: { 
+        slidesPerView : 1.6
+      }
+    }
+  })
+  
+</script>
+
+{% schema %}
+  {
+    "name": "Promotion Slider Image",
+    "settings": [
+		{
+			"type":"text",
+			"label":"title",
+			"id":"title"
+		}
+	],
+	"blocks":[
+		{
+			"type":"block",
+			"name":"block",
+			"settings":[
+              {
+                  "type":"image_picker",
+                  "label":"image",
+                  "id":"img"
+              },
+              {
+                  "type":"text",
+                  "label":"text",
+                  "id":"text"
+              },
+              {
+                  "type":"text",
+                  "label":"Date",
+                  "id":"date"
+              },
+              {
+                  "type":"url",
+                  "label":"link",
+                  "id":"link"
+              }
+			]
+		}
+	],
+	"presets":[
+		{
+			"name":"Promotion Slider Image",
+			"category":"Image"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

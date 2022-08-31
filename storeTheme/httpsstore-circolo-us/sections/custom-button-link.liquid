@@ -1,0 +1,71 @@
+{% if section.settings.btn_link != blank %}
+
+<style>
+  {% if section.settings.bg_color != blank %}
+  .custom-button-link-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  {% endif %}
+  {% if section.settings.btn_text_color != blank %}
+  .custom-button-link-{{ section.id }} .button-link {
+    color: {{ section.settings.btn_text_color }};
+    {% if section.settings.btn_bg_color != blank %}
+    background-color: {{ section.settings.btn_bg_color }};
+    {% endif %}
+  }
+  {% endif %}
+</style>
+
+<div class="custom-button-link custom-button-link-{{ section.id }}">
+  <a class="button-link" href="{{ section.settings.btn_link }}">{% if section.settings.btn_text != blank %}{{ section.settings.btn_text }}{% else %}Start Trial Today{% endif %}</a>
+</div>
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Custom Button Link",
+    "settings": [
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#F6F7F9"
+      },
+      {
+        "type": "color",
+        "id": "btn_text_color",
+        "label": "Button Text Color",
+        "default": "#FFFFFF"
+      },
+      {
+        "type": "color",
+        "id": "btn_bg_color",
+        "label": "Button Background Color",
+        "default": "#F6696C"
+      },
+      {
+        "type": "text",
+        "id": "btn_text",
+        "label": "Button Text",
+        "default": "Start Trial Today"
+      },
+      {
+        "type": "url",
+        "id": "btn_link",
+        "label": "Button Link"
+      }
+	],
+    "presets": [
+      {
+        "name": "Custom Button Link"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,64 @@
+<div class="promotion-icons-wrapper">
+  <div class="container900">
+    {% if section.blocks.size > 0 %}
+    <div class="custom-icon-wrapper">
+      {% for block in section.blocks %}
+      <div class="customBlock_item">
+          {% if block.settings.image != blank %}
+          <img class="custom-icon-png" src="{{block.settings.image | img_url:'master'}}"/>
+        {% else %}
+        <span class="custom-icon-svg">{{block.settings.icon_svg}}</span>
+          {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+    "name": "Promotion Icons",
+    "max_blocks": 8,
+    "settings": [],
+    "blocks": [
+        {
+            "type": "logo_image",
+            "name": "Icon",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Icon PNG",
+                    "info": "Size: 120x120px"
+                },{
+                    "type":"text",
+                    "id":"icon_svg",
+                    "label":"Icon SVG(Effective when PNG is not uploaded)",
+                    "info":"Use svg code"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Promotion Icons",
+            "category": "Custom Block",
+            "blocks": [
+                {
+                    "type": "logo_image"
+                },
+                {
+                    "type": "logo_image"
+                },
+                {
+                    "type": "logo_image"
+                },
+                {
+                    "type": "logo_image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

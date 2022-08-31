@@ -1,0 +1,159 @@
+<script src="{{ 'TweenMax.min.js' | asset_url }}" defer></script>
+<script src="{{ 'ScrollMagic.js' | asset_url }}" defer></script>
+<script src="{{ 'animation.gsap.js' | asset_url }}" defer></script>
+
+<div class="section-product-features section-openrun-features-scale">
+  {% for block in section.blocks %}
+  
+  <div class="features-item features-item_{{ forloop.index }}">
+    <div class="image-wrapper">
+      <img src="{{block.settings.image | img_url: 'master'}}" class="features-image hide-mb"/>
+      <img src="{{block.settings.image_mb | img_url: 'master'}}" class="features-image hide-pc"/>
+    </div>
+    <div class="text-wrapper text-wrapper-{{block.id}}" style="color: {{block.settings.color}}; ">
+      <h2 class="title">{{block.settings.title}}</h2>
+      <div class="content">{{block.settings.content}}</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<style>
+  .product-openrun .section-openrun-features-scale{padding: 40px 0px;}
+  .product-openrun .section-openrun-features-scale .features-item{padding: 0px 24px;max-width: 1248px;}
+  @media(min-width: 1250px){
+/*     .section-openrun-features-scale .features-item_1{
+      max-width: unset !important;
+      padding: 0px !important;
+    } */
+    .section-openrun-features-scale .features-item_1 .text-wrapper{
+      max-width: 1300px;
+      padding: 40px 24px 6.24vw !important;
+      margin: 0px auto;
+    }
+  }
+  .section-openrun-features-scale .features-item_1 .features-image{transform-origin: bottom;}
+  @media(min-width: 1921px){
+    .section-openrun-features-scale .features-item_1 .text-wrapper{
+      max-width: 65vw;
+      padding: 40px 1.25vw 6.24vw !important;
+    }
+    .product-openrun .section-openrun-features-scale .features-item{padding: 0px 1.25vw;max-width: 65vw;}
+  }
+  @media(max-width: 768px) and (min-width: 351px){
+    .section-openrun-features-scale .features-item_1{
+      padding: 0px !important;
+    }
+  }
+</style>
+
+
+<script>
+  if($(window).width() > 1400){
+    $(function () { // wait for document ready
+      // build scene
+      // init controller
+      var controller = new ScrollMagic.Controller();
+      var t = new TimelineMax();
+      var w_width = $(window).width();
+      var fit_scale = 1 - (w_width - 1400)/w_width;
+      
+      var fit_offset_top = 450;
+      
+      if($(window).width() < 1920){
+        var fit_scale_time = w_width/1920 * 750;
+      }else{
+        var fit_scale_time =  750;
+        var fit_scale_image_width = w_width * 0.625;
+        fit_scale = 1 - (w_width - fit_scale_image_width)/w_width;
+        fit_offset_top = fit_offset_top*(1+fit_scale);
+      }
+      
+      t.add(TweenLite.to(".section-openrun-features-scale .features-item_1 .features-image.hide-mb", 10, { css: { scale:1 },css: { scale:fit_scale }, ease:Linear.ease }))
+
+      // build scene
+      var scene = new ScrollMagic.Scene({ triggerElement: ".section-openrun-features-scale .features-item_1", duration: fit_scale_time, offset: fit_offset_top })
+      .setTween(t)
+      .setPin(".section-openrun-features-scale .features-item_1")
+      .addTo(controller);
+
+    }); 
+//   }else if($(window).width() > 350 && $(window).width() < 769){
+//     $(function () { // wait for document ready
+//       // build scene
+//       // init controller
+//       var controller = new ScrollMagic.Controller();
+//       var t = new TimelineMax();
+//       var w_width = $(window).width();
+//       var fit_scale = (w_width - 48)/w_width;
+      
+//       if($(window).width() < 1920){
+//         var fit_scale_time = w_width/1920 * 500;
+//       }else{
+//         var fit_scale_time =  500;
+//       }
+      
+//       t.add(TweenLite.to(".section-openrun-features-scale .features-item_1 .features-image.hide-pc", 10, { css: { scale:1 },css: { scale:fit_scale }, ease:Linear.ease }))
+
+//       // build scene
+//       var scene = new ScrollMagic.Scene({ triggerElement: ".section-openrun-features-scale .features-item_1", duration: fit_scale_time, offset: 350 })
+//       .setTween(t)
+//       .setPin(".section-openrun-features-scale .features-item_1")
+//       .addTo(controller);
+
+//     });
+  }
+</script>
+
+
+{% schema %}
+  {
+    "name": "Product Features scale",
+    "settings": [],
+    "blocks":[
+      {
+        "type": "features",
+        "name": "Features scale",
+        "settings":[
+          {
+            "type": "image_picker",
+            "label": "Image PC",
+            "id": "image"
+          },{
+            "type": "image_picker",
+            "label": "Image Mobile",
+            "id": "image_mb"
+          },{
+            "type": "html",
+            "label": "Title",
+            "id": "title"
+          },{
+            "type": "html",
+            "label": "Content",
+            "id": "content"
+          },{
+           "type": "color",
+           "id": "color",
+           "label": "Tetx Color",
+           "default": "#000000"
+		  }
+        ]
+      }
+	],
+    "presets": [
+      {
+        "name": "Product Features scale",
+        "category": "image"
+ 
+      }
+    ]
+  }
+
+
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

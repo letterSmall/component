@@ -1,0 +1,51 @@
+<div class="blog-item" >
+  <div class="tt-post">
+    {%- unless article.image == blank -%}
+    <div class="tt-post-img">
+      <a href="{{ article.url }}">
+        <img id="{{ img_id }}"
+             class="lazyload"
+             src="{{ article.image | img_url: '885x610' }}"
+             data-src="{{ img_url }}"
+             data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+             data-aspectratio="{{ article.image.aspect_ratio }}"
+             data-sizes="auto"
+             alt="">
+      </a>
+    </div>
+    {%- endunless -%}  
+    <div class="tt-post-content">
+
+      <h3 class="tt-title"><a href="{{ article.url }}">{{ article.title | truncate: 75 }}</a></h3>
+
+      <p class="blog-date">
+        {% if section.settings.blog_show_date %}
+        <span class="article__date">{{ article.published_at | time_tag: format: 'date' }}</span>
+        {% endif %}
+        {% if section.settings.blog_show_author %}
+        <span class="article__author">{{ 'blogs.article.by_author' | t: author: article.author }}</span>
+        {% endif %}
+        {% if blog.comments_enabled? and article.comments_count > 0 %}
+        <a href="{{ article.url }}#comments" class="article__comment-count">
+          {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+        </a>
+        {% endif %}
+      </p>
+
+      <div class="tt-description">
+        {% if article.excerpt.size > 0 %}
+        {{ article.excerpt }}
+        {% else %}
+        {{ article.content | strip_html | truncate: 160 }}
+        {% endif %}
+      </div>
+
+      <div class="tt-btn">
+        <a href="{{ article.url }}" aria-label="{{ 'blogs.article.read_more_title' | t: title: article.title }}">
+          {{ 'blogs.article.read_more' | t }}
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>

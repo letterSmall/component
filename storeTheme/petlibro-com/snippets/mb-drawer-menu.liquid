@@ -1,0 +1,124 @@
+{%- assign mainMenu = linklists[section.settings.main_menu_link_list] -%}
+{%- assign imgBlocks = section.blocks -%}
+{%- assign imageBlock = '' -%}
+{% for block in section.blocks %}
+  {% if block.type == 'image' %}
+    {%- assign title_handle = block.settings.title | handle -%}
+    {%- assign title_image_url = block.settings.image | img_url: '320x320' -%}
+    {%- assign imageBlock = imageBlock | append: ',' | append: title_handle | append: ':' | append: title_image_url | append: ':' | append: title_handle -%}
+  {% endif %}
+{% endfor %}
+{%- assign imageBlock = imageBlock | remove_first: ',' -%}
+<div class="mb_drawer_menu" data={{ imageBlock }}>
+  <div class="drawer_menu_content">    
+    {% for menuItem in mainMenu.links %}
+      <div class="drawer_menu_item">
+        {% if menuItem.links.size > 0 %}
+          <div class="menu_item_title {% if menuItem.handle contains 'products' %}menu_item_more{% endif %}">
+            <span>{{ menuItem.title }}</span><img width="20" height="20" src="{{ "icon-menu-arrow.svg" | asset_url }}" />
+          </div>
+        {% else %}
+          <div class="menu_item_title"><a href="{{ menuItem.url }}"><span>{{ menuItem.title }}</span></a></div>
+        {% endif %}
+        <ul class="link_list {% if menuItem.handle contains 'products' %}default_open{% endif %}">
+          {% for linkItem in menuItem.links %}
+            <li class="link_li" >
+              {%- assign firstStr = linkItem.handle | append: ':'  -%}
+              {%- assign lastStr = ':' | append: linkItem.handle  -%}
+              {%- assign linkImageUrl = ''  -%}
+              {% if imageBlock contains firstStr %}
+                {%- assign linkImageUrl = imageBlock | split: firstStr | last | split: lastStr | first -%}
+              {% endif %}
+              {% if linkItem.links.size > 0 %}
+                <div class="item_links_title">
+                  <div class="item_links_title_t">
+                    {% if linkImageUrl != '' %}<img src="{{ linkImageUrl }}" class="link_image" alt={{ linkItem.title }}>{% endif %}
+                    <span>{{ linkItem.title }}</span>
+                  </div>
+                  <img class="title_meneu_arrow" width="20" height="20" src="{{ "icon-menu-arrow.svg" | asset_url }}">
+                </div>
+              {% else %}
+                <a class="item_links_title {% if linkImageUrl == '' %}item_links_text{% endif %}" href="{{ linkItem.url }}">
+                  <div class="item_links_title_t">
+                    {% if linkImageUrl != '' %}<img src="{{ linkImageUrl }}" class="link_image" alt={{ linkItem.title }}>{% endif %}
+                    <span>{{ linkItem.title }}</span>
+                  </div>
+                </a>
+              {% endif %}
+              <div class="link_list_more">
+                {% for childLink in linkItem.links %}
+                  {%- assign _firstStr = childLink.handle | append: ':'  -%}
+                  {%- assign _lastStr = ':' | append: childLink.handle  -%}
+                  {%- assign _linkImageUrl = ''  -%}
+                  {% if imageBlock contains _firstStr %}
+                    {%- assign _linkImageUrl = imageBlock | split: _firstStr | last | split: _lastStr | first -%}
+                  {% endif %}
+                  {% if childLink.handle contains 'all-' %}
+                    <a class="link_a all_link_a" href="{{ childLink.url }}"><img src="{{ "icon_menu_all.svg" | asset_url }}"><span>{{ childLink.title  }}</span></a>
+                  {% else %}
+                    <a class="link_a" href="{{ childLink.url }}"><img src="{{ _linkImageUrl }}" alt="{{ childLink.handle }}"><span>{{ childLink.title  }}</span></a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="mb_drawer_login">
+    <a href="{% if customer %}{{ routes.account_url }}{%else%}{{ routes.account_login_url }}{%endif%}" class="mb_drawer_customer">
+      <img width="30" height="30" alt="" src="{{ "icon-drawer-customer-icon.svg" | asset_url }}">
+      {% if customer %}
+        <span> {{ customer.last_name | t }}</span>
+      {% else %}
+        <span>Log in</span>
+      {% endif %}
+    </a>
+  </div>
+</div>
+<div class="bg_navss"></div>
+<script>
+  $('.js-drawer-open-nav').click(function(e){
+    if (!$('#mb_drawer_menu_page').hasClass('open_drawer_menu')) {
+      $('html').addClass('js-drawer-open')
+      $('#mb_drawer_menu_page').css('top', $('#site-header').hasClass('site-header--opening') ? 0 : '47px').addClass('open_drawer_menu')
+      $('.site-header-sticky').css('background', '#fff')
+    }
+  })
+  $('#mb_drawer_menu_page').click(function(e){
+    $('html').removeClass('js-drawer-open')
+    $('#mb_drawer_menu_page').removeClass('open_drawer_menu')
+    $('.site-header-sticky').css('background', '')
+  })
+  $('.mb_drawer_menu .menu_item_title').click(function(e){
+    let targetEl = $(e.target)
+    if (targetEl.hasClass('menu_item_more')) {
+      targetEl.removeClass('menu_item_more')
+      targetEl.next('.link_list').css('max-height', 0)
+      {% comment %} targetEl.find('.menu_link_open').next('.link_list_more').css('max-height', 0)
+      targetEl.find('.menu_link_open').removeClass('menu_link_open') {% endcomment %}
+      
+    } else {
+      targetEl.addClass('menu_item_more')
+      targetEl.next('.link_list').css('max-height', '1700px')
+    }
+    e.stopPropagation()
+  })
+
+  $('.mb_drawer_menu .item_links_title').click(function(e){
+    let targetEl = $(e.target)
+    if (targetEl.hasClass('menu_link_open')) {
+      targetEl.removeClass('menu_link_open')
+      targetEl.next('.link_list_more').css('max-height', 0)
+    } else {
+      targetEl.addClass('menu_link_open')
+      targetEl.next('.link_list_more').css('max-height', '640px')
+    }
+    e.stopPropagation()
+  })
+
+  $('.mb_drawer_menu').click(function(e){
+    e.stopPropagation()
+  })
+</script>

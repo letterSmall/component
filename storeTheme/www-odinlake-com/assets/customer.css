@@ -1,0 +1,30 @@
+html{padding-bottom:0!important}body{display:flex;flex-direction:column;min-height:unset}#MainContent{flex-grow:1}.shopify-challenge__container{padding:48px 16px}.shopify-challenge__container .shopify-challenge__button{background-color:#000;background-image:none;border-radius:.375rem;color:#fff;cursor:pointer;margin:2rem auto;padding:.75rem 3rem;transition:all .15s}.shopify-challenge__button:hover{background-color:#737373}
+/*# sourceMappingURL=customer.css.map */
+
+
+
+*{margin:0;padding:0;}
+html{background-attachment:fixed;background-color:#ffffff;height:100%;}
+/* header */
+#odinheader{border:1px solid;border-color:rgba(0,0,0,0.1);border-bottom-color:rgba(0,0,0,0.2);border-top:none;background-clip:padding-box;border-radius:0 0 5px 5px;margin:auto;position:relative;width:1000px;
+	background:#f7f7f7;
+	background:-webkit-linear-gradient(top, #f7f7f7, #f4f4f4);
+	background:-moz-linear-gradient(top, #f7f7f7, #f4f4f4);
+	background:-o-linear-gradient(top, #f7f7f7, #f4f4f4);
+	background:linear-gradient(to bottom, #f7f7f7, #f4f4f4);
+}
+#odinheader a{color:#4C9FEB;}
+#odinheader a:hover{color:#FF7D4C;}
+/* menu */
+#odinnavmenu{
+	border-radius:0 0 4px 4px;border-top:1px solid #D1D1D1;box-shadow:-1px 1px 0 rgba(255, 255, 255, 0.8) inset;clear:both;height:51px;padding-top:1px;
+}
+#odinmenu{float:left;}
+#odinmenu a{text-decoration:none;}
+#odinmenu ul{list-style:none;margin:0;padding:0;}
+#odinmenu > ul > li{float:left;position:relative;height:52px;}
+#odinmenu ul li a{
+	border-color:#D1D1D1;border-image:none;border-style:solid;border-width:0 1px 0 0;color:#333333;display:block;font-size:14px;height:30px;line-height:30px;padding:11px 15px 10px;text-shadow:0 1px 0 #FFFFFF;
+	box-shadow:-1px 0 0 rgba(255, 255, 255, 0.8) inset, 1px 0 0 rgba(255, 255, 255, 0.8) inset;
+}
+

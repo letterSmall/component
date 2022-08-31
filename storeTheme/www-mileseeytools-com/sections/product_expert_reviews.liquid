@@ -1,0 +1,126 @@
+<div class="product-reviews-section">
+  <div class="container">
+    {% if section.settings.show_review %}
+    <div class="product-reviews-top">
+      {% if section.settings.title1 %}
+      <h2 class="title">{{ section.settings.title1 }}</h2>
+      {% endif %}
+      <div class="fadein-wrapper">
+        <div class="swiper-container-expert_reviews swiper-container">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+            <div class="item swiper-slide">
+              <div class="content">{{block.settings.content}}</div>
+              <div class="image-wrapper">
+                <img src="{{block.settings.image | img_url: 'master'}}"/>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% if section.blocks.size > 1 %}
+          <div class="pc-show">
+            <div class="swiper-button-next fcw-swiper-button-next swiper-button-next-expert_reviews">{%- render 'icon-svg',icon_svg: 'product-switch-arrow' -%}</div>
+            <div class="swiper-button-prev fcw-swiper-button-prev swiper-button-prev-expert_reviews">{%- render 'icon-svg',icon_svg: 'product-switch-arrow' -%}</div>
+          </div>
+          <div class="mb-show"><div class="swiper-pagination swiper-pagination-new swiper-pagination-expert_reviews"></div></div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if section.settings.show_app_review %}
+    <div class="product-reviews-bottom">
+      {% if section.settings.title2 %}
+      <h2 class="title">{{ section.settings.title2 }}</h2>
+      {% endif %}
+      <div id='Areviewsapp' class='page-full'>{%  render 'aliexpress_reviews' , product: product %}</div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  var reSwiper = new Swiper('.swiper-container-expert_reviews', {
+//     spaceBetween: 20,
+    slidesPerView : 1,
+    watchOverflow: true,
+//     centeredSlides: true,
+//     autoplay: {
+//       delay: 5000,
+//       disableOnInteraction: false,
+//     },
+//     loop: 1,
+    pagination: {
+      el: '.swiper-pagination-expert_reviews',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next-expert_reviews',
+      prevEl: '.swiper-button-prev-expert_reviews',
+	}
+  })
+</script>
+
+
+
+{% schema %}
+  {
+    "name": "Product Reviews",
+    "settings": [
+      {
+        "type": "checkbox",
+        "label": "Show Product Expert Reviews",
+        "id": "show_review",
+        "default": true
+      },
+      {
+        "type": "text",
+        "label": "Product Expert Reviews Title",
+        "id": "title1",
+        "default": "Expert reviews"
+      },
+      {
+        "type": "checkbox",
+        "label": "Show App Reviews",
+        "id": "show_app_review",
+        "default": true
+      },
+      {
+        "type": "text",
+        "label": "Product App Reviews Title",
+        "id": "title2",
+        "default": "Reviews"
+      }
+	],
+	"blocks":[
+      {
+        "type": "review",
+        "name": "review",
+        "settings":[
+          {
+            "type": "text",
+            "label": "Content",
+            "id": "content"
+          },{
+            "type": "image_picker",
+            "label": "Brand honor image",
+            "id": "image"
+          }
+      	]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Product Reviews",
+		"category": "Image With Text"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

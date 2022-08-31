@@ -1,0 +1,179 @@
+{% if section.settings.show_block %}
+<style>
+  .custom-header-banner-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  {% if section.settings.primary_color != blank %}
+  .custom-header-banner-{{ section.id }} .content-title02 {
+    color: {{ section.settings.primary_color }};
+  }
+  {% endif %}
+  {% if section.settings.secondary_color != blank %}
+  .custom-header-banner-{{ section.id }} .content-title {
+    color: {{ section.settings.secondary_color }};
+  }
+  {% endif %}
+  {% if section.settings.thirdly_color != blank %}
+  .custom-header-banner-{{ section.id }} .content-text,
+  .custom-header-banner-{{ section.id }} .content-linklist .item-title {
+    color: {{ section.settings.thirdly_color }};
+  }
+  {% endif %}
+</style>
+
+<div class="custom-header-banner custom-header-banner-{{ section.id }}">
+  <div class="custom-header-banner-container">
+    <div class="content-container container-box">
+      {% if section.settings.title != blank %}
+      <div class="content-title">{{ section.settings.title }}</div>
+      {% endif %}
+      {% if section.settings.title02 != blank %}
+      <h2 class="content-title02">{{ section.settings.title02 }}</h2>
+      {% endif %}
+      {% if section.settings.content != blank %}
+      <div class="content-text">{{ section.settings.content }}</div>
+      {% endif %}
+
+      {% if section.blocks.size > 0 %}
+      <div class="content-linklist">
+        {% for block in section.blocks %}
+        <a class="link-item" href="{{ block.settings.link }}">
+          <div class="item-title">{{ block.settings.title }}</div>
+          <div class="item-button">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="13" stroke="#3C435B" stroke-width="2"/>
+              <path d="M14.4836 9.82232C14.03 9.39256 13.3052 9.39256 12.8516 9.82232C12.3828 10.2666 12.3828 10.9986 12.8516 11.4428L17.6613 16L12.8516 20.5572C12.3828 21.0014 12.3828 21.7334 12.8516 22.1777C13.3052 22.6074 14.03 22.6074 14.4836 22.1777L20.1484 16.8102C20.6172 16.366 20.6172 15.634 20.1484 15.1898L14.4836 9.82232Z" fill="#3C435B"/>
+            </svg>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% if section.settings.image != blank %}
+    {%- assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+    <div class="image-container container-box">
+      <img class="image lazyload mb-down--hide"
+           data-src="{{ img_url }}"
+           data-widths="[180, 360, 540, 750, 900, 1080]"
+           data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+           data-sizes="auto"
+           alt="{{ section.settings.image.alt }}"
+           width="{{ section.settings.image.width }}"
+           height="{{ section.settings.image.height }}">
+      {% if section.settings.image_mb != blank %}
+      {%- assign mb_img_url = section.settings.image_mb | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+      <img class="image lazyload mb-up--hide"
+           data-src="{{ mb_img_url }}"
+           data-widths="[180, 360, 540, 750, 900, 1080]"
+           data-aspectratio="{{ section.settings.image_mb.aspect_ratio }}"
+           data-sizes="auto"
+           alt="{{ section.settings.image_mb.alt }}"
+           width="{{ section.settings.image_mb.width }}"
+           height="{{ section.settings.image_mb.height }}">
+      {% else %}
+      <img class="image lazyload mb-up--hide"
+           data-src="{{ img_url }}"
+           data-widths="[180, 360, 540, 750, 900, 1080]"
+           data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+           data-sizes="auto"
+           alt="{{ section.settings.image.alt }}"
+           width="{{ section.settings.image.width }}"
+           height="{{ section.settings.image.height }}">
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Custom Header Banner",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_block",
+        "label": "show this block?",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "primary_color",
+        "label": "Primary Color",
+        "default": "#111431"
+      },
+      {
+        "type": "color",
+        "id": "secondary_color",
+        "label": "Secondary Color",
+        "default": "#F6696C"
+      },
+      {
+        "type": "color",
+        "id": "thirdly_color",
+        "label": "Thirdly Color",
+        "default": "#3C435B"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "PC Image",
+        "info": "Image SIze: 1440*1600px"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mb",
+        "label": "Mobile Image",
+        "info": "Image SIze: 750*560px"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "circolo mirror"
+      },
+      {
+        "type": "text",
+        "id": "title02",
+        "label": "Title02",
+        "default": "The Most Versatile smart fitness mirror"
+      },
+      {
+        "type": "html",
+        "id": "content",
+        "label": "content",
+		"default": "With Circolo Mirror, we provide a technology and content platform to empower fitness professionals, businesses, and non-profits to create a best-in-class experience to help everyone live an active lifestyle"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text_link",
+        "name": "Text Link",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Parkinson’s"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Header Banner"
+      }
+    ]
+  }
+{% endschema %}

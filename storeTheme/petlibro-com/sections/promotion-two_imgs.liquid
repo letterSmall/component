@@ -1,0 +1,88 @@
+<div class="promotion-two_imgs-wrapper">
+  <div class="page-width"> 
+    <div class="image-text-container">
+      <div class="image01-text-row">
+        <div class="img-wrapper">
+        {% if section.settings.image01 != blank %}
+        <img class="spsmall-hide image01" src="{{ section.settings.image01 | img_url:'master' }}"/>
+        {% endif %}
+        {% if section.settings.image01_mb != blank %}
+        <img class="ipadup-hide" src="{{ section.settings.image01_mb | img_url:'master' }}"/>
+        {% else %}
+        <img class="ipadup-hide" src="{{ section.settings.image01 | img_url:'master' }}"/>
+        {% endif %}
+        </div>
+
+        {% if section.settings.title != blank %}
+        <div class="title-wrapper spsmall-hide">{{ section.settings.title }}</div>
+        {% endif %}
+      </div>
+
+      <div class="image02-text-row">
+        {% if section.settings.title != blank %}
+        <div class="title-wrapper ipadup-hide">{{ section.settings.title }}</div>
+        {% endif %}
+        {% if section.settings.text != blank %}
+        <div class="text-wrapper">{{ section.settings.text }}</div>
+        {% endif %}
+        <div class="img-wrapper">
+          {% if section.settings.image02 != blank %}
+          <img class="spsmall-hide image02" src="{{ section.settings.image02 | img_url:'master' }}"/>
+          {% endif %}
+          {% if section.settings.image02_mb != blank %}
+          <img class="ipadup-hide" src="{{ section.settings.image02_mb | img_url:'master' }}"/>
+          {% else %}
+          <img class="ipadup-hide" src="{{ section.settings.image02 | img_url:'master' }}"/>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+{% schema %}
+  {
+    "name": "Promotion Two Images", 
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image01",
+            "label": "Image01(Recommended size：996x600px)"
+          },
+          {
+            "type": "image_picker",
+            "id": "image01_mb",
+            "label": "Image01 Mobile(Recommended size：)"
+          },
+          {
+            "type": "html",
+            "id": "title",
+            "label": "Title"
+          },
+          {
+            "type": "image_picker",
+            "id": "image02",
+            "label": "Image02(Recommended size：735x438px)"
+          },
+          {
+            "type": "image_picker",
+            "id": "image02_mb",
+            "label": "Image02 Mobile(Recommended size：)"
+          },
+          {
+            "type": "html",
+            "id": "text",
+            "label": "Text"
+          }
+    ],
+    "presets": [
+      {
+        "name": "Promotion Two Images",
+        "category": "image"
+      }
+    ]
+  }
+{% endschema %}

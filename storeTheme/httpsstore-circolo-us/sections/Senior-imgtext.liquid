@@ -1,0 +1,166 @@
+{% if section.settings.show_block %}
+<div class="Seniorimgtext-outbox">
+  <div class="Seniorimgtext-topbanner">
+
+{% if section.settings.banner %}
+  <img class="small-hide lazyload" data-src="{{ section.settings.banner | img_url:'master' }}" width="{{ section.settings.banner.width }}" height="{{ section.settings.banner.height }}"/>
+  <img class="medium--up-hide lazyload" data-src="{{ section.settings.banner_mobile | img_url:'master' }}" width="{{ section.settings.banner_mobile.width }}" height="{{ section.settings.banner_mobile.height }}"/>
+{% endif %}
+  <div class="Seniorimgtext-bannertext">  
+  {% if section.settings.title != blank %}
+  <div class="Seniorimgtext-title">{{ section.settings.title }}</div>
+  {% endif %}
+     {% if section.settings.subtitle != blank %}
+  <div class="Seniorimgtext-subtitle">{{ section.settings.subtitle }}</div>
+  {% endif %}
+    </div>
+  
+  </div>
+  
+  
+<div class="Seniorimgtext-container">
+  
+     {% for block in section.blocks %}
+    <div class="Seniorimgtext-wrapper {% if block.settings.position == 'right' %} Seniorimgtext-right{% endif %}">
+
+  <div class="Seniorimgtext-box-text">
+
+    {% if block.settings.title != blank %}
+  <div class="Seniorimgtext-text-title">{{ block.settings.title }}</div>
+   {% endif %}
+  <div class="techintrotextimg-box-img medium--up-hide">
+   {% if block.settings.image_url %}
+    <a href="{{ block.settings.image_url }}">
+   {% endif %}
+    {% if block.settings.image %}
+    <img class="lazyload" data-src="{{ block.settings.image | img_url:'master' }}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}"/>
+   {% endif %}
+   {% if block.settings.image_url %}
+    </a>
+   {% endif %}
+    
+  </div>
+    {% if block.settings.content != blank %}
+  <div class="Seniorimgtext-text-content">{{ block.settings.content }}</div>
+   {% endif %}
+
+    {% if block.settings.btntext != blank %}
+  <a class="Seniorimgtext-text-btn" href="{{ block.settings.btnurl }}">{{ block.settings.btntext }}</a>
+   {% endif %}
+    
+  </div>
+      
+      
+   <div class="techintrotextimg-box-img small-hide">
+   {% if block.settings.image_url %}
+    <a href="{{ block.settings.image_url }}">
+   {% endif %}
+    {% if block.settings.image %}
+    <img class="lazyload" data-src="{{ block.settings.image | img_url:'master' }}" width="{{ block.settings.image.width }}" height="{{ block.settings.image.height }}" />
+   {% endif %}
+   {% if block.settings.image_url %}
+    </a>
+   {% endif %}
+    
+  </div>
+
+  </div>
+  
+    {% endfor %}
+
+</div>
+</div>
+
+
+{% endif %}
+
+{% schema %}
+
+  {
+    "name": "Senior Banner",
+    "settings": [
+         {
+            "type": "checkbox",
+            "id": "show_block",
+            "label": "show this block?",
+            "default": true
+          },{
+            "type": "image_picker",
+            "id": "banner",
+            "label": "Banner(Recommended size：1920*675px)"
+          },{
+            "type": "image_picker",
+            "id": "banner_mobile",
+            "label": "Banner Mobile"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "text",
+            "id": "subtitle",
+            "label": "subtitle"
+          }   
+      
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+        "type": "select",
+        "id": "position",
+        "label": "Text Position",
+          "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "left"
+          },
+          {
+            "value": "right",
+            "label": "right"
+          }
+        ]
+      },{
+            "type": "image_picker",
+            "id": "image",
+            "label": "image(Recommended size：1050*675px)"
+          },{
+            "type": "url",
+            "id": "image_url",
+            "label": "image_url"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "richtext",
+            "id": "content",
+            "label": "content"
+          },{
+            "type": "text",
+            "id": "btntext",
+            "label": "button text"
+          },{
+            "type": "url",
+            "id": "btnurl",
+            "label": "button url"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Senior Banner",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+
+
+
+  

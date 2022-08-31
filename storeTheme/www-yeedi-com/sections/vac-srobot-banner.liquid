@@ -1,0 +1,61 @@
+<div class="vac_srobot-bg-text">
+  {% if section.settings.image !=blank %}
+  <img class="hide-mb" src="{{ section.settings.image |img_url: 'master' }}" alt=""/>
+  {% endif %}
+  
+  {% if section.settings.image_mb !=blank %}
+  <img class="hide-pc" src="{{ section.settings.image_mb |img_url: 'master' }}" alt=""/>
+  {% else %}
+   <img class="hide-pc" src="{{ section.settings.image |img_url: 'master' }}" alt=""/>
+  {% endif %}
+
+  <div class="bg-text-wrapper">
+    {% if section.settings.title != blank %}
+    <h2 class="title50">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    {% if section.settings.text != blank %}
+    <p class="text">{{ section.settings.text }}</p>
+    {% endif %}
+   </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Vac series robot Banner",
+    "class": "vac_srobot_banner",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Background Image PC",
+            "info": "Size: 1920px*710px"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Background Image Mobile",
+            "info": "Size: 750px*750px"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },{
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          }
+    ],
+    "presets": [
+      {
+        "name": "Vac series robot Banner",
+        "category": "image"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,91 @@
+{% if section.settings.show_section %}
+<style>
+  .affliate-how-works-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+</style>
+<div class="affliate-how-works affliate-how-works-{{ section.id }}">
+    <div class="affliate-how-works-wrapper">
+      {% if section.settings.title != blank %}
+        <h2 class="title-box pro-titles">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.blocks.size > 0 %}
+      <div class="worklist-container">
+        <div class="worklist-wrapper">
+        {% for block in section.blocks %}
+          <div class="worklist-item">
+            {% if block.settings.title != blank or block.settings.desc != blank %}
+              <div class="item-number middle-text">{{ forloop.index }}.</div>
+              <div class="item-content">
+                {% if block.settings.title != blank %}
+                  <h3 class="item-title middle-text">{{ block.settings.title }}</h3>
+                {% endif %}
+                {% if block.settings.desc != blank %}
+                  <div class="item-desc normal-text">{{ block.settings.desc }}</div>
+                {% endif %}
+              </div>
+            {% endif %}
+            </div>
+        {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Affliate How Works",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title",
+        "default": "How It Works?"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "works item",
+        "settings": [
+          {
+            "type": "html",
+            "id": "title",
+            "label": "Title",
+            "default": "Sign Up for Free"
+          },
+          {
+            "type": "html",
+            "id": "desc",
+            "label": "Description",
+			"default": "Direct your visitors to great promos/deals to <br></br>place orders."
+          }
+		]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Affliate How Works"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

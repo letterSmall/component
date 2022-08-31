@@ -1,0 +1,55 @@
+ <div class="profeatureon-container">
+  <div class="page-width">
+{% if section.settings.title != blank %}
+  <div class="profeatureon-title">{{ section.settings.title }}</div>
+   {% endif %}
+  <div class="profeatureon-box">
+   <div class="profeatureon-item"></div>
+   {% for block in section.blocks %}
+  <div class="profeatureon-item">
+    {% if block.settings.image %}
+    <img alt src="{{ block.settings.image | img_url:'master' }}"/>
+   {% endif %}
+   </div>
+   {% endfor %}
+  </div>
+</div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Featured on",
+    "settings": [
+            {
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured on",
+        "category": "Ho-Advance"
+
+      }
+    ]
+  }
+{% endschema %}
+
+
+

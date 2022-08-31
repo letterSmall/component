@@ -1,0 +1,144 @@
+{%- liquid
+  assign per_row = section.settings.per_row
+  assign collection = collections[section.settings.collection]
+-%}
+
+<div class="vac_srobot-collection-{{ section.id }}">
+  {% if section.settings.title != blank or section.settings.text != blank %}
+    <div class="vac_srobot-header">
+      {% if section.settings.title != blank %}
+      <h2> {{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.text != blank %}
+      <div>{{ section.settings.text }}</div>
+      {% endif %}
+    </div>
+    {% endif %}
+  
+    <div class="vac_srobot-main">
+      {% if is_empty_collection %}
+      <div class="halo-column">
+        <div class="halo-item">
+          <p class="text-center">{{ 'collections.general.no_matches' | t }}</p>
+        </div>
+      </div>
+      {% else %}
+      <div class="swiper-container vac_srobot-swiper-container">
+        <div class="swiper-wrapper{% if collection.products_count < per_row %} vac_srobot-center{% endif %}">
+          {% for product in collection.products %}
+          <div class="vac_srobot-item swiper-slide">
+            {% render 'product-grid-item-collection', product: product %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {%- unless collection.empty? -%}
+      {% if collection.products_count > per_row %}
+      <div class="hide-mb">
+        <div class="swiper-button-prev vac_srobot-swiper-button-prev">
+          <svg width="12" height="22" viewBox="0 0 12 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.9593 1.64044L1.2959 10.9161L10.9669 20.9707" stroke="#A3BAC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="swiper-button-next vac_srobot-swiper-button-next">
+          <svg width="13" height="23" viewBox="0 0 13 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.56122 21.2283L11.2246 11.9527L1.55358 1.8981" stroke="#A3BAC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      {% endif %}
+      <div class="hide-pc">
+        <div class="swiper-pagination swiper-pagination-vac_srobot"></div>
+      </div>
+      {%endunless%}
+      {% endif %}
+    </div>
+</div>
+
+<style>
+ .vac_srobot-collection-{{ section.id }} h2{ text-transform: none; }
+</style>
+
+  {{ 'swiper.min.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'swiper.min.js' | asset_url }}"></script>
+<script>
+  $(function(){
+  var maxheight = 0;
+  $(".vac_srobot-main .vac_srobot-item .grid-product").each(function(){
+    if(maxheight < $(this).innerHeight()) 
+      maxheight = $(this).innerHeight();
+  });
+  $(".vac_srobot-main .vac_srobot-item .grid-product").css({"height": maxheight + "px"});
+});
+</script>
+
+<script>
+  var vac_srobotSwiper = new Swiper('.vac_srobot-swiper-container', {
+    slidesPerView: {{per_row}}, 
+    slidesPerGroup: {{per_row}}, 
+    observer:true,
+    observeParents:true,
+    spaceBetween : 10,
+    navigation: {
+    nextEl: '.vac_srobot-swiper-button-next',
+    prevEl: '.vac_srobot-swiper-button-prev',
+  },
+  pagination: {
+    el: '.swiper-pagination-vac_srobot',
+    clickable:true,
+  },
+  breakpoints: {
+    768: {  
+    slidesPerView: 1.4,
+    slidesPerGroup: 1, 
+    spaceBetween : 1,
+      observer:false,
+    observeParents:false,
+    watchSlidesVisibility: true,
+    centeredSlides: true,
+    loop: true,
+    watchOverflow: true,
+    }
+  }
+})
+</script>
+
+{% schema %}
+{
+    "name": "Vac srobot Collection",
+    "class": "vac_srobot-collection-section",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },{
+            "type": "textarea",
+            "id": "text",
+            "label": "Text"
+        },
+        {
+          "type": "range",
+          "id": "per_row",
+          "label": "Products per row",
+          "default": 4,
+          "min": 1,
+          "max": 5,
+          "step": 1
+        },
+       {
+        "id": "collection",
+        "type": "collection",
+        "label": "Collection01"
+       }
+    ],
+    "presets": [
+      {
+        "name": "Vac srobot Collection",
+        "category": "text"
+ 
+      }
+    ]
+}
+{% endschema %}

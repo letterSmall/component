@@ -1,0 +1,67 @@
+
+<div class="mopprorot-container">
+     <div class="mopprorot-text">
+  {% if section.settings.title != blank %}
+  <div class="mopprorot-title">{{ section.settings.title }}</div>
+  {% endif %}
+  {% if section.settings.content != blank %}
+  <div class="mopprorot-content medium-down--hide">{{ section.settings.content }}</div>
+  <div class="mopprorot-content large-up--hide">{{ section.settings.content_mb }}</div>
+  {% endif %}
+     
+  {% if section.settings.rightimage %}
+   <img class="mopprorot-rimg" src="{{ section.settings.rightimage | img_url:'master' }}"/>
+  {% endif %}
+
+      
+  </div>
+  {% if section.settings.image %}
+  <div class="mopprorot-img">
+  <img class="small-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  <img class="medium--up-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+  </div>
+{% endif %}
+
+
+</div>
+
+
+{% schema %}
+  {
+    "name": "Textoverimage-Moppro",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：750*px)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          },{
+            "type": "html",
+            "id": "content_mb",
+            "label": "content_mb"
+          },{
+            "type": "image_picker",
+            "id": "rightimage",
+            "label": "Image"
+          }
+    ],
+
+    "presets": [
+      {
+        "name": "Textoverimage-Moppro",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

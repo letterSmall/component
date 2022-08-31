@@ -1,0 +1,103 @@
+<div class="product-video-text">
+  {% for block in section.blocks %}
+  <div class="features-item {% if block.settings.position == "left" %} position-left {% else %} position-right{% endif %}">
+    <div class="container">
+      <div style="position: relative;">
+        <div class="product-feature-video">
+        <video class="videoloop-dex"  width="100%" muted loop> 
+          <source src="{{block.settings.video_link}}">
+        </video>
+          <div class="product-video-text-bg"></div>
+        </div>
+        <div class="text-wrapper">
+          <h2 class="title" style="color: {{block.settings.color}};">{{block.settings.title}}</h2>
+          <div class="content" style="color: {{block.settings.color}};">{{block.settings.content}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<style>
+  .product-video-text{ background:{{ section.settings.bg_color}}; }
+  .product-video-text .title{ font-size:1.875vw; text-transform: none;}
+  .product-video-text .content{ font-size: 1.04167vw; line-height: 1.5;}
+</style>
+
+<script>
+//   if($(window).width() > 768){
+    $(".product-feature-video .videoloop-dex").attr("autoplay","autoplay");
+//   }
+</script>
+
+{% schema %}
+  {
+    "name": "Product Video Text",
+    "settings": [
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Section Background Color",
+            "default": "#000"
+        }
+     ],
+    "blocks":[
+      {
+        "type": "features",
+        "name": "Features video",
+        "settings":[
+          {
+            "type": "text",
+            "label": "Video link",
+            "id": "video_link"
+          },{
+            "type": "image_picker",
+            "label": "Image PC",
+            "id": "image"
+          },{
+            "type": "image_picker",
+            "label": "Image Mobile",
+            "id": "image_mb"
+          },{
+            "type": "html",
+            "label": "Title",
+            "id": "title"
+          },{
+            "type": "html",
+            "label": "Content",
+            "id": "content"
+          },{
+           "type": "color",
+           "id": "color",
+           "label": "Tetx Color",
+           "default": "#000000"
+		  },{
+           "type": "radio",
+           "id": "position",
+           "options": [
+              { "value": "left", "label": "Left"},
+              { "value": "right", "label": "Right"}
+           ],
+           "label": "Text Position"
+          }
+        ]
+      }
+	],
+    "presets": [
+      {
+        "name": "Product Video Text",
+        "category": "video"
+ 
+      }
+    ]
+  }
+
+
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

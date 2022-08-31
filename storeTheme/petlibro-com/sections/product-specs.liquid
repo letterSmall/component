@@ -1,0 +1,104 @@
+{% if section.settings.show_section != blank %}
+{%- assign customDesc = product.metafields.custom_desc -%}
+<div class="product-specs product-specs-{{ section.id }} {% if section.settings.tab_id != blank %}{{ section.settings.tab_id }}{% endif %}">
+  <div class="psc-content">
+
+    {% if customDesc.in_the_box != blank %}
+    <div class="page-width specs-inbox-wrapper">
+      <div class="in_the_box-content">
+        {{ customDesc.in_the_box }}
+      </div>
+    </div>
+    {% endif %}
+    {% if customDesc.in_the_box_2 != blank %}
+    <div class="page-width specs-inbox-wrapper">
+      <div class="in_the_box-content">
+        {{ customDesc.in_the_box_2 }}
+      </div>
+    </div>
+    {% endif %}
+    {% if customDesc.specs != blank %}
+    <div class="page-width specs-content-wrapper">
+      <div class="specs-content">
+        {{ customDesc.specs }}
+      </div>
+    </div>
+    {% endif %}
+    
+    {% for block in section.blocks %}
+    {% if block.type == 'in_the_box' and block.settings.box_code != blank %}
+    <div class="page-width specs-inbox-wrapper">
+      <div class="in_the_box-content">
+        {{ block.settings.box_code }}
+      </div>
+    </div>
+    {% endif %}
+    {% if block.type == 'specs_content' and block.settings.content_code != blank %}
+    <div class="page-width specs-content-wrapper">
+      <div class="specs-content">
+        {{ block.settings.content_code }}
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product Specs",
+    "settings": [
+      {
+        "type": "text",
+        "id": "tab_id",
+        "label": "Tab ID",
+		"default": "specs",
+		"info": "This must be filled in for the first module of the category for Tabs Bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      }
+	],
+    "blocks": [
+      {
+        "type": "in_the_box",
+        "name": "In The Box",
+        "settings": [
+          {
+            "type": "html",
+            "id": "box_code",
+            "label": "HTML For In The Box",
+			"info": "Metefields are used by default. Namespace: custom_desc, Key: in_the_box, in_the_box_2"
+          }
+		]
+      },
+      {
+        "type": "specs_content",
+        "name": "Specs Content",
+        "settings": [
+          {
+            "type": "html",
+            "id": "content_code",
+            "label": "HTML For Specs Content",
+			"info": "Metefields are used by default. Namespace: custom_desc, Key: specs"
+          }
+		]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Product Specs"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,197 @@
+{% if section.blocks.size > 0 %}
+<style>
+  .download-page-downloadlist-{{ section.id }} {
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+  @media only screen and (max-width: 790px) {
+    .download-page-downloadlist-{{ section.id }} {
+      margin-top: {{ section.settings.mb_margin_top }}px;
+      margin-bottom: {{ section.settings.mb_margin_bottom }}px;
+    }
+  }
+  {% if section.settings.primary_color != blank %}
+  .download-page-downloadlist-{{ section.id }} .downloadlist-item .content-title,
+  .download-page-downloadlist-{{ section.id }} .downloadlist-item .item-download-box a {
+    color: {{ section.settings.primary_color }};
+  }
+  {% endif %}
+  {% if section.settings.secondary_color != blank %}
+  .download-page-downloadlist-{{ section.id }} .downloadlist-item .content-desc {
+    color: {{ section.settings.secondary_color }};
+  }
+  {% endif %}
+</style>
+
+<div class="download-page-downloadlist download-page-downloadlist-{{ section.id }} container" data-section-id="{{ section.id }}">
+  <div class="downloadlist-wrapper downloadlist-wrapper-{{ section.id }}">
+    {% for block in section.blocks %}
+    <div class="downloadlist-item downloadlist-item-{{ block.id }} {% if block.settings.download_item_category != blank %}{{ block.settings.download_item_category }} {% endif %}">
+      <div class="item-container">
+        {% if block.settings.image != blank %}
+        <div class="item-image-box">
+          {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+          <img class="image lazyload"
+               src="{{ block.settings.image | img_url: 'master' }}"
+               data-src="{{ img_url }}"
+               data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+               data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+               data-sizes="auto"
+               alt="{{ block.settings.image.alt | escape }}">
+        </div>
+        {% endif %}
+        {% if block.settings.title != blank %}
+        <div class="item-content-box">
+          <h3 class="content-title">{{ block.settings.title }}</h3>
+          {% if block.settings.description != blank %}
+          <div class="content-desc">{{ block.settings.description }}</div>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% if block.settings.download_code != blank %}
+        <div class="item-download-box">
+          {{ block.settings.download_code }}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endif %}
+<script>
+  $(function(){
+    var currFilter = $(".filterbar-container .filterbar-item.active").attr("data-filterid");
+    if(currFilter == 'all'){
+      $(".download-page-downloadlist .downloadlist-wrapper .downloadlist-item").css("display", "block");
+    }else {
+      $(".download-page-downloadlist .downloadlist-wrapper .downloadlist-item").css("display", "none");
+      $(`.download-page-downloadlist .downloadlist-wrapper .downloadlist-item.${currFilter}`).css("display", "block");
+    }
+
+    if($(".filterbar-container").length){
+      $(".filterbar-item").click(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+        currFilter = $(this).attr("data-filterid");
+
+        if(currFilter == 'all'){
+          $(".download-page-downloadlist .downloadlist-wrapper .downloadlist-item").css("display", "block");
+        }else {
+          $(".download-page-downloadlist .downloadlist-wrapper .downloadlist-item").css("display", "none");
+          $(`.download-page-downloadlist .downloadlist-wrapper .downloadlist-item.${currFilter}`).css("display", "block");
+        }
+      });
+    }
+  });  
+</script>
+
+{% schema %}
+  {
+    "name": "Download Page List",
+    "settings": [
+      {
+        "type": "color",
+        "id": "primary_color",
+        "label": "Primary Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "secondary_color",
+        "label": "Secondary Color",
+        "default": "#505050"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin Top",
+        "default": 30
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin Bottom",
+        "default": 60
+      },
+      {
+        "type": "range",
+        "id": "mb_margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile Margin Top",
+        "default": 20
+      },
+      {
+        "type": "range",
+        "id": "mb_margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile Margin Bottom",
+        "default": 40
+      }
+	],
+	"blocks": [
+      {
+        "type": "image",
+        "name": "Download Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "download_item_category",
+            "label": "Download Item Category",
+			"default": "pet-stories",
+			"info": "It must be consistent with the value in filter bar. Use all lowercase ids and hyphens(-) between words. Such as: pet-stories."
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+			"info": "Image Size: 200*200px"
+          },
+          {
+            "type": "html",
+            "id": "title",
+            "label": "Download Title",
+			"default": "PF210"
+          },
+          {
+            "type": "html",
+            "id": "description",
+            "label": "Download Description",
+			"default": "Mileseey Best Rangefinder Binoculars BPFS2"
+          },
+          {
+            "type": "html",
+            "id": "download_code",
+            "label": "Download Table Code",
+            "default": "<a class='download-item' href='https://cdn.shopifycdn.net/s/files/1/0259/1857/0593/files/PF210_serier_for_outdoor_rangefinder.pdf?v=1608866976'>Manuals 0.1</a><a class='download-item' href='https://cdn.shopifycdn.net/s/files/1/0259/1857/0593/files/DT20_for_digital_tape_measure.pdf?v=1608865690'>Manuals 0.2</a><a class='download-item' href='https://cdn.shopifycdn.net/s/files/1/0259/1857/0593/files/PF210_serier_for_outdoor_rangefinder.pdf?v=1608866976'>Manuals 0.3</a>"
+          }
+		]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Download Page List"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

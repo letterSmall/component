@@ -1,0 +1,282 @@
+{% if section.settings.show_section %}
+<style>
+  .special-lr-image-text-{{ section.id }} .title-box {
+    color: {{ section.settings.title_color }};
+  }
+  .special-lr-image-text-{{ section.id }} .desc-box {
+    color: {{ section.settings.desc_color }};
+  }
+  .special-lr-image-text-{{ section.id }} .separator-box {
+    background-color: {{ section.settings.separator_color }};
+  }
+  .special-lr-image-text-{{ section.id }} .image-container {
+    background-color: {{ section.settings.image_bg_color }};
+  }
+  .special-lr-image-text-{{ section.id }} .content-container {
+    background-color: {{ section.settings.content_bg_color }};
+  }
+</style>
+
+<div class="special-lr-image-text special-lr-image-text-{{ section.id }} {% if section.settings.tab_id != blank %}{{ section.settings.tab_id }}{% endif %} {% if section.settings.layout == 'left' %}left-image {% else %}right-image {% endif %} home-fullscreen-video home-fullscreen-video-{{ section.id }} {% if section.settings.video_autoplay %}autoplay {% endif %}" data-section-id="{{ section.id }}">
+  <div class="special-image-text-wrapper page-width">
+    {% capture image_temp %}
+    {% if section.settings.pc_image != blank %}
+    <div class="image-container item-box video-overlap-image" data-section-id="{{ section.id }}" data-special-flag="true">
+      {% if section.settings.title != blank %}
+      <h2 class="title-box pad-up--hide">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.show_separator %}
+      <div class="separator-box pad-up--hide"></div>
+      {% endif %}
+      <img class="lazyload js pad-down--hide"
+           src="{{ section.settings.pc_image | img_url: '1x' }}"
+           srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+           sizes="(max-width: 960px) 960px, 1500px" 
+           alt=""
+           width="{{ section.settings.pc_image.width }}" 
+           height="{{ section.settings.pc_image.height }}"/>
+      {% if section.settings.mb_image != blank %}
+      <img class="lazyload js pad-up--hide"
+           src="{{ section.settings.mb_image | img_url: '1x' }}"
+           srcset="{{ section.settings.mb_image | img_url: '1500x' }}, {{ section.settings.mb_image | img_url: '960x' }}"
+           sizes="(max-width: 960px) 960px, 1500px" 
+           alt=""
+           width="{{ section.settings.mb_image.width }}" 
+           height="{{ section.settings.mb_image.height }}"/>
+      {% else %}
+      <img class="lazyload js pad-up--hide"
+           src="{{ section.settings.pc_image | img_url: '1x' }}"
+           srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+           sizes="(max-width: 960px) 960px, 1500px" 
+           alt=""
+           width="{{ section.settings.pc_image.width }}" 
+           height="{{ section.settings.pc_image.height }}"/>
+      {% endif %}
+      {% if section.settings.video_url != blank %}
+      <div class="media-box">
+        <!--   Youtube   -->
+        {% if section.settings.video_type == 'youtube' %}
+        {% if section.settings.video_url contains 'youtube.com/watch' %}
+        {% assign video_id = section.settings.video_url | split: 'v=' %}
+        {% assign video_id = video_id[1] | split: '&' | first %}
+        <div
+             id="fullscreenYoutube-{{section.id}}"
+             class="video-div media-item youtube-media-item"
+             data-type="youtube"
+             data-video-id="{{ video_id }}"
+             data-section-id="{{ section.id }}"></div>
+        {% endif %}
+
+        {% if section.settings.video_url contains 'youtu.be/' %}
+        {% assign video_id = section.settings.video_url | split: '.be/' %}
+        {% assign video_id = video_id[1] | split: '&' | first %}
+        <div
+             id="fullscreenYoutube-{{section.id}}"
+             class="video-div media-item youtube-media-item"
+             data-type="youtube"
+             data-video-id="{{ video_id }}"
+             data-section-id="{{ section.id }}"></div>
+        {% endif %}
+        {% endif %}
+
+        <!--   MP4   -->
+        {% if section.settings.video_type == 'mp4' %}
+        <video class="media-item fullscreen-myMPFour mpf-media-item" id="fullscreen-myMPFour-{{ section.id }}" data-section-id="{{ section.id }}" autoplay loop muted webkit-playsinline playsinline>
+          <source src="{{ section.settings.video_url }}" type="video/mp4" />
+        </video>
+        {% endif %}
+      </div>
+      {% endif %}
+      
+      {% if section.settings.desc != blank %}
+      <div class="desc-box pad-up--hide">{{ section.settings.desc }}</div>
+      {% endif %}
+      
+    </div>
+    {% endif %}
+    {% endcapture %}
+    {% capture content_temp %}
+    {% if section.settings.title != blank %}
+    <div class="content-container item-box pad-down--hide">
+      <div class="content-innerbox">
+        <h2 class="title-box">{{ section.settings.title }}</h2>
+        {% if section.settings.show_separator %}
+        <div class="separator-box"></div>
+        {% endif %}
+        {% if section.settings.desc != blank %}
+        <div class="desc-box">{{ section.settings.desc }}</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+    {% endcapture %}
+    
+    {% if section.settings.layout == 'left' %}
+    {{ image_temp }}
+    {{ content_temp }}
+    {% endif %}
+    {% if section.settings.layout == 'right' %}
+    {{ content_temp }}
+    {{ image_temp }}
+    {% endif %}
+  </div>
+</div>
+
+<script>
+  $(function(){
+    $(`.special-lr-image-text .video-overlap-image`).click(function(){
+      var sectionId = $(this).attr("data-section-id");
+      if($(`.special-lr-image-text-${sectionId} #fullscreen-myMPFour-${sectionId}`).length > 0) {
+        var fullscreenMyMPFour = document.getElementById(`fullscreen-myMPFour-${sectionId}`);
+        if($(window).width() > 821) {
+          $(this).find('img').css("opacity","0");
+          $(`.special-lr-image-text-${sectionId} .media-box`).css("display","block");
+        }
+        if($(window).width() <= 820){
+          $(this).find('img').css("display","none");
+          $(`.special-lr-image-text-${sectionId} .media-box`).css("display","block");
+        }
+        if(fullscreenMyMPFour.paused){
+          fullscreenMyMPFour.play();
+          return false;
+        }else {
+          fullscreenMyMPFour.pause();
+          return false;
+        }
+      }
+    });
+  });
+</script>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Special LR Image Text",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "tab_id",
+        "label": "Tab ID",
+		"default": "overview",
+		"info": "This must be filled in for the first module of the category for Tabs Bar"
+      },
+      {
+        "type": "image_picker",
+        "id": "pc_image",
+        "label": "PC Image"
+      },
+	  {
+        "type": "image_picker",
+        "id": "mb_image",
+        "label": "Mobile Image"
+      },
+      {
+        "type": "checkbox",
+        "id": "video_autoplay",
+        "label": "Video Autoplay"
+      },
+      {
+        "type": "select",
+        "id": "video_type",
+        "label": "Video Type",
+        "default": "youtube",
+        "options": [
+          {
+            "value": "mp4",
+            "label": "MP4"
+          },
+          {
+            "value": "youtube",
+            "label": "Youtube"
+          }
+        ]
+      },
+      {
+        "type": "url",
+        "id": "video_url",
+        "label": "Youtube Video Link or MP4 Video Link"
+      },
+      {
+        "type": "color",
+        "id": "image_bg_color",
+        "label": "Image Box Background Color",
+        "default":"#e4ded6"
+      },
+      {
+        "type": "color",
+        "id": "content_bg_color",
+        "label": "Content Box Background Color",
+        "default":"#ededed"
+      },
+      {
+        "type": "color",
+        "id": "title_color",
+        "label": "Title Color",
+        "default":"#000000"
+      },
+      {
+        "type": "color",
+        "id": "separator_color",
+        "label": "Separator Color",
+        "default":"#000000"
+      },
+      {
+        "type": "color",
+        "id": "desc_color",
+        "label": "Description Color",
+        "default":"#000000"
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title",
+        "default": "Picture Pur-fect"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_separator",
+        "label": "Show Separator?",
+        "default": true
+      },
+      {
+        "type": "html",
+        "id": "desc",
+        "label": "Description",
+        "default": "<p>The built-in 1080p HD camera with a 145° wide-angle lens and night vision helps you feel right there at home with your pets during mealtimes.</p>"
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Image on left"
+          },
+          {
+            "value": "right",
+           "label": "Image on right"
+          }
+        ]
+      }
+	],
+   "presets": [
+      {
+		"name": "Special LR Image Text"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

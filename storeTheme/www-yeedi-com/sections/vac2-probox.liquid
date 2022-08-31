@@ -1,0 +1,58 @@
+ <div class="vac2probox-container">
+   {% if section.settings.title != blank %}
+  <div class="vac2probox-title">{{ section.settings.title }}</div>
+   {% endif %}
+  <div class="vac2probox-box">
+   {% for block in section.blocks %}
+  <div class="vac2probox-item vac2probox-item-{{forloop.index}}">
+    {% if block.settings.image %}
+    <img class="lazyload" alt src="{{ block.settings.image | img_url:'10x' }}" data-src="{{ block.settings.image | img_url:'master' }}" /> 
+   {% endif %}
+      {% if block.settings.title != blank %}
+  <div class="vac2probox-item-title">{{ block.settings.title }}</div>
+  {% endif %}
+   </div>
+   {% endfor %}
+  </div>
+</div>
+
+
+
+
+{% schema %}
+  {
+    "name": "Vac2pro Box",
+    "settings": [
+{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：144*70px)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vac2pro Box",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+

@@ -1,0 +1,58 @@
+<div class="company_textimg-container">
+  <div class="text-wrapper">
+    {% if section.settings.title != blank %}
+    <h2 class="company_textbg-title title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.content != blank %}
+    <div class="company_textbg-content text">{{ section.settings.content }}</div>
+    {% endif %}
+  </div>
+
+  {% if section.settings.image %}
+  <img class="small-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  {% endif %}
+  {% if section.settings.image_mb != blank %}
+  <img class="medium--up-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+  {% endif %}
+  {% if section.settings.image_mb02 %}
+  <img class="medium--up-hide" src="{{ section.settings.image_mb02 | img_url:'master' }}"/>
+  {% else %}
+  <img class="medium--up-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  {% endif %}
+
+</div>
+
+{% schema %}
+  {
+    "name": "Company Text Image",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile01(Recommended size：750*px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb02",
+            "label": "Image Mobile02(Recommended size：750*px)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          }
+    ],
+    "presets": [
+      {
+        "name": "Company Text Image",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

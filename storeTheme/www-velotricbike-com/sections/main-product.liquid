@@ -1,0 +1,637 @@
+{%- liquid
+  assign isModal = false
+  if template == 'product.modal'
+    assign isModal = true
+  endif
+-%}
+
+{%-
+  render 'product-template',
+  product: product,
+  section_id: section.id,
+  blocks: section.blocks,
+
+  image_container_width: section.settings.image_size,
+  product_zoom_enable: section.settings.product_zoom_enable,
+  sku_enable: section.settings.sku_enable,
+  isModal: isModal,
+  thumbnail_position: section.settings.thumbnail_position,
+  thumbnail_arrows: section.settings.thumbnail_arrows,
+  video_looping: section.settings.enable_video_looping,
+  video_style: section.settings.product_video_style
+  sku_switching: section.settings.sku_switching,
+  navbar_text: section.settings.navbar_text
+-%}
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    {
+      "type": "text",
+      "id": "navbar_text",
+      "label": "NavBar Text",
+      "default": "Discover 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "sku_enable",
+      "label": "Show SKU"
+    },
+    {
+      "type": "checkbox",
+      "id": "sku_switching",
+      "label": "Enable SKU switching?",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Free Accessories"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_free_accessories",
+      "label": "Show Free Accessories"
+    },
+    {
+      "type": "html",
+      "id": "free_access_title",
+      "label": "Free Accessories Title",
+      "default": "Free Accessories"
+    },
+    {
+      "type": "html",
+      "id": "free_access_icon",
+      "label": "Free Accessories Icon"
+    },
+    {
+      "type": "html",
+      "id": "free_access_desc",
+      "label": "Free Accessories Description",
+      "default": "We offer more for our customer with every order"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "paragraph",
+      "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media)"
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "label": "Image size",
+      "default": "medium",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "product_zoom_enable",
+      "label": "Enable image zoom",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "thumbnail_position",
+      "label": "Thumbnail position",
+      "default": "beside",
+      "options": [
+        {
+          "value": "beside",
+          "label": "Next to media"
+        },
+        {
+          "value": "below",
+          "label": "Below media"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "thumbnail_arrows",
+      "label": "Show thumbnail arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_looping",
+      "label": "Enable video looping",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "product_video_style",
+      "label": "Video style",
+      "default": "muted",
+      "options": [
+        {
+          "value": "muted",
+          "label": "Video without sound"
+        },
+        {
+          "value": "unmuted",
+          "label": "Video with sound"
+        }
+      ],
+      "info": "Video with sound will not autoplay"
+    },
+    {
+      "type": "text",
+      "id": "oldprice",
+      "label": "oldprice",
+      "default": "$1899.00"
+    },
+    {
+      "type": "text",
+      "id": "newprice",
+      "label": "newprice",
+      "default": "$1399.00"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "html",
+          "id": "html",
+          "label": "HTML"
+        }
+      ]
+    },
+    {
+      "type": "sku_change_btn",
+      "name": "SKU change button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "btn_text_1",
+          "label": "Button 1 text:"
+        },
+        {
+          "type": "text",
+          "id": "btn_desc_1",
+          "label": "Button 1 description:"
+        },
+        {
+          "type": "product",
+          "id": "p1",
+          "label": "Button 1 Product:"
+        },
+        {
+          "type": "text",
+          "id": "btn_text_2",
+          "label": "Button 2 text:"
+        },
+        {
+          "type": "text",
+          "id": "btn_desc_2",
+          "label": "Button 2 description:"
+        },
+        {
+          "type": "product",
+          "id": "p2",
+          "label": "Button 2 Product:"
+        }
+      ]
+    },
+    {
+      "type": "save-popup",
+      "name": "Save Tips Popup",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_popup",
+          "label": "Show Popup",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "popup_image",
+          "label": "Popup Image",
+          "info": "Image Size: 506*133px"
+        },
+        {
+          "type": "html",
+          "id": "popup_title",
+          "label": "Title",
+          "default": "Buy more, save more."
+        },
+        {
+          "type": "html",
+          "id": "popup_desc",
+          "label": "Description",
+          "default": "<ul><li><h2>Extra $200 Off for 2 Bikes</h2></li><li><h2>Extra $300 Off for 3 Bikes</h2><p>with code BUYTHREE</p></li><li><h2>Extra $600 Off for 4 Bikes</h2><p>with code BUYFOUR</p></li></ul>"
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "quantity_selector",
+      "name": "Quantity selector",
+      "limit": 1
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "variant_labels",
+          "label": "Show variant labels",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "picker_type",
+          "label": "Type",
+          "options": [
+            {
+              "value": "button",
+              "label": "Buttons"
+            },
+            {
+              "value": "dropdown",
+              "label": "Dropdown"
+            }
+          ],
+          "default": "button"
+        },
+        {
+          "type": "checkbox",
+          "id": "color_swatches",
+          "label": "Enable color swatches",
+          "info": "Requires type to be set to 'Buttons'. [Learn how to set up swatches](https://archetypethemes.co/blogs/impulse/how-do-i-set-up-color-swatches)"
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "is_tab",
+          "label": "Show as tab"
+        }
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "Show dynamic checkout button",
+          "info": "Lets customers check out directly using a familiar payment method. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "surface_pickup_enable",
+          "label": "Enable pickup availability feature",
+          "info": "Learn how to setup this feature [here](https://help.shopify.com/en/manual/shipping/setting-up-and-managing-your-shipping/local-methods/local-pickup)",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "inventory_status",
+      "name": "Inventory status",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "range",
+          "id": "inventory_threshold",
+          "label": "Low inventory threshold",
+          "default": 10,
+          "min": 0,
+          "max": 20,
+          "step": 2
+        },
+        {
+          "type": "checkbox",
+          "id": "inventory_transfers_enable",
+          "label": "Show inventory transfer notice",
+          "info": "Learn how to create inventory transfers [here](https://help.shopify.com/en/manual/products/inventory/transfers/create-transfer)",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "sales_point",
+      "name": "Sales point",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "globe",
+          "options": [
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            },
+            {
+              "value": "globe",
+              "label": "Globe"
+            },
+            {
+              "value": "leaf",
+              "label": "Leaf"
+            },
+            {
+              "value": "package",
+              "label": "Package"
+            },
+            {
+              "value": "lock",
+              "label": "Lock"
+            },
+            {
+              "value": "truck",
+              "label": "Truck"
+            },
+            {
+              "value": "warranty",
+              "label": "Warranty"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Free worldwide shipping"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Text block",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "trust_badge",
+      "name": "Trust badge",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "trust_image",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Shipping information"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Tab content",
+          "default": "<p>Use collapsible tabs for more detailed information that will help customers make a purchasing decision.</p><p>Ex: Shipping and return policies, size guides, and other common questions.</p>"
+        },
+        {
+          "type": "html",
+          "id": "html",
+          "label": "HTML content overwrite"
+        },
+        {
+          "type": "page",
+          "id": "page",
+          "label": "Tab content from page"
+        }
+      ]
+    },
+    {
+      "type": "share",
+      "name": "Share on social",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Choose which platforms to share to in global theme settings"
+        }
+      ]
+    },
+    {
+      "type": "separator",
+      "name": "Separator"
+    },
+    {
+      "type": "contact",
+      "name": "Contact form",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "All submissions are sent to the customer email address of your store. [Learn more](https://help.shopify.com/en/manual/using-themes/change-the-layout/add-contact-form#view-contact-form-submissions)."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Ask a question"
+        },
+        {
+          "type": "checkbox",
+          "id": "phone",
+          "label": "Add phone number field"
+        }
+      ]
+    },
+    {
+      "type": "reviews",
+      "name": "Product reviews badge",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Add reviews by installing the [Shopify Product Reviews app](https://apps.shopify.com/product-reviews) and following our [setup guide](https://archetypethemes.co/blogs/support/installing-shopifys-product-reviews-app)"
+        }
+      ]
+    },
+    {
+      "type": "custom",
+      "name": "HTML",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "code",
+          "label": "HTML",
+          "default": "<h4>Custom code block</h4><p>Use this advanced section to add custom HTML, app scripts, or liquid.</p>",
+          "info": "Supports Liquid"
+        }
+      ]
+    },
+    {
+      "type": "payment",
+      "name": "Payment",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "display_payment_1",
+          "label": "display visa",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "payment_image_1",
+          "label": "Visa Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "display_payment_2",
+          "label": "display master",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "payment_image_2",
+          "label": "Master Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "display_payment_3",
+          "label": "display american_express",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "payment_image_3",
+          "label": "American_express Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "display_payment_4",
+          "label": "display discover",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "payment_image_4",
+          "label": "discover Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "display_payment_5",
+          "label": "display jcb",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "payment_image_5",
+          "label": "Jcb Image"
+        },
+        {
+          "type": "checkbox",
+          "id": "display_payment_6",
+          "label": "display diners club",
+          "default": true
+        },
+        {
+          "type": "image_picker",
+          "id": "payment_image_6",
+          "label": "Diners club Image"
+        }
+      ]
+    },
+    {
+      "type": "free_accessories",
+      "name": "Free Accessories Product",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "fa_pro_image",
+          "label": "Free Accessories Product Image"
+        },
+        {
+          "type": "html",
+          "id": "title",
+          "label": "Free Accessories Product Title"
+        },
+        {
+          "type": "url",
+          "id": "fa_pro_link",
+          "label": "Free Accessories Product Link"
+        }
+      ]
+    },
+    {
+      "type": "pad_free_accessories",
+      "name": "Pad Free Accessories",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "pad_fa_code",
+          "label": "Pad Free Accessories HTML",
+          "info": "Supports Liquid"
+        }
+      ]
+    },
+    {
+      "type": "custom_title",
+      "name": "Custom title",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_stock_label",
+          "label": "Show/Hide"
+        },
+        {
+          "type": "text",
+          "id": "in_stock_label",
+          "label": "In stock label"
+        },
+        {
+          "type": "text",
+          "id": "out_stock_label",
+          "label": "Out of stock label"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

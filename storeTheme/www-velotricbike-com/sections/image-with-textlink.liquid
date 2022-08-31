@@ -1,0 +1,179 @@
+{% if section.settings.display %}
+<style>
+  {% if section.settings.text_color != blank %}
+  .fullscreen-image-link-{{ section.id }} .title-box, .fullscreen-image-link-{{ section.id }} .subtitle-box, .fullscreen-image-link-{{ section.id }} .text-link {
+    color: {{ section.settings.text_color }};
+  }
+  .fullscreen-image-link-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
+    margin-bottom: {{ section.settings.margin_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .fullscreen-image-link-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      margin-top: {{ section.settings.margin_top }}px;
+      margin-bottom: {{ section.settings.margin_bottom }}px;
+    }
+  }
+  {% endif %}
+  {% if section.settings.bg_color != blank and section.settings.show_text_below %}
+  @media only screen and (max-width: 790px) {
+    .fullscreen-image-link-{{ section.id }} {
+      background-color: {{ section.settings.bg_color }};
+    }
+  }
+  {% endif %}
+</style>
+<div class="image-with-text-link fullscreen-image-link fullscreen-image-link-{{ section.id }} {% if section.settings.show_text_below %}pad-down-textbelow {% endif %}">
+  {% if section.settings.pc_image != blank %}
+  <img class="lazyload js image-item mb-down--hide"
+       src="{{ section.settings.pc_image | img_url: '1x' }}"
+       srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+       sizes="(max-width: 960px) 960px, 1500px" 
+       alt=""
+       width="{{ section.settings.pc_image.width }}" 
+       height="{{ section.settings.pc_image.height }}"/>
+  {% endif %}
+  {% if section.settings.mb_image != blank %}
+  <img class="lazyload js image-item mb-up--hide"
+       src="{{ section.settings.mb_image | img_url: '1x' }}"
+       srcset="{{ section.settings.mb_image | img_url: '1500x' }}, {{ section.settings.mb_image | img_url: '960x' }}"
+       sizes="(max-width: 960px) 960px, 1500px" 
+       alt=""
+       width="{{ section.settings.mb_image.width }}" 
+       height="{{ section.settings.mb_image.height }}"/>
+  {% else %}
+  <img class="lazyload js image-item mb-up--hide"
+       src="{{ section.settings.pc_image | img_url: '1x' }}"
+       srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+       sizes="(max-width: 960px) 960px, 1500px" 
+       alt=""
+       width="{{ section.settings.pc_image.width }}" 
+       height="{{ section.settings.pc_image.height }}"/>
+  {% endif %}
+  <div class="title-wrapper text-center page-width">
+    {% if section.settings.title %}
+    <h2 class="title-box pro-titles">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.subtitle != blank %}
+    <div class="subtitle-box">{{ section.settings.subtitle }}</div>
+    {% endif %}
+    {% if section.settings.button_text != blank and section.settings.button_url != blank %}
+    <a class="button-link" href="{{ section.settings.button_url }}">{{ section.settings.button_text }}</a>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Image With Textink",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "display",
+        "label": "Display block ?",
+        "default": true
+      },
+      {
+        "id": "text_color",
+        "type": "color",
+        "label": "Text Color",
+		"default": "#ffffff"
+      },
+      {
+        "id": "pc_image",
+        "type": "image_picker",
+        "label": "PC Image",
+		"info": "Image Size: 2880*774px"
+      },
+      {
+        "id": "mb_image",
+        "type": "image_picker",
+        "label": "Mobile Image",
+		"info": "Image Size: 856*876px"
+      },
+	  {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+		"default": "Join the Community"
+      },
+	  {
+        "type": "html",
+        "id": "subtitle",
+        "label": "Subtitle"
+	  },
+	  {
+        "type": "text",
+        "id": "button_text",
+        "label": "Button Text",
+		"default": "get started"
+      },
+	  {
+        "type": "url",
+        "id": "button_url",
+        "label": "Button Link"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_text_below",
+        "label": "Show Text Below"
+      },
+      {
+        "id": "bg_color",
+        "type": "color",
+        "label": "Background Color for Mobile",
+		"default": "#ffffff"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Bottom",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin Top",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin Bottom",
+        "default": 0
+      }
+    ],
+	"presets": [
+      {
+        "name": "Image With Textink",
+        "category": "image"
+      }
+    ]
+  }
+{% endschema %}

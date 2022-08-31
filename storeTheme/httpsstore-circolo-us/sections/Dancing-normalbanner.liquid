@@ -1,0 +1,72 @@
+{% if section.settings.show_block %}
+<div class="dancenormalbanner-container">
+  {% if section.settings.title != blank %}
+  <div class="dancenormalbanner-title">{{ section.settings.title }}</div>
+  {% endif %}
+
+  {% if section.settings.youtubevideo_url != blank or section.settings.video_url != blank %}
+  <div class="paautovideo-container">
+    {% if section.settings.youtubevideo_url == blank %}
+    <video class="pa-sutovideo" width="100%" loop="loop" autoplay="autoplay"  webkit-playsinline="true" playsinline="true" muted="muted" >
+      <source src="{{  section.settings.video_url }}">
+    </video>
+    {% else %}
+    {% if section.settings.youtubevideo_url.type == "youtube" %}
+    <!--             <iframe src="https://www.youtube.com/embed/{{ section.settings.youtubevideo_url.id }}" frameborder="0" allowfullscreen></iframe> -->
+    <iframe src="//www.youtube.com/embed/{{ section.settings.youtubevideo_url.id }}"  frameborder="0" allowfullscreen></iframe>
+    {% endif %}
+    {% if section.settings.youtubevideo_url.type == "vimeo" %}
+    <iframe src="//player.vimeo.com/video/{{ section.settings.youtubevideo_url.id }}?color={{ settings.color_secondary | remove: "#" }}&byline=0&portrait=0&badge=0" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+    {% endif %}
+    {% endif %}
+  </div>
+  {% else %}
+  {% if section.settings.image != blank %}
+  <img class="small-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  <img class="medium--up-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+  {% endif %}
+  {% endif %}
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Normal Banner",
+    "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_block",
+            "label": "show this block?",
+            "default": true
+          },{
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*1100px,gif image)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：750*1300px)"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "text",
+            "id": "video_url",
+            "label": "video_url"
+          },
+          {
+            "type": "video_url",
+            "id": "youtubevideo_url",
+            "label": "Youtube Video link",
+            "accept": ["youtube", "vimeo"]
+          }
+    ],
+
+    "presets": [
+      {
+        "name": "Normal Banner",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

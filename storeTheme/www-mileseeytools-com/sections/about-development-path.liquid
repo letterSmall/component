@@ -1,0 +1,135 @@
+<div class="section-brands-highlights">
+<h3 class="h2_36 about-content-title">{{ section.settings.title }}</h3>
+  <div class="highlights-content">
+    <ul class="highlights-left">
+      {% for block in section.blocks %}
+      {% assign index_odd = forloop.index0 | modulo:2 %}
+      {% if index_odd == 0%}
+      <li class="highlights-item highlights-item-{{block.id}}" {% if forloop.first %} style="display: block;"{% else %} hide-item{% endif %}>
+        <div class="year">{{ block.settings.year }}</div>
+        <div class="content">{{ block.settings.content }}</div>
+        {% if block.settings.image != blank %}
+        <img src="{{block.settings.image |img_url: 'master'}}"/>
+        {% endif %}
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    <ul class="highlights-right">
+      {% for block in section.blocks %}
+      {% assign index_even = forloop.index0 | modulo:2 %}
+      {% if index_even == 1%}
+      <li class="highlights-item highlights-item-{{block.id}}" {% if forloop.index0 == 1 %} style="display: block;" {% else %} hide-item{% endif %}>
+        <div class="year">{{ block.settings.year }}</div>
+        <div class="content">{{ block.settings.content }}</div>
+          {% if block.settings.image != blank %}
+        <img src="{{block.settings.image |img_url: 'master'}}"/>
+          {% endif %}
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    
+    <ul class="highlights-mb">
+      {% for block in section.blocks %}
+      <li class="highlights-item highlights-item-{{block.id}}" {% if forloop.index0 < 3 %} style="display: block;" {% else %} hide-item {% endif %}>
+        <div class="year">{{ block.settings.year }}</div>
+        <div class="content">{{ block.settings.content }}</div>
+         {% if block.settings.image != blank %}
+        <img src="{{block.settings.image |img_url: 'master'}}" class="image"/>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="learn-more">LEARN MORE&nbsp;></div>
+  <div class="leran-less">CLOSE&nbsp;></div>
+</div>
+
+<script>
+  $(".section-brands-highlights .learn-more").click(function(){
+    $(".highlights-content").addClass("active");
+//     $(this).addClass("hide");
+    $(".section-brands-highlights").addClass("learn-more");
+  });
+  
+  $(".section-brands-highlights .leran-less").click(function(){
+    $(".highlights-content").removeClass("active");
+//     $(this).addClass("hide");
+    $(".section-brands-highlights").removeClass("learn-more");
+    $(".highlights-item[hide-item]").removeClass("fade-show");
+    $('html,body').animate({
+      scrollTop: $(".section-brands-highlights").offset().top-100  + "px"
+    }, 300);
+  });
+</script>
+
+{% comment %}
+<script>
+  {% for block in section.blocks %}
+  if( $(window).width() > 1000 ){
+    $(window).scroll(function(){
+      if($(".highlights-item-{{block.id}}").css('display') === 'block'){
+        if($(window).scrollTop() +($(window).height())*3/5 > $(".highlights-item-{{block.id}}").offset().top){
+          if(!$(".highlights-item-{{block.id}}").hasClass("fade-show")){
+            $(".highlights-item-{{block.id}}").addClass("fade-show");
+          }
+        }
+      }
+   }); 
+  }
+  else{
+      $(window).scroll(function(){
+        if($(".highlights-mb .highlights-item-{{block.id}}").css('display') === 'block'){
+          if($(window).scrollTop() +($(window).height())*3/5 > $(".highlights-mb .highlights-item-{{block.id}}").offset().top){
+            if(!$(".highlights-mb .highlights-item-{{block.id}}").hasClass("fade-show")){
+              $(".highlights-mb .highlights-item-{{block.id}}").addClass("fade-show");
+            }
+          }
+        }
+      });
+  }
+  {% endfor %}
+</script>
+{% endcomment %}
+
+{% schema %}
+  {
+    "name": "Development Path",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Development Path"
+       }
+	],
+    "blocks":[
+      {
+        "type": "path",
+        "name": "Path",
+        "settings":[
+          {
+            "type": "text",
+            "label": "Year",
+            "id": "year"
+          },{
+            "type": "html",
+            "label": "Content",
+            "id": "content"
+          },{
+            "type": "image_picker",
+            "label": "Image",
+            "id": "image"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

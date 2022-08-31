@@ -1,0 +1,47 @@
+<div class="prooverbanner-container">
+{% if section.settings.image %}
+  <img class="small-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  <img class="medium--up-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+{% endif %}
+  <div class="prooverbanner-text">
+  {% if section.settings.title != blank %}
+  <div class="prooverbanner-title">{{ section.settings.title }}</div>
+  {% endif %}
+    
+  {% if section.settings.content != blank %}
+  <div class="prooverbanner-content">{{ section.settings.content }}</div>
+  {% endif %}
+
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Product Textoverbanner",
+    "settings": [
+         {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          }
+    ],
+
+    "presets": [
+      {
+        "name": "Product Textoverbanner",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

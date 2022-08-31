@@ -1,0 +1,124 @@
+<div class="site-padding">
+{% if section.settings.title != blank %}
+<h2 class="title50 text-center">
+{{section.settings.title}}
+</h2>
+{% endif %}
+{% if section.settings.btn != blank %}
+<span class="link"><a href="{{ section.settings.link}}">{{ section.settings.btn }}</a></span>
+  <div class="clear"></div>
+{% endif %}
+
+
+    <div class="product-wrapper">
+      {% for block in section.blocks %}
+        <div class="product-item-bg {% if forloop.first == true %}product-item-one{% else %}product-item-special{% endif %}">
+            <a href="{{ block.settings.link}}">
+        <div class="product-item-box">
+          <div class="itemimg"> 
+            {% if block.settings.image !=blank %}
+              <img class="hide-mb" src="{{ block.settings.image | img_url: 'master' }}" alt=""/>
+            {% endif %}
+  
+            {% if block.settings.image_mb !=blank %}
+             <img class="hide-pc" src="{{ block.settings.image_mb | img_url: '200x' }}" alt=""/>
+            {% else %}
+             <img class="hide-pc" src="{{ block.settings.image | img_url: '200x' }}" alt=""/>
+            {% endif %}
+           </div>
+
+            <div class="item-text-wrapper">
+              {% if block.settings.title %}
+              <div class="itemtitle">{{ block.settings.title }}</div>
+              {% endif %}
+
+            <div class="vac-price-wrapper">
+              {% if block.settings.price != blank%}
+              <div class="vac-price{% if block.settings.oldprice != blank%} sale-price{% endif %}">{{block.settings.price}}</div>
+              {% endif %}
+      
+              {% if block.settings.oldprice != blank%}
+              <div class="vac-oldprice">{{block.settings.oldprice}}</div>
+              {% endif %}
+             </div>
+        
+              {% if block.settings.btn %}
+              <span class="link">{{ block.settings.btn }}</span>
+              {% endif %}
+            </div>
+        </div>
+             </a>
+        </div>
+      {% endfor %}
+    </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Vac srobot Accessories",
+    "class": "vac_accessories-section",
+    "settings": [
+      {
+        "type": "html",
+        "label": "Section Title",
+        "id": "title"
+	  },{
+            "type": "text",
+            "id": "btn",
+            "label": "Button Label",
+            "default": "View More >"
+          },{
+            "type": "url",
+            "id": "link",
+            "label": "Button Link"
+          }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image Text Link ",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Product Image on PC"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Product Image on Mobile"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "Title"
+          },{
+            "type": "text",
+            "id": "price",
+            "label": "Price"
+          },{
+            "type": "text",
+            "id": "oldprice",
+            "label": "Old Price"
+          },{
+            "type": "url",
+            "id": "link",
+            "label": "Button Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vac srobot Accessories",
+        "category": "Image"
+ 
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

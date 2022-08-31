@@ -1,0 +1,251 @@
+{%- comment -%}Subscription Plus Selector Snippets{%- endcomment -%}
+{% assign selectorType = 1 %}
+{% assign LayoutColor = '#000000' %}
+
+{% assign currentvariant = product.selected_or_first_available_variant %}
+{% assign currentSellingPlans = currentvariant.selling_plan_allocations  %}
+{% if product and product.selling_plan_groups.size > 0 %}
+  {% if selectorType == 0 %}
+    <div id="subscriptions__plus" class="subscriptions__plus light-theme hide--pricing" data-productId="{{ product.id }}" data-defaultvarid="{{ currentvariant.id }}">
+      <input type="hidden" name="selling_plan" value="{{ product.selected_selling_plan.id }}"/>
+      {% unless product.requires_selling_plan %}
+      <div class="subscription-selectors subscription-form-group">
+        <input type="radio" checked id="subscription-plus-one-time-{{ product.id }}"
+              name="subscription-plus-group" value="one-time">
+        <label for="subscription-plus-one-time-{{ product.id }}">One time purchase
+          <span class="unit-price money" data-defaultPrice>
+            {{ currentvariant.price | money }}
+          </span>
+        </label>
+      </div>
+      {% endunless %}
+
+      {% for selling_plan_group in product.selling_plan_groups %}
+      <div class="subscription-selectors subscription-form-group" data-groupID="{{ selling_plan_group.id }}" data-type="Standard">
+        <input type="radio" id="subscribe-{{ product.id }}-{{ selling_plan_group.id }}"
+              name="subscription-plus-group" value="{{ selling_plan_group.id }}">
+        <label for="subscribe-{{ product.id }}-{{ selling_plan_group.id }}">{{ selling_plan_group.name }}
+          <div class="subscription-tooltip">
+            <span>
+              <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                  viewBox="0 0 23.625 23.625" style="enable-background:new 0 0 23.625 23.625;" xml:space="preserve">
+                <path d="M11.812,0C5.289,0,0,5.289,0,11.812s5.289,11.813,11.812,11.813s11.813-5.29,11.813-11.813
+                        S18.335,0,11.812,0z M14.271,18.307c-0.608,0.24-1.092,0.422-1.455,0.548c-0.362,0.126-0.783,0.189-1.262,0.189
+                        c-0.736,0-1.309-0.18-1.717-0.539s-0.611-0.814-0.611-1.367c0-0.215,0.015-0.435,0.045-0.659c0.031-0.224,0.08-0.476,0.147-0.759
+                        l0.761-2.688c0.067-0.258,0.125-0.503,0.171-0.731c0.046-0.23,0.068-0.441,0.068-0.633c0-0.342-0.071-0.582-0.212-0.717
+                        c-0.143-0.135-0.412-0.201-0.813-0.201c-0.196,0-0.398,0.029-0.605,0.09c-0.205,0.063-0.383,0.12-0.529,0.176l0.201-0.828
+                        c0.498-0.203,0.975-0.377,1.43-0.521c0.455-0.146,0.885-0.218,1.29-0.218c0.731,0,1.295,0.178,1.692,0.53
+                        c0.395,0.353,0.594,0.812,0.594,1.376c0,0.117-0.014,0.323-0.041,0.617c-0.027,0.295-0.078,0.564-0.152,0.811l-0.757,2.68
+                        c-0.062,0.215-0.117,0.461-0.167,0.736c-0.049,0.275-0.073,0.485-0.073,0.626c0,0.356,0.079,0.599,0.239,0.728
+                        c0.158,0.129,0.435,0.194,0.827,0.194c0.185,0,0.392-0.033,0.626-0.097c0.232-0.064,0.4-0.121,0.506-0.17L14.271,18.307z
+                        M14.137,7.429c-0.353,0.328-0.778,0.492-1.275,0.492c-0.496,0-0.924-0.164-1.28-0.492c-0.354-0.328-0.533-0.727-0.533-1.193
+                        c0-0.465,0.18-0.865,0.533-1.196c0.356-0.332,0.784-0.497,1.28-0.497c0.497,0,0.923,0.165,1.275,0.497
+                        c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
+              </svg>
+            </span>
+            <div class="subscription-tooltip-caption">
+              {% if product.selected_selling_plan %}{{product.selected_selling_plan.description}}{% else %}{{selling_plan_group.selling_plans[0].description}}{% endif %}
+            </div>
+          </div>
+          <span class="unit-price money" data-subscribePrice>
+            {% if product.selected_selling_plan %}
+                {{ product.selected_selling_plan_allocation.price | money }}
+              {% elsif currentSellingPlans[0].price %}
+                {{ currentSellingPlans[0].price | money }}
+              {% else %}
+              	{{ currentvariant.price | money }}
+              {% endif %}
+          </span>
+        </label>
+        <div class="subscription-plan subscription-selector-group">
+          {{ selling_plan_group.options[0].name }}
+          <select name="plan-frequency" id="inputState-{{ product.id }}-{{ selling_plan_group.id }}"  class="plan-selector form-control">
+            {% for plan in selling_plan_group.selling_plans %}
+            <option {% if plan.selected %}selected{% endif %}
+                    value="{{ plan.id }}">{{ plan.options[0].value }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="subscription-plus-agreement terms-condition" style="display: none;">
+        <input type="checkbox" id="terms-{{ product.id }}" name="terms-{{ product.id }}" value="terms"
+              data-subscriptionPlusTermsCheckbox>
+        <label for="terms-{{ product.id }}" ><span data-subPlusAgree>I agree to</span> <a target="_blank" data-subPlusTerms href="/" class="subscriptions_link">terms and
+          condition</a></label>
+      </div>
+
+    </div>
+  {% else %}
+    <div id="subscriptions__plus" class="subscriptions__plus subscriptions__plus--option light-theme hide--pricing" data-productId="{{ product.id }}" data-defaultvarid="{{ currentvariant.id }}">
+      <input type="hidden" name="selling_plan" value="{{ product.selected_selling_plan.id }}"/>
+      {% unless product.requires_selling_plan %}
+      <div class="subscription-selectors subscription-form-option">
+        <input type="radio" checked id="subscription-plus-one-time-{{ product.id }}" name="subscription-plus-group" value="one-time" style="display:none">
+        <label for="subscription-plus-one-time-{{ product.id }}">
+          <div class="subscription-option__title">
+            <span class="option__check"></span>One time purchase
+            <span class="unit-price money" data-defaultPrice>{{ currentvariant.price | money }}</span>
+          </div>
+
+        </label>
+
+      </div>
+      {% endunless %}
+      {% for selling_plan_group in product.selling_plan_groups %}
+      <div class="subscription-selectors subscription-form-option" data-groupID="{{ selling_plan_group.id }}" data-type="Modern">
+        <input type="radio" id="subscribe-{{ product.id }}-{{ selling_plan_group.id }}" name="subscription-plus-group" value="{{ selling_plan_group.id }}" style="display:none">
+        <label for="subscribe-{{ product.id }}-{{ selling_plan_group.id }}">
+          <div class="subscription-option__title">
+            <span class="option__check"></span>
+            <span style="display: flex;">
+              {{ selling_plan_group.name }}
+              <div class="subscription-tooltip">
+                <span>
+                  <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                      viewBox="0 0 23.625 23.625" style="enable-background:new 0 0 23.625 23.625;" xml:space="preserve">
+                    <path d="M11.812,0C5.289,0,0,5.289,0,11.812s5.289,11.813,11.812,11.813s11.813-5.29,11.813-11.813
+                            S18.335,0,11.812,0z M14.271,18.307c-0.608,0.24-1.092,0.422-1.455,0.548c-0.362,0.126-0.783,0.189-1.262,0.189
+                            c-0.736,0-1.309-0.18-1.717-0.539s-0.611-0.814-0.611-1.367c0-0.215,0.015-0.435,0.045-0.659c0.031-0.224,0.08-0.476,0.147-0.759
+                            l0.761-2.688c0.067-0.258,0.125-0.503,0.171-0.731c0.046-0.23,0.068-0.441,0.068-0.633c0-0.342-0.071-0.582-0.212-0.717
+                            c-0.143-0.135-0.412-0.201-0.813-0.201c-0.196,0-0.398,0.029-0.605,0.09c-0.205,0.063-0.383,0.12-0.529,0.176l0.201-0.828
+                            c0.498-0.203,0.975-0.377,1.43-0.521c0.455-0.146,0.885-0.218,1.29-0.218c0.731,0,1.295,0.178,1.692,0.53
+                            c0.395,0.353,0.594,0.812,0.594,1.376c0,0.117-0.014,0.323-0.041,0.617c-0.027,0.295-0.078,0.564-0.152,0.811l-0.757,2.68
+                            c-0.062,0.215-0.117,0.461-0.167,0.736c-0.049,0.275-0.073,0.485-0.073,0.626c0,0.356,0.079,0.599,0.239,0.728
+                            c0.158,0.129,0.435,0.194,0.827,0.194c0.185,0,0.392-0.033,0.626-0.097c0.232-0.064,0.4-0.121,0.506-0.17L14.271,18.307z
+                            M14.137,7.429c-0.353,0.328-0.778,0.492-1.275,0.492c-0.496,0-0.924-0.164-1.28-0.492c-0.354-0.328-0.533-0.727-0.533-1.193
+                            c0-0.465,0.18-0.865,0.533-1.196c0.356-0.332,0.784-0.497,1.28-0.497c0.497,0,0.923,0.165,1.275,0.497
+                            c0.353,0.331,0.53,0.731,0.53,1.196C14.667,6.703,14.49,7.101,14.137,7.429z"/>
+                  </svg>
+                </span>
+                <div class="subscription-tooltip-caption">
+                  {% if product.selected_selling_plan %}{{product.selected_selling_plan.description}}{% else %}{{selling_plan_group.selling_plans[0].description}}{% endif %}
+                </div>
+              </div>
+            </span>
+
+
+            <span class="unit-price money" data-subscribePrice>
+              {% if product.selected_selling_plan %}
+                {{ product.selected_selling_plan_allocation.price | money }}
+              {% elsif currentSellingPlans[0].price %}
+                {{ currentSellingPlans[0].price | money }}
+              {% else %}
+              	{{ currentvariant.price | money }}
+              {% endif %}
+            </span>
+          </div>
+        </label>
+
+        <div class="subscription-option-frequency">
+          <p>{{ selling_plan_group.options[0].name }}</p>
+          <ul>
+            {% for plan in selling_plan_group.selling_plans %}
+              {% assign proPrice = currentvariant.price | money %}
+              {% assign perDeliveryPrice = currentvariant.price | money %}
+              {% for comparePlan in currentSellingPlans %}
+                {% if comparePlan.selling_plan.id == plan.id %}
+                  {% assign proPrice = comparePlan.price | money %}
+                  {% assign perDeliveryPrice = comparePlan.per_delivery_price | money %}
+                {% endif %}
+              {% endfor %}
+              <li>
+                <input class="plan-selector form-control" type="radio" {% if product.selected_selling_plan and plan.selected %}checked{% elsif forloop.first %}checked{% endif %} id="plan-{{ product.id }}-{{ plan.id }}" name="plan-frequency" value="{{ plan.id }}">
+                <label for="plan-{{ product.id }}-{{ plan.id }}">
+                  <div class="subscription-frequency__title">
+                    <span class="option__check"></span>
+                    {{ plan.options[0].value }} 
+                    <span class="unit-price price"> 
+                      <span data-perDeliveryPrice>{{ perDeliveryPrice }}</span>
+                      {% if perDeliveryPrice != proPrice %}/delivery{% endif %}
+                    </span>
+                  </div>
+                </label>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="subscription-plus-agreement terms-condition" style="display: none;">
+        <input type="checkbox" id="terms-{{ product.id }}" name="terms-{{ product.id }}" value="terms"
+              data-subscriptionPlusTermsCheckbox>
+        <label for="terms-{{ product.id }}" ><span data-subPlusAgree>I agree to</span> <a target="_blank" data-subPlusTerms href="/" class="subscriptions_link">terms and
+          condition</a></label>
+      </div>
+    </div>
+  {% endif %}
+  <style type="text/css">
+    /* ==================  product widget color css ================================= */
+    .subscription-form-option > input:checked + label .option__check {
+      border-color: {{ LayoutColor }};
+      background-color: {{ LayoutColor }};
+    }
+    .subscription-option-frequency ul li > input:checked + label .option__check {
+      border-color: {{ LayoutColor }};
+      background-color: {{ LayoutColor }};
+    }
+    .subscription-form-option.selected .subscription-option__title{
+      color:{{ LayoutColor }};
+    }
+    .subscription-form-option.selected{
+      border-color:{{ LayoutColor }};
+    }
+    .subscription-form-option.selected::after{
+      background: {{ LayoutColor }};
+    }
+    .subscription-option-frequency ul li > input:checked + label .subscription-frequency__title{
+      color:{{ LayoutColor }};
+    }
+  </style>
+
+  <script type="text/javascript" id="Subscription_Plus">
+    window.subscriptionPlusApp = window.subscriptionPlusApp || {};
+
+    var mainProduct = {{ product | json }};
+    mainProduct.template = "{{ template.name }}";
+    mainProduct.selected_selling_plan = {{ product.selected_selling_plan | json }};
+    mainProduct.sorted_selling_plans = {
+      by_plan: {},
+      by_variants: {},
+    }
+
+    // Looping of Subscription Plan by Variants Id's
+    var variantsPlanData = mainProduct.sorted_selling_plans.by_variants;
+    {% for variant in product.variants %}
+    variantsPlanData[{{ variant.id }}] = {};
+    variantsPlanData[{{ variant.id }}].available =  {{ variant.available | json }};
+    variantsPlanData[{{ variant.id }}].formatted_price = {{ variant.price | money | json }};
+    variantsPlanData[{{ variant.id }}].formatted_compare_at_price = {{ variant.compare_at_price | money | json }};
+    variantsPlanData[{{ variant.id }}].selling_plans = {};
+
+    {% for planDetails in variant.selling_plan_allocations %}
+    variantsPlanData[{{ variant.id }}].selling_plans[{{ planDetails.selling_plan.id }}] = {};
+    variantsPlanData[{{ variant.id }}].selling_plans[{{ planDetails.selling_plan.id }}].price = {{ planDetails.price | money | json }};
+    variantsPlanData[{{ variant.id }}].selling_plans[{{ planDetails.selling_plan.id }}].compare_at_price = {{ planDetails.compare_at_price | money | json }};
+    variantsPlanData[{{ variant.id }}].selling_plans[{{ planDetails.selling_plan.id }}].perDeliveryPrice = {{ planDetails.per_delivery_price | money | json }};
+    {% endfor %}
+    {% endfor %}
+
+    // Looping of Subscription Plan by plan Id's
+    for (let i = 0; i < mainProduct.selling_plan_groups.length; i++) {
+      var sellingPlansGroup = mainProduct.selling_plan_groups[i];
+      for (plan of sellingPlansGroup.selling_plans) {
+        mainProduct.sorted_selling_plans.by_plan[plan.id] = JSON.parse(JSON.stringify(plan));
+        mainProduct.sorted_selling_plans.by_plan[plan.id].group_id = sellingPlansGroup.id;
+      }
+    }
+
+    if (window.subscriptionPlusApp.products) {
+    } else {
+      window.subscriptionPlusApp.products = {};
+    }
+    window.subscriptionPlusApp.products[mainProduct.id] = mainProduct;
+  </script>
+{% else %}
+  <script>
+    console.log("Subscriptions are not activated for this product - {{ product.title }}.");
+  </script>
+{% endif %}

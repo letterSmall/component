@@ -1,0 +1,99 @@
+
+<div class="vatwoimage-container medium-down--hide">
+  <div class="vatwoimage-box">
+   {% for block in section.blocks %}
+  <div class="vatwoimage-item">
+   {% if block.settings.title != blank %}
+  <div class="vatwoimage-itemtitle">{{ block.settings.title }}</div>
+   {% endif %}
+    {% if block.settings.image %}
+    <img class="lazyload" alt src="{{ block.settings.image | img_url:'10x' }}" data-src="{{ block.settings.image | img_url:'master' }}" /> 
+   {% endif %}
+   </div>
+   {% endfor %}
+  </div>
+   {% if section.settings.bottomtitle != blank %}
+  <div class="vatwoimage-bottitle">{{ section.settings.bottomtitle }}</div>
+   {% endif %}
+</div>
+
+<div class="vatwoimage-container large-up--hide">
+  
+  
+  <div class="vatwoimage-box">
+       {% if section.settings.title_mb != blank %}
+  <div class="vatwoimage-title_mb">{{ section.settings.title_mb }}</div>
+   {% endif %}     
+    {% if section.settings.subtitle_mb != blank %}
+  <div class="vatwoimage-subtitle_mb">{{ section.settings.subtitle_mb }}</div>
+   {% endif %}
+   {% for block in section.blocks %}
+  <div class="vatwoimage-item">
+    {% if block.settings.image_mb %}
+    <img class="lazyload" alt src="{{ block.settings.image_mb | img_url:'10x' }}" data-src="{{ block.settings.image_mb | img_url:'master' }}" /> 
+   {% endif %}
+    {% if block.settings.title_mb != blank %}
+  <div class="vatwoimageitem-title_mb">{{ block.settings.title_mb }}</div>
+   {% endif %}
+    
+   </div>
+   {% endfor %}
+  </div>
+</div>
+
+
+
+
+{% schema %}
+  {
+    "name": "Vac2pro Twoimage",
+    "settings": [
+   {
+            "type": "text",
+            "id": "bottomtitle",
+            "label": "bottomtitle"
+          },{
+            "type": "html",
+            "id": "title_mb",
+            "label": "title_mb"
+          },{
+            "type": "html",
+            "id": "subtitle_mb",
+            "label": "subtitle_mb"
+          }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },{
+            "type": "text",
+            "id": "title_mb",
+            "label": "title_mb"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "image_mb"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vac2pro Twoimage",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+

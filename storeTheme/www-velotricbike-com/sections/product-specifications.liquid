@@ -1,0 +1,81 @@
+{%- if section.blocks.size > 0 -%}
+<section class="section--{{ section.id }}" style="background-color: {{ section.settings.bg_color }};">
+  <div class="page-width">
+    <div class="product-specification-container {{ section.settings.custom_class }}">
+    {%- for block in section.blocks -%}
+        <div class="spec-block">
+            {%- if block.settings.image != blank -%}
+            <div class="spec-img"><img src="{{ block.settings.image | img_url: '50x' }}" alt="{{ block.settings.image.alt }}" /></div>
+            {%- endif -%}
+            <div class="product-spec-content">
+                {%- if block.settings.title != blank -%}
+                    <div class="h5 spec-title">{{ block.settings.title }}</div>
+                {%- endif -%}
+                {%- if block.settings.subtitle != blank -%}
+                    <div class="spec-subtitle">{{ block.settings.subtitle }}</div>
+                {%- endif -%}
+            </div>
+        </div>
+    {%- endfor -%}
+    </div>
+  </div>
+</section>
+<style>
+    .section--{{ section.id }} div.spec-title{ color: {{ section.settings.text_color }}; }
+    .section--{{ section.id }} div.spec-subtitle{ color: {{ section.settings.subtitle_color }}; }
+</style>
+{%- endif -%}
+{%- schema -%}
+    {
+      "name": "Product Specifications",
+      "settings": [
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background color"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Title color"
+        },
+        {
+            "type": "color",
+            "id": "subtitle_color",
+            "label": "Subtitle color"
+        },
+        {
+          "type": "text",
+          "id": "custom_class",
+          "label": "Custom CSS class"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "block",
+          "name": "Block",
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Image(Recommended size：100*100px)"
+            },{
+              "type": "text",
+              "id": "title",
+              "label": "Title"
+            },{
+              "type": "html",
+              "id": "subtitle",
+              "label": "Subtitle"
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Product Specifications"
+        }
+      ]
+    }
+{%- endschema -%}
+

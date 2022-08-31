@@ -1,0 +1,140 @@
+<div class="page-full" 
+    data-section-id="{{ section.id }}"
+    data-section-type="professional-testimonials"
+    style="background-color: {{ section.settings.background_color }};">
+  	<div class="page-width">
+    <div class="professional-testimonial-container">
+        {% if section.settings.title != blank %}
+        <div class="h1 text-center section-title">{{ section.settings.title }}</div>
+        {% endif %}
+        <div class="swiper testimonial-box-container">
+            <div class="swiper-wrapper">
+                {% for block in section.blocks %}
+                <div class="swiper-slide text-center testimonial-box">
+                    {% if block.settings.description != blank %}
+                        <div class="testimonial-content">
+                            {%- comment -%}
+                            <svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.17647 0H7.05882L5.64706 2.8V7H9.88235V2.8H7.76471L9.17647 0ZM3.52941 0H1.41176L0 2.8V7H4.23529V2.8H2.11765L3.52941 0Z" fill="#737B7D"/>
+                            </svg>
+                            {%- endcomment -%}
+                            {{ block.settings.description | escape }}
+                            {%- comment -%}
+                            <svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.823529 7L2.94118 7L4.35294 4.2L4.35294 -4.93682e-07L0.117648 -8.63943e-07L0.117647 4.2L2.23529 4.2L0.823529 7ZM6.47059 7L8.58824 7L10 4.2L10 0L5.76471 -3.70261e-07L5.76471 4.2L7.88235 4.2L6.47059 7Z" fill="#737B7D"/>
+                            </svg>
+                            {%- endcomment -%}
+                        </div>
+                    {% endif %}
+                    <div class="testimonial-image medium-up--hide">
+                        {% if block.settings.image %}
+                            <img alt src="{{ block.settings.image | img_url:'master' }}"/> 
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination medium-up--hide"></div>
+        </div>
+        <div thumbsSlider="" class="swiper testimonial-thumbs small--hide">
+            <div class="swiper-wrapper">
+                {% for block in section.blocks %}
+                <div class="swiper-slide">
+                    {% if block.settings.image %}
+                        <img alt src="{{ block.settings.image | img_url:'master' }}"/> 
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        {% if section.settings.featured_on_title != blank %}
+        <div class="testimonial-featured-on">
+            <div class="h5 title">{{ section.settings.featured_on_title }}</div>
+            <div class="image">
+                {% for i in (1..4) %}
+                {%- assign featured_img = 'featured_on_image_' | append: i -%}
+                {% if section.settings[featured_img] != blank %}
+              	<figure><img alt src="{{ section.settings[featured_img] | img_url:'original' }}"/></figure>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+    </div>
+</div>
+</div>
+  
+{% schema %}
+    {
+    "name": "Professional Testimonials",
+    "settings": [
+        {
+            "type": "text",
+            "id": "title",
+            "label": "title"
+        },
+        {
+            "type": "color",
+            "id": "background_color",
+            "label": "Background color"
+        },
+        {
+            "type": "header",
+            "content": "Featured on"
+        },
+        {
+            "type": "text",
+            "id": "featured_on_title",
+            "label": "Title"
+        },
+        {
+            "type": "image_picker",
+            "id": "featured_on_image_1",
+            "label": "Image 1"
+        },
+        {
+            "type": "image_picker",
+            "id": "featured_on_image_2",
+            "label": "Image 2"
+        },
+        {
+            "type": "image_picker",
+            "id": "featured_on_image_3",
+            "label": "Image 3"
+        },
+        {
+            "type": "image_picker",
+            "id": "featured_on_image_4",
+            "label": "Image 4"
+        }
+    ],
+    "blocks": [
+        {
+        "type": "block",
+        "name": "Block",
+        "settings": [
+            {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+            },
+            {
+            "type": "textarea",
+            "id": "description",
+            "label": "Content"
+            }
+        ]
+        }
+    ],
+    "presets": [
+        {
+        "name": "Professional Testimonials"
+        }
+    ]
+    }
+{% endschema %}
+
+
+

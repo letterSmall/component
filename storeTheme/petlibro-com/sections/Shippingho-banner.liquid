@@ -1,0 +1,52 @@
+{% if section.settings.show_block %}
+<div class="Shippingho-banner-container">
+{% if section.settings.image %}
+  <img class="mobileho-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  <img class="pcho-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+{% endif %}
+  <div class="Shippingho-banner-text">
+  {% if section.settings.title != blank %}
+  <div class="Shippingho-banner-title">{{ section.settings.title }}</div>
+  {% endif %}
+    {% if section.settings.subtitle != blank %}
+  <div class="Shippingho-banner-subtitle">{{ section.settings.subtitle }}</div>
+  {% endif %}
+  </div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Banner", 
+    "settings": [
+          {
+            "type": "checkbox",
+            "id": "show_block",
+            "label": "show this block?",
+            "default": true
+          },{
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*600px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：750*640px)"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "text",
+            "id": "subtitle",
+            "label": "subtitle"
+          }
+    ],
+
+    "presets": [
+      {
+        "name": "Banner",
+        "category": "other"
+      }
+    ]
+  }
+{% endschema %}

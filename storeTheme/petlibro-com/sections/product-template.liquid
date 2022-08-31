@@ -1,0 +1,245 @@
+
+  {{ 'slick.min.js' | asset_url | script_tag }}
+<input type="hidden" class="product-image-input" value="{{product.featured_media | img_url :'80X'}}">
+<input type="hidden" class="product-title-input" value="{{product.title}}">
+
+<style>
+  .jm-mfp-is-open div#bundle-sticky_add_to_cart {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .popup-right-structure h2 {
+    margin: 0;
+    padding: 25px 0px 15px 0;
+  }
+  .reviews-start {
+    display: block;
+  }
+
+  .popup-right-structure .reviews-body {margin: 0;}
+
+  @media (max-width:768px){
+    button.jm-mfp-arrow.jm-mfp-arrow-right {
+      right: 5px !important;
+    }
+    button.jm-mfp-arrow.jm-mfp-arrow-left.jm-mfp-prevent-close {
+      left: 5px !important;
+    }
+  }
+</style>
+
+
+
+{% render 'product-template',
+  product: product,
+  description_style: section.settings.description_style,
+  image_container_width: section.settings.image_size,
+  section_id: product.id,
+  social: section.settings.social_enable,
+  thumbnail_position: section.settings.thumbnail_position,
+  thumbnail_arrows: section.settings.thumbnail_arrows,
+  video_looping: section.settings.enable_video_looping,
+  video_style: section.settings.product_video_style,
+section:section
+%}
+
+{% if settings.enable_product_reviews and settings.reviews_layout == 'full' %}
+  <hr id="Reviews-{{ product.id }}" class="hr--large">
+  <div class="index-section index-section--small product-reviews product-reviews--full">
+    <div class="page-width">
+      <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product pages",
+    "settings": [
+      {
+        "type": "select",
+        "id": "description_style",
+        "label": "Description position",
+        "default": "default",
+        "options": [
+          {
+            "value": "default",
+            "label": "Next to media"
+          },
+          {
+            "value": "full",
+            "label": "Below media"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "social_enable",
+        "label": "Enable social sharing",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Media"
+      },
+      {
+        "type": "paragraph",
+        "content": "Learn more about [media types](https://help.shopify.com/en/manual/products/product-media)"
+      },
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image size",
+        "default": "medium",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "thumbnail_position",
+        "label": "Thumbnail position",
+        "default": "beside",
+        "options": [
+          {
+            "value": "beside",
+            "label": "Next to media"
+          },
+          {
+            "value": "below",
+            "label": "Below media"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "thumbnail_arrows",
+        "label": "Show thumbnail arrows"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_video_looping",
+        "label": "Enable video looping",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "product_video_style",
+        "label": "Video style",
+        "default": "muted",
+        "options": [
+          {
+            "value": "muted",
+            "label": "Video without sound"
+          },
+          {
+            "value": "unmuted",
+            "label": "Video with sound"
+          }
+        ],
+        "info": "Video with sound will not autoplay"
+      },
+ {
+        "type": "header",
+        "content": "Shipping"
+      },{
+        "type": "checkbox",
+        "id": "show_shipping",
+        "label": "Show shipping",
+"default":true
+      },
+  {
+      "type": "text",
+      "id": "shipping_text",
+      "label":"Shipping text",
+"default":"Get Your Package"
+    },
+    {
+      "type": "range",
+      "id": "shipping_start_time",
+      "label":"Start time",
+      "default": 2,
+      "min": 1,
+      "max": 5,
+      "step": 1,
+"info":"Time begins from now"
+    },
+ {
+      "type": "range",
+      "id": "shipping_interval",
+      "label":"Interval time",
+      "default": 3,
+      "min": 1,
+      "max": 50,
+      "step": 1,
+"info":"Interval days"
+    }
+    ],
+ "blocks": [
+{
+  "type": "filter_colour",
+  "name": "Filter colour",
+  "settings": [ 
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Filter color name"
+      },
+{
+  "type": "select",
+  "id": "user_color_type",
+  "label": "Use type",
+  "options": [
+    {
+      "value": "one",
+      "label": "Monochromatic"
+    },
+    {
+      "value": "two",
+      "label": "Two-color gradient"
+    },
+{
+      "value": "three",
+      "label": "Image"
+    }
+  ],
+  "default": "one"
+},
+       {
+        "type": "color",
+        "id": "filter_color",
+        "label": "Filter color",
+        "default": "#ffffff"
+      },
+       {
+        "type": "color",
+        "id": "filter_color2",
+        "label": "Filter color gradient",
+        "default": "transparent" },
+      {
+        "type": "image_picker",
+        "id": "filter_color_img",
+        "label": "Filter color image",
+        "info":"Min size:100*100px"
+      }
+  ]
+}
+],
+   "presets": [
+      {
+		"name": "Product pages"
+      }
+   ]
+  }
+{% endschema %}

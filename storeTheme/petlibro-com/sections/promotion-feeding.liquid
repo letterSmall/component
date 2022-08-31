@@ -1,0 +1,133 @@
+<div class="promotion-feeding-wrapper">
+  {% if section.settings.image != blank %}
+  <img class="spsmall-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  {% endif %}
+  {% if section.settings.image_mb != blank %}
+  <img class="ipadup-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+  {% else %}
+  <img class="ipadup-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  {% endif %}
+
+  {% if section.settings.title != blank or section.settings.text != blank %}
+  <div class="text-wrapper">
+    <div class="page-width">
+      <div class="feeding-box">
+      <div class="title">{{ section.settings.title }}</div>
+      <div class="text">{{ section.settings.text }}</div>
+        {% unless section.settings.video_url != blank %}
+        {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+        <a href="{{ section.settings.button_link }}" class="btn promotion-btn">
+          {{ section.settings.button_label }}
+        </a>
+        {% endif %}
+        {% else %}
+        <div class="btn promotion-btn vimeo-btn">{{ section.settings.button_label }}</div>
+        {% endunless %}
+        
+      {% if section.blocks.size > 0 %}
+      <div class="custom-icon-wrapper">
+        {% for block in section.blocks %}
+        <div class="customBlock_item">
+          {% if block.settings.image != blank %}
+          <img class="custom-icon-png" src="{{block.settings.image | img_url:'master'}}"/>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  
+  {% if section.settings.video_url != blank and section.settings.video_url.type == "vimeo" %}
+  <div class="vimeo-container">
+    <div class="vimeo-wrapper">
+      <iframe class="vimeo-media" src="//player.vimeo.com/video/{{ section.settings.video_url.id }}?color={{ '#000000' | remove: "#" }}&byline=0&portrait=0&badge=0" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+  $(function(){
+    $(`.promotion-feeding-wrapper .vimeo-btn`).click(function(){
+      $(`.promotion-feeding-wrapper .vimeo-container`).addClass("active");
+    });
+    $(`.promotion-feeding-wrapper .vimeo-container`).click(function(){
+      $(this).removeClass("active");
+      $(this).find(".vimeo-media").remove();
+      var currentUrl= new URL(window.location.href);
+      fetch(currentUrl,{
+        credentials:'same-origin',
+        method: 'GET'
+      }).then(function(response){
+        response.text().then(function(content){
+          var tempElement = document.createElement('div');
+          tempElement.innerHTML= content;
+          document.querySelector('.promotion-feeding-wrapper .vimeo-container').innerHTML = tempElement.querySelector('.promotion-feeding-wrapper .vimeo-container').innerHTML;
+        })
+      });
+    });
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Promotion Feeding", 
+    "settings": [{
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920x500px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "Title"
+          },{
+            "type": "html",
+            "id": "text",
+            "label": "Text"
+          },{
+            "type": "text",
+            "id": "button_label",
+            "label": "Button label"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button link"
+          },
+          {
+            "type": "video_url",
+            "id": "video_url",
+            "label": "Video link",
+            "accept": ["vimeo"]
+          }
+    ],
+    "blocks": [
+        {
+            "type": "image",
+            "name": "Icon",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Icon PNG",
+                    "info": "Size: 62x40px"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Promotion Feeding",
+        "category": "image"
+      }
+    ]
+  }
+{% endschema %}

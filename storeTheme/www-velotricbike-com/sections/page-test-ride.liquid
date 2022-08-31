@@ -1,0 +1,375 @@
+<div class="page-test-ride">
+    <div class="list-wrapper">
+
+      <div class="heading-wrapper">
+        {% if section.settings.heading != blank %}
+          <h1>{{ section.settings.heading }}</h1>
+        {% endif %}
+        {% if section.settings.description != blank %}{{ section.settings.description }}{% endif %}
+      </div>
+
+      <!-- Calendly link widget begin -->
+      <link rel="preconnect" href="https://assets.calendly.com" crossorigin="use-credentials">
+      <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+      <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async=""></script>
+      <!-- Calendly link widget end -->
+
+      <div class="search-places">
+        <div class="autocomplete">
+          <input type="text" placeholder="Where are you?" data-search-places>
+          <button type="button" class="hide" data-clear-search>
+            <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="2.70711" y1="1.29289" x2="16.7071" y2="15.2929" stroke="#9E9E9E" stroke-width="2"/>
+            <line y1="-1" x2="19.799" y2="-1" transform="matrix(-0.707107 0.707107 0.707107 0.707107 16 2)" stroke="#9E9E9E" stroke-width="2"/>
+            </svg>
+          </button>
+        </div>
+        <ul id="autocomplete-options--places">
+          {% for block in section.blocks %}
+            {% if block.settings.country_code != blank %}
+            {% assign countryCode = block.settings.country_code %}
+            {% endif %}
+            {% assign title = block.settings.title %}
+
+            <li
+              {{ block.shopify_attributes }}
+              tabindex="-1"
+              aria-selected="false"
+              role="option"
+              class="null"
+              data-option-value="{{ title }}"
+              data-option-description="{% if block.type == 'city' %}{{ block.settings.city_description }}{% else %}null{% endif %}"
+              data-option-is-country="{% if block.type == 'country' %}true{% else %}false{% endif %}"
+              data-option-country="{{ countryCode }}"
+              data-option-lat="{{block.settings.map_lat}}"
+              data-option-lng="{{block.settings.map_lng}}"
+              data-option-zoom="{% if block.type == 'country' %}7{% else %}null{% endif %}"
+              data-option-calendly="{% if block.type == 'city' %}https://calendly.com/testride-1/test-ride-{{ title | handleize }}-velotric?hide_gdpr_banner=1&?text_color=000000&primary_color=ffbc00{% else %}null{% endif %}"
+            >
+              <h3 class="h2">{% if block.settings.country_icon != blank %}{{ block.settings.country_icon }}{% endif %} {{ title }}</h3>
+              <a
+                {% if block.type == 'city' %}
+                href="https://calendly.com/testride-1/test-ride-{{ title | handleize }}-velotric?hide_gdpr_banner=1&?text_color=000000&primary_color=ffbc00"
+                data-calendly-button
+                {% else %}
+                href="javascript:void(0)"
+                {% endif %}
+              >
+
+                {% if block.type == 'city' %}
+                <span class="btn btn--yellow btn--small btn--rounded btn--bold-text btn--no-animate"><span>Book Now</span></span>
+                {% endif %}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <div id="email-form" class="hide">
+          <div class="email-form-wrapper">
+            {% if section.settings.email_form_text != blank %}{{ section.settings.email_form_text }}{% endif %}
+            <div class="email-form">
+              <div class="klaviyo-form-SvnKj9"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="map-wrapper">
+      <div id="map"></div>
+    </div>
+</div>
+
+<script src="{{ 'test-ride.js' | asset_url }}" async></script>
+<script type="text/javascript" async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzMoNNt4ssfOj25_r8gMLrQKObv23zFnU&amp;libraries=places&amp;callback=initTestRideApp"></script>
+
+<style>
+/* google info windoww */
+.gm-style .gm-style-iw-c {
+  border-radius: 0;
+  text-align: center;
+  padding-top: 18px;
+}
+.gm-style .gm-style-iw-c .btn {
+  height: 28px;
+  line-height: 24px;
+  padding: 0;
+  min-width: 93px;
+}
+.gm-ui-hover-effect {
+  display: none!important; /* hide x button */
+}
+
+.hide {display: none;}
+.calendly-overlay .calendly-popup {max-height: 780px;}
+/*
+* Always set the map height explicitly to define the size of the div element
+* that contains the map.
+*/
+#map {
+  height: 100%;
+}
+.map-wrapper {
+  display: none;
+}
+.search-places {
+  padding-top: 40px;
+}
+.search-places .autocomplete {
+  position: relative;
+}
+.search-places .autocomplete [data-clear-search] {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 44px;
+  position: absolute;
+  z-index: 2;
+  right: 0;
+}
+.search-places .autocomplete input {
+  background: #FFFFFF;
+  border: 1px solid #E5E5E5;
+  width: 100%;
+  height: 46px;
+}
+#autocomplete-options--places {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#autocomplete-options--places li {
+  border-bottom: 1px solid #cbcbcb;
+  position: relative;
+  cursor: pointer;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+}
+#autocomplete-options--places li>a {
+  /* padding: 16px; */
+}
+#autocomplete-options--places li h3 {
+  font-family:'Avenir Book';
+  margin-bottom: 0;
+  line-height: 1.2em;
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  color: #000000;
+}
+#autocomplete-options--places li h3 img {
+  margin-right: 7px;
+}
+#autocomplete-options--places li:hover h3 {
+  font-family:'Avenir Heavy';
+}
+#autocomplete-options--places li .btn {
+  height: 28px;
+  line-height: 24px;
+  padding: 0;
+  min-width: 93px;
+  color: #0F0F0F;
+}
+
+[role=option] .btn {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  transition: all .35s cubic-bezier(.42,0,.002,1);
+}
+[role=option]:hover .btn {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.email-form-wrapper {
+  text-align: center;
+  padding: 20px;
+}
+.email-form-wrapper .email-form {
+  width: 100%;
+  padding: 20px 0;
+}
+.email-form-wrapper .email-form .btn {
+  width: 100%;
+  margin-top: 8px;
+}
+.email-form form.klaviyo-form p strong { color: #1c1d1d !important; }
+.template-test-ride .main-content { min-height: auto; }
+/*.page-test-ride .heading-wrapper { padding-top: 58px; }*/
+.heading-wrapper h1 {
+  font-size: 36px;
+  line-height: 1;
+  color: #0F0F0F;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+.heading-wrapper p {
+  font-size: 18px;
+  line-height: 1.2;
+  color: #000;
+}
+.map-wrapper .map-info-window h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0F0F0F;
+  line-height: 1;
+  letter-spacing: 0.025em;
+}
+.map-wrapper .map-info-window p {
+  font-size: 14px;
+  color: #000;
+  line-height: 1.3;
+}
+.page-test-ride { background: #EDEDED; }
+
+@media (min-width: 1100px) {
+  .email-form-wrapper { padding: 20px 40px; }
+}
+
+@media (min-width: 1024px) {
+  .page-test-ride {
+    height: calc(100vh - 104px);
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 2fr 1fr;
+    grid-template-columns: 2fr 1fr;
+  }
+  .list-wrapper, .map-wrapper {
+    position: relative;
+    height: 100%;
+    -ms-grid-row: 1;
+    grid-row: 1;
+  }
+  .map-wrapper {
+    -ms-grid-column: 1;
+    grid-column: 1;
+    overflow: hidden;
+    display: block;
+  }
+  .list-wrapper {
+    -ms-grid-column: 2;
+    grid-column: 2;
+    overflow: auto;
+    padding: 40px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .page-test-ride { padding: 49px 43px; }
+  .email-form-wrapper { padding: 20px 0; }
+  #autocomplete-options--places li { position: relative; }
+  #autocomplete-options--places li>a {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    padding: 26px 10px;
+  }
+  .calendly-overlay .calendly-popup { max-height: 100%; }
+  .heading-wrapper h1 {
+    font-size: 23px;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Page",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "paragraph",
+      "content": "Important: Make sure the sequence is correct. That is all city must be under the country."
+    },
+    {
+      "type": "richtext",
+      "id": "email_form_text",
+      "label": "Email form text"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "country",
+      "name": "Country",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Country name"
+        },
+        {
+          "type": "html",
+          "id": "country_icon",
+          "label": "Flag icon"
+        },
+        {
+          "type": "text",
+          "id": "country_code",
+          "label": "Country code",
+          "info": "This code will be use for the city belongs to this country."
+        },
+        {
+          "type": "text",
+          "id": "map_lat",
+          "label": "Country Latitude",
+          "info": "The google map's latitude. [Latlong](https://www.latlong.net/)"
+        },
+        {
+          "type": "text",
+          "id": "map_lng",
+          "label": "Country Longitude",
+          "info": "The google map's longitude. [Latlong](https://www.latlong.net/)"
+        }
+      ]
+    },
+    {
+      "type": "city",
+      "name": "City",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "City name"
+        },
+        {
+          "type": "textarea",
+          "id": "city_description",
+          "label": "Description",
+          "info": "This will be displayed on Google map's description."
+        },
+        {
+          "type": "text",
+          "id": "map_lat",
+          "label": "City Latitude",
+          "info": "The google map's latitude. [Latlong](https://www.latlong.net/)"
+        },
+        {
+          "type": "text",
+          "id": "map_lng",
+          "label": "City Longitude",
+          "info": "The google map's longitude. [Latlong](https://www.latlong.net/)"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

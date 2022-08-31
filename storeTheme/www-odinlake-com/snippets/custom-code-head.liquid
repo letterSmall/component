@@ -1,0 +1,200 @@
+{%- assign fa_google_ads_audience_tag_id = 10827452057 -%}
+{%- assign fa_product_id_alpha2_code = 'US' -%}
+{%- assign fa_prices_with_decimal_separator = true -%}
+{% assign fa_product_id = 'sku' %}
+<!-- Global site tag (gtag.js) - Ads. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-{{ fa_google_ads_audience_tag_id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-{{ fa_google_ads_audience_tag_id }}');
+</script>
+<!-- Global site tag (gtag.js) - Ads. -->
+{%- if fa_prices_with_decimal_separator == true -%}
+	{%- if template contains 'product' -%}
+		{%- assign fa_product_price = product.price_min | money_without_currency | remove:',' -%}
+	{%- elsif template contains 'cart' -%}
+		{%- assign fa_product_price = cart.total_price | money_without_currency | remove:',' -%}
+	{%- endif -%}
+{%- else -%}
+	{%- if template contains 'product' -%}
+		{%- assign fa_product_price = product.price_min | money_without_currency | remove:'.' | replace: ',', '.' -%}
+	{% elsif template contains 'cart' %}
+		{%- assign fa_product_price = cart.total_price | money_without_currency | remove:'.' | replace: ',', '.' -%}
+	{%- endif -%}
+{% endif %}
+{%- if template contains 'collection' -%}
+{%- assign fa_event = 'view_item_list' -%}
+{%- elsif template contains 'product' -%}
+{%- assign fa_event = 'view_item' -%}
+{%- elsif template contains 'search' -%}
+{%- assign fa_event = 'view_search_results' -%}
+{%- elsif template contains 'cart' -%}
+{%- assign fa_event = 'add_to_cart' -%}
+{%- elsif template contains 'index' -%}
+{%- assign fa_event = 'home' -%}
+{%- else -%}
+{%- assign fa_event = 'other' -%}
+{%- endif -%}
+
+{%- comment -%}
+<script>
+  gtag('event', '{{ fa_event }}', {
+    'send_to': 'AW-{{ fa_google_ads_audience_tag_id }}',
+	{% if template contains 'product' or template contains 'cart' %}'value': {{ fa_product_price }},{% endif %}
+	{% if template contains 'product' %}
+    'items': [{
+		{% if fa_product_id == 'default' %}
+			'id': 'shopify_{{ fa_product_id_alpha2_code }}_{{ product.id }}_{% if product.variants.first.id %}{{ product.variants.first.id }}{% else %}{{ product.variants.id }}{% endif %}',
+		{% elsif fa_product_id == 'product_id' %}
+			'id': '{% if product.variants.first.id %}{{ product.variants.first.id }}{% else %}{{ product.variants.id }}{% endif %}',
+		{% elsif fa_product_id == 'parent_id' %}
+			'id': '{{ product.id }}',
+		{% elsif fa_product_id == 'sku' %}
+			'id': '{% if product.variants.first.id %}{{ product.variants.first.sku }}{% else %}{{ product.variants.sku }}{% endif %}',
+		{% endif %}
+      'google_business_vertical': 'retail'
+    }]
+	{% elsif template contains 'cart' %}
+	'items': [
+	{% for item in cart.items %}
+	{
+		{% if fa_product_id == 'default' %}
+			'id': 'shopify_{{ fa_product_id_alpha2_code }}_{{ item.product_id }}_{{ item.variant_id }}',
+		{% elsif fa_product_id == 'product_id' %}
+			'id': '{{ item.variant_id }}',
+		{% elsif fa_product_id == 'parent_id' %}
+			'id': '{{ item.product_id }}',
+		{% elsif fa_product_id == 'sku' %}
+			'id': '{{ item.sku }}',
+		{% endif %}
+      'google_business_vertical': 'retail'
+    },
+	{% endfor %}
+	]
+	{% endif %}
+  });
+</script>
+{%- endcomment -%}
+
+
+ 
+    <script>
+      gtag('event', '{{ fa_event }}', {
+        'send_to': 'AW-{{ fa_google_ads_audience_tag_id }}',
+        {% if template contains 'product' or template contains 'cart' %}'value': {{ fa_product_price }},{% endif %}
+        {% if template contains 'product' %}
+        'items': [{
+            {% if fa_product_id == 'default' %}
+                'id': 'shopify_{{ fa_product_id_alpha2_code }}_{{ product.id }}_{% if product.variants.first.id %}{{ product.variants.first.id }}{% else %}{{ product.variants.id }}{% endif %}',
+            {% elsif fa_product_id == 'product_id' %}
+                'id': '{% if product.variants.first.id %}{{ product.variants.first.id }}{% else %}{{ product.variants.id }}{% endif %}',
+            {% elsif fa_product_id == 'parent_id' %}
+                'id': '{{ product.id }}',
+            {% elsif fa_product_id == 'sku' %}
+                'id': '{% if product.variants.first.id %}{{ product.variants.first.sku }}{% else %}{{ product.variants.sku }}{% endif %}',
+            {% endif %}
+          'google_business_vertical': 'retail',
+          'ecomm_prodid': '{% if product.variants.first.id %}{{ product.variants.first.sku }}{% else %}{{ product.variants.sku }}{% endif %}',
+          'ecomm_totalvalue': '{{fa_product_price}}',
+          'ecomm_category': 'Office Chairs',
+          'ecomm_pagetype', '{{fa_event}}'
+        }]
+        {% elsif template contains 'cart' %}
+        'ecomm_pagetype', '{{fa_event}}'
+        'ecomm_user_in_cart': '{{fa_product_price}}',
+        'items': [
+        {% for item in cart.items %}
+        {
+            {% if fa_product_id == 'default' %}
+                'id': 'shopify_{{ fa_product_id_alpha2_code }}_{{ item.product_id }}_{{ item.variant_id }}',
+            {% elsif fa_product_id == 'product_id' %}
+                'id': '{{ item.variant_id }}',
+            {% elsif fa_product_id == 'parent_id' %}
+                'id': '{{ item.product_id }}',
+            {% elsif fa_product_id == 'sku' %}
+                'id': '{{ item.sku }}',
+            {% endif %}
+          'google_business_vertical': 'retail',
+          'ecomm_user_in_cart_quantity ': '{{ item.quantity }}',
+          'ecomm_prodid': '{{ item.sku }}',
+          'ecomm_totalvalue': '{{ item.price }}',
+          'ecomm_category': 'Office Chairs'
+           
+        },
+        {% endfor %}
+        ]
+        {% endif %}
+      });
+    </script>
+
+
+
+
+<!-- Global site tag (gtag.js) - Bing Ads. -->
+<script>(function(w, d, t, r, u) {
+    var f, n, i;
+    w[u]=w[u]||[], f=function() {
+        var o= {
+            ti: "134626867"
+        }
+        ;
+        o.q=w[u], w[u]=new UET(o), w[u].push("pageLoad")
+    }
+    , n=d.createElement(t), n.src=r, n.async=1, n.onload=n.onreadystatechange=function() {
+        var s=this.readyState;
+        s&&s!=="loaded"&&s!=="complete"||(f(), n.onload=n.onreadystatechange=null)
+    }
+    , i=d.getElementsByTagName(t)[0], i.parentNode.insertBefore(n, i)
+}
+
+)(window, document, "script", "//bat.bing.com/bat.js", "uetq");
+</script>
+<!-- Global site tag (gtag.js) - Bing Ads. -->
+
+
+
+
+
+{%- comment -%}
+/*
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-10827452057"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-10827452057');
+</script>
+  
+<!-- Global site tag (gtag.js) - Bing Ads. -->
+  <script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"134626867"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
+<!-- Global site tag (gtag.js) - Bing Ads. -->
+
+<meta name="p:domain_verify" content="eb862362f780691505006421b1d2b7f3"/>
+*/
+
+
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P9LDB2B');</script>
+<!-- End Google Tag Manager -->
+
+{%- endcomment -%}
+
+<!-- Hotjar Tracking Code for https://odinlake.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3094835,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>

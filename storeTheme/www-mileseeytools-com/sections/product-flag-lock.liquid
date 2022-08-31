@@ -1,0 +1,98 @@
+<div class="section-product-fulfill-job">
+  <div class="text-wrapper animation-text">
+    <h2 class="title media-title fadein-0">{{section.settings.title}}</h2>
+    <div class="subtitle fadein-05">{{section.settings.subtitle}}</div>
+  </div>
+  <div class="product-fulfill-job-wrapper">
+    <div class="swiper-container swiper-container-fulfill-job">
+      <div class="swiper-wrapper fulfill-job">
+        {% for block in section.blocks %}
+        <div class="fulfill-job-item swiper-slide {% if forloop.first %} active{% endif %}" data-index="id-{{forloop.index0}}">
+          <img class="image lazyload {% unless forloop.first == true %} lazypreload{% endunless %}" src="{{block.settings.image | img_url: '10x'}}" data-src="{{block.settings.image | img_url: '1200x'}}" />
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="swiper-pagination swiper-pagination-fulfill-job"></div>
+  </div>
+  
+</div>
+<script>
+  var fit_width = $(window).width() * 0.625 * 0.5;
+  if($(window).width() < 769 )  fit_width = $(window).width() * 0.5;
+  
+  var swiper_brands_numbers = new Swiper('.swiper-container-fulfill-job', {
+    direction : 'vertical',
+    slidesPerView: 1,
+    pagination: {
+      el: '.swiper-pagination-fulfill-job',
+      clickable: true,
+    },
+    mousewheel: true,
+    height: fit_width,
+    speed: 300,
+    spaceBetween : 20,
+    loop : false,
+    on: {
+      init: function(swiper){
+        setTimeout(function(){
+          $(".swiper-container-fulfill-job").height($(".swiper-container-fulfill-job .swiper-slide").first().height());
+        },100);
+      },
+    },
+    autoplay: {
+      delay: 4000,
+      stopOnLastSlide: false,
+      disableOnInteraction: false,
+    },
+    touchReleaseOnEdges:true,
+    mousewheel: {
+      releaseOnEdges: true
+    }
+  });
+</script>
+
+
+{% schema %}
+  {
+    "name": "Product Flag Lock",
+    "settings": [
+      {
+        "type": "html",
+        "label": "Title",
+        "id": "title"
+      },{
+        "type": "html",
+        "label": "Subtitle",
+        "id": "subtitle"
+      }
+	],
+	"blocks":[
+      {
+        "type": "image",
+        "name": "Item",
+        "settings":[
+          {
+            "type": "image_picker",
+            "label": "Image",
+            "id": "image"
+          }
+        ]
+      }
+	],
+    "presets": [
+      {
+        "name": "Product Flag Lock",
+        "category": "image"
+ 
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

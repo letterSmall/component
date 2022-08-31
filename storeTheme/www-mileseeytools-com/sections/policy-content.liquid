@@ -1,0 +1,214 @@
+<style>
+  .policy-content-{{ section.id }} {
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+  @media only screen and (max-width: 790px) {
+    .policy-content-{{ section.id }} {
+      margin-top: {{ section.settings.mb_margin_top }}px;
+      margin-bottom: {{ section.settings.mb_margin_bottom }}px;
+    }
+  }
+  {% if section.settings.desc_color != blank %}
+  .policy-content-{{ section.id }},
+  .policy-content-{{ section.id }} p {
+    color: {{ section.settings.desc_color }};
+  }
+  {% endif %}
+  {% if section.settings.link_color != blank %}
+  .policy-content-{{ section.id }} a {
+    color: {{ section.settings.link_color }};
+    font-weight: 700;
+  }
+  .policy-content-{{ section.id }} a::before {
+    background-color: {{ section.settings.link_color }};
+  }
+  {% endif %}
+  {% if section.settings.title_color != blank %}
+  .policy-content-{{ section.id }} .content-title {
+    color: {{ section.settings.title_color }};
+    font-weight: 700;
+  }
+  {% endif %}
+  {% if section.settings.text_alignment %}
+  .policy-content-{{ section.id }} .content-title,
+  .policy-content-{{ section.id }} .content-desc,
+  .policy-content-{{ section.id }} .content-desc p {
+    text-align: {{ section.settings.text_alignment }};
+  }
+  {% endif %}
+  {% if section.settings.text_alignment and section.blocks.size > 0 %}
+  {% assign alignment = section.settings.text_alignment  %}
+  {% case alignment %}
+  {% when alignment == 'left' %}
+  .policy-content-{{ section.id }} .content-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  {% when alignment == 'right' %}
+  .policy-content-{{ section.id }} .content-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  {% when alignment == 'center' %}
+  .policy-content-{{ section.id }} .content-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  {% endcase %}
+  {% endif %}
+</style>
+
+{% if section.settings.title != blank or section.settings.desc != blank %}
+<div class="policy-content policy-content-{{ section.id }}">
+  <div class="policy-content-wrapper container">
+    {% if section.settings.title != blank %}
+    <div class="content-title pro-titles">{{ section.settings.title }}</div>
+    {% endif %}
+    {% if section.settings.desc != blank %}
+    <div class="content-desc">{{ section.settings.desc }}</div>
+    {% endif %}
+    {% if section.blocks.size > 0 %}
+    <div class="content-image-container">
+      {% for block in section.blocks %}
+      <div class="image-item">
+        {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+        <img class="image lazyload"
+             src="{{ block.settings.image | img_url: 'master' }}"
+             data-src="{{ img_url }}"
+             data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+             data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+             data-sizes="auto"
+             alt="{{ block.settings.image.alt | escape }}">
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Policy Content",
+    "settings": [
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "richtext",
+        "id": "desc",
+        "label": "Description"
+      },
+  	  {
+        "type": "select",
+        "id": "text_alignment",
+        "label": "Text Alignment",
+        "default": "center",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+		  },
+          {
+            "value": "right",
+            "label": "Right"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          }
+        ]
+      },
+      {
+        "type": "color",
+        "id": "title_color",
+        "label": "Title Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "desc_color",
+        "label": "Description Color",
+        "default": "#505050"
+      },
+      {
+        "type": "color",
+        "id": "link_color",
+        "label": "Link Color",
+        "default": "#019CB6"
+      },
+      {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin Top",
+        "default": 50
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin Bottom",
+        "default": 50
+      },
+      {
+        "type": "range",
+        "id": "mb_margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile Margin Top",
+        "default": 25
+      },
+      {
+        "type": "range",
+        "id": "mb_margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile Margin Bottom",
+        "default": 25
+      }
+	],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+			"info": "Image Size: 150*90px"
+          }
+		]
+      }
+    ],
+	"presets": [
+      {
+        "name": "Policy Content"
+      }
+    ]
+
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

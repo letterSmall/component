@@ -1,0 +1,1198 @@
+<div
+class="product-recommended-size-container  product-compare-with-container product-compare-with-container-{{section.id}}">
+<script>
+  let prsci_swiper_scrollbar_length = 0;
+</script>
+
+{%- liquid
+    assign td_size=3
+    assign product_current=product.handle
+
+
+   if customDesc.compare != blank
+   assign compare_content=customDesc.compare|strip
+    assign compare_content_text=customDesc.compare|strip_html
+    endif
+
+    if section.settings.newcomparekei != blank 
+      assign compare_content=section.settings.newcomparekei|strip
+      assign compare_content_text=section.settings.newcomparekei|strip_html
+     endif 
+    
+    assign title=compare_content|split:"</title>"|first|split:"<title>"|last|default:"Find the Right Product for You"
+    assign product_list=compare_content|split:"</product>"|first|split:"<product>"|last|split:";"
+
+        if compare_content_text contains "col1_"
+        assign item_1=compare_content|split:"</col1>"|first|split:"<col1>"|last|strip|split:"_"|last|split:";"|default:""
+  endif
+  if compare_content_text contains "col2_"
+    assign item_2=compare_content|split:"</col2>"|first|split:"<col2>"|last|strip|split:"_"|last|split:";"|default:""
+  endif
+  if compare_content_text contains "col3_"
+    assign item_3=compare_content|split:"</col3>"|first|split:"<col3>"|last|strip|split:"_"|last|split:";"|default:""
+  endif
+  if compare_content_text contains "col4_"
+    assign item_4=compare_content|split:"</col4>"|first|split:"<col4>"|last|strip|split:"_"|last|split:";"|default:""
+  endif
+  if compare_content_text contains "col5_"
+    assign item_5=compare_content|split:"</col5>"|first|split:"<col5>"|last|strip|split:"_"|last|split:";"|default:""
+  endif
+  if compare_content_text contains "col6_"
+    assign item_6=compare_content|split:"</col6>"|first|split:"<col6>"|last|strip|split:"_"|last|split:";"|default:""
+  endif
+  if compare_content_text contains "col7_"
+    assign item_7=compare_content|split:"</col7>"|first|split:"<col7>"|last|strip|split:"_"|last|split:";"|default:""
+  endif
+  if compare_content_text contains "col8_"
+    assign item_8=compare_content|split:"</col8>"|first|split:"<col8>"|last|strip|split:"_"|last|split:";"|default:""
+  endif
+  if compare_content_text contains "col9_"
+    assign item_9=compare_content|split:"</col9>"|first|split:"<col9>"|last|strip|split:"_"|last|split:";"|default:""
+    endif
+    assign product_1=product_list[0]|strip
+    assign product_2=product_list[1]|strip
+    assign product_3=product_list[2]|strip
+    assign product_4=product_list[3]|strip
+      assign product_5=product_list[4]|strip
+    if product_1 contains "current"
+       assign  product_1=product_current
+       
+    endif
+    assign td_size=100|divided_by:item_1.size
+ -%}
+
+ {%style%}
+ .pcwt-left{
+    width:{{td_size|times:2}}%;
+
+ }
+ .pcwt-right{
+    width:calc(100 - {{td_size|times:2}})%;
+ }
+ {%endstyle%}
+ 
+  
+<div class="">
+
+  {%if title!=blank%}
+  <h2 class="section-title text-center">{{title}}</h2>
+  {%endif%}
+
+<div class="medium-down--hide pc-pwc-content">
+  <div class="pwc-content">
+  
+    <div class="pcw-table-box">
+     <div class="pcwt-left">
+      <div class="pcw-td pcw-td-1" data-index="1">
+        <div class="pcw-th pcw-th-1"></div>
+       {%if product_1!=blank%}
+        <div class="pcw-th pcw-th-2">
+          {%render "product-compare-with-item",product:all_products[product_1],product_current:product_current%}
+        </div>
+        {%endif%}
+      </div>
+      <div class="pcw-table-body">
+      {%if item_1!=blank%}
+      <div class="pcw-td pcw-td-2" data-index="2">
+        <div class="pcw-th pcw-th-1">
+         {{item_1[0]}}
+        </div>
+        <div class="pcw-th pcw-th-2">
+          {{item_1[1]}}
+         </div>
+        </div>
+        {%endif%}
+        {%if item_2!=blank%}
+        <div class="pcw-td pcw-td-3" data-index="3">
+          <div class="pcw-th pcw-th-1">
+           {{item_2[0]}}
+          </div>
+          <div class="pcw-th pcw-th-2">
+            {{item_2[1]}}
+           </div>
+          </div>
+          {%endif%}
+          {%if item_3!=blank%}
+          <div class="pcw-td pcw-td-4" data-index="4">
+            <div class="pcw-th pcw-th-1">
+             {{item_3[0]}}
+            </div>
+            <div class="pcw-th pcw-th-2">
+              {{item_3[1]}}
+             </div>
+            </div>
+            {%endif%}
+
+            {%if item_4!=blank%}
+            <div class="pcw-td pcw-td-5" data-index="5">
+              <div class="pcw-th pcw-th-1">
+               {{item_4[0]}}
+              </div>
+              <div class="pcw-th pcw-th-2">
+                {{item_4[1]}}
+               </div>
+              </div>
+              {%endif%}
+              {%if item_5!=blank%}
+              <div class="pcw-td pcw-td-6" data-index="6">
+                <div class="pcw-th pcw-th-1">
+                 {{item_5[0]}}
+                </div>
+                <div class="pcw-th pcw-th-2">
+                  {{item_5[1]}}
+                 </div>
+                </div>
+                {%endif%}
+                {%if item_6!=blank%}
+              <div class="pcw-td pcw-td-7" data-index="7">
+                <div class="pcw-th pcw-th-1">
+                 {{item_6[0]}}
+                </div>
+                <div class="pcw-th pcw-th-2">
+                  {{item_6[1]}}
+                 </div>
+                </div>
+                {%endif%}
+
+                {%if item_7!=blank%}
+                <div class="pcw-td pcw-td-8" data-index="8">
+                  <div class="pcw-th pcw-th-1">
+                   {{item_7[0]}}
+                  </div>
+                  <div class="pcw-th pcw-th-2">
+                    {{item_7[1]}}
+                   </div>
+                  </div>
+                  {%endif%}
+                  {%if item_8!=blank%}
+                  <div class="pcw-td pcw-td-9" data-index="9">
+                    <div class="pcw-th pcw-th-1">
+                     {{item_8[0]}}
+                    </div>
+                    <div class="pcw-th pcw-th-2">
+                      {{item_8[1]}}
+                     </div>
+                    </div>
+                    {%endif%}
+                    {%if item_9!=blank%}
+                    <div class="pcw-td pcw-td-10" data-index="10">
+                      <div class="pcw-th pcw-th-1">
+                       {{item_9[0]}}
+                      </div>
+                      <div class="pcw-th pcw-th-2">
+                        {{item_9[1]}}
+                       </div>
+                      </div>
+                      {%endif%}
+                      {%if item_10!=blank%}
+                      <div class="pcw-td pcw-td-11" data-index="11">
+                        <div class="pcw-th pcw-th-1">
+                         {{item_10[0]}}
+                        </div>
+                        <div class="pcw-th pcw-th-2">
+                          {{item_10[1]}}
+                         </div>
+                        </div>
+                        {%endif%}
+     </div>
+    </div>
+     <div class="pcwt-right">
+      <div class="swiper-container pcwt-swiper-container">
+<div class="swiper-wrapper">
+
+<div class="swiper-slide ">
+<div class="pcw-td  pcw-td-1">
+{%if product_list[1]!=blank%}
+<div class="pcw-th pcw-th-4">
+  {%render "product-compare-with-item",product:all_products[product_2]%}
+</div>
+{%endif%}
+</div>
+<div class="pcw-table-body">
+  {%if item_1!=blank%}
+  <div class="pcw-td  pcw-td-2">
+<div class="pcw-th pcw-th-3">
+  {{item_1[2]}}
+ </div>
+</div>
+ {%endif%}
+ {%if item_2!=blank%}
+ <div class="pcw-td  pcw-td-3">
+ <div class="pcw-th pcw-th-3">
+  {{item_2[2]}}
+ </div>
+</div>
+ {%endif%}
+ {%if item_3!=blank%}
+ <div class="pcw-td  pcw-td-4">
+ <div class="pcw-th pcw-th-3">
+  {{item_3[2]}}
+ </div>
+</div>
+ {%endif%}
+ {%if item_4!=blank%}
+ <div class="pcw-td  pcw-td-5">
+ <div class="pcw-th pcw-th-3">
+  {{item_4[2]}}
+ </div>
+</div>
+ {%endif%}
+ {%if item_5!=blank%}
+ <div class="pcw-td  pcw-td-6">
+ <div class="pcw-th pcw-th-3">
+  {{item_5[2]}}
+ </div>
+</div>
+ {%endif%}
+ {%if item_6!=blank%}
+ <div class="pcw-td  pcw-td-7">
+ <div class="pcw-th pcw-th-3">
+  {{item_6[2]}}
+ </div>
+</div>
+ {%endif%}
+ {%if item_7!=blank%}
+ <div class="pcw-td  pcw-td-8">
+ <div class="pcw-th pcw-th-3">
+  {{item_7[2]}}
+ </div>
+</div>
+ {%endif%}
+ {%if item_8!=blank%}
+ <div class="pcw-td  pcw-td-9">
+ <div class="pcw-th pcw-th-3">
+  {{item_8[2]}}
+ </div>
+</div>
+ {%endif%}
+ {%if item_9!=blank%}
+ <div class="pcw-td  pcw-td-10">
+ <div class="pcw-th pcw-th-3">
+  {{item_9[2]}}
+ </div>
+</div>
+ {%endif%}
+ {%if item_10!=blank%}
+ <div class="pcw-td  pcw-td-11">
+ <div class="pcw-th pcw-th-3">
+  {{item_10[2]}}
+ </div>
+</div>
+ {%endif%}
+</div>
+</div>
+
+<div class="swiper-slide ">
+<div class="pcw-td  pcw-td-1">
+  {%if product_list[2]!=blank%}
+  <div class="pcw-th pcw-th-4 123123213">
+      {%render "product-compare-with-item",product:all_products[product_3]%}
+  </div>
+  {%endif%}
+  </div>
+  <div class="pcw-table-body">
+    {%if item_1!=blank%}
+    <div class="pcw-td  pcw-td-2">
+  <div class="pcw-th pcw-th-4">
+    {{item_1[3]}}
+   </div>
+  </div>
+   {%endif%}
+   {%if item_2!=blank%}
+   <div class="pcw-td  pcw-td-3">
+   <div class="pcw-th pcw-th-4">
+    {{item_2[3]}}
+   </div>
+  </div>
+   {%endif%}
+   {%if item_3!=blank%}
+   <div class="pcw-td  pcw-td-4">
+   <div class="pcw-th pcw-th-4">
+    {{item_3[3]}}
+   </div>
+  </div>
+   {%endif%}
+   {%if item_4!=blank%}
+   <div class="pcw-td  pcw-td-5">
+   <div class="pcw-th pcw-th-4">
+    {{item_4[3]}}
+   </div>
+  </div>
+   {%endif%}
+   {%if item_5!=blank%}
+   <div class="pcw-td  pcw-td-6">
+   <div class="pcw-th pcw-th-4">
+    {{item_5[3]}}
+   </div>
+  </div>
+   {%endif%}
+   {%if item_6!=blank%}
+   <div class="pcw-td  pcw-td-7">
+   <div class="pcw-th pcw-th-4">
+    {{item_6[3]}}
+   </div>
+  </div>
+   {%endif%}
+   {%if item_7!=blank%}
+   <div class="pcw-td  pcw-td-8">
+   <div class="pcw-th pcw-th-4">
+    {{item_7[3]}}
+   </div>
+  </div>
+   {%endif%}
+   {%if item_8!=blank%}
+   <div class="pcw-td  pcw-td-9">
+   <div class="pcw-th pcw-th-4">
+    {{item_8[3]}}
+   </div>
+  </div>
+   {%endif%}
+   {%if item_9!=blank%}
+   <div class="pcw-td  pcw-td-10">
+   <div class="pcw-th pcw-th-4">
+    {{item_9[3]}}
+   </div>
+  </div>
+   {%endif%}
+   {%if item_10!=blank%}
+   <div class="pcw-td  pcw-td-11">
+   <div class="pcw-th pcw-th-4">
+    {{item_10[3]}}
+   </div>
+  </div>
+   {%endif%}
+  </div>
+</div>
+{%if product_list[3]!=blank%}
+<div class="swiper-slide ">
+  <div class="pcw-td  pcw-td-1">
+   
+    <div class="pcw-th pcw-th-5">
+      {%render "product-compare-with-item",product:all_products[product_4]%}
+    </div>
+   
+    </div>
+    <div class="pcw-table-body">
+      {%if item_1!=blank%}
+      <div class="pcw-td  pcw-td-2">
+    <div class="pcw-th pcw-th-5">
+      {{item_1[4]}}
+     </div>
+    </div>
+     {%endif%}
+     {%if item_2!=blank%}
+     <div class="pcw-td  pcw-td-3">
+     <div class="pcw-th pcw-th-5">
+      {{item_2[4]}}
+     </div>
+    </div>
+     {%endif%}
+     {%if item_3!=blank%}
+     <div class="pcw-td  pcw-td-4">
+     <div class="pcw-th pcw-th-5">
+      {{item_3[4]}}
+     </div>
+    </div>
+     {%endif%}
+     {%if item_4!=blank%}
+     <div class="pcw-td  pcw-td-5">
+     <div class="pcw-th pcw-th-5">
+      {{item_4[4]}}
+     </div>
+    </div>
+     {%endif%}
+     {%if item_5!=blank%}
+     <div class="pcw-td  pcw-td-6">
+     <div class="pcw-th pcw-th-5">
+      {{item_5[4]}}
+     </div>
+    </div>
+     {%endif%}
+     {%if item_6!=blank%}
+     <div class="pcw-td  pcw-td-7">
+     <div class="pcw-th pcw-th-5">
+      {{item_6[4]}}
+     </div>
+    </div>
+     {%endif%}
+     {%if item_7!=blank%}
+     <div class="pcw-td  pcw-td-8">
+     <div class="pcw-th pcw-th-5">
+      {{item_7[4]}}
+     </div>
+    </div>
+     {%endif%}
+     {%if item_8!=blank%}
+     <div class="pcw-td  pcw-td-9">
+     <div class="pcw-th pcw-th-5">
+      {{item_8[4]}}
+     </div>
+    </div>
+     {%endif%}
+     {%if item_9!=blank%}
+     <div class="pcw-td  pcw-td-10">
+     <div class="pcw-th pcw-th-5">
+      {{item_9[4]}}
+     </div>
+    </div>
+     {%endif%}
+     {%if item_10!=blank%}
+     <div class="pcw-td  pcw-td-11">
+     <div class="pcw-th pcw-th-5">
+      {{item_10[4]}}
+     </div>
+    </div>
+     {%endif%}
+    </div>
+  </div>
+  {%endif%}
+  {%if product_5!=blank%}
+  <div class="swiper-slide ">
+    <div class="pcw-td  pcw-td-1">
+    
+      <div class="pcw-th pcw-th-6">
+          {%render "product-compare-with-item",product:all_products[product_5]%}
+      </div>
+    
+      </div>
+      <div class="pcw-table-body">
+        {%if item_1!=blank%}
+        <div class="pcw-td  pcw-td-2">
+      <div class="pcw-th pcw-th-6">
+        {{item_1[5]}}
+       </div>
+      </div>
+       {%endif%}
+       {%if item_2!=blank%}
+       <div class="pcw-td  pcw-td-3">
+       <div class="pcw-th pcw-th-6">
+        {{item_2[5]}}
+       </div>
+      </div>
+       {%endif%}
+       {%if item_3!=blank%}
+       <div class="pcw-td  pcw-td-4">
+       <div class="pcw-th pcw-th-6">
+        {{item_3[5]}}
+       </div>
+      </div>
+       {%endif%}
+       {%if item_4!=blank%}
+       <div class="pcw-td  pcw-td-5">
+       <div class="pcw-th pcw-th-6">
+        {{item_4[5]}}
+       </div>
+      </div>
+       {%endif%}
+       {%if item_5!=blank%}
+       <div class="pcw-td  pcw-td-6">
+       <div class="pcw-th pcw-th-6">
+        {{item_5[5]}}
+       </div>
+      </div>
+       {%endif%}
+       {%if item_6!=blank%}
+       <div class="pcw-td  pcw-td-7">
+       <div class="pcw-th pcw-th-6">
+        {{item_6[5]}}
+       </div>
+      </div>
+       {%endif%}
+       {%if item_7!=blank%}
+       <div class="pcw-td  pcw-td-8">
+       <div class="pcw-th pcw-th-6">
+        {{item_7[5]}}
+       </div>
+      </div>
+       {%endif%}
+       {%if item_8!=blank%}
+       <div class="pcw-td  pcw-td-9">
+       <div class="pcw-th pcw-th-6">
+        {{item_8[5]}}
+       </div>
+      </div>
+       {%endif%}
+       {%if item_9!=blank%}
+       <div class="pcw-td  pcw-td-10">
+       <div class="pcw-th pcw-th-6">
+        {{item_9[5]}}
+       </div>
+      </div>
+       {%endif%}
+       {%if item_10!=blank%}
+       <div class="pcw-td  pcw-td-11">
+       <div class="pcw-th pcw-th-6">
+        {{item_10[5]}}
+       </div>
+      </div>
+       {%endif%}
+      </div>
+    </div>
+    {%endif%}
+</div>
+<div class="large-up--hide">
+<div class="mb-table-swiper-scrollbar-box">
+<div class="swiper-scrollbar"></div>
+</div>
+</div>
+      </div>
+     
+     </div>
+    </div>
+   
+
+</div>
+</div>
+
+  <div class="large-up--hide  mb-pwc-content">
+    <div class="pwc-content">
+      <div class="pcw-table-box">
+        <div class="pcwt-top">
+          <div class="pcw-td pcw-td-1" data-index="1">
+            <div class="pcw-th pcw-th-1"></div>
+
+          </div>
+          <div class="pcw-table-body">
+            {%if product_1!=blank%}
+            <div class="pcw-td pcw-td-2" data-index="2">
+              <div class="pcw-th pcw-th-1">
+                {%render "product-compare-with-item",product:all_products[product_1],product_current:product_current%}
+              </div>
+
+            </div>
+            {%endif%}
+            {%if product_2!=blank%}
+            <div class="pcw-td pcw-td-3" data-index="3">
+              <div class="pcw-th pcw-th-1">
+                {%render "product-compare-with-item",product:all_products[product_2]%}
+              </div>
+
+            </div>
+            {%endif%}
+            {%if product_3!=blank%}
+            <div class="pcw-td pcw-td-4" data-index="4">
+              <div class="pcw-th pcw-th-1">
+                {%render "product-compare-with-item",product:all_products[product_3]%}
+              </div>
+
+            </div>
+            {%endif%}
+
+            {%if product_4!=blank%}
+            <div class="pcw-td pcw-td-5" data-index="5">
+              <div class="pcw-th pcw-th-1">
+                {%render "product-compare-with-item",product:all_products[product_4]%}
+              </div>
+
+            </div>
+            {%endif%}
+            {%if product_5!=blank%}
+            <div class="pcw-td pcw-td-6  " data-index="6">
+              <div class="pcw-th pcw-th-1">
+                {%render "product-compare-with-item",product:all_products[product_5]%}
+              </div>
+
+            </div>
+            {%endif%}
+
+          </div>
+        </div>
+        <div class="pcwt-bottom">
+              {%if item_1!=blank%}
+              <div class="pcwt-bottom-row">
+                {%if item_1[0]!=blank%}
+                <div class="value-row filter-xs">
+                <div class="pcw-td pcw-td-1 pcw-title-fix"> 
+                  <div class="pcw-th pcw-th-3">
+                    {{item_1[0]}}
+                  </div> 
+                </div> 
+                </div>
+                {%endif%}
+                {%if item_1[1]!=blank%}   
+                <div class="pcw-table-body value-row">   
+                  <div class="pcw-td  pcw-td-2">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_1[1]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_1[2]!=blank%}   
+                  <div class="pcw-td  pcw-td-3">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_1[2]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_1[3]!=blank%} 
+                  <div class="pcw-td  pcw-td-4">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_1[3]}}
+                    </div>
+                  </div> 
+                  {%endif%}
+                  {%if item_1[4]!=blank%} 
+                  <div class="pcw-td  pcw-td-5">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_1[4]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_1[5]!=blank%} 
+                  <div class="pcw-td  pcw-td-6">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_1[5]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                </div>
+              </div>
+              {%endif%}
+              {%if item_2!=blank%}
+              <div class="pcwt-bottom-row">
+                <div class="value-row filter-xs">
+                <div class="pcw-td  pcw-td-1 pcw-title-fix">
+                  {%if item_2[0]!=blank%}
+                  <div class="pcw-th pcw-th-4">
+                    {{item_2[0]}}
+                  </div>
+                  {%endif%}
+                </div>
+                </div>
+                <div class="pcw-table-body value-row">
+                  {%if item_2[1]!=blank%}
+                  <div class="pcw-td  pcw-td-2">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_2[1]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_2[2]!=blank%}
+                  <div class="pcw-td  pcw-td-3">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_2[2]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_2[3]!=blank%}
+                  <div class="pcw-td  pcw-td-4">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_2[3]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_2[4]!=blank%}
+                  <div class="pcw-td  pcw-td-5">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_2[4]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_2[5]!=blank%}
+                  <div class="pcw-td  pcw-td-6">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_2[5]}}
+                    </div>
+                  </div>
+                  {%endif%}
+
+                </div>
+              </div>
+              {%endif%}
+              {%if item_3!=blank%}
+              <div class="pcwt-bottom-row">
+                <div class="value-row filter-xs">
+                  <div class="pcw-td  pcw-td-1 pcw-title-fix">
+                    <div class="pcw-th pcw-th-4 ">
+                      {{item_3[0]}}
+                    </div>
+                  </div>
+                </div>
+                <div class="pcw-table-body value-row">
+                  {%if item_3[1]!=blank%}
+                  <div class="pcw-td  pcw-td-2">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_3[1]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_3[2]!=blank%}
+                  <div class="pcw-td  pcw-td-3">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_3[2]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_3[3]!=blank%}
+                  <div class="pcw-td  pcw-td-4">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_3[3]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_3[4]!=blank%}
+                  <div class="pcw-td  pcw-td-5">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_3[4]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_3[5]!=blank%}
+                  <div class="pcw-td  pcw-td-6">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_3[5]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                </div>
+              </div>
+              {%endif%}
+              {%if item_4!=blank%}
+              <div class="pcwt-bottom-row">
+                <div class="value-row filter-xs">
+                <div class="pcw-td  pcw-td-1 pcw-title-fix">  
+                  <div class="pcw-th pcw-th-5">
+                    {{item_4[0]}}
+                  </div>  
+                </div>
+                </div>
+                <div class="pcw-table-body value-row">
+                  {%if item_4[1]!=blank%}
+                  <div class="pcw-td  pcw-td-2">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_4[1]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_4[2]!=blank%}
+                  <div class="pcw-td  pcw-td-3">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_4[2]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_4[3]!=blank%}
+                  <div class="pcw-td  pcw-td-4">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_4[3]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_4[4]!=blank%}
+                  <div class="pcw-td  pcw-td-5">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_4[4]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_4[5]!=blank%}
+                  <div class="pcw-td  pcw-td-6">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_4[5]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                </div>
+              </div>
+              {%endif%}
+              {%if item_5!=blank%}
+              <div class="pcwt-bottom-row">
+                 <div class="value-row filter-xs">
+                <div class="pcw-td  pcw-td-1 pcw-title-fix">
+                  <div class="pcw-th pcw-th-6">
+                    {{item_5[0]}}
+                  </div>
+                </div>
+                </div>
+                <div class="pcw-table-body value-row">
+                  {%if item_5[1]!=blank%}
+                  <div class="pcw-td  pcw-td-2">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_5[1]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_5[2]!=blank%}
+                  <div class="pcw-td  pcw-td-3">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_5[2]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_5[3]!=blank%}
+                  <div class="pcw-td  pcw-td-4">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_5[3]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_5[4]!=blank%}
+                  <div class="pcw-td  pcw-td-5">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_5[4]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_5[5]!=blank%}
+                  <div class="pcw-td  pcw-td-6">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_5[5]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                </div>
+              </div>
+              {%endif%}
+              {%if item_6!=blank%}
+              <div class="pcwt-bottom-row">
+                <div class="value-row filter-xs">
+                <div class="pcw-td  pcw-td-1 pcw-title-fix">
+
+                  <div class="pcw-th pcw-th-6">
+                    {{item_6[0]}}
+                  </div>
+
+                </div>
+                </div>
+                <div class="pcw-table-body value-row">
+                  {%if item_6[1]!=blank%}
+                  <div class="pcw-td  pcw-td-2">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_6[1]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_6[2]!=blank%}
+                  <div class="pcw-td  pcw-td-3">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_6[2]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_6[3]!=blank%}
+                  <div class="pcw-td  pcw-td-4">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_6[3]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_6[4]!=blank%}
+                  <div class="pcw-td  pcw-td-5">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_6[4]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_6[5]!=blank%}
+                  <div class="pcw-td  pcw-td-6">
+                    <div class="pcw-th pcw-th-3">
+                      {{item_6[5]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                </div>
+              </div>
+              {%endif%}
+              {%if item_7!=blank%}
+              <div class="pcwt-bottom-row">
+                 <div class="value-row filter-xs">
+                <div class="pcw-td  pcw-td-1 pcw-title-fix">
+
+                  <div class="pcw-th pcw-th-6">
+                    {{item_7[0]}}
+                  </div>
+
+                </div>
+                </div>
+                <div class="pcw-table-body value-row">
+                  {%if item_7[1]!=blank%}
+                  <div class="pcw-td  pcw-td-2">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_7[1]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_7[2]!=blank%}
+                  <div class="pcw-td  pcw-td-3">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_7[2]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_7[3]!=blank%}
+                  <div class="pcw-td  pcw-td-4">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_7[3]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_7[4]!=blank%}
+                  <div class="pcw-td  pcw-td-5">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_7[4]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_7[5]!=blank%}
+                  <div class="pcw-td  pcw-td-6">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_7[5]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                </div>
+              </div>
+              {%endif%}
+              {%if item_8!=blank%}
+              <div class="pcwt-bottom-row">
+                 <div class="value-row filter-xs">
+                <div class="pcw-td  pcw-td-1 pcw-title-fix">
+
+                  <div class="pcw-th pcw-th-6">
+                    {{item_8[0]}}
+                  </div>
+
+                </div>
+                </div>
+                <div class="pcw-table-body value-row">
+                  {%if item_8[1]!=blank%}
+                  <div class="pcw-td  pcw-td-2">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_8[1]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_8[2]!=blank%}
+                  <div class="pcw-td  pcw-td-3">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_8[2]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_8[3]!=blank%}
+                  <div class="pcw-td  pcw-td-4">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_8[3]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_8[4]!=blank%}
+                  <div class="pcw-td  pcw-td-5">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_8[4]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_8[5]!=blank%}
+                  <div class="pcw-td  pcw-td-6">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_8[5]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                </div>
+              </div>
+              {%endif%}
+
+
+              {%if item_9!=blank%}
+              <div class="pcwt-bottom-row">
+                <div class="value-row filter-xs">
+                <div class="pcw-td  pcw-td-1 pcw-title-fix">
+
+                  <div class="pcw-th pcw-th-6">
+                    {{item_9[0]}}
+                  </div>
+
+                </div>
+                </div>
+                <div class="pcw-table-body value-row">
+                  {%if item_9[1]!=blank%}
+                  <div class="pcw-td  pcw-td-2">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_9[1]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_9[2]!=blank%}
+                  <div class="pcw-td  pcw-td-3">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_9[2]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_9[3]!=blank%}
+                  <div class="pcw-td  pcw-td-4">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_9[3]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_9[4]!=blank%}
+                  <div class="pcw-td  pcw-td-5">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_9[4]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_9[5]!=blank%}
+                  <div class="pcw-td  pcw-td-6">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_9[5]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                </div>
+              </div>
+              {%endif%}
+
+
+              {%if item_10!=blank%}
+              <div class="pcwt-bottom-row">
+                <div class="value-row filter-xs">
+                <div class="pcw-td  pcw-td-1 pcw-title-fix">
+
+                  <div class="pcw-th pcw-th-6">
+                    {{item_10[0]}}
+                  </div>
+
+                </div>
+                </div>
+                <div class="pcw-table-body value-row">
+                  {%if item_10[1]!=blank%}
+                  <div class="pcw-td  pcw-td-2">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_10[1]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_10[2]!=blank%}
+                  <div class="pcw-td  pcw-td-3">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_10[2]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_10[3]!=blank%}
+                  <div class="pcw-td  pcw-td-4">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_10[3]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_10[4]!=blank%}
+                  <div class="pcw-td  pcw-td-5">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_10[4]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                  {%if item_10[5]!=blank%}
+                  <div class="pcw-td  pcw-td-6">
+                    <div class="pcw-th pcw-th-6">
+                      {{item_10[5]}}
+                    </div>
+                  </div>
+                  {%endif%}
+                </div>
+              </div>
+              {%endif%}
+
+            </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+</div>
+</div>
+
+<script>
+
+$(document).ready(function(){
+    if($(window).width()>768){
+      $(".product-recommended-size-container").css('opacity',0);
+        autoTableHeight();
+    }
+})
+$(window).resize(function(){
+autoTableHeight();
+})
+
+var compare_stauts=true;
+$('.mb-psc-tabbar-item[data-name="compare"]').click(function(){
+  
+    if($(window).width()<=768 &&compare_stauts){
+      setTimeout(function(){
+       autoTableHeight();
+        compare_stauts=false;
+      },500)
+   
+}
+})
+
+
+function autoTableHeight(){
+let table=$('.pcw-table-box');
+
+$('.pcw-table-box .pcwt-left .pcw-td').each(function(){
+let that=this;
+let index=$(that).data('index');
+let el_height_list=[];
+$(`.pcw-table-box .pcw-td-${index}`).find('.pcw-th').each(function(){
+    let that2=this;
+    let el_height=$(that2).outerHeight();
+    el_height_list.push(el_height);
+
+}); 
+let  max = Math.max.apply(null, el_height_list);
+$(`.pcw-table-box .pcw-td-${index}`).find(".pcw-th").css('min-height',`${max}px`);
+  $(".product-recommended-size-container").css('opacity',1);
+})
+}
+
+
+
+var pcw_pc_Swiper = new Swiper('.pc-pwc-content .pcwt-swiper-container', {
+observer: true,
+observeParents: true,
+freeMode: true,
+allowTouchMove: false,
+{%assign td_size_right=item_1.size|minus:2%}
+{%if td_size_right>4%}
+slidesPerView:4,
+{%else%}
+slidesPerView:{{td_size_right}},
+{%endif%}
+  breakpoints: {
+  
+  768: {  
+    slidesPerView: 3,
+    
+  allowTouchMove: true,
+  
+       },  589: { 
+      slidesPerView: 1,
+      
+  allowTouchMove: true,
+ 
+       }
+  }
+})
+
+
+// var pcw_mb_Swiper = new Swiper('.mb-pwc-content .pcwt-swiper-container', {
+// observer: true,
+// observeParents: true,
+// freeMode: true,
+// slidesPerView: 3,
+//   breakpoints: {
+//   589: { 
+//       slidesPerView: 1,
+//        }
+//   }
+// })
+</script>

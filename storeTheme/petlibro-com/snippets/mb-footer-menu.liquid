@@ -1,0 +1,94 @@
+<div class="footer-inner-left mb_fotter_menu">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {% when 'menu' %}
+        {% if linklists[block.settings.menu].links.size > 0 %}
+          <div class="mb_fotter_menu_item">
+            <div class="item_title {% if block.settings.default_open %}mb_menu_item_active{% endif %}"><span>{{ linklists[block.settings.menu].title }}</span><img src="{{ "icon-menu-arrow.svg" | asset_url }}" ></div>
+            <ul class="menu_items {% if block.settings.default_open %}default_open{% endif %}">
+              {% for link in linklists[block.settings.menu].links %}
+                <a class="menu_item_link" href="{{ link.url }}">{{ link.title }}</a>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+    {% endcase %}
+  {% endfor %}
+</div>
+
+<script>
+  $('.mb_fotter_menu .mb_fotter_menu_item .item_title').click(function(e) {
+    e.stopPropagation()
+    let targetEl = $(e.target)
+    if (targetEl.hasClass('mb_menu_item_active')) {
+      targetEl.removeClass('mb_menu_item_active')
+      targetEl.next('.menu_items').css('height', 0)
+    } else {
+      targetEl.addClass('mb_menu_item_active')
+      targetEl.next('.menu_items').css('height', targetEl.next('.menu_items').find('a.menu_item_link').length * 40 + 'px')
+    }
+
+  })
+</script>
+
+<style>
+  .mb_fotter_menu{
+    display: none;
+  }
+  @media (max-width: 768px){
+    .pc_fotter_menu{
+      display: none;
+    }
+    .mb_fotter_menu{
+      display: block;
+      margin-bottom: 30px;
+    }
+    .footer-inner-right .footer-social-box{
+      margin-bottom: 16px!important;
+    }
+    .mb_fotter_menu .mb_fotter_menu_item{
+      padding: 0 16px;
+      max-width: 320px;
+      margin: 0 auto;
+      overflow: hidden;
+      transition: height .3s;
+    }
+    .mb_fotter_menu .mb_fotter_menu_item .item_title{
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 54px;
+      background: rgba(0,0,0,0);
+    }
+    .mb_fotter_menu .mb_fotter_menu_item .item_title img{
+      width: 24px;
+      height: 24px;
+      transition: all .3s;
+      pointer-events: none;
+    }
+    .mb_fotter_menu .mb_fotter_menu_item .mb_menu_item_active img{
+      transform: rotate(90deg);
+    }
+    .mb_fotter_menu .mb_fotter_menu_item .item_title span{
+      font-size: 14px;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+    .mb_fotter_menu .mb_fotter_menu_item .menu_items{
+      margin: 0;
+      padding-left: 20px;
+      height: 0;
+      transition: height .3s;
+    }
+    .mb_fotter_menu .mb_fotter_menu_item .default_open{
+      height: auto;
+    }
+    .mb_fotter_menu .mb_fotter_menu_item .menu_items .menu_item_link{
+      display: block;
+      font-size: 14px;
+      height: 40px;
+      line-height: 40px;
+    }
+  }
+</style>

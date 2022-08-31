@@ -1,0 +1,81 @@
+{% if section.settings.display %}
+ 
+  <div class="pf-c" style="--c-xs:12;--c-lg:12">
+    <div data-pf-type="Column" class="sc-JkixQ bOeEnL pf-159_">
+      <div data-slider="{'slidesToShow':{'all':1,'laptop':1,'tablet':1,'mobile':1},'slidesToScroll':{'all':1,'laptop':1,'tablet':1,'mobile':1},'loop':false,'autoPlay':false,'autoPlayDelay':3000,'pauseOnHover':false,'maxHeight':false,'id':'4ddd2663-678b-4db6-8dd2-93212a57cdf3'}"
+        class="sc-cVAmsi sc-kHxTfl cMmhCo hJRmmA pf-160_ glider-n-2 glider-n-2x "
+        style="visibility:hidden;height:-Infinitypx" data-pf-type="Slider2">
+        <div class="glider" style="--g-xs:0px">
+        {% for block in section.blocks %}
+          <div class="glide-wrapper">
+            <div style="height:100%" class="sc-ksHpcM sc-gXRojI kXPzVa cqVxEi pf-161_" data-pf-type="Slide2">
+              <div class="glide-container">
+                <div class="sc-bBHHxi gGMCwe pf-162_ pf-r pf-r-eh" style="--s-xs:15px" data-pf-type="Row">
+                  <div class="pf-c" style="--c-xs:12;--c-lg:12">
+                    <div data-pf-type="Column" class="sc-JkixQ bOeEnL pf-163_">
+                      <div data-pf-type="Image"
+                        class="sc-gIBqdA biKLcv pf-164_ pf-lg-hide pf-md-hide pf-sm-hide">
+                        <img src="{{ block.settings.img | img_url: '1x' }}"
+                           srcset="{{ block.settings.img | img_url: 'master' }}"
+                          sizes="(min-width: 1536px) 1536px, (min-width: 1024px) 1280px, (min-width: 640px) 768px, 320px"
+                          loading="lazy" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+  
+  
+        </div><button aria-label="Previous" class="glider-prev glider-nav glider-nav-1"></button><button
+          aria-label="Next" class="glider-next glider-nav glider-nav-1"></button>
+        <div class="glider-dots glider-d-1"></div>
+      </div>
+    </div>
+  </div>
+  
+ 
+  {% endif %}
+
+
+
+
+{% schema %}
+  {
+    "name": "Image Slide Meow",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "display",
+        "label": "display?",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "img",
+            "label": "Image"
+          }
+        ]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Image Slide Meow"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

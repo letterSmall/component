@@ -1,0 +1,511 @@
+{% assign product = all_products[section.settings.product] %}
+<div
+  class="cfp-section"
+  style="background-color: {{ section.settings.bg }};"
+  x-data="
+    {
+      productHandle: '{{ product.handle }}',
+      productVariants:
+        {{ product.variants | json | replace: '"', "'" }},
+      availableVariants: [],
+      selectedOptions: {},
+      currentVariant: {},
+      updateVariantId(init = false) {
+        {% for option in product.options_with_values %}
+          const optionName{{ forloop.index }} = '{{ option.name }}'
+        {% endfor %}
+        const currentVariant = this.productVariants.find(
+          variant => (
+            variant.option1 === this.selectedOptions[optionName1] &&
+            (variant.option2 ? variant.option2 === this.selectedOptions[optionName2] : true) &&
+            (variant.option3 ? variant.option3 === this.selectedOptions[optionName3] : true)
+          )
+        );
+        if(!currentVariant) {
+          console.error('No variant found for selected options');
+          return;
+        }
+        this.currentVariant = currentVariant;
+        // console.log('new variant id' + currentVariant.id)
+        const targetSlide = document.querySelector(`#shopify-section-{{ section.id }} [data-variant-id='${currentVariant.id}']`)
+        if(!targetSlide) return;
+
+        if(init) return
+        document.querySelectorAll('#shopify-section-{{ section.id }} .swiper-slide').forEach((slide, idx) => {
+          if(slide === targetSlide) {
+            if(this.swiper) this.swiper.slideTo(idx)
+          }
+        })
+        // $store.bundle.childrenProductSelectedVariantIds[this.productHandle] = currentVariant.id;
+      },
+      handleSelect(option) {
+        this.selectedOptions[option.name] = option.value;
+        this.updateVariantId();
+
+        // select the first available color after a small delay, to let the browser update info first
+        if(option.selectFirstAvailableColor) {
+          setTimeout(() => {
+            const firstAvailableColor = document.querySelector('#shopify-section-{{ section.id }} .variant-color-btn:not(.disabled)')
+            firstAvailableColor.click();
+            this.updateVariantId()
+          }, 50)
+       }
+      },
+      setFirstAvailableVariantOptions() {
+        const availableVariants = this.productVariants.filter(
+          variant => variant.available
+        );
+        this.availableVariants = availableVariants;
+        const firstAvailableVariant = availableVariants[0]
+        let newSelectedOptions = {}
+        {% for option in product.options_with_values %}
+        newSelectedOptions['{{ option.name }}'] = firstAvailableVariant.option{{ forloop.index }}
+        {% endfor %}
+        this.selectedOptions = newSelectedOptions;
+        this.updateVariantId()
+      },
+      swiper: undefined,
+      swiperInit() {
+        const swiper = new Swiper('#shopify-section-{{ section.id }} .swiper--cfp', {
+          slidesPerView: 1,
+          speed: 400
+        })
+        this.swiper = swiper;
+      },
+      initFunc() {
+        this.swiperInit()
+        this.setFirstAvailableVariantOptions(true)
+        {% if section.settings.default_sand %}
+        setTimeout(() => {
+          this.handleSelect({ name: 'Style', value: 'High-Step', selectFirstAvailableColor: true })
+          setTimeout(() => {
+            this.handleSelect({ name: 'Color', value: 'Sand' })
+          }, 200)
+        }, 200)
+        {% endif %}
+      }
+    }
+  "
+  x-init="initFunc()"
+>
+  <div class="page-width">
+    <h1 class="h2 product-single__title text-center">
+      {{ section.settings.title }}
+    </h1>
+    <div class="text-center fps-title">{{ section.settings.subtitle }}</div>
+
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'variant_select' %}
+          <div
+            {% if block.settings.mb %}
+              class="variant-select--mb-desktop"
+            {% endif %}
+            style="
+              display: flex;
+              justify-content: center;
+              flex-direction: column;
+              position: relative;
+              z-index: 2;
+              {% if block.settings.reverse %}
+              flex-direction: column-reverse;
+              {% endif %}
+            "
+          >
+            {% for option in product.options_with_values %}
+              {% assign forloop_first = forloop.first %}
+              <div
+                class="option-container"
+                x-data="
+                  {
+                    optionName: '{{ option.name }}',
+                    optionIndex: {{ forloop.index }},
+                    checkValueIfAvailable(value) {
+                      const availableVariants = this.availableVariants.filter(
+                        variant => (
+                        {% for option in product.options_with_values %}
+                        ( this.optionIndex === {{ forloop.index }} ? true : variant.option{{ forloop.index }} === selectedOptions['{{ option.name }}']  ) &&
+                        {% endfor %}
+                        variant['option' + this.optionIndex] === value
+                        )
+                      )
+                      return availableVariants.length > 0
+                    }
+                  }
+                "
+              >
+                <div class="option-btn-container">
+                  {% for value in option.values %}
+                    {% if option.name == 'Color' %}
+                      {%- liquid
+                        if value == 'Mango'
+                          assign color_swatch_color = '#FFBC00'
+                        elsif value == 'Indigo Grey'
+                          assign color_swatch_color = '#798186'
+                        elsif value == 'Navy'
+                          assign color_swatch_color = '#000080'
+                        elsif value == 'Cyan'
+                          assign color_swatch_color = '#4EDBD2'
+                        elsif value == 'Jet Black'
+                          assign color_swatch_color = '#333333'
+                        elsif value == 'Pearl'
+                          assign color_swatch_color = '#E6E6E6'
+
+                        elsif value == 'Sand'
+                          assign color_swatch_color = '#E5DBCD'
+                        elsif value == 'Forest'
+                          assign color_swatch_color = '#012826'
+                        elsif value == 'Sky Blue'
+                          assign color_swatch_color = '#ABD7F0'
+                        elsif value == 'Spring'
+                          assign color_swatch_color = '#BBE5CA'
+                        endif
+                      -%}
+                      <button
+                        type="button"
+                        class="variant-color-btn"
+                        :class="
+                          {
+                            'selected': (selectedOptions['{{ option.name }}'] && selectedOptions['{{ option.name }}'] === '{{ value }}'),
+                            'disabled': !checkValueIfAvailable('{{ value }}')
+                          }
+                        "
+                        style="--bg-color: {{ color_swatch_color }};"
+                        x-bind:disabled="!checkValueIfAvailable('{{ value }}')"
+                        @click="handleSelect({ name: '{{ option.name }}', value: '{{ value }}' })"
+                        title="{{ value }}"
+                      ></button>
+                    {% else %}
+                      <div>
+                        <button
+                          type="button"
+                          class="variant-style-btn {% if section.settings.dark %} variant-style-btn--dark{% endif %}"
+                          data-enable-size-info="{{ value }}"
+                          :class="
+                            {
+                              'selected': (selectedOptions['{{ option.name }}'] && selectedOptions['{{ option.name }}'] === '{{ value }}'),
+                            }
+                          "
+                          @click="handleSelect({ name: '{{ option.name }}', value: '{{ value }}', selectFirstAvailableColor: true })"
+                        >
+                          {{ value }}
+                        </button>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        {% when 'image_overwrite' %}
+          <div
+            style="display: none;"
+            class="vid-{{ block.settings.variant_id }}"
+            data-mobile-image="{{ block.settings.mobile_image | img_url: 'master' }}"
+            data-desktop-image="{{ block.settings.desktop_image | img_url: 'master' }}"
+          ></div>
+        {% when 'images' %}
+          <div class="swiper swiper--cfp">
+            <div class="swiper-wrapper">
+              {% for variant in product.variants %}
+                {% if variant.featured_image != blank %}
+                  <div
+                    class="swiper-slide"
+                    data-idx="{{ forloop.index0 }}"
+                    data-variant-id="{{ variant.id }}"
+                    x-data='
+                      {
+                        mobileImage: "{{ variant.featured_image | img_url: 'master' }}",
+                        desktopImage: "{{ variant.featured_image | img_url: 'master' }}",
+                        findImageOverwrite() {
+                          const section = document.querySelector("#shopify-section-{{ section.id }} ")
+                          const vtData = document.querySelector("#shopify-section-{{ section.id }} .vid-{{ variant.id }}")
+                          if(!vtData) return;
+
+                          this.mobileImage = vtData.dataset.mobileImage
+                          this.desktopImage = vtData.dataset.desktopImage
+                        }
+                      }
+                    '
+                    x-init="findImageOverwrite"
+                  >
+                    <img
+                      class="cfp-image--mobile"
+                      :src="mobileImage"
+                      alt="{{ variant.title }}"
+                    >
+                    <img
+                      class="cfp-image--desktop"
+                      :src="desktopImage"
+                      alt="{{ variant.title }}"
+                    >
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+            {% render 'text-overlay-on-images', idx: 0, text: section.settings.t1 %}
+            {% render 'text-overlay-on-images', idx: 1, text: section.settings.t2 %}
+            {% render 'text-overlay-on-images', idx: 2, text: section.settings.t3 %}
+            {% render 'text-overlay-on-images', idx: 3, text: section.settings.t4 %}
+            {% render 'text-overlay-on-images', idx: 4, text: section.settings.t5 %}
+            {% render 'text-overlay-on-images', idx: 5, text: section.settings.t6 %}
+            {% render 'text-overlay-on-images', idx: 6, text: section.settings.t7 %}
+
+            {%- comment -%}Set overlay positions:{%- endcomment -%}
+            <script>
+              document.addEventListener("DOMContentLoaded", function() {
+                const width = 950
+                const height = 587
+                const posData = [
+                  {t: 125, l:79},
+                  {t: 139, r:30},
+                  {t: 260, l:414},
+                  {t: 358, l:0},
+                  {t: 358, r:13},
+                  {t: 439, l:184},
+                  {t: 466, l:507}
+                ]
+
+                document.querySelectorAll(".text-overlay-on-image").forEach((overlay) => {
+                  const index = overlay.dataset.idx;
+                  overlay.style.top = posData[index].t / height * 100 + "%"
+                  if(posData[index].l >= 0)
+                    overlay.style.left = posData[index].l / width * 100 + "%"
+                  else
+                    overlay.style.right = posData[index].r / width * 100 + "%"
+                  // overlay.style.top = onDesktop ? posData[index].t / height : posDataMobile[index].t / heightMobile * 100 + "%"
+                  // overlay.style.left = onDesktop ? posData[index].l / width : posDataMobile[index].l / widthMobile * 100 + "%"
+                })
+              })
+            </script>
+          </div>
+        {% when 'size_info' %}
+          <div data-size-info>
+            <div
+              class="style-desc--st sku-change-desc"
+              x-show="selectedOptions['Style'] === 'Step-Thru'"
+            >
+              <span class="size-info-only">Step-Thru </span>Rider Heights<br>
+              5’1” - 6’4”
+            </div>
+            <div
+              class="style-desc--hs sku-change-desc"
+              x-show="selectedOptions['Style'] === 'High-Step'"
+              {% unless template contains 'product' %}
+                style="display: none;"
+              {% endunless %}
+            >
+              <span class="size-info-only">High-Step </span>Rider Heights<br>
+              5’5” - 6’9”
+            </div>
+          </div>
+        {% when 'btn' %}
+          <div class="cfp-end-wrapper">
+            <div class="cfp-price-wrapper">
+              <div
+                x-show="currentVariant.compare_at_price > 0"
+                style="margin-bottom: 6px;"
+              >
+                $<span
+                  class="product__price product__price--compare"
+                  x-text="(currentVariant.compare_at_price/100).toFixed(2)"
+                ></span>
+              </div>
+              <div
+                class="product__price productbold-prices"
+                style="margin-bottom: 16px;"
+              >
+                $<span x-text="(currentVariant.price/100).toFixed(2)"></span>
+              </div>
+            </div>
+
+            <div style="max-width: 207px; width: 100%;">
+              <a
+                href="{{ product.url }}"
+                class="
+                  btn btn--full add-to-cart add-to-cart--secondary
+                  add-to-cart--custom
+                  {% if section.settings.dark %}
+                  add-to-cart--custom--dark
+                  {% endif %}
+                "
+              >
+                {{- section.settings.btn_text -}}
+              </a>
+            </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom featured product",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "default_sand",
+      "label": "Default High-Step Sand?",
+      "default": false
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Nomad"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Sub title",
+      "default": "The powerful fat tire ebike that can conquer all road and weather conditions"
+    },
+    {
+      "type": "color",
+      "id": "bg",
+      "label": "Background color",
+      "default": "#edeff1"
+    },
+    {
+      "type": "text",
+      "id": "btn_text",
+      "label": "Button text",
+      "default": "Pre Order"
+    },
+    {
+      "type": "checkbox",
+      "id": "dark",
+      "label": "Dark mode?",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Overlay Text"
+    },
+    {
+      "type": "text",
+      "id": "t1",
+      "label": "Text Overlay 1"
+    },
+    {
+      "type": "text",
+      "id": "t2",
+      "label": "Text Overlay 2"
+    },
+    {
+      "type": "text",
+      "id": "t3",
+      "label": "Text Overlay 3"
+    },
+    {
+      "type": "text",
+      "id": "t4",
+      "label": "Text Overlay 4"
+    },
+    {
+      "type": "text",
+      "id": "t5",
+      "label": "Text Overlay 5"
+    },
+    {
+      "type": "text",
+      "id": "t6",
+      "label": "Text Overlay 6"
+    },
+    {
+      "type": "text",
+      "id": "t7",
+      "label": "Text Overlay 7"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "variant_select",
+      "name": "Variant Selection",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "reverse",
+          "label": "Reverse?",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "mb",
+          "label": "Custom reduced margin bottom?",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "info",
+          "label": "Enable size info under variant selection button?",
+          "default": false
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "images",
+      "name": "Images",
+      "limit": 1
+    },
+    {
+      "type": "size_info",
+      "name": "Size info",
+      "limit": 1
+    },
+    {
+      "type": "btn",
+      "name": "Button Link & Price",
+      "limit": 1
+    },
+    {
+      "type": "image_overwrite",
+      "name": "Image Overwrite",
+      "settings": [
+        {
+          "type": "text",
+          "id": "variant_id",
+          "label": "Variant ID"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Custom",
+      "name": "Custom featured product",
+      "blocks": [
+        {
+          "type": "variant_select"
+        },
+        {
+          "type": "images"
+        },
+        {
+          "type": "size_info"
+        },
+        {
+          "type": "btn"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

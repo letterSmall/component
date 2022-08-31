@@ -1,0 +1,107 @@
+{% if section.settings.show_section %}
+<style>
+  .affliate-register-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+</style>
+<div class="affliate-register affliate-register-{{ section.id }}">
+    <div class="affliate-register-wrapper">
+      {% if section.settings.title != blank %}
+        <h2 class="title-box pro-titles">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.blocks.size > 0 %}
+        <div class="country-container">
+          {% for block in section.blocks %}
+                <div class="country-item">
+                  {% if block.settings.image != blank and block.settings.title != blank %}
+                    <div class="image-title-container">
+                      <div class="country-image-box">
+                          <img class="lazyload js"
+                           src="{{ block.settings.image | img_url: '1x' }}"
+                           srcset="{{ block.settings.image | img_url: '191x' }}"
+                           alt="Nation Flag Image"
+                           width="{{ block.settings.image.width }}" 
+                           height="{{ block.settings.image.height }}"/>
+                      </div>
+                      <div class="country-name-box middle-text">{{ block.settings.title }}</div>
+                    </div>
+                  {% endif %}
+                  {% if block.settings.link_url != blank %}
+                    <a class="link-box middle-text" href="{{ block.settings.link_url }}">{% if block.settings.link_label != blank %}{{ block.settings.link_label }}{% else %}Register Now{% endif %} ></a>
+                  {% endif %}
+                </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+</div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Affliate Registration",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#f5fafc"
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title",
+        "default": "Easy and Quick <br>Registration on Impact"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Registration Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "National Flag Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Country",
+			"default": "U.S."
+          },
+          {
+            "type": "text",
+            "id": "link_label",
+            "label": "Link Label",
+			"default": "Register Now"
+          },
+          {
+            "type": "url",
+            "id": "link_url",
+            "label": "Link URL",
+			"default": "/"
+          }
+		]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Affliate Registration"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

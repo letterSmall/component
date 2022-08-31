@@ -1,0 +1,172 @@
+{%-style-%}
+.byOneSettingCheckBoxDrawer{
+      cursor: pointer;
+    margin-right: 8px;
+    width: 22px;
+    height: 22px;
+    float: left;
+    border: 2px solid #000;
+    border-radius: 4px;
+}
+.byOneSettingLabel{
+    flex: 1;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #0b090a;
+}
+.drawer .dawerSettingCheckout{
+    border-radius: 5px;
+<!--     background-color: #d3d3d3 !important; -->
+background-color: #d3d3d3;
+    pointer-events: none;
+}
+.drawer .candawerSettingCheckout{
+<!--     background-color: #161616 !important; -->
+	background-color: #161616;
+    pointer-events: auto;
+}
+ .checkoutBoxBackGround{
+      background-image:url({{ "checkouted_box.png" | asset_url | split: '?' | first }});
+      background-size:100% 100%;
+  }
+#CartTermsDrawer:checked{
+       background-image:url({{ "checkouted_box.png" | asset_url | split: '?' | first }});
+        background-size:100% 100%;
+  }
+    .mainClearIcon{
+    width:16px;
+    height:16px;
+    float:left;
+    margin-right:4px;
+  }
+  .clearCart{
+    width:105px;
+    margin:0 auto;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 18px;
+    color: #888888;
+    margin-top:25px;
+    cursor:pointer;
+  }
+  @media only screen and (max-width: 589px){
+      .clearCart{
+          margin-top:12px;
+      }
+  }
+  .cartNoShop{
+     position:relative;
+  }
+  .childCartNoShop{
+    cursor:pointer;
+    position:absolute;
+    z-index:9;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+  }
+{%-endstyle-%}
+{% if settings.cart_type == 'drawer' %}
+  <div id="CartDrawer" class="drawer drawer--right">
+    <form id="CartDrawerForm" action="{{ routes.cart_url }}" method="post" novalidate class="drawer__contents">
+    <input class="js-drawer-form-discount" type="hidden" name="discount" value="" />
+      <div class="drawer__close">
+        <button type="button" class="drawer__close-button js-drawer-close">
+          <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><path d="M19 17.61l27.12 27.13m0-27.12L19 44.74"/></svg>
+          <span class="icon__fallback-text">{{ 'cart.general.close_cart' | t }}</span>
+        </button>
+      </div> 
+      <div class="drawer__fixed-header">
+        <div class="drawer__header appear-animation appear-delay-1">
+          <div class="drawer__title">Your {{ 'cart.general.title' | t }}</div>
+          <div class='clearCart'><img class='mainClearIcon' src={{"trash_delete@2x.png"| asset_url | split: '?' | first }} alt='err' /> CLEAR CART</div>
+        </div>
+
+      </div>
+      <div class="drawer__inner">
+        <div class="drawer__scrollable">
+          <div data-products class="appear-animation appear-delay-2"></div>
+
+          {% if settings.cart_notes_enable %}
+            <div class="appear-animation appear-delay-3">
+             <div class='byOneSettingCheckBoxDrawer'></div><label for="CartNoteDrawer" class='byOneSettingLabel'>THIS IS A GIFT</label>
+              <textarea name="note" class="input-full cart-notes" id="CartNoteDrawer">{{ cart.note }}</textarea>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="drawer__footer appear-animation appear-delay-4">
+          <div data-discounts>
+            {% if cart.cart_level_discount_applications != blank %}
+              <div class="cart__item-sub cart__item-row">
+                <div>{{ 'cart.general.discounts' | t }}</div>
+                <div class="text-right">
+                  {% for cart_discount in cart.cart_level_discount_applications %}
+                    <div>
+                      {{ cart_discount.title }} (-{{ cart_discount.total_allocated_amount | money }})
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+
+          <div class="cart__item-sub cart__item-row">
+            <div class="cart__subtotal">SUBTOTAL: </div>
+            <div data-subtotal class="cart__total_price">{{ cart.total_price | money }}</div>
+          </div>
+
+          <div class="cart__item-row cart__savings text-center hide" data-savings></div>
+
+          <div class="cart__item-row ajaxcart__note byOneSetingLeft">
+                {{'cart.general.shipping_at_checkout'| t }} 
+            </div>
+
+          {% if settings.cart_terms_conditions_enable %}
+            <div class="cart__item-row cart__terms byOneSetingLeft">
+              <input type="checkbox" id="CartTermsDrawer" class="cart__terms-checkbox">
+              <label for="CartTermsDrawer">
+                 <span class='byOneSettingService'>By clicking checkout, I hereby agree and consent to the  <a href='https://www.circolo.us/policies/terms-of-service' target='_black'>Terms of Use </a> and the <a href='https://www.circolo.us/policies/privacy-policy' target='_black'>Privacy Policy.</a></span>
+              </label> 
+            </div>
+          {% endif %}
+{% comment %} data-terms-required="{{ settings.cart_terms_conditions_enable }}" {% endcomment %}
+          {% comment %}<p class="affirm-as-low-as" data-page-type="cart" data-amount="{{cart.total_price}}"></p>{% endcomment %}
+          <div class="cart__checkout-wrapper">
+            <button type="submit" name="checkout" {% if settings.cart_terms_conditions_enable %} data-terms="CartPageAgree"{% endif %} class="btn cart__checkout dawerSettingCheckout">
+              CHECKOUT
+            </button>
+             {% if additional_checkout_buttons and settings.cart_additional_buttons %}
+              <div class="additional-checkout-buttons additional-checkout-buttons--vertical cartNoShop"><div class='childCartNoShop'></div>{{ content_for_additional_checkout_buttons }}</div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer__cart-empty appear-animation appear-delay-2">
+        <div class="drawer__scrollable">
+          {{ 'cart.general.empty' | t }}
+        </div>
+      </div>
+    </form>
+  </div>
+  <script>
+     const mainCartCheckboxDrawer=()=>{
+      var byOneSettingCheckBoxDrawer=document.getElementsByClassName('byOneSettingCheckBoxDrawer')
+      var setCartNote=document.getElementById('CartNoteDrawer')
+      if(byOneSettingCheckBoxDrawer[0]){
+        byOneSettingCheckBoxDrawer[0].onclick=()=>{
+           if(byOneSettingCheckBoxDrawer[0].classList.length<=1){
+             setCartNote.focus()
+             byOneSettingCheckBoxDrawer[0].classList.add("checkoutBoxBackGround");
+           }else{
+             byOneSettingCheckBoxDrawer[0].classList.remove("checkoutBoxBackGround");
+           }
+        }
+      }
+    }
+    mainCartCheckboxDrawer()
+  </script>
+{% endif %}

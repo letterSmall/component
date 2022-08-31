@@ -1,0 +1,25 @@
+<a href="#" class="subscriptions_link" data-subPageLink>Manage Subscriptions</a>
+<script type="text/javascript">
+  let pageAnchor = document.querySelector('[data-subPageLink]');
+  if(pageAnchor && window.subscriptionPlusApp){
+  	pageAnchor.href = '/' + window.subscriptionPlusApp.proxy_url;
+  }
+
+  const requestURL = window.subscriptionPlusApp.api_url+'/settings?include=language';
+  let newDataRequest = new XMLHttpRequest();
+	newDataRequest.open('GET', requestURL, false);
+	newDataRequest.setRequestHeader('Accept', 'application/json');
+	newDataRequest.onload = function () {
+		if (this.status == 200) {
+			let finalResponse = JSON.parse(this.response);
+			if (finalResponse.data.app_status == false) {
+				pageAnchor.remove();
+				return false;
+			}
+            if(finalResponse.data.language['product-page']['manage-subscriptions']){
+                pageAnchor.innerHTML = finalResponse.data.language['product-page']['manage-subscriptions'];
+            }
+		}
+	}
+	newDataRequest.send();
+</script>

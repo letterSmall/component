@@ -1,0 +1,191 @@
+<div id="AddToCart" class="compare-table sectionFull">
+  <div class="page-width">
+    {% if block.settings.heading != blank or block.settings.subtitle != blank%}
+    <div class="header-section">
+    	{% if block.settings.heading != blank %}
+      		<h3>{{ block.settings.heading }}</h3>
+      	{% endif %}
+      	{% if block.settings.subtitle != blank%}
+      		<a href="#compareVac" class="subtitle">{{ block.settings.subtitle }}</a>
+      	{% endif %}
+    </div>
+    {% endif %}
+    <div class="ctable-wrapper" id="ctableWrapper">
+    {% for i in (1..3) %}
+    	{% assign meta = 'meta' | append: i %}
+    	{% assign title = 'title' | append: i %}
+    	{% assign image = 'image' | append: i %}
+    	{% assign price = 'price' | append: i %}
+    	{% assign body = 'body' | append: i %}
+      
+      	{% assign product = 'product' | append: i %}
+      	{% assign modal_image = 'modal_image' | append: i %}
+      	{% assign modal_image1 = 'modal_image1' | append: i %}
+      	{% assign upgrade = 'upgrade' | append: i %}
+      	{% assign product1 = 'product' | append: i | append: '1' %}
+      	{% assign product2 = 'product' | append: i | append: '2' %}
+      	{% assign product_main = all_products[block.settings[product]] %}
+    
+    	<div class="ctable hoverTable">
+          <div class="meta">{{ block.settings[meta] }}</div>
+          <h4 class="h4">{{ block.settings[title] }}</h4>
+          <p class="mobile_only">{{ block.settings[body] | replace: "</p><p>", " | " | replace: '<p>', '' | replace: '</p>', '' }}</p>
+          <img src="{{ block.settings[image] | img_url: 'master' }}" />
+          <div class="price">{{ block.settings[price] }}</div>
+          <div class="body">{{ block.settings[body] }}</div>
+          <div class="buttons">
+            <div>
+              <div>
+                {% capture form_id %}AddToCartForm-c{{i}}{% endcapture %}
+                {% form 'product', product_main, id: form_id, class: 'product-single__form' %}
+                    <select name="id" class="product-single__variants no-js">
+                      {%- for variant in product_main.variants -%}
+                        {% if variant.available %}
+                          <option {% if variant == product_main.selected_or_first_available_variant %}
+                            selected="selected" {% endif %}
+                            value="{{ variant.id }}">
+                            {{ variant.title }} - {{ variant.price | money_with_currency }}
+                          </option>
+                        {% else %}
+                          <option disabled="disabled">
+                            {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                          </option>
+                        {% endif %}
+                      {%- endfor -%}
+                    </select>
+
+                    {%- liquid
+                      assign default_text = 'products.product.add_to_cart' | t
+                      assign button_text = 'products.product.add_to_cart' | t
+                      unless product_main.selected_or_first_available_variant.available
+                        assign button_text = 'products.product.sold_out' | t
+                      endunless
+                    -%}
+                    <button {% unless product_main.selected_or_first_available_variant.available %}type="button" disabled="disabled"{% else %}type="submit"{% endunless %} class="btn add-to-cart">{{ button_text }}</button>
+                {% endform %}
+              </div>
+              {% if block.settings[upgrade] %}
+              <div>
+                <button type="button" class="btn js-modal-open-compare{{i}}">Upgrade</button>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+    	</div>
+    {% endfor %}
+    </div>
+    {% for i in (1..3) %}
+    	{% assign meta = 'meta' | append: i %}
+    	{% assign title = 'title' | append: i %}
+    	{% assign image = 'image' | append: i %}
+    	{% assign price = 'price' | append: i %}
+    	{% assign body = 'body' | append: i %}
+      
+      	{% assign product = 'product' | append: i %}
+      	{% assign modal_image = 'modal_image' | append: i %}
+      	{% assign modal_image1 = 'modal_image1' | append: i %}
+      	{% assign upgrade = 'upgrade' | append: i %}
+      	{% assign product1 = 'product' | append: i | append: '1' %}
+      	{% assign product2 = 'product' | append: i | append: '2' %}
+      	{% assign product_main = all_products[block.settings[product]] %}
+
+        {% if block.settings[upgrade] %}
+        <div id="ComparePopup-{{ i }}" class="modal Compare_popup modal--square modal--mobile-friendly">
+          <div class="modal__inner">
+            <div class="modal__centered medium-up--text-center">
+              <div class="modal__centered-content cart_popup_wrapper{% if block.settings[product2] != blank %} double{% endif %}">
+                {% if block.settings[product1] != blank %}
+                {% assign product_object = all_products[block.settings[product1]] %}
+                <div class="cartPopup">
+                  <img src="{{ block.settings[modal_image] | img_url: 'master' }}" />
+                  <div class="flex">
+                    <div>
+                      <p>{{ product_object.title }}</p>
+                      <p><strong>{{ product_object.price | money }}</strong></p>
+                    </div>
+                    <div>
+                      {% capture form_id %}AddToCartForm-mc1{{i}}{% endcapture %}
+                      {% form 'product', product_object, id: form_id, class: 'product-single__form' %}
+                      <select name="id" class="product-single__variants no-js">
+                        {%- for variant in product_object.variants -%}
+                        {% if variant.available %}
+                        <option {% if variant == product_object.selected_or_first_available_variant %}
+                                selected="selected" {% endif %}
+                                value="{{ variant.id }}">
+                          {{ variant.title }} - {{ variant.price | money_with_currency }}
+                        </option>
+                        {% else %}
+                        <option disabled="disabled">
+                          {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                        </option>
+                        {% endif %}
+                        {%- endfor -%}
+                      </select>
+
+                      {%- liquid
+                                  assign default_text = 'products.product.add_to_cart' | t
+                                  assign button_text = 'products.product.add_to_cart' | t
+                                  unless product_object.selected_or_first_available_variant.available
+                                    assign button_text = 'products.product.sold_out' | t
+                                  endunless
+                                -%}
+                      <button {% unless product_object.selected_or_first_available_variant.available %}type="button" disabled="disabled"{% else %}type="submit"{% endunless %} class="btn add-to-cart">{{ button_text }}</button>
+                      {% endform %}
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+                {% if block.settings[product2] != blank %}
+                {% assign product_object2 = all_products[block.settings[product2]] %}
+                <div class="cartPopup">
+                  <img src="{{ block.settings[modal_image1] | img_url: 'master' }}" />
+                  <div class="flex">
+                    <div>
+                      <p>{{ product_object2.title }}</p>
+                      <p><strong>{{ product_object2.price | money }}</strong></p>
+                    </div>
+                    <div>
+                      {% capture form_id %}AddToCartForm-mc2{{i}}{% endcapture %}
+                      {% form 'product', product_object2, id: form_id, class: 'product-single__form' %}
+                      <select name="id" class="product-single__variants no-js">
+                        {%- for variant in product_object2.variants -%}
+                        {% if variant.available %}
+                        <option {% if variant == product_object2.selected_or_first_available_variant %}
+                                selected="selected" {% endif %}
+                                value="{{ variant.id }}">
+                          {{ variant.title }} - {{ variant.price | money_with_currency }}
+                        </option>
+                        {% else %}
+                        <option disabled="disabled">
+                          {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                        </option>
+                        {% endif %}
+                        {%- endfor -%}
+                      </select>
+
+                      {%- liquid
+                                  assign default_text = 'products.product.add_to_cart' | t
+                                  assign button_text = 'products.product.add_to_cart' | t
+                                  unless product_object2.selected_or_first_available_variant.available
+                                    assign button_text = 'products.product.sold_out' | t
+                                  endunless
+                                -%}
+                      <button {% unless product_object2.selected_or_first_available_variant.available %}type="button" disabled="disabled"{% else %}type="submit"{% endunless %} class="btn add-to-cart">{{ button_text }}</button>
+                      {% endform %}
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+
+              <button type="button" class="modal__close js-modal-close text-link">
+                <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-close" viewBox="0 0 64 64"><path d="M19 17.61l27.12 27.13m0-27.12L19 44.74"/></svg>
+                <span class="icon__fallback-text">{{ 'general.accessibility.close_modal' | t | json }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+  </div>
+</div>

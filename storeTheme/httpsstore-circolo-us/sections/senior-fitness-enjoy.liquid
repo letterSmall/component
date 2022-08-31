@@ -1,0 +1,74 @@
+<div class="senior-fitness-enjoy-contianer">
+ <div class="page-width">
+    {%if section.settings.title!=blank%}
+  <div class="title">
+    {{section.settings.title}}
+  </div>
+  {%endif%}
+  
+  
+  <div class="sfec-bottom">
+  {%for block in section.blocks%}
+    <div class="item">
+      {{block.settings.content}}
+    </div>
+    {%endfor%}
+  </div>
+   
+     {%- if section.settings.button_label != blank -%}
+          <div class="appear-delay{% cycle '','-1','-2','-3','-4' %}">
+            <a href="{{ section.settings.button_link }}" class="btn{% if section.settings.button_style == 'secondary' %} btn--tertiary{% endif %}">
+              {{ section.settings.button_label }}
+            </a>
+          </div>
+        {%- endif -%}
+  </div>
+             
+</div>
+
+
+{% schema %}
+  {
+    "name": "Senior fitness enjoy",
+    "settings": [
+ {
+          "type": "html",
+          "id": "title",
+          "label": "Title"
+        },
+ 
+ {
+        "type": "text",
+        "id": "button_label",
+        "label": "Button label"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button link"
+      }
+],
+  "blocks": [{
+        "type": "item",
+        "name": "Item",
+        "settings": [
+       
+        {
+            "type": "html",
+            "id": "content",
+            "label": "Content" 
+          }
+     ]
+    }],
+ "presets": [{
+      "name": "Senior fitness enjoy",
+      "category": "Image"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

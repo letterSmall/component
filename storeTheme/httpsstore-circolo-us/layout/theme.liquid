@@ -1,0 +1,1025 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}" dir="{{ settings.text_direction }}">
+<head>
+
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+  <meta name="theme-color" content="{{ settings.color_button }}"/>
+  
+  <meta name="description" content="Circolo,Smart Fitness Mirror">
+
+  <link rel="canonical" href="{{ canonical_url }}"/>
+  <link rel="preconnect" href="https://cdn.shopify.com"/>
+  <link rel="preconnect" href="https://fonts.shopifycdn.com"/>
+  <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com"/>
+  <link rel="dns-prefetch" href="https://ajax.googleapis.com"/>
+  <link rel="dns-prefetch" href="https://maps.googleapis.com"/>
+  <link rel="dns-prefetch" href="https://maps.gstatic.com"/>
+  <link href="https://fonts.googlefonts.cn/css?family=Roboto" rel="stylesheet">
+   {%- render 'social-meta-tags' -%} 
+
+  {%- if settings.favicon != blank -%}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+  {%- endif -%}
+
+  {%- render 'seo-title' -%}
+
+  {% comment %} {%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape }}"/>
+  {%- endif -%} {% endcomment %}
+
+
+  {%- render 'font-face' -%}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  {%- render 'css-variables' -%}
+  
+  <script defer>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    window.theme = window.theme || {};
+    theme.routes = {
+      home: "{{ routes.root_url }}",
+      cart: "{{ routes.cart_url | append: '.js' }}",
+      cartPage: "{{ routes.cart_url }}",
+      cartAdd: "{{ routes.cart_add_url | append: '.js' }}",
+      cartChange: "{{ routes.cart_change_url | append: '.js' }}"
+    };
+    theme.strings = {
+      soldOut: {{ 'products.product.sold_out' | t | json }},
+      unavailable: {{ 'products.product.unavailable' | t | json }},
+      inStockLabel: {{ 'products.product.in_stock_label' | t | json }},
+      stockLabel: {{ 'products.product.stock_label' | t: count: '[count]' | json }},
+      willNotShipUntil: {{ 'products.product.will_not_ship_until' | t: date: '[date]' | json }},
+      willBeInStockAfter: {{ 'products.product.will_be_in_stock_after' | t: date: '[date]' | json }},
+      waitingForStock: {{ 'products.product.waiting_for_stock' | t | json }},
+      cartSavings: {{ 'cart.general.savings_html' | t: savings: '[savings]' | json }},
+      cartEmpty: {{ 'cart.general.empty' | t | json }},
+      cartTermsConfirmation: {{ 'cart.general.terms_confirm' | t | json }},
+      searchCollections: {{ 'general.search.collections' | t | json }},
+      searchPages: {{ 'general.search.pages' | t | json }},
+      searchArticles: {{ 'general.search.articles' | t | json }}
+    };
+    theme.settings = {
+      dynamicVariantsEnable: true,
+      cartType: {{ settings.cart_type | json }},
+      isCustomerTemplate: {% if request.page_type contains 'customers/' %}true{% else %}false{% endif %},
+      moneyFormat: {{ shop.money_format | json }},
+      predictiveSearch: {{ settings.predictive_search_enabled }},
+      predictiveSearchType: {{ settings.search_type | json }},
+      quickView: {{ settings.quick_shop_enable }},
+      themeName: 'Motion',
+      themeVersion: "8.1.1"
+    };
+  </script>
+
+  {{ 'jquery-2.2.3.min.js' | asset_url | script_tag}}
+  
+  {{ content_for_header }}
+
+  <script src="{{ 'vendor-scripts-v13.js' | asset_url | split: '?' | first }}" defer="defer"></script>
+  <script defer="defer">
+    _affirm_config = {
+      public_api_key:  "GQTOTAEEB3F29NJ4",
+      script:          "https://cdn1.affirm.com/js/v2/affirm.js"
+    };
+    (function(l,g,m,e,a,f,b){var d,c=l[m]||{},h=document.createElement(f),n=document.getElementsByTagName(f)[0],k=function(a,b,c){return function(){a[b]._.push([c,arguments])}};c[e]=k(c,e,"set");d=c[e];c[a]={};c[a]._=[];d._=[];c[a][b]=k(c,a,b);a=0;for(b="set add save post open empty reset on off trigger ready setProduct".split(" ");a<b.length;a++)d[b[a]]=k(c,e,b[a]);a=0;for(b=["get","token","url","items"];a<b.length;a++)d[b[a]]=function(){};h.async=!0;h.src=g[f];n.parentNode.insertBefore(h,n);delete g[f];d(g);l[m]=c})(window,_affirm_config,"affirm","checkout","ui","script","ready");
+    // Use your live public API Key and https://cdn1.affirm.com/js/v2/affirm.js script to point to Affirm production environment.
+  </script>
+   {%- if shop.enabled_currencies.size > 1 -%}
+    <link rel="preload" as="style" href="{{ 'currency-flags.css' | asset_url | split: '?' | first }}" onload="this.onload=null;this.rel='stylesheet'"/>
+    <link rel="stylesheet" href="{{ 'currency-flags.css' | asset_url | split: '?' | first }}">
+  {%- endif -%} 
+
+  {{ 'swiper.min.css' | asset_url | stylesheet_tag }}
+
+
+  <script src="{{ 'theme.min.js' | asset_url }}" defer="defer"></script>
+  
+   {% comment %} <script src="{{ 'affirmShopify.js' | asset_url }}" defer="defer"></script> {% endcomment %}
+  {%-style-%}
+   .shopMirrorRight{
+      background: url({{ "productShow3.jpg" | asset_url | split: '?' | first }});
+      background-size:cover;
+      background-position:50%;
+   }
+  .hiwChild:nth-of-type(1){
+    background: url({{ "hiw_remove1.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+  .hiwChild1:nth-of-type(1){
+    background: url({{ "hiw_remove_1.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+  .hiwChild:nth-of-type(2){
+    background: url({{ "hiw_remove2.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+  .hiwChild1:nth-of-type(2){
+    background: url({{ "hiw_remove_2.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+  .hiwChild:nth-of-type(3){
+   background: url({{ "hiw_remove3.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+  .hiwChild1:nth-of-type(3){
+     background: url({{ "hiw_remove_3.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+  .hiwChild:nth-of-type(4){
+    background: url({{ "hiw_remove4.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+  .hiwChild1:nth-of-type(4){
+    background: url({{ "hiw_remove_4.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+  .hiwChild:nth-of-type(5){
+    background: url({{ "hiw_remove5.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+  .hiwChild1:nth-of-type(5){
+     background: url({{ "hiw_remove_5.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+  .hiwChild:nth-of-type(6){
+    background: url({{ "hiw_remove6.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+  .hiwChild1:nth-of-type(6){
+     background: url({{ "hiw_remove_6.jpeg" | asset_url | split: '?' | first }});
+     background-size:100% 100%;
+  }
+  .hiwChild:nth-of-type(7){
+     background: url({{ "hiw_remove7.jpeg" | asset_url | split: '?' | first }});
+     background-size:100% 100%;
+  }
+  .hiwChild1:nth-of-type(7){
+    background: url({{ "hiw_remove_7.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+    .hiwChild:nth-of-type(8){
+     background: url({{ "hiw_remove8.jpeg" | asset_url | split: '?' | first }});
+     background-size:100% 100%;
+  }
+  .hiwChild1:nth-of-type(8){
+    background: url({{ "hiw_remove_8.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+    .hiwChild:nth-of-type(9){
+     background: url({{ "hiw_remove9.jpeg" | asset_url | split: '?' | first }});
+     background-size:100% 100%;
+  }
+  .hiwChild1:nth-of-type(9){
+    background: url({{ "hiw_remove_9.jpeg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }
+   .fixedIframe{
+     border-radius:8px;
+     overflow:hidden;
+    display:none;
+    z-index:99;
+    background:#fff;
+    position:fixed;
+    left:50%;
+    margin-left:-300px;
+    top:50%;
+    margin-top:-200px;
+    width:550px;
+    height:500px;
+  } 
+  .fixedIframe iframe{
+    width:550px;
+    height:500px;
+    border:none;
+  }
+   #div_index .shopify-section:nth-of-type(5) .index-section{
+    background:url({{ "indexSectionWork11.png" | asset_url | split: '?' | first }});
+    background-size:cover;
+     background-position:50%;
+    height:900px;
+    padding:50px 0;
+  }  
+   .testDiv1{
+    background-image:url({{ "indexSectionFirstPic.jpg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  } 
+   .testDiv2{
+    background-image:url({{ "indexSectionSecondPic.jpg" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  } 
+ .testDiv3{
+    background-image:url({{ "indexSectionThird.png" | asset_url | split: '?' | first }});
+    background-size:100% 100%;
+  }  
+    @media only screen and (max-width: 1043px){
+      .testDiv2{
+        margin-left:0;
+      }
+    }
+     #divHowItWork .shopify-section:nth-of-type(1) {
+    background: #161616 url({{"new_hiw_background_1800.jpg"| asset_url | split: '?' | first }});
+    color:white;
+    background-size:cover;
+    background-position:50%;
+  }
+  @media only screen and (min-width: 1500px){
+       #divHowItWork .shopify-section:nth-of-type(1) {
+        background: #161616 url({{"new_hiw_background_1800.jpg"| asset_url | split: '?' | first }});
+        background-size:100% 100%;
+      }
+    }
+  #div_index .shopify-section:nth-of-type(8),#divHowItWork .shopify-section:nth-of-type(9),#divparents .shopify-section:nth-of-type(6){
+    background: #161616 url({{"pc_30_daily.jpg"| asset_url | split: '?' | first }});
+    background-size:cover;
+    background-position:50%;
+  }
+  #divHowItWork .shopify-section:nth-of-type(8){
+     background: #161616 url({{"moreClearBackground.jpeg"| asset_url | split: '?' | first }});
+    background-size:cover;
+     background-position:50%;
+
+  }
+  #divparents .shopify-section:nth-of-type(1) {
+    background: #161616 url({{"des_parents_banner.jpeg"| asset_url | split: '?' | first }});
+    color:white;
+    background-size:cover;
+    background-position:50%;
+  }
+    #divparents .shopify-section:nth-of-type(2) {
+    background: url({{"de_senior_fingertip_nobg.png"| asset_url | split: '?' | first }});
+    background-size:cover;
+    height:900px;
+    background-position:50%;
+  }
+     #divparents .shopify-section:nth-of-type(3){
+       background: url({{"threeCircle1800.jpg"| asset_url | split: '?' | first }});
+       height:900px;
+       background-size:cover;
+       background-position:50%;
+    }
+     #divparents .shopify-section:nth-of-type(3) .rte{
+       margin-top:45%;
+     }
+ 
+  @media only screen and (max-width: 589px){
+  {% comment %}
+  <!--      #divparents .shopify-section:nth-of-type(2) {
+height:auto;
+}
+#div_index .shopify-section:nth-of-type(5) .index-section{
+height:auto;
+} -->
+  {% endcomment %}
+       #div_index .shopify-section:nth-of-type(8),#divHowItWork .shopify-section:nth-of-type(9),#divparents .shopify-section:nth-of-type(6){
+          background: #161616 url({{"mobile_30_daily.jpg"| asset_url | split: '?' | first }});
+          background-size:cover;
+          background-position:50%;
+        }
+         #divparents .shopify-section:nth-of-type(3) .rte{
+       margin-top:0;
+     }
+        #divparents .shopify-section:nth-of-type(3){
+        background:#161616 url({{"mobile_parents_three_circle.jpg"| asset_url | split: '?' | first }}) no-repeat;
+        height:700px;
+        background-size:100% 50%;
+        background-position:bottom ;
+    }
+         #divparents .shopify-section:nth-of-type(2) {
+  height:auto;
+  background:#fff;
+         }
+         #divparents .shopify-section:nth-of-type(1) {
+          background: #161616 url({{"mobile_parents_banner.jpeg"| asset_url | split: '?' | first }});
+          color:white;
+          background-size:cover;
+          background-position:50%;
+        }
+         #divHowItWork .shopify-section:nth-of-type(8){
+           background:#fff;
+         }
+       #div_index .shopify-section:nth-of-type(5) .index-section{
+        background:#f1f4f9;
+        height:auto;
+        padding:40px 0;
+      }
+        #divHowItWork .shopify-section:nth-of-type(1) {
+        background: #161616 url({{"how_it_works_first_section_mobile.jpeg"| asset_url | split: '?' | first }});
+        background-size:cover;
+        background-position:50%;
+      }
+       .fixedIframe{
+        margin-left:-175px;
+        top:50%;
+        margin-top:-215px;
+        width:350px;
+        height:480px;
+      } 
+      .fixedIframe iframe{
+        width:350px;
+        height:480px;
+      }
+      .testDiv1,.testDiv3{
+          position:absolute;
+          width: 100px;
+          height:100px;
+          top:60px;
+          margin-top:0;
+          border-radius: 50%;
+         
+        }
+      .testDiv1{
+        left:0;
+        margin-left:-90px;
+      }
+      .testDiv2{
+        width: 200px;
+        height: 200px;
+        margin:10px auto 0;
+        border-radius: 50%;
+      
+      }
+      .testDiv3{
+          right:0;
+          margin-right:-90px;
+          margin-left:100px;
+          border-radius: 50%;
+        
+        }
+    }
+    .googleBtn{
+      background-image:url({{ "google-play-badge@2x.png" | asset_url | split: '?' | first }});
+      background-size:100% 100%;
+    }
+    .appStoreBtn{
+      background-image:url({{ "app-store-badge@2x.png" | asset_url | split: '?' | first }});
+      background-size:100% 100%;
+    }
+  .Curtains{
+    display:none;
+    width:100%;
+    height:100%;
+    background:#000;
+    position:fixed;
+    top:0;
+    left:0;
+    opacity:0.5;
+  }
+  .cirleMirrorUl{
+    list-style-type: none;
+    margin:0 0 20px 0;
+  }
+  .cirleMirrorUl li:nth-of-type(1){
+    padding-left:24px;
+    background:url({{ "mirror@2x.png" | asset_url | split: '?' | first }}) no-repeat;
+    background-size:16px;
+    background-position:2px 2px;
+  }
+    .cirleMirrorUl li:nth-of-type(2){
+    padding-left:24px;
+    background:url({{ "fixGift.png" | asset_url | split: '?' | first }}) no-repeat;
+    background-size:16px;
+    background-position:2px 2px;
+  }
+    .cirleMirrorUl li:nth-of-type(3){
+    padding-left:24px;
+    background:url({{ "Delivery@2x.png" | asset_url | split: '?' | first }}) no-repeat;
+    background-size:16px;
+    background-position:2px 2px;
+  }
+   .cirleMirrorUl li:nth-of-type(4){
+    padding-left:24px;
+    background:url({{ "trial@2x.png" | asset_url | split: '?' | first }}) no-repeat;
+    background-size:16px;
+    background-position:2px 2px;
+  }
+  .cirleMirrorUl li:nth-of-type(5){
+    padding-left:24px;
+   background:url({{ "Warranty@2x.png" | asset_url | split: '?' | first }}) no-repeat;
+    background-size:16px;
+    background-position:2px 2px;
+  }
+  .cirleMirrorUl li:nth-of-type(6){
+    padding-left:24px;
+    background:url({{ "trial@2x.png" | asset_url | split: '?' | first }}) no-repeat;
+    background-size:16px;
+    background-position:2px 2px;
+  }
+  .giftMirrorUl li:nth-of-type(2){
+      background:url({{ "fixMembership.png" | asset_url | split: '?' | first }}) no-repeat;
+      background-size:16px;
+      background-position:2px 2px;
+  }
+    .giftMirrorUl li:nth-of-type(4){
+      background:url({{ "fixGift.png" | asset_url | split: '?' | first }}) no-repeat;
+      background-size:16px;
+      background-position:2px 2px;
+  }
+     .giftMirrorUl li:nth-of-type(6){
+      background:url({{ "trial@2x.png" | asset_url | split: '?' | first }}) no-repeat;
+      background-size:16px;
+      background-position:2px 2px;
+  }
+  .onlyBuyOne{
+    display:none;
+    width:300px;
+    height:200px;
+    position:fixed;
+    left:50%;
+    margin-left:-150px;
+    top:50%;
+    margin-top:-100px;
+    background:#fff;
+    text-align:center;
+    padding:50px 20px 0px;
+    font-size:14px;
+    border-radius:8px;
+    z-index:3;
+  }
+.weChatOpen{
+  display:none;
+  position:fixed;
+  width:100%;
+  height:100%;
+  z-index:100;
+  left:0;
+  top:0;
+}
+.weChatOpen img{
+  object-fit:cover;
+}
+   {%-endstyle-%}
+  {%- if request.page_type contains 'customers/' -%}
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+  {%- endif -%}
+{% render 'subscription-plus-resource' %}
+</head> 
+<body class="{% if template contains 'page' %}tem-{{page.template_suffix}}{% endif %} template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}{% if request.path == '/challenge' %} template-challange{% endif %}" data-transitions="{{ settings.animate_page_transitions }}" data-type_header_capitalize="{{ settings.type_header_capitalize }}" data-type_base_accent_transform="{{ settings.type_base_accent_transform }}" data-type_header_accent_transform="{{ settings.type_header_accent_transform }}" data-animate_sections="{{ settings.animate_sections }}" data-animate_underlines="{{ settings.animate_underlines }}" data-animate_buttons="{{ settings.animate_buttons }}" data-animate_images="{{ settings.animate_images }}" data-animate_page_transition_style="{{ settings.animate_page_transition_style }}" data-type_header_text_alignment="{{ settings.type_headers_align_text }}" data-animate_images_style="{{ settings.animate_images_style | default: "zoom-fade" }}">
+  {% if settings.animate_page_transitions %}
+    <script type="text/javascript">window.setTimeout(function() { document.body.className += " loaded"; }, 25);</script>
+  {% endif %}
+  <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+  <div id="PageContainer" class="page-container">
+    <div class="transition-body">
+    {%- section 'header' -%}
+      <main class="main-content" id="MainContent">
+        {{ content_for_layout }}
+      </main>
+
+      {%- section 'senior-fitness-enjoy' -%}
+      {%- if template.name == 'index' or page.template_suffix =='circle-gift' or page.template_suffix =='circle-mirror' or page.template_suffix =='senior-fitness' or page.template_suffix =='how-it-works' or page.template_suffix =='Parkinson' or page.template_suffix =='Senior-living' or page.template_suffix =='Dancing' or page.template_suffix =='rent' or page.template_suffix =='parents' -%}
+      {%- section 'simple-text-columns' -%}
+      {% endif %}
+      {%- section 'footer-promotions' -%}
+      {%- section 'footer' -%} 
+    </div>
+  </div>
+<div class='onlyBuyOne'>
+<img class='closeOnlyBuyOneModelIcon'
+        src={{ "close_view_model_icon.png" | asset_url | split: '?' | first }}
+         alt='close' />
+There are already items in your cart. If you'd like to purchase multiple items, please go through checkout first before placing a second order.
+</div>
+  {% section 'newsletter-popup' %}
+  {%- liquid
+    render 'video-modal'
+    render 'photoswipe-template'
+  -%}
+
+  {{ 'swiper.min.js' | asset_url | script_tag}}
+  {{ 'slick.min.js' | asset_url | script_tag}}
+  </body>
+  
+  
+ <div class='fixedIframe'>
+    <img class='closeIframe'
+        src={{ "close_view_model_icon.png" | asset_url | split: '?' | first }}
+         alt='close' />
+</div> 
+<div class='Curtains'></div>
+  {% comment %}
+  <!-- <div class='weChatOpen'><img src={{ "openInBroser.jpg" | asset_url | split: '?' | first }} alt='err' /></div> -->
+  {% endcomment %}
+<script defer>
+const ifWeChatOpen=()=>{
+
+  var browser = {
+      versions: function () {
+        var u = navigator.userAgent, app = navigator.appVersion;
+        return {     //移动终端浏览器版本信息
+          trident: u.indexOf('Trident') > -1, //IE内核
+          presto: u.indexOf('Presto') > -1, //opera内核
+          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+          mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或uc浏览器
+          iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+          iPad: u.indexOf('iPad') > -1, //是否iPad
+          webApp: u.indexOf('Safari') == -1 //是否web应该程序，没有头部与底部
+        };
+      }(),
+      language: (navigator.browserLanguage || navigator.language).toLowerCase()
+    };
+    if (browser.versions.mobile) {//判断是否是移动设备打开。browser代码在下面
+      var ua = navigator.userAgent.toLowerCase();//获取判断用的对象
+      if (ua.match(/MicroMessenger/i) == "micromessenger") {
+        let weChatOpen=document.getElementsByClassName('weChatOpen')
+        let setTitle=document.getElementById('setTitle')
+        setTitle.innerHTML='Please open in your browser'
+        weChatOpen[0].style.display='block'
+      }
+    }
+}
+ifWeChatOpen()
+var monthlyMembership=0;
+var monthlyMembershipId=0;
+var monthlyRentMembership=0;
+var monthlyRentMembershipId=0;
+var circoloMirrorVariantsId=0;
+var circoloMirrorRentVariantsId=0;
+var oneYearGiftCircoloId=0;
+
+const setAjax=(path,method,data,success,fail)=>{
+    const request=new XMLHttpRequest()
+    request.open(method,path)
+    request.send(data)
+    request.onreadystatechange=()=>{
+        if(request.readyState===4){
+            if(request.status>=200&&request.status<=300){
+                success.call(undefined,request.responseText)
+            }else if(request.status>=400){
+                fail.call(undefined,request)
+            }
+        }
+    }
+}
+const setClearCart=()=>{
+    const clearCartIcon=document.getElementsByClassName('clearCart')
+    const clearSuccess=(e)=>{
+     history.go(0);
+    }
+    if(clearCartIcon[0]){
+      clearCartIcon[0].onclick=()=>{
+      setAjax('/cart/clear.js','POST',{},clearSuccess,()=>{})
+      } 
+    }
+     if(clearCartIcon[1]){  
+        clearCartIcon[1].onclick=()=>{
+      setAjax('/cart/clear.js','POST',{},clearSuccess,()=>{})
+      } 
+     }
+}
+setClearCart()
+const getSomeMessage=()=>{
+  const successSetId=(e)=>{
+    if(e.length){
+      monthlyMembership=JSON.parse(e).selling_plan_groups[0].selling_plans[0].id
+      monthlyMembershipId=JSON.parse(e).variants[0].id
+    }
+  }
+  const successSetId1=(e)=>{
+    if(e.length){
+      circoloMirrorVariantsId=JSON.parse(e).variants[0].id
+    }
+  }
+
+  const successSetId2=(e)=>{
+    if(e.length){
+      oneYearGiftCircoloId=JSON.parse(e).variants[0].id
+    }
+  }
+
+  const successSetId3=(e)=>{
+    if(e.length){
+      circoloMirrorRentVariantsId=JSON.parse(e).variants[0].id
+    }
+  }
+
+  const successSetId4=(e)=>{
+    if(e.length){
+      monthlyRentMembership=JSON.parse(e).selling_plan_groups[0].selling_plans[0].id
+      monthlyRentMembershipId=JSON.parse(e).variants[0].id
+    }
+  }
+
+  setAjax('/products/circolo-membership.js','GET',{},successSetId,(err)=>{console.log(err)})
+  setAjax('/products/circolo-mirror.js','GET',{},successSetId1,(err)=>{console.log(err)})
+  setAjax('/products/1-year-circolo-membership.js','GET',{},successSetId2,(err)=>{console.log(err)})
+  //rent device
+  setAjax('/products/circolo-mirror-rental.js','GET',{},successSetId3,(err)=>{console.log(err)})
+  //rent cost
+  setAjax('/products/circolo-monthly-rental.js','GET',{},successSetId4,(err)=>{console.log(err)})
+
+}
+getSomeMessage() 
+const setPicReomve=()=>{
+      var howChildren=document.getElementsByClassName('hiwChild')
+      var howChildren1=document.getElementsByClassName('hiwChild1')
+      if(howChildren.length){
+        var timer;
+        for(var j=0;j<howChildren.length;j++){
+            howChildren[j].style.left=j*232+'px'
+        }
+        var max =0
+        clearInterval()
+        timer=setInterval(()=>{
+            for(var i=0;i<howChildren.length;i++){
+                howChildren[i].style.left=parseFloat(howChildren[i].style.left)-1+'px'
+            if(howChildren[i].style.left==('-'+200+'px')){
+                for(var k=0;k<howChildren.length;k++){
+                    max=Math.max(parseFloat(howChildren[k].style.left),max)
+                }
+                howChildren[i].style.left=max+232+'px'
+                max=0 
+            }
+            }
+        },20)
+      }
+    if(howChildren1.length){
+        var timer1;
+        for(var jk=1;jk<howChildren1.length+1;jk++){
+            howChildren1[jk-1].style.left=(1857-jk*200)-(jk-1)*32+'px'
+        }
+        var min =100
+        clearInterval()
+        timer1=setInterval(()=>{
+            for(var ij=0;ij<howChildren.length;ij++){
+                howChildren1[ij].style.left=parseFloat(howChildren1[ij].style.left)+1+'px'
+            if(howChildren1[ij].style.left==(1857+'px')){
+                 for(var d=0;d<howChildren1.length;d++){
+                    min=Math.min(parseFloat(howChildren1[d].style.left),min)
+                }
+                howChildren1[ij].style.left=min-232+'px'
+                min=100
+            }
+            }
+        },20)
+      } 
+}
+setPicReomve()
+const setImgChange=()=>{
+  const colorArr=['//cdn.shopifycdn.net/s/files/1/0559/5788/1006/t/10/assets/indexSectionFirstPic.jpg','//cdn.shopifycdn.net/s/files/1/0559/5788/1006/t/10/assets/indexSectionSecondPic.jpg','//cdn.shopifycdn.net/s/files/1/0559/5788/1006/t/10/assets/indexSectionThird.png']
+  var testDiv=document.getElementsByClassName('testDiv')
+  var timer
+  var num=0
+  if(testDiv.length){
+    clearInterval()
+    timer=setInterval(()=>{ 
+    if(num==2){
+      testDiv[0].style.backgroundImage=`url(${colorArr[0]})`
+      testDiv[1].style.backgroundImage=`url(${colorArr[1]})`
+      testDiv[2].style.backgroundImage=`url(${colorArr[2]})`
+      num=0
+    }else if(num==1){
+      testDiv[0].style.backgroundImage=`url(${colorArr[1]})`
+      testDiv[1].style.backgroundImage=`url(${colorArr[2]})`
+      testDiv[2].style.backgroundImage=`url(${colorArr[0]})`
+      num++
+    }else{
+      testDiv[0].style.backgroundImage=`url(${colorArr[2]})`
+      testDiv[1].style.backgroundImage=`url(${colorArr[0]})`
+      testDiv[2].style.backgroundImage=`url(${colorArr[1]})`
+      num++
+    }
+  },2000)
+  }
+}
+setImgChange()
+const buttonCanClick=()=>{
+  let canAddFlag=true
+  var onlyBuyOne=document.getElementsByClassName('onlyBuyOne')
+  var ipt=document.getElementById('circleMirroript')
+  var checkSpan=document.getElementById('circleMirrorCheckSpan')
+  var checkMirrorBtn=document.getElementsByClassName('circleMirrorbtn')
+  var checkMirrorBtn1=document.getElementsByClassName('giftCircolo')
+  var checkMirrorBtn2=document.getElementsByClassName('shopCircle')
+  var checkMirrorBtn3=document.getElementsByClassName('rentCircle')
+  var tipcircleMirrorbtn=document.getElementsByClassName('tipcircleMirrorbtn')
+  var closeOnlyBuyOneModelIcon=document.getElementsByClassName('closeOnlyBuyOneModelIcon')
+  var curtains=document.getElementsByClassName('Curtains')
+  var showCanSave=document.getElementsByClassName('circleMirrorCheckBottom')
+  var hiddenCanSave=document.getElementsByClassName('circleMirrorCheckBottom1')
+  const checkArr=[94002,94005,94010,94014,94015,94019,94020,94021,
+  94022,94024,94025,94027,94028,94030,94037,94038,94040,94041,94043,94044,94060,94061,94062,94063,94065,94066,94070,94074,94080,94085,94086,94087,94089,94102,94103,94104,94105,94106,94107,94108,94109,94110,94111,94112,94114,94115,94116,94117,94118,94121,94122,94123,94124,94127,94128,94129,94130,94131,94132,94133,94134,94158,94301,94303,94304,94305,94306,94401,94402,94403,94404,94501,94502,94506,94507,94516,94523,94526,94528,94530,94536,94538,94539,94541,94542,94544,94545,94546,94549,94552,94555,94556,94560,94563,94566,94568,94575,94577,94578,94579,94580,94582,94583,94586,94587,94588,94595,94596,94597,94598,94601,94602,94603,94605,94606,94607,94608,94609,94610,94611,94612,94613,94618,94619,94621,94702,94703,94704,94705,94706,94707,94708,94709,94710,94720,94801,94803,94804,94850,94901,94904,94920,94924,94925,94930,94939,94941,94957,94960,94964,94965,94970,94973,95002,95005,95006,95007,95008,95013,95014,95017,95018,95030,95032,95033,95035,95050,95051,95053,95054,95060,95065,95066,95070,95073,95110,95111,95112,95113,95116,95117,95118,95119,95120,95121,95122,95123,95124,95125,95126,95127,95128,95129,95130,95131,95132,95133,95134,95136,95139,95148]
+  if(ipt){
+    ipt.onkeypress=()=>{
+       var myEvent = event || window.event;
+       if(myEvent.target.value.length<=4){
+         event.returnValue = true;
+       }else{
+         event.returnValue = false;
+       }
+    }
+   ipt.oninput=()=>{
+      var myEvent = event || window.event;
+      if(myEvent.target.value.length==0){
+         showCanSave[0].style.display='none'
+         hiddenCanSave[0].style.display='block'
+         hiddenCanSave[0].innerHTML='Please enter a zip code'
+         checkMirrorBtn[0].classList.add("nextBtn");
+       }else{
+          showCanSave[0].style.display='none'
+         hiddenCanSave[0].style.display='none'
+         hiddenCanSave[0].innerHTML='Sorry we are not available at your zip code. Please check back later!'
+       }
+   } 
+  }
+
+  if(checkSpan){
+    checkSpan.onclick=()=>{
+    if(checkArr.indexOf(Number(ipt.value))!==-1){
+      if(tipcircleMirrorbtn[0]){
+        tipcircleMirrorbtn[0].classList.remove("nextBtn");
+      }else{
+        checkMirrorBtn[0].classList.remove("nextBtn");
+      }
+      showCanSave[0].style.display='block'
+      hiddenCanSave[0].style.display='none'
+    }else{
+       if(tipcircleMirrorbtn[0]){
+        tipcircleMirrorbtn[0].classList.add("nextBtn");
+      }else{
+        checkMirrorBtn[0].classList.add("nextBtn");
+      }
+         showCanSave[0].style.display='none'
+        hiddenCanSave[0].style.display='block'
+    }
+  }
+    if(checkMirrorBtn1[0]){
+    checkMirrorBtn1[0].onclick=()=>{
+      let formData = {
+      'items': [
+        {
+          quantity: 1,
+          id: circoloMirrorVariantsId,
+        }, 
+        {
+          quantity: 1,
+          id: oneYearGiftCircoloId,
+        }  
+      ]
+      };
+      if(canAddFlag){
+        canAddFlag=false
+         fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        window.location.href = 'https://www.circolo.us/cart';
+        return response.json();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+      }
+     
+    }
+  }
+  if(checkMirrorBtn2[0]){
+    checkMirrorBtn2[0].onclick=()=>{
+      let formData = {
+      'items': [
+        {
+          quantity: 1,
+          id: circoloMirrorVariantsId,
+        }, 
+        {
+          quantity: 1,
+          id: monthlyMembershipId,
+          selling_plan:monthlyMembership,
+        }  
+      ]
+      };
+      if(canAddFlag){
+        canAddFlag=false
+        fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        window.location.href = 'https://www.circolo.us/cart';
+        return response.json();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+      }
+    }
+  }
+  if(checkMirrorBtn3[0]){
+    checkMirrorBtn3[0].onclick=()=>{
+      let formData = {
+      'items': [
+        {
+          quantity: 1,
+          id: circoloMirrorRentVariantsId,
+        }, 
+        {
+          quantity: 1,
+          id: monthlyRentMembershipId,
+          selling_plan:monthlyRentMembership,
+        }  
+      ]
+      };
+      if(canAddFlag){
+        canAddFlag=false
+        fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        window.location.href = 'https://www.circolo.us/cart';
+        return response.json();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+      }
+    }
+  }
+
+  if(tipcircleMirrorbtn[0]){
+    tipcircleMirrorbtn[0].onclick=()=>{
+      onlyBuyOne[0].style.display='block'
+      curtains[0].style.display='block'
+    }
+  }
+
+  if(closeOnlyBuyOneModelIcon[0]){
+    closeOnlyBuyOneModelIcon[0].onclick=()=>{
+       onlyBuyOne[0].style.display='none'
+       curtains[0].style.display='none'
+    } 
+  }
+  }
+}
+buttonCanClick()
+const showTips=()=>{
+  var tips=document.getElementsByClassName('showTipsModel')
+  var mirrorCloseModel=document.getElementsByClassName('circleMirrorCloseModel')
+  var showModel=document.getElementsByClassName('circleMirrorTips')
+  var curtains=document.getElementsByClassName('Curtains')
+  if(tips[0]){
+    tips[0].onclick=()=>{
+    curtains[0].style.display='block'
+    showModel[0].style.display='block'
+  }
+  }
+  if(mirrorCloseModel[0]){
+    mirrorCloseModel[0].onclick=()=>{
+      curtains[0].style.display='none'
+      showModel[0].style.display='none'
+    }
+  }
+}
+showTips()
+const changeCartStyle=()=>{
+  var cartTerms=document.getElementById('CartTerms')
+  let cartTermsDrawer=document.getElementById('CartTermsDrawer')
+  let childCartShopModel=document.getElementsByClassName('childCartNoShop')[0]
+  var checkoutBtn=document.getElementsByClassName('cart__checkout')
+  if(cartTerms){
+      var setTimer1=setTimeout(()=>{
+      if(cartTerms.checked&&checkoutBtn[1].classList.length<=3){
+        checkoutBtn[1].classList.add('canCartCheckout')
+      }
+      clearInterval(setTimer1)
+      },100)
+      cartTerms.onclick=()=>{
+        if(cartTerms.checked){
+          checkoutBtn[1].classList.add('canCartCheckout')
+        }else{
+          checkoutBtn[1].classList.remove('canCartCheckout')
+        }
+  }
+  }
+  if(cartTermsDrawer){
+    var setTimer=setTimeout(()=>{
+      if(cartTermsDrawer.checked&&checkoutBtn[0].classList.length<=3){
+        checkoutBtn[0].classList.add('candawerSettingCheckout')
+        childCartShopModel.style.display='none'
+      }
+  clearInterval(setTimer)
+  },500)
+    cartTermsDrawer.onclick=()=>{
+        if(cartTermsDrawer.checked){
+          checkoutBtn[0].classList.add('candawerSettingCheckout')
+          childCartShopModel.style.display='none'
+        }else{
+          checkoutBtn[0].classList.remove('candawerSettingCheckout')
+          childCartShopModel.style.display='block'
+        }
+  }
+  }
+}
+changeCartStyle()
+const showContactModel=()=>{
+  var bannerShop=document.getElementsByClassName('bannerShop')
+  let contactModel=document.getElementsByClassName('fixedIframe')
+  var curtains=document.getElementsByClassName('Curtains')
+  var closeIframe=document.getElementsByClassName('closeIframe')
+  if(bannerShop[0]){
+    bannerShop[0].onclick=()=>{
+      contactModel[0].style.display='block'
+      curtains[0].style.display='block'
+    }
+  }
+  if(closeIframe[0]){
+    closeIframe[0].onclick=()=>{
+      contactModel[0].style.display='none'
+      curtains[0].style.display='none'
+    }
+  }
+}
+showContactModel()
+ const newIframe=()=>{
+  var aIframe=document.createElement('iframe')
+  let aIframeModel=document.getElementsByClassName('fixedIframe')
+  aIframe.src='https://cdn.forms-content.sg-form.com/882b0499-4c27-11ec-9a86-7a2573c19e87'
+  aIframeModel[0].appendChild(aIframe)
+  aIframe.sandbox="allow-same-origin allow-forms allow-scripts"
+}
+newIframe() 
+</script>
+<script defer>
+
+function getParameterByName(name, url) {
+  if (!url) {
+    url = window.location.href;
+  }
+
+  name = name.replace(/[\[\]]/g, "\\$&");
+  var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+$coupon = getParameterByName('coupon');
+
+if($coupon){
+  // set a cookie with the coupon code
+  // Valid for 7 days : can adjust { expires: 7 } to whatever you want
+  // single / is a session cookie
+  setCookie("coupon",$coupon, 7)
+}
+
+
+// Get cookie discount code value and set form value
+$discountCode = getCookie('coupon');
+
+$discountInpuMain = $("input.js-main-form-discount");
+
+$discountInputDrawer = $("input.js-drawer-form-discount");
+
+if($discountCode){
+  if ($discountInpuMain.length > 0) { 
+    // if cookie is set and discount input field is on page set its value to cookie val 
+    $discountInpuMain.val( $discountCode );
+  }
+
+    if ($discountInputDrawer.length > 0) { 
+    // if cookie is set and discount input field is on page set its value to cookie val 
+    $discountInputDrawer.val( $discountCode );
+  }
+}
+
+
+</script>
+  <noscript>Your browser does not support JavaScript!</noscript>
+</html>

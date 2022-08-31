@@ -1,0 +1,74 @@
+<div class="section-product-awards section-product-awards-{{ section.id }}">
+  <h2 class="title media-title">{{section.settings.title}}</h2>
+  <div class="awards-wrapper">
+    
+    {% for block in section.blocks %}
+    <div class="item">
+      <div class="image-wrapper">
+        <img class="lazyload" src="{{block.settings.image }}" data-src="{{block.settings.image }}"/>
+      </div>
+      <div class="text">{{block.settings.text}}</div>
+    </div>
+    {% endfor %}
+    
+  </div>
+</div>
+
+<style>
+  .section-product-awards-{{ section.id }}{ background: {{ section.settings.bg_color }};}
+  .section-product-awards-{{ section.id }} .title,.section-product-awards-{{ section.id }} .text{color: {{ section.settings.color }};}
+</style>
+  
+{% schema %}
+  {
+    "name": "Product Awards",
+    "settings": [
+	  {
+        "type": "text",
+        "label": "Title",
+        "id": "title"
+      },
+      {
+        "type":"color",
+        "id":"bg_color",
+        "label":"Section Background Color",
+        "default":"#141414"
+      },
+      {
+        "type":"color",
+        "id":"color",
+        "label":"Text Color",
+        "default":"#FFF"
+      }
+	],
+    "blocks":[
+      {
+        "type": "text-width-icon",
+        "name": "Awards",
+        "settings":[
+          {
+            "type": "url",
+            "label": "Image link",
+            "id": "image"
+          },{
+            "type": "text",
+            "label": "Text",
+            "id": "text"
+          }
+        ]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Product Awards",
+		"category": "text"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

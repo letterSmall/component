@@ -1,0 +1,92 @@
+<div class="promotion-monitoring-wrapper">
+  <div class="page-width">
+    <div class="monitoring-box">
+    {% if section.settings.image != blank %}
+    <img class="spsmall-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+    {% endif %}
+    {% if section.settings.image_mb != blank %}
+    <img class="ipadup-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+    {% else %}
+    <img class="ipadup-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+    {% endif %}
+
+      {% if section.settings.title != blank or section.settings.text != blank %}
+      <div class="bg-text-wrapper">
+        <div class="title">{{ section.settings.title }}</div>
+        <div class="text">{{ section.settings.text }}</div>
+        {% if section.blocks.size > 0 %}
+        <div class="custom-icon-wrapper">
+          {% for block in section.blocks %}
+          <div class="customBlock_item">
+            {% if block.settings.image != blank %}
+            <img class="custom-icon-png" src="{{block.settings.image | img_url:'master'}}"/>
+            {% else %}
+            <span class="custom-icon-svg">{{block.settings.icon_svg}}</span>
+            {% endif %}
+            {% if block.settings.text != blank %}
+            <div>{{ block.settings.text }}</div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Promotion Monitoring", 
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1200x600px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "Title"
+          },{
+            "type": "html",
+            "id": "text",
+            "label": "Text"
+          }
+    ],
+    "blocks": [
+        {
+            "type": "logo_image",
+            "name": "Icon",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Icon PNG",
+                    "info": "Size: 120x120px"
+                },{
+                    "type":"text",
+                    "id":"icon_svg",
+                    "label":"Icon SVG(Effective when PNG is not uploaded)",
+                    "info":"Use svg code"
+                },{
+                  "type": "html",
+                  "id": "text",
+                  "label": "Text"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Promotion Monitoring",
+        "category": "image"
+      }
+    ]
+  }
+{% endschema %}

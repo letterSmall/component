@@ -1,0 +1,61 @@
+<div class="about-header">
+  {% if section.settings.image %}
+  <img class="hide-mb" src="{{ section.settings.image |img_url: 'master' }}" alt=""/>
+  {% endif %}
+
+  {% if section.settings.image_mb %}
+  <img class="hide-pc" src="{{ section.settings.image_mb |img_url: 'master' }}" alt=""/>
+  {% else %}
+  <img class="hide-pc" src="{{ section.settings.image |img_url: 'master' }}" alt=""/>
+  {% endif %}
+  <h1>{{ page.title}}</h1>
+</div>
+{%if section.blocks.size>0%}
+<div class="container">
+  <div class="about-tab-wrapper">
+    {%for block in section.blocks%}
+    <div class="about-tab-item item {%if forloop.first%}active{%endif%}" data-index="{{ forloop.index0 }}">
+      {{block.settings.title}}
+    </div>
+    {%endfor%}
+  </div>
+</div>
+{%endif%}
+
+{% schema %}
+  {
+    "name": "About Page Tab",
+    "settings": [
+        {
+          "type": "image_picker",
+          "label": "Image",
+          "id": "image",
+          "info": "Size:1920px*450px"
+        },
+        {
+          "type": "image_picker",
+          "label": "Image Mobile",
+          "id": "image_mb"
+        }
+     ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "Item",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Tabbar name"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

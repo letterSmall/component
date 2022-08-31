@@ -1,0 +1,91 @@
+<div class="Hofriend-container">
+  <div class="contianer-ho">
+   {% if section.settings.title != blank %}
+    <div class="Hofriend--title">{{-section.settings.title-}}</div>
+   {% endif %}
+     {% if section.settings.subtitle != blank %}
+    <div class="Hofriend--subtitle">{{-section.settings.subtitle-}}</div>
+   {% endif %}
+   <div class="Hofriend-box">
+  {% for block in section.blocks %}
+   <div class="Hofriend-item">
+     {% if block.settings.url %}
+     <a href="{{ block.settings.url }}"> 
+     {% endif %}
+     {% if block.settings.image %}
+     <img class="Hofriend-itemimg"  src="{{ block.settings.image | img_url:'master' }}" alt="{{ block.settings.title }}" />
+     {% endif %}
+     {% if block.settings.url %}
+     </a>
+     {% endif %}
+
+   </div>
+  {% endfor %}
+  </div>
+    {%if section.settings.show_btn%}
+  {% if section.settings.url %}
+     <a class="Hofriend--btn" href="{{ section.settings.url }}">{{ section.settings.url_text }}<img alt src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/copy.png?v=1641370654"/></a>
+     {% endif %}
+     {% endif %}
+  </div>
+  
+</div>
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Index From Friends",
+"class":"pa_tops",
+"settings": [
+     {
+        "type": "text",
+        "id": "title",
+        "label": "title"
+      },{
+        "type": "richtext",
+        "id": "subtitle",
+        "label": "subtitle"
+      },{
+        "type": "text",
+        "id": "url_text",
+        "label": "url_text"
+      },{
+        "type": "url",
+        "id": "url",
+        "label": "url"
+      },
+{
+        "type": "checkbox",
+        "id": "show_btn",
+        "label": "Show url btn"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+       {
+        "type": "image_picker",
+        "id": "image",
+        "label": "image"
+      },{
+        "type": "url",
+        "id": "url",
+        "label": "url"
+      }
+          
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index From Friends",
+        "category": "HO-layout"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,209 @@
+{%- assign customDesc = product.metafields.custom_desc -%}
+<div class="product-desc-contianer">
+ <div class="psc-tabbar-container">
+        <div class="psc-tabbar psc-tabbar-personal" id="psc-tabbar">
+           <div class="page-width">
+             <div class="psct-inner">
+          {%for block in section.blocks%}
+               {%assign name=block.settings.title|handle%}
+             
+                 {%if name contains "faq"%}{%unless  customDesc.warranty%} {%continue%}{%endunless%}{%endif%}
+               {%if name=="specs" %}{%unless  customDesc.specs%}{%continue%}{%endunless%}{%endif%}
+             {%if name=="compare" %}{%unless  customDesc.compare%}{%continue%}{%endunless%}{%endif%}
+             <div class="psc-tabbar-item {%if forloop.index==1 %}active{%endif%}"  data-name="{{ name }}">
+               {{block.settings.title}}
+          </div>
+              
+          {%endfor%}
+             </div>
+              </div>
+  </div>
+    <div class="  psc-tabbar-shadow" >
+           <div class="page-width">
+             <div class="psct-inner">
+          {%for block in section.blocks%}
+               {%assign name=block.settings.title|handle%}
+              
+                 {%if name contains "faq"%}{%unless  customDesc.warranty%} {%continue%}{%endunless%}{%endif%}
+               {%if name=="specs" %}{%unless  customDesc.specs%}{%continue%}{%endunless%}{%endif%}
+             {%if name=="compare" %}{%unless  customDesc.compare%}{%continue%}{%endunless%}{%endif%}
+             <div class="psc-tabbar-item  {%if forloop.index==1 %}active{%endif%}" data-name="{{ name }}">
+               {{block.settings.title}}
+          </div>
+              
+          {%endfor%}
+             </div>
+              </div>
+  </div>
+    </div>
+  <div class="psc-content">
+     {%for block in section.blocks%}
+    {%assign name=block.settings.title | handle%}
+    {%assign status=false%}
+    
+                 {%if name contains "faq"%}{%unless  customDesc.warranty%} {%assign status=true%} {%continue%}{%endunless%}{%endif%}
+               {%if name=="specs" %}{%unless  customDesc.specs%} {%assign status=true%}{%continue%}{%endunless%}{%endif%}
+            
+             <div class="psc-content-item psc-content-item-{{name}} pscci-{{name}} {%if  name contains 'review' or name contains 'overview'%}active{%endif%}" id="{{ name }}" data-name="{{name}}">
+          
+              <div class=" psc-inner-content-{{ name }}    psc-inner-content {%if  name contains 'review' or name contains 'overview'%}active{%endif%}" >
+               {%if name contains 'overview'%}
+         {{product.description}} 
+               {%if customDesc.series%}
+                 <div class="page-width ">
+               <div class="series-container">
+                 <h3 class="title text-center">Series of Products</h3>
+                    <div class="series-inner-container">
+                  {{customDesc.series}}
+                </div>
+                  </div>
+                          </div>
+                {%endif%}
+               {%elsif name contains 'specs'%}
+                 {%if customDesc.in_the_box %}
+                 <div class="page-width ">
+                 <div class="in_the_box-content">
+               {{customDesc.in_the_box}}
+               </div>
+                                  </div>
+                   {%endif%}
+                
+                 {%if customDesc.in_the_box_2 %}
+                 <div class="page-width ">
+                 <div class="in_the_box-content">
+               {{customDesc.in_the_box_2}}
+               </div>
+                                  </div>
+                   {%endif%}
+                
+                {%if customDesc.specs%}
+               <div class="page-width ">
+                 <div class="specs-content">
+               {{customDesc.specs}}
+               </div>
+                   </div>
+                {%endif%}
+                  {%elsif name contains 'faq'%}
+              
+                 <div class="page-width page-width1220">
+                   
+                    {%if customDesc.warranty %}
+                     <div class="warranty-content">
+               {{customDesc.warranty}}
+               </div>
+                   {%endif%}
+                   
+                     {%if customDesc.download %}
+                     {%assign download_list=customDesc.download|split:'<end>'%}
+                  
+                           {%for item in download_list%} 
+                   {%assign item=item|remove:'<end>'%}
+                     {%assign title=""%}
+           {%if item contains "title="%}
+                   {%assign title =item|split:'title="'|last|split:'">'|first |strip%}
+                   {%endif%}
+                   {%assign download=item |split:'">'|last|split:'</div>'|first|strip%}                
+                   <a class="manual-content" href="{{download}}">    
+          <div class="title">{{title|default:"User Manual"}}</div>
+                          
+                           <svg t="1644833155754" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2762" width="25" height="25"><path d="M802 664v146c0 7.7-6.3 14-14 14H236c-7.7 0-14-6.3-14-14V664c0-5.5-4.5-10-10-10h-50c-5.5 0-10 4.5-10 10v170c0 33.1 26.9 60 60 60h600c33.1 0 60-26.9 60-60V664c0-5.5-4.5-10-10-10h-50c-5.5 0-10 4.5-10 10z" p-id="2763" fill="#000000"></path><path d="M547 163v449.5l173.6-173.6c13.7-13.7 35.8-13.7 49.5 0 13.7 13.7 13.7 35.8 0 49.5L536.8 721.7c-0.4 0.4-0.8 0.8-1.3 1.2-0.2 0.2-0.4 0.4-0.6 0.5-0.2 0.2-0.4 0.4-0.7 0.6-0.3 0.2-0.5 0.4-0.8 0.6-0.2 0.1-0.4 0.3-0.5 0.4l-0.9 0.6c-0.2 0.1-0.3 0.2-0.5 0.3-0.3 0.2-0.6 0.4-1 0.6-0.2 0.1-0.3 0.2-0.5 0.3-0.3 0.2-0.6 0.4-1 0.5-0.2 0.1-0.4 0.2-0.5 0.3-0.3 0.2-0.6 0.3-0.9 0.5l-0.6 0.3c-0.3 0.1-0.6 0.3-0.8 0.4-0.2 0.1-0.5 0.2-0.7 0.3-0.3 0.1-0.5 0.2-0.8 0.3l-0.9 0.3c-0.2 0.1-0.4 0.2-0.7 0.2-0.3 0.1-0.6 0.2-1 0.3-0.2 0.1-0.4 0.1-0.6 0.2-0.4 0.1-0.7 0.2-1.1 0.3-0.2 0-0.4 0.1-0.6 0.1-0.4 0.1-0.7 0.2-1.1 0.2-0.2 0-0.4 0.1-0.6 0.1-0.4 0.1-0.7 0.1-1.1 0.2-0.2 0-0.4 0.1-0.7 0.1-0.3 0-0.7 0.1-1 0.1-0.3 0-0.6 0-0.9 0.1-0.3 0-0.5 0-0.8 0.1-1.2 0.1-2.3 0.1-3.5 0-0.3 0-0.5 0-0.8-0.1-0.3 0-0.6 0-0.9-0.1-0.3 0-0.7-0.1-1-0.1-0.2 0-0.4-0.1-0.7-0.1-0.4-0.1-0.7-0.1-1.1-0.2-0.2 0-0.4-0.1-0.6-0.1-0.4-0.1-0.7-0.2-1.1-0.2-0.2 0-0.4-0.1-0.6-0.1-0.4-0.1-0.7-0.2-1.1-0.3-0.2-0.1-0.4-0.1-0.6-0.2-0.3-0.1-0.6-0.2-1-0.3-0.2-0.1-0.5-0.1-0.7-0.2l-0.9-0.3c-0.3-0.1-0.5-0.2-0.8-0.3-0.2-0.1-0.5-0.2-0.7-0.3-0.3-0.1-0.6-0.3-0.8-0.4l-0.6-0.3c-0.3-0.2-0.6-0.3-0.9-0.5-0.2-0.1-0.4-0.2-0.5-0.3-0.3-0.2-0.6-0.4-1-0.6-0.2-0.1-0.3-0.2-0.5-0.3-0.3-0.2-0.6-0.4-1-0.6-0.2-0.1-0.3-0.2-0.5-0.3-0.3-0.2-0.6-0.4-0.9-0.7-0.2-0.1-0.3-0.3-0.5-0.4-0.3-0.2-0.5-0.4-0.8-0.6-0.2-0.2-0.4-0.4-0.7-0.6-0.2-0.2-0.4-0.4-0.6-0.5l-1.2-1.2-233.1-233.1c-13.7-13.7-13.7-35.8 0-49.5 13.7-13.7 35.8-13.7 49.5 0L477 612.5V163c0-19.3 15.7-35 35-35s35 15.7 35 35z" p-id="2764" fill="#000000"></path></svg>
+                          
+               </a>
+                   {%endfor%}
+                     {%endif%}
+                   </div>
+               
+                {%elsif name contains 'compare'%}
+              
+            {%if customDesc.compare!=balnk%}
+                
+                 <div class="page-width page-width1220">
+                   {%render "product-compare" ,customDesc:customDesc,product:product%}                   
+                   </div>
+                {%endif%}
+               
+        {%elsif name contains 'review'%}
+       <!--         ========================================================================================== -->
+        
+        <div class="cus_sorting_r">
+          <div class="main_sort">
+            <div class="allReviews review_active" data-review="most-recent">Most Recent</div>
+            <div class="allReviews" data-review="with-pictures">With pictures</div>
+            <div class="allReviews" data-review="videos-first">With videos</div>
+            <div class="allReviews" data-review="most-helpful">Most helpful</div>
+            <div class="allReviews" data-review="highest-rating">Highest Rating</div>
+            <div class="allReviews" data-review="lowest-rating">Lowest Rating</div>
+          </div>
+        </div>
+        <div class="Custom_reviewRating">
+          <div class="topHeader">
+            <div class="productImage">
+              {% if product.metafields.my_fields.product_review_image != blank %}
+              <img src="{{ product.metafields.my_fields.product_review_image | img_url:'200x'}}">
+              {% else %}
+              {% if product.images[0] %}
+              <img src="{{ product.images[0] | img_url:'200x'}}">
+              {%endif%}
+              {%endif%}
+            </div>
+            <div class="review_Ratings">
+              <h2 class="jdgm-rev-widg__title reviewTitle">Overall Rating</h2>
+              <div class="reviewCountReview">
+                <div class="review_stars" data-rate="{{ product.metafields.reviews.rating.value }}">
+                  {% assign ss=  product.metafields.reviews.rating.value %}
+                  {% assign reviews_Rating_first= product.metafields.reviews.rating.value | split:'.' | first  %}
+                  {% assign reviews_Rating= product.metafields.reviews.rating.value | split:'.' | last %}
+                  {% assign ssssw = reviews_Rating | plus: 0 %}
+                  {% assign sssss = reviews_Rating | plus: 0 %}
+                  {% if sssss >= 49 %} <span class="cone">{{- reviews_Rating_first | plus : 1 -}}</span><span class="review_Center"> / </span><span class="ctwo">5</span>
+                  {% else %}
+                  {% if ssssw == 0 %}<span class="cone">{{- reviews_Rating_first -}}</span><span class="review_Center"> / </span><span class="ctwo">5</span>
+                  {% else %}
+                  <span class="cone">{{- reviews_Rating_first -}}.5</span><span class="review_Center"> / </span><span class="ctwo">5</span>{% endif %}{% endif %}
+                </div>
+                <div class="cus-rating">{{ product.metafields.judgeme.badge }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+<!--         ========================================================================================== -->
+        <div class="page-width review L-Customreview">
+          {% comment %}Start automatically added Judge.me widget{% endcomment %}
+          {% render 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: true, product: product %}
+          {% comment %}End automatically added Judge.me widget{% endcomment %}
+        </div>
+
+        {%endif%}
+              
+          </div>
+               </div>
+          {%endfor%}
+  </div>
+
+  </div>
+
+
+
+{% schema %}
+  {
+    "name": "Product desc",
+    "settings": [],
+"blocks": [{
+          "type": "text",
+          "name": "Item",
+          "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Name"
+        }]
+      }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+<script src="{{ 'reviews.js' | asset_url }}"></script>

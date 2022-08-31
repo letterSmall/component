@@ -1,0 +1,160 @@
+{% if section.settings.show_block %}
+
+{%- liquid
+  assign per_row = section.settings.per_row
+  assign collection = collections[section.settings.collection1]
+  
+-%}
+
+<div class="compare-collection-{{ section.id }} compare-collection-section padding6vw">
+  <div class="container">
+    <div class="compare-header container1200">
+      {% if section.settings.title != blank %}
+      <h2> {{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.text != blank %}
+      <div>{{ section.settings.text }}</div>
+      {% endif %}
+    </div>
+    <div class="compare-main">
+      {% if is_empty_collection %}
+      <div class="halo-column">
+        <div class="halo-item">
+          <p class="text-center">{{ 'collections.general.no_matches' | t }}</p>
+        </div>
+      </div>
+      {% else %}
+      <div class="swiper-container compare-swiper-container">
+        <div class="swiper-wrapper{% if collection.products_count < per_row %} compare-center{% endif %}">
+          {% for product in collection.products %}
+          <div class="compare-item swiper-slide">
+            {% render 'product-card-list-compare', product: product, serial: forloop.index %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {%- unless collection.empty? -%}
+      {% if collection.products_count > per_row %}
+      <div class="pc-show">
+        <div class="swiper-button-prev fcw-swiper-button-prev compare-swiper-button-prev">{%- render 'icon-svg',icon_svg: 'product-switch-arrow' -%} </div>
+        <div class="swiper-button-next fcw-swiper-button-next compare-swiper-button-next">{%- render 'icon-svg',icon_svg: 'product-switch-arrow' -%} </div>
+      </div>
+      {% endif %}
+      <div class="mb-show">
+        <div class="swiper-scrollbar swiper-scrollbar-compare"></div>
+      </div>
+      {%endunless%}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+ .compare-collection-{{ section.id }}{background:{{ section.settings.bg_color }};}
+ .compare-collection-{{ section.id }} h2{ text-transform: none; }
+</style>
+
+<script>
+  var compareSwiper = new Swiper('.compare-swiper-container', {
+    slidesPerView: {{per_row}}, 
+    slidesPerGroup:  {{per_row}}, 
+    observer:true,
+    observeParents:true,
+    spaceBetween : 21,
+    navigation: {
+    nextEl: '.compare-swiper-button-next',
+    prevEl: '.compare-swiper-button-prev',
+  },
+                              scrollbar: {
+                              el: '.swiper-scrollbar-compare',
+                              draggable: true,
+                              dragSize: 100,
+                              },
+                              {%if fcw1_num<=per_row%}
+                              allowTouchMove: false,
+                              {%endif%}
+
+                              breakpoints: {
+                              1400: {  
+                              slidesPerView: 4,
+                              slidesPerGroup : 4,
+
+                              {%if fcw1_num<=2%}
+                              allowTouchMove: false,
+                              {%endif%}
+                              },
+                              1025: {  
+                              slidesPerView: 3,
+                              slidesPerGroup : 3,
+
+                              {%if fcw1_num<=2%}
+                              allowTouchMove: false,
+                              {%endif%}
+                              },
+                              768: {  
+                              slidesPerView: 2,
+                              slidesPerGroup : 2,
+                              spaceBetween : 12,
+
+                              {%if fcw1_num<=2%}
+                              allowTouchMove: false,
+                              {%endif%}
+
+                              }
+                              }
+
+                              })
+</script>
+
+{% endif %}
+
+{% schema %}
+{
+    "name": "Product CompareCollection",
+    "class": "compare-content",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "show_block",
+            "label": "Show Section",
+            "default": true
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Section Background Color",
+            "default": "#f6f6f6"
+        },{
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },{
+            "type": "textarea",
+            "id": "text",
+            "label": "Text"
+        },
+        {
+          "type": "range",
+          "id": "per_row",
+          "label": "Products per row",
+          "default": 4,
+          "min": 1,
+          "max": 5,
+          "step": 1
+        },
+       {
+        "id": "collection1",
+        "type": "collection",
+        "label": "Collection01"
+       }
+    ],
+    "presets": [
+      {
+        "name": "Product Compare Collection",
+        "category": "text"
+ 
+      }
+    ]
+}
+{% endschema %}

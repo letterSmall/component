@@ -1,0 +1,93 @@
+<div class="pi_lefttext_rightvideo">
+  <div class="pi_lefttext_rightvideo-top">
+    <div class="text-wrapper">
+     {% if section.settings.title != blank %}
+    <h2 class="pi_textoverimage-title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.content != blank %}
+    <div class="pi_textoverimage-content">{{ section.settings.content }}</div>
+    {% endif %}
+    </div>
+  </div>
+  <div class="pi_lefttext_rightvideo-bottom">
+    <div class="bottom_left_text">
+      <div class="text-wrapper">
+        {% if section.settings.left_title01 != blank %}
+        <h2 class="pi_textoverimage-title">{{ section.settings.left_title01 }}</h2>
+        {% endif %}
+        {% if section.settings.left_content01 != blank %}
+        <div class="pi_textoverimage-content">{{ section.settings.left_content01 }}</div>
+        {% endif %}
+      </div>
+
+      <div class="text-wrapper">
+        {% if section.settings.left_title02 != blank %}
+        <h2 class="pi_textoverimage-title">{{ section.settings.left_title02 }}</h2>
+        {% endif %}
+        {% if section.settings.left_content02 != blank %}
+        <div class="pi_textoverimage-content">{{ section.settings.left_content02 }}</div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="rightvideo-wrapper">
+      {% if section.settings.video_url %}
+      <video class="small-hide" width="100%" loop="loop" autoplay="autoplay" webkit-playsinline="true" playsinline="true" muted >
+        <source src="{{  section.settings.video_url }}">
+      </video>
+      <video class="medium--up-hide" width="100%" loop="loop" autoplay="autoplay" webkit-playsinline="true" playsinline="true" muted >
+        <source src="{{  section.settings.video_mburl }}">
+      </video>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "PI LeftText RightVideo",
+    "settings": [
+         {
+            "type": "html",
+            "id": "title",
+            "label": "Top Title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "Top Content"
+          },{
+            "type": "html",
+            "id": "left_title01",
+            "label": "Left Title01"
+          },{
+            "type": "html",
+            "id": "left_content01",
+            "label": "Left Content01"
+          },{
+            "type": "html",
+            "id": "left_title02",
+            "label": "Left Title02"
+          },{
+            "type": "html",
+            "id": "left_content02",
+            "label": "Left Content02"
+          },{
+            "type": "text",
+            "id": "video_url",
+            "label": "PC Video Url"
+          },{
+            "type": "text",
+            "id": "video_mburl",
+            "label": "Mobile Video Url"
+          }
+    ],
+
+    "presets": [
+      {
+        "name": "PI LeftText RightVideo",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

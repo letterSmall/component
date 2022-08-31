@@ -1,0 +1,34 @@
+{% layout none %}
+{% assign limit = canonical_url | split: 'limit=%26' | last %}
+<div class="halo-row"> 
+{% if collection.products_count > 0 %}    
+    {% for product in collection.products limit: limit %}
+    <div class="halo-item"> 
+        {% render 'product-card-grid' with product as product, serial: forloop.index %}
+    </div>
+    {% endfor%}
+{% else %}
+    <div class="halo-item halo-item-full">
+        {{ 'collections.general.no_matches' | t }}
+    </div>
+{% endif %}
+</div>
+
+<!-- Global site tag (gtag.js) - Google Ads -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-10826652318"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-10826652318');
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-203299648-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-203299648-1');
+</script>

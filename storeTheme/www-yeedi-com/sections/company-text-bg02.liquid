@@ -1,0 +1,51 @@
+<div class="company_textbg-container">
+   {% if section.settings.image %}
+    <img class="small-hide lazyload" src="{{ section.settings.image | img_url:'10x' }}" data-src="{{ section.settings.image | img_url:'master' }}" />
+    {% endif %}
+    {% if section.settings.image_mb != blank %}
+    <img class="medium--up-hide lazyload" src="{{ section.settings.image_mb | img_url:'10x' }}" data-src="{{ section.settings.image_mb | img_url:'master' }}"/>
+    {% else %}
+    <img class="medium--up-hide lazyload" src="{{ section.settings.image | img_url:'10x' }}" data-src="{{ section.settings.image | img_url:'master' }}"/>
+    {% endif %}
+
+  <div class="company_textbg-text02 text-bgcolor">
+    {% if section.settings.title != blank %}
+    <h2 class="company_textbg-title title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.content != blank %}
+    <div class="company_textbg-content text">{{ section.settings.content }}</div>
+    {% endif %}
+  </div>
+
+</div>
+
+{% schema %}
+  {
+    "name": "Company Text Bg02",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：750*px)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          }
+    ],
+    "presets": [
+      {
+        "name": "Company Text Bg02",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

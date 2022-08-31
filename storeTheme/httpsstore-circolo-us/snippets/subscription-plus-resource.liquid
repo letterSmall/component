@@ -1,0 +1,16 @@
+<script type="text/javascript" defer>
+	if (typeof window.subscriptionPlusApp === 'undefined') {
+		window.subscriptionPlusApp = {};
+	}
+	window.subscriptionPlusApp.proxy_url = 'apps/subscription-plus';
+	window.subscriptionPlusApp.api_url = '/' + window.subscriptionPlusApp.proxy_url + '/api';
+	window.subscriptionPlusApp.customerID = {{ customer.id | json }};
+	window.subscriptionPlusApp.products = {};
+	window.subscriptionPlusApp.money_format = '{{ shop.money_format }}';
+	window.subscriptionPlusApp.currency = {{ shop.currency | json }} ;
+</script>
+
+{% if template.name == 'product' or template.name == 'collection' %} {% render 'subscription-plus-assets' %} {% endif %}
+
+
+<div data-subscription-plus-wrapper style='display:none' data-time='11/07/2021'></div>

@@ -1,0 +1,228 @@
+<link href="{{ 'flickity.min.css' | asset_url }}" rel="stylesheet">
+<script src="{{ 'flickity.pkgd.min.js' | asset_url }}"></script>
+<div class="videos-switcher">
+  <div class="container">
+  <div class="section-product-video">
+    <h2 class="title">{{section.settings.title}}</h2>
+    <div class="videos-switcher-container">
+      <div class="videos-wrapper videos-main-carousel">
+        {% for block in section.blocks %}
+        <div class="video-item carousel-cell {% if forloop.first %} active{% endif %}" data-index="{{forloop.index}}">
+          <div class="player_video-wrapper" data-index="{{forloop.index}}">
+            {% if block.settings.image != blank %}
+            <img src="{{block.settings.image | img_url: 'master'}}" class="prev_video_image hide-mb"/>
+            {% endif %}
+            {% if block.settings.image_mb != blank %}
+            <img src="{{block.settings.image_mb | img_url: 'master'}}" class="prev_video_image hide-pc" />
+            {% else %}
+            <img src="{{block.settings.image | img_url: 'master'}}" class="prev_video_image hide-pc" />
+            {% endif %}
+            <div class="play-icon-wrapper">
+              {%- render 'icon-svg',icon_svg: 'play_icon' -%}
+            </div>
+            <div class="product_player_video-wrapper">
+              <div id="product_player_video_{{forloop.index}}" class="product_player_video"></div>
+            </div>
+          </div>
+          <div class="video-text-wrapper">
+          <h3>{{block.settings.title }}</h3>
+          <p>{{block.settings.text }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<style>
+  .videos-switcher{ background: {{ section.settings.bg_color }};}
+</style>
+
+<script>
+  var player_videos =[];
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/player_api?"+Math.random();
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+</script>
+<script>
+  function productVedioChange(event){
+    if(event.data == 0){
+      $(".player_video-wrapper").find(".prev_video_image").removeClass("hide");
+      $(".player_video-wrapper").find(".play-icon-wrapper").css("display","block");
+      $(".player_video-wrapper").find(".text").css("display","block");
+      $(".player_video-wrapper").find(".product_player_video-wrapper").css("display","none");
+    }
+  }
+  
+  var player_pdtpage_desc;
+  var player_pdtpage_product = [];
+  function onYouTubePlayerAPIReady() {
+    {% for block in section.blocks %}
+    player_pdtpage_product[{{forloop.index}}] = new YT.Player('product_player_video_{{forloop.index}}', {
+      height: '675',
+      width: '1200',
+      videoId: {{block.settings.code | json}},
+      playerVars:{
+        controls: 1,
+      },
+      events: {
+        'onStateChange': productVedioChange,                     
+      },
+   });
+    {% endfor %}
+ }
+</script>
+
+<script>
+  $(function(){
+    var last_video_index = 1;
+    var video_width =  1200;
+    var video_height =  675;
+    $(".player_video-wrapper").click(function(){
+      if(player_pdtpage_product){
+        if($(window).width() > 768){
+          $(this).find(".product_player_video").css({'width':$(this).find(".prev_video_image.hide-mb").width(),'height':$(this).find(".prev_video_image.hide-mb").height(),'display': 'block'});
+        }else{
+          $(this).find(".product_player_video").css({'width':$(this).find(".prev_video_image.hide-pc").width(),'height':$(this).find(".prev_video_image.hide-pc").height(),'display': 'block'});
+        }
+        $(this).find(".prev_video_image").addClass("hide");
+        $(this).find(".play-icon-wrapper").css("display","none");
+        $(this).find(".text").css("display","none");
+        $(this).find(".product_player_video-wrapper").css("display","block");
+        var now_index = parseInt($(this).attr("data-index"));
+        player_pdtpage_product[last_video_index].stopVideo();
+        player_pdtpage_product[now_index].seekTo(0);
+        player_pdtpage_product[now_index].playVideo();
+        last_video_index = now_index;	
+      }
+    });
+    
+    setTimeout(function(){
+      $(".videos-wrapper,.flickity-viewport").css("min-height",$(".video-item.active").height() + "px");
+    },3000);
+  });
+</script>
+
+<script type="text/javascript">
+  if($(window).width() > 768){
+    $('.videos-main-carousel').flickity({
+      cellAlign: 'center',
+      contain: true,
+      wrapAround:true,
+      fullscreen:true,
+      draggable: true,
+    });
+  }
+</script>
+
+<script type="text/javascript">
+  if($(window).width() < 769){
+    $(".videos-wrapper").removeClass("videos-main-carousel");
+    $(".videos-wrapper .video-item").removeClass("carousel-cell");
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "Videos Switcher",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Title",
+        "id": "title",
+		"default": "PRODUCT VIDEO"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Title and Text Color",
+        "default": "#F2F2F2"
+      }
+	],
+	"blocks":[
+      {
+        "type": "video",
+        "name": "Video",
+        "settings":[
+          {
+            "type": "text",
+            "label": "Youtube Code",
+            "id": "code"
+          },{
+            "type": "image_picker",
+            "label": "Prev Image",
+            "id": "image",
+            "info": "Size: 1130px*570px"
+          },{
+            "type": "image_picker",
+            "label": "Prev Image Mobile",
+            "id": "image_mb"
+          },{
+            "type": "html",
+            "label": "Video Title",
+            "id": "title"
+          },{
+            "type": "html",
+            "label": "Video Text",
+            "id": "text"
+          }
+      	]
+      }
+	],
+    "presets": [
+      {
+        "name": {
+          "da": "Video",
+          "de": "Video",
+          "en": "Videos Switcher",
+          "es": "Video",
+          "fi": "Video",
+          "fr": "Vidéo",
+          "hi": "वीडियो",
+          "it": "Video",
+          "ja": "動画",
+          "ko": "동영상",
+          "ms": "Video",
+          "nb": "Video",
+          "nl": "Video",
+          "pt-BR": "Vídeo",
+          "pt-PT": "Vídeo",
+          "sv": "Video",
+          "th": "วิดีโอ",
+          "zh-CN": "视频切换",
+          "zh-TW": "影片"
+        },
+        "category": {
+          "da": "Video",
+          "de": "Video",
+          "en": "Video",
+          "es": "Video",
+          "fi": "Video",
+          "fr": "Vidéo",
+          "hi": "वीडियो",
+          "it": "Video",
+          "ja": "動画",
+          "ko": "동영상",
+          "ms": "Video",
+          "nb": "Video",
+          "nl": "Video",
+          "pt-BR": "Vídeo",
+          "pt-PT": "Vídeo",
+          "sv": "Video",
+          "th": "วิดีโอ",
+          "zh-CN": "视频",
+          "zh-TW": "影片"
+        }
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

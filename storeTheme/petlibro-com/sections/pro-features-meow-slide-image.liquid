@@ -1,0 +1,88 @@
+<div class="promotion-slider-wrapper slider-img-kei xpmcc">
+  <div class="content_wrapper swiper-container">
+    <div class="swiper-wrapper">
+      {%for block in section.blocks%}
+      <div class="item swiper-slide">
+        <div class="item_wrapper">
+          <img src="{{block.settings.img | img_url:'500x'}}">
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+    <div class="swiper-button-next promotion-next  swiper-button-kei swiper-button-kei-next">
+       <svg width="17" height="34" viewBox="0 0 17 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2L14 17L2 32" stroke="white" stroke-width="4"/>
+      </svg> 
+    </div>
+    <div class="swiper-button-prev promotion-prev  swiper-button-kei swiper-button-kei-prev">
+       <svg width="17" height="34" viewBox="0 0 17 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 2L14 17L2 32" stroke="white" stroke-width="4"/>
+      </svg> 
+    </div>
+    <div class="swiper-pagination swiper-kei-pagination"></div>
+  </div>	
+</div>
+
+<script> 
+  var proSwiper = new Swiper('.slider-img-kei .content_wrapper',{
+    slidesPerView : 1,
+    slidesPerGroup : 1,
+    spaceBetween: 0,
+    watchSlidesVisibility: true,
+    centeredSlides: false,
+    loop: true,
+    pagination: {
+      el: ".swiper-pagination",
+    },
+    watchOverflow: true,
+    navigation: {
+		nextEl: '.promotion-next',
+		prevEl: '.promotion-prev',
+	},
+  
+    breakpoints: { 
+      820: { 
+        slidesPerView : 1
+      }
+    }
+  })
+  
+</script>
+
+{% schema %}
+  {
+    "name": "Slider Image New",
+    "settings": [
+		{
+			"type":"text",
+			"label":"title",
+			"id":"title"
+		}
+	],
+	"blocks":[
+		{
+			"type":"block",
+			"name":"block",
+			"settings":[
+              {
+                  "type":"image_picker",
+                  "label":"image",
+                  "id":"img"
+              }
+			]
+		}
+	],
+	"presets":[
+		{
+			"name":"Slider Image New",
+			"category":"Image"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

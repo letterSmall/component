@@ -1,0 +1,439 @@
+
+{%- assign main_menu = linklists[section.settings.main_menu_link_list] -%}
+
+{%- assign logo_alignment = 'left' -%}
+{% if section.settings.main_menu_alignment == 'center-left' or section.settings.main_menu_alignment == 'center-split' or section.settings.main_menu_alignment == 'center' or section.settings.main_menu_alignment == 'center-drawer' %}
+  {%- assign logo_alignment = 'center' -%}
+{% endif %}
+{% comment %} {% render 'drawer-menu', main_menu: main_menu %} {% endcomment %}
+{%- assign template_name = template | replace: '.', ' ' | truncatewords: 2, '' | handle -%}
+
+{%- assign sticky_header = false -%}
+{% if section.settings.header_style == 'sticky' %}
+  {%- assign sticky_header = true -%}
+{% endif %}
+{%- assign overlay_header = false -%}
+{%- assign has_logo = false -%}
+{% if template_name == 'index' and section.settings.sticky_index %}
+  {%- assign overlay_header = true -%}
+{% endif %}
+
+{% if template_name == 'collection' and collection.image and section.settings.sticky_collection %}
+  {%- assign overlay_header = true -%}
+{% endif %}
+
+{% if page.template_suffix == 'our-story' %}
+  {%- assign overlay_header = true -%}
+{% endif %}
+
+{% if page.template_suffix == 'our-story' %}
+  {%- assign overlay_header = true -%}
+{% endif %}
+{% if page.template_suffix == 'Shipping' %}
+  {%- assign overlay_header = true -%}
+{% endif %}
+
+  {% assign pgtypeho = request.page_type | handle  %}
+  {% assign pgtitleho = page_title | handle  %}
+  {% if pgtypeho == 'policy' and  pgtitleho == 'privacy-policy'%}
+  {%- assign overlay_header = true -%}
+{% endif %}
+{% style %}
+  .site-nav__link,
+  .site-nav__dropdown-link {
+    font-size: {{ section.settings.type_navigation_size }}px;
+  }
+
+  {% if section.settings.type_navigation_size < 18 %}
+    .site-nav__link {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  {% endif %}
+
+  {%- if settings.color_header == settings.color_body_bg or settings.color_body_bg contains settings.color_header -%}
+    .site-header {
+      border-bottom: 1px solid;
+      border-bottom-color: {{ settings.color_borders }};
+    }
+  {%- endif -%}
+{% endstyle %}
+
+<div data-section-id="{{ section.id }}" data-section-type="header-section">
+  <div class="header-wrapper{% if overlay_header %} header-wrapper--overlay is-light{% endif %}">
+
+    {% if section.settings.show_announcement %}
+      {% render 'announcement-bar', section: section %}
+    <script>
+      $(function(){
+       $(".site-header-sticky").css("top",$(".announcement__text").innerHeight());
+      });
+    
+    </script>
+    {% endif %}
+    <header id="site-header"
+      class="site-header{%if section.settings.type_navigation_style %} site-header--heading-style{% endif %} {%if template.name=='index'%}site-header-index{%endif%}"
+      data-sticky="{{ sticky_header }}"
+      data-overlay="{{ overlay_header }}">
+      <div class="site-header-inner">
+        <div class="page-width header-page-width">
+          <div
+            class="header-layout header-layout--{{ section.settings.main_menu_alignment }}"
+            data-logo-align="{{ logo_alignment }}">
+
+            {% if logo_alignment == 'left' %}
+              <div class="header-item small--one-quarter  header-item--left header-item--navigation  large-up--hide">
+                {% if section.settings.main_menu_alignment == 'center' or section.settings.main_menu_alignment == 'center-split' %}
+                  {% if settings.search_enable %}
+                    <div class="site-nav medium-down--hide">
+                      <a href="{{ routes.search_url }}" class="site-nav__link site-nav__link--icon js-search-header js-no-transition">
+                        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 64 64"><path d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58zM54 54L41.94 42"/></svg>
+                        <span class="icon__fallback-text">{{ 'general.search.title' | t }}</span>
+                      </a>
+                    </div>
+                  {% endif %}
+                {% endif %}
+
+                {% if section.settings.main_menu_alignment == 'center-left' %}
+                  {% render 'header-desktop-nav', main_menu: main_menu %}
+                {% endif %}
+
+                <div class="site-nav site-nav-box {% unless section.settings.main_menu_alignment == 'center-drawer' %} large-up--hide{% endunless %}">
+                  <button
+                    type="button"
+                    class="site-nav__link site-nav__link--icon js-drawer-open-nav"
+                    aria-controls="NavDrawer">
+                    <div class="nav-box">
+                  <span class="burger-icon burger-icon--top"></span>
+                    <span class="burger-icon burger-icon--mid"></span>
+                    <span class="burger-icon burger-icon--bottom"></span>
+                    <span class="fallback-text hide">Site navigation</span>
+                    </div>
+                    {% comment %}<div style="font-size:12px">shop</div>{% endcomment %}
+                    <span class="icon__fallback-text">{{ 'general.drawers.navigation' | t }}</span>
+                  </button>
+                  <a href="{% if customer %}{{ routes.account_url }}{%else%}{{ routes.account_login_url }}{%endif%}" class="mb_account_icon mb_header_icon">
+                    <img alt="" src="{{ "account_icon.svg" | asset_url }}">
+                  </a>
+                  {% comment %} <a href="{{ routes.cart_url }}" class="site-nav__link new-js-drawer-open-cart  site-nav__link--icon js-drawer-open-cart js-no-transition" aria-controls="CartDrawer" data-icon="{{ settings.cart_icon }}">
+                    <div class="nav-box">
+                      <span class="burger-icon burger-icon--top"></span>
+                      <span class="burger-icon burger-icon--mid"></span>
+                      <span class="burger-icon burger-icon--bottom"></span>
+                      <span class="fallback-text hide">Site navigation</span>
+                    </div>
+                  </a> {% endcomment %}
+                  
+                  {% comment %}<span style="position: absolute; left: 0; top: 65%;">Shop</span>{% endcomment %}
+                </div>
+              </div>
+
+              {% if section.settings.main_menu_alignment == 'center-split' %}
+                {% render 'header-split-nav', main_menu: main_menu, section: section %}
+              {% endif %}
+
+              <div class="header-item header-item--logo  small--two-quarters">
+                {% render 'header-logo-block', section: section %}
+              </div>
+            {% endif %}
+
+            {% if logo_alignment == 'left' and section.settings.main_menu_alignment != 'left-drawer' %}
+              <div class="header-item header-item--navigation medium-down--hide {% if section.settings.main_menu_alignment == 'left-center' %} text-center{% endif %}">
+                {% render 'header-desktop-nav', main_menu: main_menu %}
+              </div>
+            {% endif %}
+
+            {% if logo_alignment == 'center' %}
+              <div class="header-item header-item--left header-item--navigation small--hide">
+                {% if section.settings.main_menu_alignment == 'center' or section.settings.main_menu_alignment == 'center-split' %}
+                  {% if settings.search_enable %}
+                    <div class="site-nav medium-down--hide">
+                      <a href="{{ routes.search_url }}" class="site-nav__link site-nav__link--icon js-search-header js-no-transition">
+                        <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 64 64"><path d="M47.16 28.58A18.58 18.58 0 1 1 28.58 10a18.58 18.58 0 0 1 18.58 18.58zM54 54L41.94 42"/></svg>
+                        <span class="icon__fallback-text">{{ 'general.search.title' | t }}</span>
+                      </a>
+                    </div>
+                  {% endif %}
+                {% endif %}
+
+                {% if section.settings.main_menu_alignment == 'center-left' %}
+                  {% render 'header-desktop-nav', main_menu: main_menu %}
+                {% endif %}
+
+                <div class="site-nav{% unless section.settings.main_menu_alignment == 'center-drawer' %} large-up--hide{% endunless %}">
+                  <button
+                    type="button"
+                    class="site-nav__link site-nav__link--icon js-drawer-open-nav"
+                    aria-controls="NavDrawer">
+                    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-hamburger" viewBox="0 0 64 64"><path d="M7 15h51M7 32h43M7 49h51"/></svg>
+                    <span class="icon__fallback-text">{{ 'general.drawers.navigation' | t }}</span>
+                  </button>
+                </div>
+              </div>
+
+              {% if section.settings.main_menu_alignment == 'center-split' %}
+                {% render 'header-split-nav', main_menu: main_menu, section: section %}
+              {% endif %}
+
+              {% if section.settings.main_menu_alignment != 'center-split' %}
+                <div class="header-item header-item--logo">
+                  {% render 'header-logo-block', section: section %}
+                </div>
+              {% endif %}
+            {% endif %}
+
+            <div class="header-item header-item--icons small--one-quarter">
+              {% render 'header-icons', section: section %}
+            </div>
+          </div>
+
+          {% if section.settings.main_menu_alignment == 'center' %}
+            <div class="text-center">
+              {% render 'header-desktop-nav', main_menu: main_menu %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </header>
+  </div>
+</div>
+<div id="mb_drawer_menu_page"></div>
+<script>
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    {% capture mobileTemplate %}{% render "mb-drawer-menu" %}{% endcapture %}
+    let content = {{ mobileTemplate | json }}
+    $('#mb_drawer_menu_page').css('display', 'block')
+    $('#mb_drawer_menu_page').html(content)
+  }
+</script>
+
+<script>var _0xf480=["\x73\x74\x61\x72\x74\x61\x73\x79\x6E\x63\x6C\x6F\x61\x64\x69\x6E\x67","\x73\x63\x72\x69\x70\x74","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x73\x42\x79\x54\x61\x67\x4E\x61\x6D\x65","\x6C\x65\x6E\x67\x74\x68","\x64\x61\x74\x61\x2D\x73\x72\x63","\x67\x65\x74\x41\x74\x74\x72\x69\x62\x75\x74\x65","\x73\x72\x63","\x73\x65\x74\x41\x74\x74\x72\x69\x62\x75\x74\x65","\x64\x61\x74\x61\x73\x65\x74","\x61\x64\x64\x45\x76\x65\x6E\x74\x4C\x69\x73\x74\x65\x6E\x65\x72"];document[_0xf480[9]](_0xf480[0],function(){var _0x1610x1=document[_0xf480[2]](_0xf480[1]);for(var _0x1610x2=0;_0x1610x2< _0x1610x1[_0xf480[3]];_0x1610x2++){if(_0x1610x1[_0x1610x2][_0xf480[5]](_0xf480[4])!== null){_0x1610x1[_0x1610x2][_0xf480[7]](_0xf480[6],_0x1610x1[_0x1610x2][_0xf480[5]](_0xf480[4]));delete _0x1610x1[_0x1610x2][_0xf480[8]][_0xf480[6]]}}})</script>
+{% schema %}
+  {
+    "name": "Header and menus",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "main_menu_link_list",
+        "label": "Menu",
+        "default": "main-menu"
+      },
+      {
+        "type": "select",
+        "id": "main_menu_alignment",
+        "label": "Logo alignment",
+        "default": "left-center",
+        "options": [
+          {
+            "value": "left",
+            "label": "Logo left, menu left"
+          },
+          {
+            "value": "left-center",
+            "label": "Logo left, menu center"
+          },
+          {
+            "value": "left-drawer",
+            "label": "Logo left, menu drawer"
+          },
+          {
+            "value": "center-left",
+            "label": "Logo center, menu left"
+          },
+          {
+            "value": "center-split",
+            "label": "Logo center, menu split"
+          },
+          {
+            "value": "center",
+            "label": "Logo center, menu below"
+          },
+          {
+            "value": "center-drawer",
+            "label": "Logo center, menu drawer"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "header_style",
+        "label": "Header style",
+        "default": "normal",
+        "options": [
+          {
+            "value": "normal",
+            "label": "Normal"
+          },
+          {
+            "value": "sticky",
+            "label": "Sticky"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "sticky_index",
+        "label": "Overlay header over homepage",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "sticky_collection",
+        "label": "Overlay header over collection",
+        "info": "(if collection image is enabled)",
+        "default": false
+      },
+      {
+        "type": "header",
+        "content": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo-inverted",
+        "label": "White logo",
+        "info": "Used when on top of an image"
+      },
+      {
+        "type": "checkbox",
+        "label": "Use the SVG format Logo",
+        "id": "user_svg_logo"
+      },
+      {
+        "type": "html",
+        "id": "svg_logo",
+        "label": "Svg Logo"
+      },
+      {
+        "type": "html",
+        "id": "svg_logo-inverted",
+        "label": "Svg white logo",
+        "info": "Used when on top of an image"
+      },
+      {
+        "type": "range",
+        "id": "desktop_logo_width",
+        "label": "Desktop logo width",
+        "default": 200,
+        "min": 60,
+        "max": 300,
+        "step": 5,
+        "unit": "px"
+      },
+      {
+        "type": "range",
+        "id": "mobile_logo_width",
+        "label": "Mobile logo width",
+        "default": 125,
+        "min": 60,
+        "max": 200,
+        "step": 5,
+        "unit": "px",
+        "info": "Set as a max-width, may appear smaller"
+      },
+      {
+        "type": "header",
+        "content": "Typography"
+      },
+      {
+        "type": "range",
+        "id": "type_navigation_size",
+        "label": "Text size",
+        "default": 18,
+        "min": 12,
+        "max": 40,
+        "unit": "px"
+      },
+      {
+        "type": "checkbox",
+        "id": "type_navigation_style",
+        "label": "Use heading font"
+      },
+      {
+        "type": "header",
+        "content": "Announcement bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_announcement",
+        "label": "Show an announcement"
+      },
+      {
+        "type": "richtext",
+        "id": "announcement_text",
+        "label": "Announcement text",
+        "info": "When closed, the announcement will remain closed until the next visit. Change the text to see it again."
+      },
+      {
+        "type": "checkbox",
+        "id": "announcement_closable",
+        "label": "Allow users to close announcement"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Link name"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "Max size:200*200px"
+          }
+        ]
+      },
+      {
+        "type": "mobile-search-hot-word",
+        "name": "Mobile Search Hot Word",
+        "limit": 4,
+        "settings": [
+          {
+            "type": "text",
+            "id": "hot_word",
+            "label": "Mobile Hot Word Item"
+          }
+        ]
+      },
+      {
+        "type": "mobile-search-others",
+        "name": "Mobile Search Others",
+        "limit": 4,
+        "settings": [
+          {
+            "type": "header",
+            "content": "Search Other Item"
+          },
+          {
+            "type": "image_picker",
+            "id": "search_other_image",
+            "label": "Image",
+            "info": "Max size:90*90px(54px*54px)"
+          },
+          {
+            "type": "text",
+            "id": "search_other_text",
+            "label": "Text"
+          },
+          {
+            "type": "url",
+            "id": "search_other_url",
+            "label": "Url"
+          }
+        ]
+      }
+    ],
+    "default": {
+      "settings": {}
+    }
+  }
+{% endschema %}

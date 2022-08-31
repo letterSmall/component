@@ -1,0 +1,31 @@
+
+<div class="feeding_icon_box feeding_model_s">
+  <img class="lazyload media_pc" data-src="{{ section.settings.icon_image_pc | img_url: 'master' }}" alt="">
+  <img class="lazyload media_mb" data-src="{{ section.settings.icon_image_mobile | img_url: 'master' }}" alt="">
+</div>
+
+{% schema %}
+{
+  "name": "Feeding Overview Icon",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "icon_image_pc",
+      "label": "Image",
+      "info": "Image Width: 1920"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_mobile",
+      "label": "Mobile Image",
+      "info": "Image Width: 1024"
+    }
+],
+  "presets": [
+    {
+      "name": "Feeding Overview Icon"
+    }
+  ]
+}
+{% endschema %}
+

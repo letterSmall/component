@@ -1,0 +1,165 @@
+{%- assign swatch_file_extension = 'png' -%}
+ {%assign option_index=forloop.index%}
+
+                    {%assign option_name=option.name|handle%}
+
+                   {%if option_name contains "color" or option_name contains "colour"%}
+
+                  {%assign option_name="color"%}
+
+                {%endif%}
+<div class="variant-wrapper {%if forloop.index==option_size_minus%}last-second-item{%endif%} variant-wrapper--{{ settings.variant_type }} variant-wrapper-{{option_name}} js">
+ <div class="variant-wrapper-inner">
+  <label class="variant__label{% if option.name == 'Default' or option.name == 'Title' %} hidden-label{% endif %}{% unless settings.variant_labels_enable %} hidden-label{% endunless %}"
+    for="ProductSelect-{{ section_id }}-option-{{ forloop.index0 }}">
+    <span class="name"> {{ option.name }}</span>
+    {% if is_color %}
+      <span class="variant__label-info">
+        <i>  &mdash;</i>
+        <span
+          id="VariantColorLabel-{{ section_id }}-{{ forloop.index0 }}"
+          data-option-index="{{ color_option_index }}">
+          {{ option.selected_value }}
+        </span>
+      </span>
+    {% endif %}
+  </label>
+
+  
+  
+  {% assign option_index = forloop.index %}
+  <fieldset class="variant-input-wrap"
+    name="{{ option.name }}"
+    data-index="option{{ option_index }}"
+    id="ProductSelect-{{ section_id }}-option-{{ forloop.index0 }}">
+    {% for value in option.values %}
+      {%- assign product_available = true -%}
+      {% if product.options.size == 1 %}
+        {%- assign product_available = product.variants[forloop.index0].available -%}
+      {% endif %}
+      <div
+        class="variant-input"
+        data-index="option{{ option_index }}"
+        data-value="{{ value | escape }}">
+        
+        
+        <input type="radio"
+          {% if option.selected_value == value %} checked="checked"{% endif %}
+          value="{{ value | escape }}"
+          data-index="option{{ option_index }}"
+          name="{{ option.name }}"
+          class="variant__input-{{ section_id }}{% unless product_available %} disabled{% endunless %}{% if is_color %} variant__input--color-swatch-{{ section_id }}{% endif %}"
+          {% if is_color %} data-color-name="{{ value | escape }}"{% endif %}
+          {% if is_color %} data-color-index="{{ color_option_index }}"{% endif %}
+          id="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}">
+        {% if is_color %}
+          {%- assign color_image = value | handle | append: '.' | append: swatch_file_extension | asset_img_url: '50x' | prepend: 'https:' | split: '?' | first -%}
+          {%- assign color_swatch_fallback = value | handle -%}
+          <label
+            for="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"
+            class="color-swatch color-swatch--{{ value | handle }} color-swatch--{{color_swatch_fallback}}  option-btn-{{option_name}}-{{color_swatch_fallback}} {% unless product_available %} disabled{% endunless %}"
+            style="background-image: url({{ color_image }});"
+          >
+            {{ value | escape }}
+          </label>
+        
+         <style>
+
+                 .variant-input-wrap label.option-btn-{{option_name}}-{{color_swatch_fallback}}{
+
+                                 background-color:{{color_swatch_fallback}} !important;
+
+                               }  
+
+        {%for block in section.blocks%}
+
+          
+
+               {%assign filter_color_name=block.settings.title| downcase |handleize |replace: ' ', ''%}
+
+                               
+
+                {%assign user_color_type=block.settings.user_color_type|handleize%}
+
+                 {%assign filter_color=block.settings.filter_color%}
+
+                {%assign filter_color2=block.settings.filter_color2%}
+
+           
+
+               {%if filter_color_name==color_swatch_fallback %}
+          .variant-input-wrap input[type=radio]:checked+label.option-btn-{{option_name}}-{{color_swatch_fallback}}{
+            box-shadow: 0 0 0 2px {{filter_color|color_darken: 30}} !important;
+           }
+
+              .variant-input-wrap label.option-btn-{{option_name}}-{{color_swatch_fallback}}{
+
+            {%if user_color_type=="one"%}
+
+               
+
+                {%if filter_color!='transparent' or filter_color2!='rgba(0,0,0,0)' %}
+
+                {%if  filter_color2=='transparent' or filter_color2=='rgba(0,0,0,0)'%}
+
+                background-color:{{filter_color}} !important;
+
+                {%endif%}
+
+                {%endif%}
+
+            {%elsif user_color_type=="two"%}
+
+              
+
+                    background-color:none;
+
+                    background-image:-webkit-gradient(0deg,{{filter_color}},{{filter_color2}} );
+
+                    background-image:-webkit-linear-gradient(0deg,{{filter_color}},{{filter_color2}} );
+
+                    background-image:-moz-linear-gradient(0deg,{{filter_color}},{{filter_color2}} );
+
+                    background-image: -ms-linear-gradient(0deg,{{filter_color}},{{filter_color2}} );
+
+                    background-image: -o-linear-gradient(0deg,{{filter_color}},{{filter_color2}} );
+
+                    background-image: linear-gradient(0deg,{{filter_color}},{{filter_color2}} );
+
+              
+
+            {%elsif block.settings.user_color_type=="three"%}
+
+                  background-size: contain;
+
+                  background-image:url('{{block.settings.filter_color_img |img_url:"master"}}')!important;
+
+            {%endif%}
+
+              }
+                     
+              {%else%}
+
+                  .variant-input-wrap label.option-btn-{{option_name}}-{{value_name}}{
+
+                                 background-color:{{color_swatch_fallback}};
+
+                               }  
+
+                                  {%endif%}           
+           
+            {%endfor%}
+
+
+                </style>
+        
+        
+        {% else %}
+          <label for="ProductSelect-{{ section_id }}-option-{{ option.name | handleize }}-{{ value | url_encode }}"{% unless product_available %} class="disabled"{% endunless %}>{{ value | escape }}</label>
+        {% endif %}
+      </div>
+    
+    {% endfor %}
+  </fieldset>
+</div>
+</div>

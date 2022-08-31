@@ -1,0 +1,63 @@
+<div class="vac_srobot_titletext">
+<div class="{{ section.settings.block_css_name }}">
+  <div class="special-bg-main">
+    <img class="bg-header-left" src="https://cdn.shopify.com/s/files/1/0524/3643/5101/files/bg-header-left.png?v=1659066459">
+  {% for block in section.blocks %}
+  <div class="text-wrapper" >
+    {% if block.settings.title != blank %}
+    <h2 class="title30">{{ block.settings.title }}</h2>
+    {% endif %}
+
+    {% if block.settings.text != blank %}
+    <p class="text">{{ block.settings.text }}</p>
+    {% endif %}
+  </div>
+  {% endfor %}
+  <img class="bg-footer-right" src="https://cdn.shopify.com/s/files/1/0524/3643/5101/files/bg-footer-right.png?v=1659066459">
+  </div>
+</div>
+</div>
+
+{% schema %}
+  {
+    "name": "Vac srobot Special BgText",
+    "class": "vac_srobot_titletext_bg",
+    "settings": [
+    {
+            "type": "html",
+            "id": "block_css_name",
+            "label": "Section Css Name"
+          }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },{
+            "type": "html",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vac srobot Special BgText",
+        "category": "text"
+ 
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

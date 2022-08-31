@@ -1,0 +1,84 @@
+<div class="company_product-container">
+  <div class="text-wrapper">
+    {% if section.settings.title != blank %}
+    <h2 class="company_textbg-title title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.content != blank %}
+    <div class="company_textbg-content text">{{ section.settings.content }}</div>
+    {% endif %}
+  </div>
+  
+  <div class="company-product-wrapper">
+    {%- for block in section.blocks -%}
+    <div class="product-item">
+      <div class="product-title">{{ block.settings.title }}</div>
+      <img src="{{ block.settings.image | img_url:'350x' }}"/>
+      <div class="product-text">{{ block.settings.content }}</div>
+    </div>
+    {%- endfor -%}
+  </div>
+
+  {% if section.settings.image %}
+  <img class="small-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  {% endif %}
+  {% if section.settings.image_mb != blank %}
+  <img class="medium--up-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+  {% else %}
+  <img class="medium--up-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  {% endif %}
+
+</div>
+
+{% schema %}
+  {
+    "name": "Company Product Item",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920*px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：750*px)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          }
+    ],
+    "blocks": [
+        {
+          "type": "text",
+          "name": "item",
+          "settings": [
+            {
+              "type": "html",
+              "id": "title",
+              "label": "title"
+            },
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Image(Recommended size：350*280px)"
+            },
+            {
+              "type": "html",
+              "id": "content",
+              "label": "content"
+            }
+          ]
+        }
+     ],
+    "presets": [
+      {
+        "name": "Company Product Item",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

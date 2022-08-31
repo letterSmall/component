@@ -1,0 +1,158 @@
+{% if section.blocks.size > 0 %}
+<style>
+  .referral-text-columns-{{ section.id }} .item-title span {
+    color: {{ section.settings.number_color }};
+  }
+</style>
+{% assign count = section.blocks.size %}
+{% case count %}
+{% when 1 %}
+{% assign item_width = 'one-whole' %}
+{% when 2 %}
+{% assign item_width = 'one-half' %}
+{% when 3 %}
+{% assign item_width = 'one-third' %}
+{% endcase %}
+<div class="referral-text-columns referral-text-columns-{{ section.id }}">
+  <div class="referral-columns-wrapper">
+    {% if section.settings.title != blank %}
+    <div class="title-container">
+      {% if section.settings.title_icon != blank %}
+      <div class="title-icon-box">{{ section.settings.title_icon }}</div>
+      {% else %}
+      {% if section.settings.title_image != blank %}
+      <div class="title-icon-box">
+        <img class="lazyload js title-iamge-item"
+             src="{{ section.settings.title_image | img_url: '1x' }}"
+             srcset="{{ section.settings.title_image | img_url: '1500x' }}, {{ section.settings.title_image | img_url: '960x' }}"
+             sizes="(max-width: 960px) 960px, 1500px" 
+             alt=""
+             width="{{ section.settings.title_image.width }}" 
+             height="{{ section.settings.title_image.height }}"/>
+      </div>
+      {% endif %}
+      {% endif %}
+      <h2 class="title-box pro-titles">{{ section.settings.title }}</h2>
+    </div>
+    {% endif %}
+    <div class="text-columns-container">
+      {% for block in section.blocks %}
+      <div class="column-item {{ item_width }}">
+        {% if block.settings.title != blank %}
+        <div class="item-title">{{ block.settings.title }}</div>
+        {% endif %}
+        {% if block.settings.desc != blank %}
+        <div class="item-desc">{{ block.settings.desc }}</div>
+        {% endif %}
+        {% if block.settings.link_text != blank and block.settings.link_url != blank %}
+        <a class="item-link" href="{{ block.settings.link_url }}">{{ block.settings.link_text }}</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.button_text != blank and section.settings.button_url != blank %}
+    <div class="button-container">
+      <a class="button-link" href="{{ section.settings.button_url }}">{{ section.settings.button_text }}</a>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Referral Text Columns",
+    "settings": [
+   	  {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+		"default": "#000000"
+      },
+   	  {
+        "type": "color",
+        "id": "number_color",
+        "label": "Number Color",
+		"default": "#FFBC00"
+      },
+      {
+        "type": "html",
+        "id": "title_icon",
+        "label": "Title Icon"
+      },
+      {
+        "type": "image_picker",
+        "id": "title_image",
+        "label": "Title Image",
+		"info": "To use this option, be sure to clear icon code of title. Image size: 48*48px."
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title",
+		"default": "Start Earning in Just Three Simple Steps"
+      },
+      {
+        "type": "text",
+        "id": "button_text",
+        "label": "Button Text",
+        "default": "Join Now"
+      },
+      {
+        "type": "url",
+        "id": "button_url",
+        "label": "Button Url"
+      }
+	],
+	"max_blocks": 3,
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text Column",
+        "settings": [
+          {
+            "type": "html",
+            "id": "title",
+            "label": "Title",
+			"default": "<span>01</span><div>Create an account</div>"
+          },
+          {
+            "type": "html",
+            "id": "desc",
+            "label": "Description",
+			"default": "<p>It’s free and easy to join. Simply create an account here and we’ll provide you a link which you can start promoting with.</p>"
+          },
+          {
+            "type": "color",
+            "id": "title_bg_color",
+            "label": "Title Background Color",
+            "default": "#FFBC00"
+          },
+          {
+            "type": "text",
+            "id": "link_text",
+            "label": "Link Text",
+            "default": "Join Now"
+          },
+          {
+            "type": "url",
+            "id": "link_url",
+            "label": "Link Url"
+          }
+		]
+      }
+    ],
+	"presets": [
+      {
+        "name": "Referral Text Columns"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

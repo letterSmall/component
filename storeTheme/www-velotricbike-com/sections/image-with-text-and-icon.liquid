@@ -1,0 +1,181 @@
+{%- if section.settings.divider -%}<div class="section--divider">{%- endif -%}
+  <div class="feature-row-wrapper text-with-icon-wrapper">
+    <div class="page-width">
+    <div class="feature-row__item text-{{ section.settings.align_text }}">
+      {%- if section.settings.title != blank -%}
+        <div class="h2 appear-delay{% cycle '','-1','-2','-3','-4' %}">{{ section.settings.title }}</div>
+      {%- endif -%}
+    </div>
+    {%- capture image_layout -%}
+      <div class="text-with-icon-image" style="max-width: {{ section.settings.image_width }}px" data-aos>
+          {%- if section.settings.image != blank -%}
+            <div class="image-wrap medium-down--hide" style="height: 0; padding-bottom: {{ 100 | divided_by: section.settings.image.aspect_ratio }}%;">
+              {%- assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+              <img class="feature-row__image lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[180, 360, 540, 750, 900, 1080]"
+                data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ section.settings.image.alt }}">
+            </div>
+          {%- endif -%}
+          {%- if section.settings.image2 != blank -%}
+            <div class="image-wrap large-up--hide" style="height: 0; padding-bottom: {{ 100 | divided_by: section.settings.image2.aspect_ratio }}%;">
+              {%- assign img_url = section.settings.image2 | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+              <img class="feature-row__image lazyload"
+                data-src="{{ img_url }}"
+                data-widths="[180, 360, 540, 750, 900, 1080]"
+                data-aspectratio="{{ section.settings.image2.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ section.settings.image2.alt }}">
+            </div>
+          {%- endif -%}
+          {%- if section.settings.image == blank and section.settings.image2 == blank -%}
+            <div>
+              <div class="image-wrap">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            </div>
+            <div>
+              <div class="image-wrap">
+                {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            </div>
+          {%- endif -%}
+      </div>
+    {%- endcapture -%}
+
+    <div class="feature-row">
+      {%- if section.settings.layout == 'left' -%}
+        {{ image_layout }}
+      {%- endif -%}
+
+      <div class="text-with-icon-description feature-row__text--{{ section.settings.layout }}" data-aos>
+        <div class="rte appear-delay{% cycle '','-1','-2','-3','-4' %}">
+          {% for block in section.blocks %}
+            <div class="text-with-icon">
+              {% if block.settings.image %}
+                <div class="image-wrpper">
+                  <img src="{{ block.settings.image | img_url: '80x' }}" alt="{{ block.settings.image.alt }}">
+                </div>
+              {% endif %}
+              <div class="text-wrapper">
+                <h3 class="title">{{ block.settings.title }}</h3>
+                {{ block.settings.text }}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {%- if section.settings.layout == 'right' -%}
+        {{ image_layout }}
+      {%- endif -%}
+    </div>
+  </div>
+  </div>
+{%- if section.settings.divider -%}</div>{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Image with text and icon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image (Desktop)"
+      },
+      {
+        "type": "image_picker",
+        "id": "image2",
+        "label": "Image (Mobile)"
+      },
+      {
+        "type": "range",
+        "id": "image_width",
+        "label": "Image width",
+        "default": 700,
+        "min": 200,
+        "max": 700,
+        "step": 10,
+        "unit": "px"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Image with text"
+      },
+      {
+        "type": "select",
+        "id": "align_text",
+        "label": "Text alignment",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Centered"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "layout",
+        "label": "Layout",
+        "default": "right",
+        "options": [
+          {
+            "value": "left",
+            "label": "Image on left"
+          },
+          {
+            "value": "right",
+            "label": "Image on right"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "Show section divider",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text_with_icon",
+        "name": "Text with icon",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Text"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Image with text and icon"
+      }
+    ]
+  }
+{% endschema %}

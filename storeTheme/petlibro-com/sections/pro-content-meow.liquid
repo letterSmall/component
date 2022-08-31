@@ -1,0 +1,116 @@
+{% if section.settings.display %}
+	<div class="pro-content-section-meow">
+		<div class="pro-content-box-meow">
+			{% for block in section.blocks %}
+				<div class="pro-content-item-meow {% if block.settings.descright %} descright-meow {% endif %}">
+					<div class="pro-content-item-d ">
+						<h3 class="meow-content-title">
+							{{block.settings.title}}
+						</h3>
+						<p class="meow-content-desc">
+							{{block.settings.content}}
+						</p>
+					</div>
+					<div class="pro-content-item-b ">
+						{% if block.settings.imgvideoselect == 'videourl' %}
+							{% if block.settings.videourl != blank %}
+							<video class="pro-content-item-video" width="100%" height="auto"
+									  type="video/mp4"
+									  src="{{ block.settings.videourl}}" controls=""
+									  loop="" playsinline="" autoplay="" controlslist="nodownload"
+									  disablepictureinpicture=""></video>
+							{% endif %}
+						{% else %}
+							{% if block.settings.contentimg != blank %}
+							 <img class="lazyload pro-content-item-img"
+												 src="{{ block.settings.contentimg | img_url: '1x' }}"
+												 srcset="{{ block.settings.contentimg | img_url: 'master' }}"
+												 
+												 alt=""/>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div>
+			{% endfor %}
+			
+		</div>
+	</div>
+{% endif %}
+    
+
+
+{% schema %}
+  {
+    "name": "Pro Content Meow",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "display",
+        "label": "display?",
+        "default": true
+      }
+    ],
+    "blocks": [
+      {
+        "type": "item",
+        "name": "item",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "descright",
+            "label": "Float text to the right?",
+            "default": false
+          },
+          {
+            "type": "html",
+            "id": "title",
+            "label": "Item Title"
+          },
+          {
+            "type": "html",
+            "id": "content",
+            "label": "Item Content"
+          },
+          {
+            "type": "select",
+            "id": "imgvideoselect",
+            "label": "Video or Img",
+            "default": "contentimg",
+            "options": [
+              {
+                "value": "contentimg",
+                "label": "Select img"
+              },
+              {
+                "value": "videourl",
+                "label": "Select video"
+              }
+            ]
+          },
+          {
+            "type": "html",
+            "id": "videourl",
+            "label": "Video Url"
+          },
+          {
+            "type": "image_picker",
+            "id": "contentimg",
+            "label": "Content img",
+            "info":"Size:530*530"
+          }
+        ]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Pro Content Meow"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

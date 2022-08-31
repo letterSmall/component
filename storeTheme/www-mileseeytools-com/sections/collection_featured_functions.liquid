@@ -1,0 +1,128 @@
+<div class="collection_featured_functions padding6vw">
+  <div class="container1200">
+    {% if section.settings.title != blank %}
+    <h2 class="h2_36">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    <div class="image-wrapper">
+    {% for block in section.blocks %}
+    <div class="image-item{% if forloop.first %} active{% endif %}" data-index="{{forloop.index}}">
+      {% if block.settings.image %}
+      <img class="hide-mb" src="{{ block.settings.image |img_url: 'master' }}" alt=""/>
+      {% endif %}
+
+      {% if block.settings.image_mb %}
+      <img class="hide-pc" src="{{ block.settings.image_mb |img_url: 'master' }}" alt=""/>
+      {% else %}
+      <img class="hide-pc" src="{{ block.settings.image |img_url: 'master' }}" alt=""/>
+      {% endif %}
+    </div>
+    {% endfor %}
+    </div>
+
+    <div class="icon_text-wrapper">
+    {% for block in section.blocks %}
+    {% if block.settings.icon != blank or block.settings.icon_text != blank %}
+    <div class="icon_text-item{% if forloop.first %} active{% endif %}" data-index="{{forloop.index}}">
+      {% if block.settings.icon != blank %}
+      <div>{{ block.settings.icon }}</div>
+      {% endif %}
+
+      {% if block.settings.icon_text != blank %}
+      <h3>{{ block.settings.icon_text }}</h3>
+      {% endif %}
+    </div>
+    {% endif %}
+    {% endfor %}
+    </div>
+
+    <div class="content-wrapper">
+    {% for block in section.blocks %}
+    {% if block.settings.content != blank %}
+    <div class="content-item{% if forloop.first %} active{% endif %}" data-index="{{forloop.index}}">{{ block.settings.content }}</div>
+    {% endif %}
+    {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  $(".collection_featured_functions .icon_text-item").click(function(){
+    var active_index = parseInt($(this).attr("data-index"));
+    $(this).addClass("active").siblings().removeClass("active");
+    $(".collection_featured_functions .image-item[data-index="+active_index+"]").addClass("active").siblings().removeClass("active");
+    $(".collection_featured_functions .content-item[data-index="+active_index+"]").addClass("active").siblings().removeClass("active");
+  });
+</script>
+
+
+{% schema %}
+   {
+    "name": "Collection Featured Image",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Title",
+        "id": "title",
+		"default": "Featured functions"
+      }
+	],
+	"blocks":[
+      {
+        "type": "image",
+        "name": "Custom Block",
+        "settings":[
+          {
+            "type": "image_picker",
+            "label": "Image",
+            "id": "image",
+            "info": "Size:1200px*523px"
+          },{
+            "type": "image_picker",
+            "label": "Image Mobile",
+            "id": "image_mb"
+          },{
+            "type": "html",
+            "label": "Icon",
+            "id": "icon",
+            "info":"Use svg code, Size:48px*51px"
+          },{
+            "type": "html",
+            "label": "Icon Text",
+            "id": "icon_text"
+          },{
+            "type": "html",
+            "label": "Content",
+            "id": "content"
+          }
+      	]
+      }
+	],
+    "presets": [
+        {
+            "name": "Collection Featured Image",
+            "category": "Custom Block",
+            "blocks": [
+                {
+                    "type": "image"
+                },
+                {
+                    "type": "image"
+                },
+                {
+                    "type": "image"
+                },
+                {
+                    "type": "image"
+                }
+            ]
+        }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

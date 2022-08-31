@@ -1,0 +1,119 @@
+{% if section.settings.display %}
+  <div class="meow-ul-part-top {{section.settings.specclass}}">
+    {% if section.settings.bgimg != blank%}
+    <div class="meow-ul-part-top-bgimg">
+      <img class="dpmcc" src="{{ section.settings.bgimg | img_url:'master' }}"/>
+         <img class="xpmcc" src="{{ section.settings.bgimg-wap | img_url:'master' }}"/>
+     </div>
+    {% endif %}
+
+    <div class="meow-ul-part-top-box {% if section.settings.bgimg == blank and section.settings.bgimg-wap == blank %}nullbgimgk {%endif%}">
+      {% if section.settings.title != blank%}
+      <h3>{{ section.settings.title}}</h3>
+      {% endif %}
+      {% if section.settings.description != blank%}
+      <span>{{ section.settings.description}}</span>
+      {% endif %}
+      
+      {% if section.blocks.size > 0 %}
+      <div class="meow-ul-part-top-box-ul">
+        <ul>
+          {% for block in section.blocks %}
+            <li>
+               <img class="lazyload" src="{{ block.settings.img | img_url: '1x' }}"
+                 srcset="{{ block.settings.img | img_url: 'master' }}" 
+                 width="108" height="108"
+                 alt=""/>
+               <span>{{ block.settings.lititle}}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if section.settings.full-screen-img != blank%}
+
+    <img class="lazyload full-screen-img-meow dpmcc" src="{{ section.settings.full-screen-img | img_url: '1x' }}"
+      srcset="{{ section.settings.full-screen-img | img_url: 'master' }}" 
+      alt=""/>
+  {% endif %}
+
+{% endif %}
+
+    
+
+
+{% schema %}
+  {
+    "name": "Pro Features Meow",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "display",
+        "label": "display?",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "bgimg",
+        "label": "Section bgimg"
+      },
+      {
+        "type": "image_picker",
+        "id": "bgimg-wap",
+        "label": "Section mobile bgimg"
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "html",
+        "id": "description",
+        "label": "Description"
+      },
+      {
+        "type": "image_picker",
+        "id": "full-screen-img",
+        "label": "Full Screen Image"
+      },
+      {
+        "type": "text",
+        "id": "specclass",
+        "label": "Special Class Name"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "icon",
+        "name": "icon",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "img",
+            "label": "icon Image"
+          },
+          {
+            "type": "text",
+            "id": "lititle",
+            "label": "icon Title"
+          }
+        ]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Pro Features Meow"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

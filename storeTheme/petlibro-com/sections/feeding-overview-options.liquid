@@ -1,0 +1,87 @@
+
+<div class="feeding_options_box feeding_model_s">
+  <div class="feeding_model_title">
+    <h3 class="model_title_h">{{section.settings.options_title | default: ''}}</h3>
+    <div class="feeding_model_title_line"></div>
+    <h5 class="model_subtitle">{{section.settings.options_subtitle | default: ''}}</h5>
+  </div>
+  <div class="feeding_options_images">
+    <div class="feeding_options_images_img">
+      <img class="lazyload media_pc" data-src="{{ section.settings.image_pc_one | img_url: 'master' }}" alt="">
+      <img class="lazyload media_mb" data-src="{{ section.settings.image_mobile_one | img_url: 'master' }}" alt="">
+      <p>{{section.settings.options_title_l}}</p>
+    </div>
+    <div class="feeding_options_images_img">
+      <img class="lazyload media_pc" data-src="{{ section.settings.image_pc_two | img_url: 'master' }}" alt="">
+      <img class="lazyload media_mb" data-src="{{ section.settings.image_mobile_two | img_url: 'master' }}" alt="">
+      <p>{{section.settings.options_title_r}}</p>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Feeding Overview Options",
+  "settings": [
+    {
+      "type": "html",
+      "id": "options_title",
+      "label": "Title"
+    },
+    {
+      "type": "html",
+      "id": "options_subtitle",
+      "label": "Subtitle"
+    },
+    {
+      "type": "header",
+      "content": "Image One"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_pc_one",
+      "label": "Image",
+      "info": "Image: 875x875"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile_one",
+      "label": "Mobile Image",
+      "info": "Image: 695x900"
+    },
+    {
+      "type": "header",
+      "content": "Image Two"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_pc_two",
+      "label": "Image",
+      "info": "Image: 875x875"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile_two",
+      "label": "Mobile Image",
+      "info": "Image: 695x900"
+    },
+    {
+      "type": "text",
+      "id": "options_title_l",
+      "label": "Left Image Text",
+      "default": "Single Bowl"
+    },
+    {
+      "type": "text",
+      "id": "options_title_r",
+      "label": "Right Image Text",
+      "default": "Dual Bowl"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feeding Overview Options"
+    }
+  ]
+}
+{% endschema %}

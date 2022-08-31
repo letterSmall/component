@@ -1,0 +1,134 @@
+<div class="vac2-video-outbox">
+
+<div class="vac2-video-container">
+  
+
+   {% if section.settings.video_url != blank %}
+   
+    <div class="vac2-video-wrapper">
+   <video id="video_vac2" width="100%" loop="loop" controls webkit-playsinline="true" playsinline="true" muted >
+    <source src="{{  section.settings.video_url }}">
+  </video>
+    </div>
+
+    
+   <div class="vac2-videotext-box">
+  {% if section.settings.image %}
+    <img class="vac2-video-bg medium-down--hide" src="{{ section.settings.image | img_url:'master' }}"/>
+    <img class="vac2-video-bg large-up--hide" src="{{ section.settings.image_mobile | img_url:'master' }}"/>
+  {% endif %}
+
+  {% if section.settings.image_play %}
+    <img class="vac2-video-playbtn" src="{{ section.settings.image_play | img_url:'master' }}"/>
+  {% endif %}
+
+</div> 
+  
+  <script defer>
+  $(function(){
+    $(".vac2-video-playbtn").click(function(){
+      $("#video_vac2").trigger('play');
+      $(".vac2-videotext-box").css("z-index","0");
+
+    });
+
+       $("body").bind("click",function(evt){ 
+  if($(evt.target).closest(".vac2-video-container").length==0)
+  { 
+    $("#video_vac2").trigger('pause');
+          $(".vac2-videotext-box").css("z-index","2");
+  } 
+}); 
+  });
+  </script>
+  
+  
+      
+  {% else %}
+     <div class="vac2-video-wrapper">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ section.settings.video_youtubeurl.id }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+   </div>
+ <div class="vac2-videotext-box">
+  {% if section.settings.image %}
+    <img class="vac2-video-bg medium-down--hide" src="{{ section.settings.image | img_url:'master' }}"/>
+    <img class="vac2-video-bg large-up--hide" src="{{ section.settings.image_mobile | img_url:'master' }}"/>
+  {% endif %}
+
+  {% if section.settings.image_play %}
+    <img class="vac2-video-playbtn" src="{{ section.settings.image_play | img_url:'master' }}"/>
+  {% endif %}
+
+</div>
+
+     <script>
+
+
+          $(".vac2-video-playbtn").click(function(){
+  
+      $(".vac2-videotext-box").css("z-index","0");
+
+    });
+
+       $("body").bind("click",function(evt){ 
+  if($(evt.target).closest(".vac2-video-container").length==0)
+  { 
+          $(".vac2-videotext-box").css("z-index","2");
+  } 
+}); 
+       
+       
+    </script>
+  
+  
+  
+  
+  
+  
+  
+  
+  {% endif %}
+  
+  
+</div>
+
+
+</div>
+
+
+{% schema %}
+  {
+    "name": "Moppro Video",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "image"
+          },{
+            "type": "image_picker",
+            "id": "image_mobile",
+            "label": "image mobile"
+          },{
+            "type": "text",
+            "id": "video_url",
+            "label": "video_url"
+          },{
+        "type": "video_url",
+        "id": "video_youtubeurl",
+        "label": "Youtube Video link",
+        "accept": ["youtube", "vimeo"]
+      },{
+            "type": "image_picker",
+            "id": "image_play",
+            "label": "image_play"
+          }
+    ],
+    "presets": [
+      {
+        "name": "Moppro Video",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+

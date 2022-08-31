@@ -1,0 +1,78 @@
+<div class="vac_srobot_imgtext-container site-padding">
+  {% for block in section.blocks %}
+  <div class="vac_srobot_imgtext-item">
+     {% if block.settings.link != blank %}
+    <a href="{{ block.settings.link }}">
+ {% endif %}
+    {% if block.settings.image !=blank %}
+    <img class="hide-mb" src="{{ block.settings.image |img_url: 'master' }}" alt=""/>
+    {% endif %}
+    
+    {% if block.settings.image_mb !=blank %}
+    <img class="hide-pc" src="{{ block.settings.image_mb |img_url: 'master' }}" alt=""/>
+    {% else %}
+     <img class="hide-pc" src="{{ block.settings.image |img_url: 'master' }}" alt=""/>
+    {% endif %}
+
+    <div class="text-wrapper">
+    {% if block.settings.title %}
+    <h4 class="itemtitle">{{ block.settings.title }}</h4>
+    {% endif %}
+    
+    {% if block.settings.text %}
+    <div class="itemtext">{{ block.settings.text }}</div>
+    {% endif %}
+    </div>
+      
+  {% if block.settings.link != blank %}
+    </a>
+  {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+{% schema %}
+  {
+    "name": "Vac srobot imgtext",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image on PC",
+            "info": "Size: 500*300px"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image on Mobile",
+            "info": "Size: 670px*340px"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+          },{
+            "type": "text",
+            "id": "text",
+            "label": "Text"
+          },{
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vac srobot imgtext",
+        "category": "Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+

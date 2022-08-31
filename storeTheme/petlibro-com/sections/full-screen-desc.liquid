@@ -1,0 +1,62 @@
+
+{% if section.settings.fullscreen-desc-image != blank %}
+    <div class="full-screen-descbox {% if section.settings.tab_id != blank %}{{ section.settings.tab_id }}{% endif %}">
+          <img class="lazyload full-screen-desc-bg dpmcc"
+                     src="{{ section.settings.fullscreen-desc-image | img_url: '1x' }}"
+                     srcset="{{ section.settings.fullscreen-desc-image | img_url: 'master' }}"
+                     
+                     alt=""/>
+        <img class="lazyload full-screen-desc-bg-wap xpmcc"
+        src="{{ section.settings.fullscreen-desc-image-wap | img_url: '1x' }}"
+        srcset="{{ section.settings.fullscreen-desc-image-wap | img_url: 'master' }}"
+        
+        alt=""/>
+            <p class="full-screen-descbox-desc">{{ section.settings.fullscreen-desc_a}}</p>
+    </div>
+    {% endif %}
+    
+
+
+{% schema %}
+  {
+    "name": "Full Screen Img-Desc",
+    "settings": [
+      {
+        "type": "text",
+        "id": "tab_id",
+        "label": "Tab ID",
+		"default": "overview",
+		"info": "This must be filled in for the first module of the category for Tabs Bar"
+      },
+      {
+        "type": "image_picker",
+        "id": "fullscreen-desc-image",
+        "label": "Image",
+        "info": "Image Width: 1920"
+      },
+      {
+        "type": "image_picker",
+        "id": "fullscreen-desc-image-wap",
+        "label": "Mobile Image",
+        "info": "Image Width: 1024"
+      },
+      
+      {
+        "type": "html",
+        "id": "fullscreen-desc_a",
+        "label": "image description"
+      }
+	],
+   "presets": [
+      {
+		"name": "Full Screen Img-Desc"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

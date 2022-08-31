@@ -1,0 +1,32 @@
+
+<div class="feeding_images_box feeding_model_s">
+  {% for block in section.blocks %}
+    <img class="lazyload feeding_banner_bg" data-src="{{ block.settings.images_bg | img_url: 'master' }}" alt="">
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "Feeding Overview Images",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "feeding-images",
+      "name": "feeding-images",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "images_bg",
+          "label": "Image",
+          "info": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feeding Overview Images"
+    }
+  ]
+}
+{% endschema %}

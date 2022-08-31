@@ -1,0 +1,94 @@
+
+<div class="paautovideo-outbox">
+  {% if section.settings.title != blank %}
+  <div class="paautovideo-title">{{ section.settings.title }}</div>
+   {% endif %}
+  
+  <div class="paautovideo-midtextbox">
+   {% for block in section.blocks %}
+  <div class="paautovideo-midtext-item">
+        {% if block.settings.title != blank %}
+  <div class="paautovideo-midtext-title">{{ block.settings.title }}</div>
+   {% endif %}
+   </div>
+   {% endfor %}
+  </div>
+  
+  
+<div class="paautovideo-container">
+
+     {% if section.settings.youtubevideo_url == blank %}
+      <video class="pa-sutovideo" width="100%" loop="loop" autoplay="autoplay"  webkit-playsinline="true" playsinline="true" muted="muted" >
+        <source src="{{  section.settings.video_url }}">
+      </video>
+        {% else %}
+          {% if section.settings.youtubevideo_url.type == "youtube" %}
+<!--             <iframe src="https://www.youtube.com/embed/{{ section.settings.youtubevideo_url.id }}" frameborder="0" allowfullscreen></iframe> -->
+   <iframe src="//www.youtube.com/embed/{{ section.settings.youtubevideo_url.id }}"  frameborder="0" allowfullscreen></iframe>
+          {% endif %}
+          {% if section.settings.youtubevideo_url.type == "vimeo" %}
+            <iframe src="//player.vimeo.com/video/{{ section.settings.youtubevideo_url.id }}?color={{ settings.color_secondary | remove: "#" }}&byline=0&portrait=0&badge=0" width="850" height="480" frameborder="0" allowfullscreen></iframe>
+          {% endif %}
+  
+        {% endif %}
+  
+  
+
+    
+  </div>
+</div>
+
+
+<script>
+  $(function(){
+    if($(".paautovideo-container iframe").height()){
+   $(".paautovideo-container iframe").height($(".paautovideo-container iframe").width()*9/16);
+    }
+  })
+
+</script>
+
+
+{% schema %}
+  {
+    "name": "Parkinson autoVideo",
+    "settings": [
+         {
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "text",
+            "id": "video_url",
+            "label": "video_url"
+          },
+      {
+        "type": "video_url",
+        "id": "youtubevideo_url",
+        "label": "Youtube Video link",
+        "accept": ["youtube", "vimeo"]
+      }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Parkinson autoVideo",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+

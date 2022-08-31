@@ -1,0 +1,50 @@
+{% if section.settings.show_section %}
+{%- assign customDesc = product.metafields.custom_desc -%}
+<div class="product-compare product-compare-{{ section.id }} {% if section.settings.tab_id != blank %}{{ section.settings.tab_id }}{% endif %}">
+  <div class="psc-content psc-content-item-compare">
+    <div class="page-width">
+      
+      {% include 'product-compare', customDesc:customDesc,product:product %}
+
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product Compare",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "tab_id",
+        "label": "Tab ID",
+		"default": "compare",
+		"info": "This must be filled in for the first module of the category for Tabs Bar"
+      },
+      {
+        "type": "html",
+        "id": "newcomparekei",
+        "label": "Product Compare "
+      }
+      
+	],
+   "presets": [
+      {
+		"name": "Product Compare"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

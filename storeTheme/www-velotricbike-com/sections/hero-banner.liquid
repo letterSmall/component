@@ -1,0 +1,481 @@
+<div
+  data-section-id="{{ section.id }}"
+  data-section-type="hero-banner">
+
+    <div class="hero-banner-wrapper">
+
+      {%- assign natural_height = false -%}
+      {%- assign natural_mobile_height = false -%}
+      {%- if section.settings.section_height == 'natural' or section.settings.mobile_height == 'auto' -%}
+        {% comment %}
+          Get image's aspect ratio
+        {% endcomment %}
+        {%- assign natural_height = true -%}
+        {%- capture natural_height_ratio -%}{{ 100 | divided_by: section.settings.image.aspect_ratio }}%{% endcapture %}
+        {%- assign natural_mobile_height = true -%}
+        {%- capture natural_mobile_height_ratio -%}{{ 100 | divided_by: section.settings.image_mobile.aspect_ratio }}%{% endcapture %}
+      {%- endif -%}
+
+      {%- if natural_height -%}
+        {%- style -%}
+          @media only screen and (min-width: 791px) {
+            .hero-natural--{{ section.id }} {
+              height: 0;
+              padding-bottom: {{ natural_height_ratio }};
+            }
+          }
+        {%- endstyle -%}
+      {%- endif -%}
+      {%- if natural_mobile_height -%}
+        {%- style -%}
+          @media screen and (max-width: 790px) {
+            .hero-natural-mobile--{{ section.id }} {
+              height: 0;
+              padding-bottom: {{ natural_mobile_height_ratio }};
+            }
+          }
+        {%- endstyle -%}
+      {%- endif -%}
+
+      <div class="{% if natural_height %}hero-natural--{{ section.id }}{% endif %}{% if natural_mobile_height %} hero-natural-mobile--{{ section.id }}{% endif %}">
+        <div id="Slideshow-{{ section.id }}"
+          class="hero hero--{{ section.settings.section_height }} hero--{{ section.id }} hero--mobile--{{ section.settings.mobile_height }}"
+          {% if natural_height %}
+            data-natural="true"
+          {% endif %}
+          data-mobile-natural="{{ natural_mobile_height }}"
+          data-aos="hero__animation">
+          <div class="hero__slide hero__slide--{{ section.id }}">
+
+
+              {%- style -%}
+                .hero__slide--{{ section.id }} .hero__title {
+                  font-size: {{ section.settings.title_size | times: 0.7 }}px;
+                }
+                @media only screen and (min-width: 1025px) {
+                  .hero__slide--{{ section.id }} .hero__title {
+                    font-size: {{ section.settings.title_size }}px;
+                  }
+                }
+              {%- endstyle -%}
+
+              {%- liquid
+                assign hero_text = false
+                assign link_slide = false
+                if section.settings.title != blank or section.settings.subheading != blank or section.settings.link_text != blank
+                  assign hero_text = true
+                endif
+                if section.settings.link_text == blank and section.settings.link != blank
+                  assign link_slide = true
+                endif
+
+                assign has_mobile_image = false
+                if section.settings.image_mobile != blank
+                  assign has_mobile_image = true
+                endif
+              -%}
+                <div class="hero__image-wrapper{% unless hero_text %} hero__image-wrapper--no-overlay{% endunless %}" data-overlay-direction="{{ section.settings.overlay_direction }}" data-overlay-direction-mobile="{{ section.settings.overlay_direction_m }}">
+
+                  {%- if section.settings.image != blank -%}
+                    {%- style -%}
+                      .hero__image--{{ section.id }} {
+                        object-position: {{ block.settings.focal_point }};
+                        font-family: "object-fit: cover; object-position: {{ section.settings.focal_point }};";
+                      }
+                      {% if section.settings.text_align == 'custom' %}
+                      @media screen and (min-width: 590px){
+                        .hero__text-content.custom{ padding: {{ section.settings.custom_text_align }}; }
+                      }
+                      {% endif %}
+                      {% if section.settings.text_align_m == 'mobile-custom' %}
+                      @media screen and (max-width: 589px){
+                        .hero__text-content.mobile-custom{ padding: {{ section.settings.custom_text_align_m }}; }
+                      }
+                      {% endif %}
+                    {%- endstyle -%}
+
+                    {%- assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+                    <img class="hero__image hero__image--{{ section.id }} lazyload{% if has_mobile_image %} pad-down--hide{% endif %}"
+                      src="{{ section.settings.image | img_url: '300x' }}"
+                      data-src="{{ img_url }}"
+                      data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+                      data-sizes="auto"
+                      alt="{{ section.settings.image.alt | escape }}">
+                    {%- if has_mobile_image -%}
+                      {%- assign img_url_mobile = section.settings.image_mobile | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                      <img class="hero__image hero__image--{{ section.id }} lazyload pad-up--hide"
+                        src="{{ section.settings.image_mobile | img_url: '300x' }}"
+                        data-src="{{ img_url_mobile }}"
+                        data-aspectratio="{{ section.settings.image_mobile.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt="{{ section.settings.image_mobile.alt | escape }}">
+                    {%- endif -%}
+                    <noscript>
+                      <img class="hero__image hero__image--{{ section.id }}"
+                        src="{{ section.settings.image | img_url: '1400x' }}"
+                        alt="{{ section.settings.image.alt | escape }}">
+                    </noscript>
+                  {%- else -%}
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  {%- endif -%}
+
+                </div>
+
+              {%- if link_slide -%}
+                <a href="{{ section.settings.link }}" class="hero__slide-link">
+              {%- endif -%}
+
+              {%- if hero_text -%}
+                <div class="hero__text-wrap">
+                  <div class="page-width">
+                    <div class="hero__text-content {{ section.settings.text_align }} {{ section.settings.text_align_m }}">
+
+                      {%- unless section.settings.title == blank -%}
+                        <h2 class="h1 hero__title">
+                          <div class="animation-cropper"><div class="animation-contents">
+                          {{ section.settings.title | newline_to_br }}
+                          </div></div>
+                        </h2>
+                      {%- endunless -%}
+                      {%- if section.settings.subheading or section.settings.link -%}
+                        {%- unless section.settings.subheading == blank -%}
+                          <div class="hero__subtitle">
+                            <div class="animation-cropper"><div class="animation-contents">
+                              {{ section.settings.subheading | newline_to_br }}
+                            </div></div>
+                          </div>
+                        {%- endunless -%}
+                        {%- if section.settings.link_text != blank -%}
+                          <div class="hero__link">
+                            <div class="animation-cropper"><div class="animation-contents">
+                              <a href="{{ section.settings.link }}" class="btn">
+                                {{ section.settings.link_text }}
+                              </a>
+                            </div></div>
+                          </div>
+                        {%- endif -%}
+                      {%- endif -%}
+
+                    </div>
+                  </div>
+                </div>
+              {%- endif -%}
+
+              {%- if link_slide -%}
+                </a>
+              {%- endif -%}
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Hero banner",
+    "class": "index-section--hero",
+    "settings": [
+      {
+        "type": "select",
+        "id": "section_height",
+        "label": "Desktop height",
+        "default": "650px",
+        "options": [
+          {
+            "label": "Natural",
+            "value": "natural"
+          },
+          {
+            "label": "450px",
+            "value": "450px"
+          },
+          {
+            "label": "550px",
+            "value": "550px"
+          },
+          {
+            "label": "650px",
+            "value": "650px"
+          },
+          {
+            "label": "750px",
+            "value": "750px"
+          },
+          {
+            "label": "Full screen",
+            "value": "100vh"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "mobile_height",
+        "label": "Mobile height",
+        "default": "auto",
+        "options": [
+          {
+            "label": "Auto",
+            "value": "auto"
+          },
+          {
+            "label": "250px",
+            "value": "250px"
+          },
+          {
+            "label": "300px",
+            "value": "300px"
+          },
+          {
+            "label": "400px",
+            "value": "400px"
+          },
+          {
+            "label": "500px",
+            "value": "500px"
+          },
+          {
+            "label": "Full screen",
+            "value": "100vh"
+          }
+        ]
+      },
+      {
+        "type": "textarea",
+        "id": "title",
+        "label": "Heading",
+        "default": "Two line\nslide title."
+      },
+      {
+        "type": "range",
+        "id": "title_size",
+        "label": "Heading text size",
+        "default": 80,
+        "min": 40,
+        "max": 100,
+        "unit": "px"
+      },
+      {
+        "type": "textarea",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "And an optional subheading"
+      },
+      {
+        "type": "url",
+        "id": "link",
+        "label": "Slide link"
+      },
+      {
+        "type": "text",
+        "id": "link_text",
+        "label": "Slide link text",
+        "default": "Optional button"
+      },
+      {
+        "type": "header",
+        "content": "Desktop"
+      },
+      {
+        "type": "select",
+        "id": "text_align",
+        "label": "Text alignment",
+        "default": "vertical-bottom horizontal-left",
+        "options": [
+          {
+            "value": "vertical-center horizontal-left",
+            "label": "Center left"
+          },
+          {
+            "value": "vertical-center horizontal-center",
+            "label": "Center"
+          },
+          {
+            "value": "vertical-center horizontal-right",
+            "label": "Center right"
+          },
+          {
+            "value": "vertical-bottom horizontal-left",
+            "label": "Bottom left"
+          },
+          {
+            "value": "vertical-bottom horizontal-center",
+            "label": "Bottom center"
+          },
+          {
+            "value": "vertical-bottom horizontal-right",
+            "label": "Bottom right"
+          },
+          {
+            "value": "custom",
+            "label": "Custom"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "custom_text_align",
+        "label": "Custom position of text"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "select",
+        "id": "overlay_direction",
+        "label": "Overlay direction",
+        "options": [
+        {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "top",
+            "label": "Top"
+          },
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "none"
+      },
+      {
+        "type": "header",
+        "content": "Mobile"
+      },
+      {
+        "type": "select",
+        "id": "text_align_m",
+        "label": "Text alignment",
+        "default": "mobile-vertical-bottom mobile-horizontal-left",
+        "options": [
+          {
+            "value": "mobile-vertical-center mobile-horizontal-left",
+            "label": "Center left"
+          },
+          {
+            "value": "mobile-vertical-center mobile-horizontal-center",
+            "label": "Center"
+          },
+          {
+            "value": "mobile-vertical-center mobile-horizontal-right",
+            "label": "Center right"
+          },
+          {
+            "value": "mobile-vertical-bottom mobile-horizontal-left",
+            "label": "Bottom left"
+          },
+          {
+            "value": "mobile-vertical-bottom mobile-horizontal-center",
+            "label": "Bottom center"
+          },
+          {
+            "value": "mobile-vertical-bottom mobile-horizontal-right",
+            "label": "Bottom right"
+          },
+          {
+            "value": "mobile-custom",
+            "label": "Custom"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "custom_text_align_m",
+        "label": "Custom position of text"
+      },
+      {
+        "type": "image_picker",
+        "id": "image_mobile",
+        "label": "Mobile image"
+      },
+      {
+        "type": "select",
+        "id": "overlay_direction_m",
+        "label": "Overlay direction",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          },
+          {
+            "value": "top",
+            "label": "Top"
+          },
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "bottom",
+            "label": "Bottom"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ],
+        "default": "none"
+      },
+      {
+        "type": "select",
+        "id": "focal_point",
+        "label": "Image focal point",
+        "info": "Used to keep the subject of your photo in view.",
+        "default": "center center",
+        "options": [
+          {
+            "value": "20% 0",
+            "label": "Top left"
+          },
+          {
+            "value": "top center",
+            "label": "Top center"
+          },
+          {
+            "value": "80% 0",
+            "label": "Top right"
+          },
+          {
+            "value": "20% 50%",
+            "label": "Left"
+          },
+          {
+            "value": "center center",
+            "label": "Center"
+          },
+          {
+            "value": "80% 50%",
+            "label": "Right"
+          },
+          {
+            "value": "20% 100%",
+            "label": "Bottom left"
+          },
+          {
+            "value": "bottom center",
+            "label": "Bottom center"
+          },
+          {
+            "value": "80% 100%",
+            "label": "Bottom right"
+          }
+        ]
+      }
+    ],
+    "presets": [{
+      "name": "Hero banner"
+    }]
+  }
+{% endschema %}

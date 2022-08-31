@@ -1,0 +1,206 @@
+<div class="featured-collections-container max-page-width">
+{% if section.settings.divider %}<div class="section--divider">{% endif %}
+  {% if section.settings.title != blank %}
+    <div class="section-header text-center">
+      <h2 class="section-header__title">{{ section.settings.title }}</h2>
+    </div>
+  {% endif %}
+ 
+{%assign per_row=0%}
+{%for block in section.blocks%}
+{%assign per_row=per_row|plus:1%}
+{%endfor%}
+ {% assign grid_item_width = 'small--one-half medium-up--one-quarter' %}
+
+        {% case per_row %}
+        {% when 1 %}
+          {%- assign grid_item_width = '' -%}
+        {% when 2 %}
+          {%- assign grid_item_width = 'medium-up--one-half' -%}
+        {% when 3 %}
+          {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+        {% when 4 %}
+          {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+        {% when 5 %}
+          {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
+        {% endcase %}
+ 
+   <div class="page-width">
+      <div class="grid{% if section.settings.enable_gutter %} grid--medium-gutters{%else%} grid--no-gutters{% endif %}">
+    {%- assign isEmpty = true -%}
+
+    {% if section.blocks.size > 0 %}
+      {%- assign isEmpty = false -%}
+    {% endif %}
+    {% for block in section.blocks limit: collection_limit %}
+      {%- assign collection = collections[block.settings.collection] -%}
+    {%assign cover_image=block.settings.cover%}
+      {%assign title=block.settings.title%}
+      {%assign content=block.settings.content%}
+       {%assign link_label=block.settings.link_label%}
+    
+   
+    
+      {% render 'new-collection-grid-item', collection: collection, grid_item_width: grid_item_width,cover_image:cover_image,title:title,content:content,link_label:link_label%}
+    {% endfor %}
+    </div>
+    {% if isEmpty %}
+    
+        <div class="grid">
+          <div class="grid__item">
+            <div class="rte">
+              {{ 'home_page.onboarding.no_content' | t }}
+            </div>
+          </div>
+        </div>
+    
+    {% endif %}
+
+  </div>
+
+
+{% if section.settings.divider %}</div>{% endif %}
+</div>
+
+<script>
+  
+  $(document).ready(function(){
+   resizeSkrim();
+  })
+   $(window).resize(function(){
+   resizeSkrim();
+  })
+  
+ function resizeSkrim(){
+   if($(window).width()<=768){
+      $('.skrim__mask').css('height',`100%`);
+   return;
+   }
+      $('.featured-collections-container .grid__item').each(function(){
+   
+   
+   let haha_el=$(this).find('.skrim__title').outerHeight(true);
+   $(this).find('.skrim__mask').css('height',`${haha_el}px`);
+ })
+  }
+
+  </script>
+
+{% schema %}
+  {
+    "name": "Collection list",
+    "class": "index-section",
+    "max_blocks": 15,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Collection list"
+      },
+      {
+        "type": "checkbox",
+        "id": "divider",
+        "label": "Show section divider",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_gutter",
+        "label": "Add spacing",
+        "default": false
+      }
+    ],
+    "presets": [{
+      "name": "Collection list",
+      "category": "Collection",
+      "blocks": [
+        {
+          "type": "collection",
+          "settings": {
+            "size": "wide"
+          }
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection"
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "size": "wide"
+          }
+        }
+      ]
+    }],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "id": "collection",
+            "type": "collection",
+            "label": "Collection"
+          },
+ {
+        "type": "text",
+        "id": "title",
+        "label": "Title",
+        "default": "Title"
+      },
+ {
+        "type": "html",
+        "id": "content",
+        "label": "Content",
+        "default": "Content"
+      },
+{
+            "id": "cover",
+            "type": "image_picker",
+            "label": "Cover iamge",
+"info":"size:455*605px"
+          },
+          {
+            "type": "select",
+            "id": "size",
+            "label": "Size",
+            "default": "square-small",
+            "options": [
+              {
+                "label": "Square (small)",
+                "value": "square-small"
+              },
+              {
+                "label": "Wide",
+                "value": "wide"
+              },
+              {
+                "label": "Tall",
+                "value": "tall"
+              },
+              {
+                "label": "Square (large)",
+                "value": "square-large"
+              }
+            ]
+          },
+{
+            "id": "link_label",
+            "type": "text",
+            "label": "Link label",
+"default":"Learn More"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

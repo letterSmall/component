@@ -1,0 +1,62 @@
+<div class="section-product-banner">
+  <img src="{{section.settings.banner | img_url: 'master'}}" class="lazyload product-banner hide-mb"/>
+  <img src="{{section.settings.banner_mb | img_url: 'master'}}" class="lazyload product-banner hide-pc"/>
+  <div class="bg-color-top"></div>
+  <div class="bg-color-bottom"></div>
+  <div class="text-wrapper">
+    <div class="text-inner">
+      <h1 class="title fadein-0">{{section.settings.title}}</h1>
+      <div class="subtitle fadein-05">{{section.settings.subtitle}}</div>
+      <div class="content fadein-1">{{section.settings.content}}</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    if(!$(".section-product-banner .text-wrapper").hasClass("fade-show")){
+      $(".section-product-banner .text-wrapper").addClass("fade-show");
+    }
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Product Header Banner",
+    "settings": [
+      {
+        "type": "checkbox",
+        "label": "Show Product Header Banner?",
+        "id": "show",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "label": "Banner",
+        "id": "banner"
+      },{
+        "type": "image_picker",
+        "label": "Banner Mobile",
+        "id": "banner_mb"
+      },{
+        "type": "text",
+        "label": "Title",
+        "id": "title"
+      },{
+        "type": "html",
+        "label": "SubTile",
+        "id": "subtitle"
+      },{
+        "type": "html",
+        "label": "Content",
+        "id": "content"
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,61 @@
+{%- liquid
+  assign og_title = page_title
+  assign og_url = canonical_url
+  assign og_type = 'website'
+  assign og_description = page_description | default: shop.description | default: shop.name
+-%}
+
+{%- if request.page_type == 'product' -%}
+  {%- assign og_title = product.title | strip_html -%}
+  {%- assign og_type = 'product' -%}
+{%- elsif request.page_type == 'article' -%}
+  {%- assign og_title = article.title | strip_html -%}
+  {%- assign og_type = 'article' -%}
+  {%- assign og_description = article.excerpt_or_content | strip_html -%}
+{%- elsif request.page_type == 'password' -%}
+  {%- liquid
+    assign og_title = shop.name
+    assign og_url = shop.url
+    assign og_description = shop.description | default: shop.name
+  -%}
+{%- endif -%}
+
+  <meta property="og:site_name" content="{{ shop.name }}"/>
+  <meta property="og:url" content="{{ og_url }}"/>
+  <meta property="og:title" content="{{ og_title | escape }}"/>
+  <meta property="og:type" content="{{ og_type }}"/>
+  <meta property="og:description" content="{{ og_description | strip_html }}"/>
+  {%- if template_base == 'product' -%}
+    <meta property="og:price:amount" content="{{ product.price | money_without_currency | strip_html }}"/>
+    <meta property="og:price:currency" content="{{ cart.currency.iso_code }}"/>
+
+  {%- endif -%}
+  {%- liquid
+    assign parkinson_og_image = "https://cdn.shopifycdn.net/s/files/1/0559/5788/1006/files/facebook_parkinson_1200x630h.jpg?v=1650772682"
+    assign senior_living_og_image = "https://cdn.shopifycdn.net/s/files/1/0559/5788/1006/files/facebook_senior_living_1200x630h.jpg?v=1650772682"
+    assign dancing_og_image = "https://cdn.shopifycdn.net/s/files/1/0559/5788/1006/files/facebook_dancing_1200x630h.jpg?v=1650772682"
+    assign home_og_image = "https://cdn.shopifycdn.net/s/files/1/0559/5788/1006/files/facebook_home_1200x630h.jpg?v=1650772682"
+  -%}
+
+
+{%- liquid
+case handle
+when 'parkinsons'
+  assign og_image_url = parkinson_og_image
+when 'senior-living'
+  assign og_image_url = senior_living_og_image
+when 'circolo-dancing'
+  assign og_image_url = dancing_og_image
+else
+  assign og_image_url = home_og_image
+endcase
+-%}
+
+  <meta property="og:image" content="{{ og_image_url }}"/>
+  <meta property="og:image:secure_url" content="{{ og_image_url }}"/>
+
+  <meta name="twitter:site" content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | prepend: '@' }}"/>
+  <meta name="twitter:title" content="{{ og_title }}"/>
+  <meta name="twitter:description" content="{{ og_description | strip_html }}"/>
+  <meta name="twitter:card" content=" {{ og_image_url }} "/>
+

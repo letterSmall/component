@@ -1,0 +1,51 @@
+
+<div class="feeding_banner_box {% if section.settings.tab_id != blank %}{{ section.settings.tab_id }}{% endif %} 
+  {% if section.settings.banner_other_class != blank %}{{ section.settings.banner_other_class }}{% endif %}
+">
+  <img class="lazyload feeding_banner_bg media_pc" data-src="{{ section.settings.banner_image_pc | img_url: 'master' }}" alt="">
+  <img class="lazyload feeding_banner_bg_mb media_mb" data-src="{{ section.settings.banner_image_mobile | img_url: 'master' }}" alt="">
+  <p class="feeding_banner_box_title">{{ section.settings.banner_title}}</p>
+</div>
+
+{% schema %}
+{
+  "name": "Feeding Overview Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab_id",
+      "label": "Tab ID",
+      "default": "overview",
+      "info": "This must be filled in for the first module of the category for Tabs Bar"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_pc",
+      "label": "Image",
+      "info": "Image Width: 1920"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image_mobile",
+      "label": "Mobile Image",
+      "info": "Image Width: 1024"
+    },
+    
+    {
+      "type": "html",
+      "id": "banner_title",
+      "label": "image description"
+    },
+    {
+      "type": "text",
+      "id": "banner_other_class",
+      "label": "Other Class"
+    }
+],
+ "presets": [
+    {
+  "name": "Feeding Overview Banner"
+    }
+ ]
+}
+{% endschema %}

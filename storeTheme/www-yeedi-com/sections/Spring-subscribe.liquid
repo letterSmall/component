@@ -1,0 +1,126 @@
+
+{% if section.settings.show_block %}
+<div class="Springform-container" {% if section.settings.bgcolor %}style="background-color:{{ section.settings.bgcolor }}"{% endif %}>
+
+   <div class="spsaleform-outbox">
+  {% if section.settings.title != blank %}
+    <div class="spsaleform-title">{{ section.settings.title }}</div>
+   {% endif %}
+      {% form 'customer', id: 'newsletter-spsale' %}
+        {% if form.posted_successfully? %}
+          <div class="note note--success">{{ 'general.newsletter_form.newsletter_confirmation' | t }}</div>
+        {% endif %}
+       
+          {% if form.errors %}
+            {{ form.errors | default_errors }}
+          {% endif %}
+   
+
+       
+        <input type="hidden" name="contact[tags]" value="prospect,newsletter">
+        <div class="spsale__newsletterho">
+          <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="Email address" name="contact[email]" id="Email-{{ block.id }}" class="spsale__newsletter-input" autocorrect="off" autocapitalize="off">
+          <button type="submit" class="spsale__newsletter-btn btn_ho02" name="commit">
+            <span>Subscribe</span>
+          </button>
+        </div>
+      {% endform %}
+  </div>
+  
+    {% if section.settings.image01 %}
+    <img class="spsale-formimg-01" alt src="{{ section.settings.image01 | img_url:'master' }}" />
+   {% endif %}
+  
+   {% if section.settings.image02 %}
+    <img class="spsale-formimg-02" alt src="{{ section.settings.image02 | img_url:'master' }}" />
+   {% endif %}
+  
+   {% if section.settings.image03 %}
+    <img class="spsale-formimg-03" alt src="{{ section.settings.image03 | img_url:'master' }}" />
+   {% endif %}
+  
+   {% if section.settings.image04 %}
+    <img class="spsale-formimg-04" alt src="{{ section.settings.image04 | img_url:'master' }}" />
+   {% endif %}
+  
+  
+  
+</div>
+ {% endif %}
+<script type="text/javascript"  language="javascript">
+  
+  $(function(){
+    
+//      if($(window).width() >  992 ){
+           $(window).scroll(function(){
+            
+        if($(window).scrollTop() + $(window).height()*5/6  > $(".Springform-container").offset().top ){
+         
+         
+          setTimeout(function(){  $(".spsale-formimg-01").addClass("opouming"); }, 200);
+          setTimeout(function(){ $(".spsale-formimg-02").addClass("opouming"); }, 600);
+          setTimeout(function(){   $(".spsale-formimg-03").addClass("opouming"); }, 1000);
+           setTimeout(function(){  $(".spsale-formimg-04").addClass("opouming"); }, 1400);
+        }else{
+          $(".spsale-formimg-01").removeClass("opouming");
+          $(".spsale-formimg-02").removeClass("opouming");
+        $(".spsale-formimg-03").removeClass("opouming"); 
+          $(".spsale-formimg-04").removeClass("opouming");
+        }
+             
+               });
+
+//        }  
+     
+     });
+  
+</script> 
+
+{% schema %}
+
+  {
+    "name": "SpringSale Form",
+    "settings": [
+         {
+            "type": "checkbox",
+            "id": "show_block",
+            "label": "show this block?",
+            "default": true
+          },{
+            "type": "color",
+            "id": "bgcolor",
+            "label": "backgroundcolor"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "image_picker",
+            "id": "image01",
+            "label": "image01"
+          },{
+            "type": "image_picker",
+            "id": "image02",
+            "label": "image02"
+          },{
+            "type": "image_picker",
+            "id": "image03",
+            "label": "image03"
+          },{
+            "type": "image_picker",
+            "id": "image04",
+            "label": "image04"
+          }
+      
+    ],
+    "presets": [
+      {
+        "name": "SpringSale Form",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+
+         

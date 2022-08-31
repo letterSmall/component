@@ -1,0 +1,66 @@
+{% comment %}
+<div class="sidebar_mobile_wrapper">
+    <div class="item item-iconSidebar text-left">
+        <div class="sidebar_mobile">
+            <span class='text'>{{ 'collections.sidebar.title' | t }}:</span>
+            {% render 'icon-sidebar' %}
+        </div>
+    </div>
+</div>
+{% endcomment %}
+
+<div class="section-blog-template">
+  <div class="container">
+    <div class="blog-tags-wrapper">
+      <ul class="blog-tags" role="list" id="bogo-tags">
+        <li {% if current_tags == null %} class="active"{% endif %} role="listitem">
+          <h2><a href="/blogs/news/" title="Show all articles">All</a></h2>
+        </li>
+        {%- for tag in blog.all_tags -%}
+        <li {% if current_tags contains tag %} class="active" {% endif %} role="listitem" class="bogo"><h2>{{ tag | link_to_tag: tag }}</h2></li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+    {% paginate blog.articles by 6 %}
+    <div class="tt-grid-col-3 tt-add-item">
+      {%- for article in blog.articles -%}
+      {%- include 'blog-masonry-item' -%}
+      {%- endfor -%}
+    </div>
+
+    {% if paginate.pages > 1 %}
+    {% render 'pagination', paginate: paginate %}
+    {% endif %}
+
+    {% endpaginate %}
+
+  </div>
+</div>
+
+{% schema %}
+{
+    "name": "Blog pages",
+    "class": "page-content",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "blog_show_date",
+            "label": "Show date",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "blog_show_author",
+            "label": "Show author",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "blog_show_tag",
+            "label": "Show tags",
+            "default": false
+        }
+    ]
+}
+{% endschema %}

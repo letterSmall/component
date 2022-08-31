@@ -1,0 +1,61 @@
+<div class="prophoto-container">
+ {% if section.settings.title %}
+  <div class="prophoto-title small--text-center">{{section.settings.title}}</div>
+   {% endif %}
+  <div class="prophoto-box">
+   {% for block in section.blocks %}
+  {% if forloop.first %}
+  <div class="prophoto-item prophoto-item-{{forloop.index}}">
+    {% if block.settings.image %}
+    <img alt src="{{ block.settings.image | img_url:'master' }}"/>
+   {% endif %}
+   </div>
+    {% else %}
+   <div class="prophoto-item prophoto-item-{{forloop.index}}">
+     <style>
+       .prophoto-item-{{forloop.index}} {
+         background-image: url({{block.settings.image | img_url:'master'}});
+       }
+     </style>
+   </div>
+    {% endif %}
+   {% endfor %}
+  </div>
+</div>
+
+
+
+
+{% schema %}
+  {
+    "name": "Product Photo",
+    "settings": [
+         {
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          }
+    ],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：540*540px)"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product Photo",
+        "category": "Ho-Advance"
+
+      }
+    ]
+  }
+{% endschema %}
+

@@ -1,0 +1,108 @@
+<style>
+  .text-with-image-row-{{ section.id }} {
+    color: {{ section.settings.text_color }};
+  }
+  .text-with-image-row-{{ section.id }} .desc-box span {
+    color: {{ section.settings.number_color }};
+    font-weight: 700;
+  }
+</style>
+{% assign count = section.blocks.size %}
+{% case count %}
+{% when 1 %}
+{% assign item_width = 'one-whole' %}
+{% when 2 %}
+{% assign item_width = 'one-half' %}
+{% when 3 %}
+{% assign item_width = 'one-third' %}
+{% when 4 %}
+{% assign item_width = 'one-quarter' %}
+{% endcase %}
+<div class="text-with-image-row text-with-image-row-{{ section.id }}">
+  <div class="text-image-row-wrapper">
+    <div class="content-container">
+      {% if section.settings.title != blank %}
+      <h2 class="title-box pro-titles">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.desc != blank %}
+      <div class="desc-box">
+        {{ section.settings.desc }}
+      </div>
+      {% endif %}
+    </div>
+    {% if section.blocks.size > 0 %}
+    <div class="images-container">
+      {% for block in section.blocks %}
+      {% if block.settings.image != blank %}
+      <div class="image-item {{ item_width }}">
+        <img class="lazyload js"
+             src="{{ block.settings.image | img_url: '1x' }}"
+             srcset="{{ block.settings.image | img_url: '1500x' }}, {{ block.settings.image | img_url: '960x' }}"
+             sizes="(max-width: 960px) 960px, 1500px" 
+             alt=""
+             width="{{ block.settings.image.width }}" 
+             height="{{ block.settings.image.height }}"/>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Page Text Images Row",
+    "settings": [
+   	  {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+		"default": "#000000"
+      },
+   	  {
+        "type": "color",
+        "id": "number_color",
+        "label": "Number Color",
+		"default": "#FFBC00"
+      },
+	  {
+        "type": "html",
+        "id": "title",
+        "label": "Title",
+		"default": "How it works"
+      },
+      {
+        "type": "html",
+        "id": "desc",
+        "label": "Description"
+      }
+	],
+	"max_blocks": 4,
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+			"info": "Image Size: 700*440px."
+          }
+		]
+      }
+    ],
+	"presets": [
+      {
+        "name": "Page Text Images Row"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

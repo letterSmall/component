@@ -1,0 +1,60 @@
+<div class="promotion-banner-wrapper">
+  {% if section.settings.image != blank %}
+  <img class="spsmall-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  {% endif %}
+  {% if section.settings.image_mb != blank %}
+  <img class="ipadup-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+  {% else %}
+  <img class="ipadup-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+  {% endif %}
+
+  {% if section.settings.title != blank %}
+  <div class="bg-text-wrapper">
+    <div class="page-width">
+      <div class="title">{{ section.settings.title }}</div>
+      {% if section.settings.button_label != blank and section.settings.button_link != blank %}
+      <a href="{{ section.settings.button_link }}" class="btn promotion-btn">
+        {{ section.settings.button_label }}
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+
+{% schema %}
+  {
+    "name": "Promotion Banner", 
+    "settings": [{
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image(Recommended size：1920x845px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile(Recommended size：)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },
+          {
+            "type": "text",
+            "id": "button_label",
+            "label": "Button label"
+          },
+          {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button link"
+          }
+    ],
+    "presets": [
+      {
+        "name": "Promotion Banner",
+        "category": "image"
+      }
+    ]
+  }
+{% endschema %}

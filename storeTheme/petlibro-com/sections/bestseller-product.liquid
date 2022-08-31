@@ -1,0 +1,485 @@
+{% if section.settings.show_block %}
+<div class="bestsellerpro-container">
+  
+  <div class="bestsellerpro-topbanner">
+  {% if section.settings.title != blank %}
+  <div class="bs-topbanner-title">{{ section.settings.title }}</div>
+  {% endif %}
+      {% if section.settings.subtitle != blank %}
+  <div class="bs-topbanner-subtitle">{{ section.settings.subtitle }}</div>
+  {% endif %}
+</div>
+  
+ <div class="bestsellerpro-bottombox">
+ {% for block in section.blocks %}
+  
+
+  {% assign product = block.settings.product %}
+   
+   
+   {% assign index_pro = forloop.index | modulo: 6  %}
+   {% assign index_promax = forloop.index | modulo: 12  %}
+  {% if index_pro == 1 and index_promax != 7 %}
+   <div class="bestsellerpro-item bestsellerpro-item-{{ forloop.index }} bestsellerpro-item-first bestfirstleft">
+       
+    {% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {%- assign on_sale = true -%}
+{% endif %}
+    
+    {% assign show_new = false %}
+  {% for tag in product.tags %}
+  {% if tag contains 'new' or tag contains 'New' or tag contains 'NEW' %}
+  {% assign show_new = true %}
+  {% endif %}
+ {% endfor %}
+    
+
+    {% if show_new %}
+     <div class="bspro__tag_new">
+       <img alt src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/3_dae3a5ed-c7db-4a1a-a6e5-4274d5ee51c5.png?v=1642495131"/>
+     </div>
+    {% endif %}
+    {% if block.settings.image %}
+     <a href="{{product.url}}">
+     <img alt src="{{ block.settings.image | img_url:'master' }}" class="mobileho-hide" />
+     <img alt src="{{ block.settings.image_mb | img_url:'master' }}" class="pcho-hide" />
+     </a>
+     {% else %}
+     <a href="{{product.url}}"> <img alt src="{{ product.featured_image | img_url:'master' }}" /></a>
+     {% endif %}
+       
+    <div class="bests-firstpro-text"> 
+      <div class="bests-firstpro-text-item"> 
+    {% if block.settings.title != blank %}
+    <div class="bestsellerpro-itemtitle">  <a href="{{ product.url | within: collection }}">{{ block.settings.title }}</a></div>
+    {% else %}
+    <div class="bestsellerpro-itemtitle">  <a href="{{ product.url | within: collection }}">{{ product.title }}</a></div>
+    {% endif %}
+    
+    {% if  block.settings.subtitle != blank %}
+    <div class="bestsellerpro-itemsubtitle">{{ block.settings.subtitle }}</div>
+    {% else %}
+     <div class="bestsellerpro-itemsubtitle">{{ product.metafields.descriptors.subtitle }}</div>
+     {% endif %}
+    
+        <div class="grid-product__price">
+          {% if product.price_varies %}
+            {% assign price = product.price_min | money %}
+            <span {% if on_sale %}class="sale-price"{% endif %}>
+              From <span>{{ price }}</span>
+            </span>
+          {% else %}
+            <span {% if on_sale %}class="sale-price"{% endif %}>
+              {{ product.price  | money }}
+            </span>
+          {% endif %}
+          {% if on_sale %}
+<!--             <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>
+            <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+            <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span> -->
+          {% endif %}
+  
+          {%- assign product_variant = product.selected_or_first_available_variant -%}
+          {%- if product_variant.unit_price_measurement -%}
+            <div class="product__unit-price">
+              {%- capture unit_price_base_unit -%}
+                {%- if product_variant.unit_price_measurement -%}
+                  {%- if product_variant.unit_price_measurement.reference_value != 1 -%}
+                    {{ product_variant.unit_price_measurement.reference_value }}
+                  {%- endif -%}
+                  {{ product_variant.unit_price_measurement.reference_unit }}
+                {%- endif -%}
+              {%- endcapture -%}
+
+              {{ product_variant.unit_price | money }}/{{ unit_price_base_unit }}
+            </div>
+          {%- endif -%}
+        </div>
+    
+        {% if settings.collection_color_swatches %}
+      {%- assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase-%}
+      {%- assign swatch_file_extension = 'png' -%}
+
+      {% for option in product.options_with_values %}
+        {%- assign option_name = option.name | downcase -%}
+        {%- assign is_color = false -%}
+        {% if option_name contains swatch_trigger %}
+          {% assign is_color = true %}
+        {%- elsif swatch_trigger == 'color' and option_name contains 'colour' -%}
+          {% assign is_color = true %}
+        {% endif %}
+        {%- if is_color -%}
+          {%- assign option_index = forloop.index0 -%}
+          {%- assign values = '' -%}
+          <div class="grid-product__colors">
+            {% for variant in product.variants %}
+              {%- assign value = variant.options[option_index] %}
+              {% unless values contains value %}
+                {%- assign values = values | join: ',' %}
+                {%- assign values = values | append: ',' | append: value %}
+                {%- assign values = values | split: ',' %}
+
+                {%- assign color_image = value | handle | append: '.' | append: swatch_file_extension | asset_img_url: '50x' | prepend: 'https:' | split: '?' | first -%}
+                {%- assign color_swatch_fallback = value | split: ' ' | last | handle -%}
+
+                <a
+                  href="{{ variant.url | within: collection }}"
+                  class="color-swatch color-swatch--small color-swatch--{{color_swatch_fallback}}"
+                  style="background-image: url({{ color_image }}); background-color: {{ color_swatch_fallback }};">
+                </a>
+              {% endunless %}
+             {% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+     </div>
+       </div>
+
+  </div>
+  {% elsif index_pro == 5 and index_promax != 9 %}
+   <div class="bestsellerpro-item bestsellerpro-item-{{ forloop.index }} bestsellerpro-item-imgleft">
+       
+    {% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {%- assign on_sale = true -%}
+{% endif %}
+    
+    {% assign show_new = false %}
+  {% for tag in product.tags %}
+  {% if tag contains 'new' or tag contains 'New' or tag contains 'NEW' %}
+  {% assign show_new = true %}
+  {% endif %}
+ {% endfor %}
+    
+     
+     <div class="bests-firstpro-image">
+    {% if block.settings.image %}
+     <a href="{{product.url}}">
+     <img alt src="{{ block.settings.image | img_url:'master' }}" class="mobileho-hide" />
+     <img alt src="{{ block.settings.image_mb | img_url:'master' }}" class="pcho-hide" />
+     </a>
+     {% else %}
+     <a href="{{product.url}}"> <img alt src="{{ product.featured_image | img_url:'master' }}" /></a>
+     {% endif %}
+     </div>
+     
+    <div class="bests-mid-text"> 
+          {% if show_new %}
+     <div class="bspro__tag_new">
+       <img alt src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/3_dae3a5ed-c7db-4a1a-a6e5-4274d5ee51c5.png?v=1642495131"/>
+     </div>
+    {% endif %}
+      <div class="bests-mid-text-item"> 
+    {% if block.settings.title != blank %}
+    <div class="bestsellerpro-itemtitle">  <a href="{{ product.url | within: collection }}">{{ block.settings.title }}</a></div>
+    {% else %}
+    <div class="bestsellerpro-itemtitle">  <a href="{{ product.url | within: collection }}">{{ product.title }}</a></div>
+    {% endif %}
+    
+    {% if  block.settings.subtitle != blank %}
+    <div class="bestsellerpro-itemsubtitle">{{ block.settings.subtitle }}</div>
+    {% else %}
+     <div class="bestsellerpro-itemsubtitle">{{ product.metafields.descriptors.subtitle }}</div>
+     {% endif %}
+    
+        <div class="grid-product__price">
+          {% if product.price_varies %}
+            {% assign price = product.price_min | money %}
+            <span {% if on_sale %}class="sale-price"{% endif %}>
+              From <span>{{ price }}</span>
+            </span>
+          {% else %}
+            <span {% if on_sale %}class="sale-price"{% endif %}>
+              {{ product.price  | money }}
+            </span>
+          {% endif %}
+          {% if on_sale %}
+<!--             <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>
+            <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+            <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span> -->
+          {% endif %}
+  
+          {%- assign product_variant = product.selected_or_first_available_variant -%}
+          {%- if product_variant.unit_price_measurement -%}
+            <div class="product__unit-price">
+              {%- capture unit_price_base_unit -%}
+                {%- if product_variant.unit_price_measurement -%}
+                  {%- if product_variant.unit_price_measurement.reference_value != 1 -%}
+                    {{ product_variant.unit_price_measurement.reference_value }}
+                  {%- endif -%}
+                  {{ product_variant.unit_price_measurement.reference_unit }}
+                {%- endif -%}
+              {%- endcapture -%}
+
+              {{ product_variant.unit_price | money }}/{{ unit_price_base_unit }}
+            </div>
+          {%- endif -%}
+        </div>
+    
+        {% if settings.collection_color_swatches %}
+      {%- assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase-%}
+      {%- assign swatch_file_extension = 'png' -%}
+
+      {% for option in product.options_with_values %}
+        {%- assign option_name = option.name | downcase -%}
+        {%- assign is_color = false -%}
+        {% if option_name contains swatch_trigger %}
+          {% assign is_color = true %}
+        {%- elsif swatch_trigger == 'color' and option_name contains 'colour' -%}
+          {% assign is_color = true %}
+        {% endif %}
+        {%- if is_color -%}
+          {%- assign option_index = forloop.index0 -%}
+          {%- assign values = '' -%}
+          <div class="grid-product__colors">
+            {% for variant in product.variants %}
+              {%- assign value = variant.options[option_index] %}
+              {% unless values contains value %}
+                {%- assign values = values | join: ',' %}
+                {%- assign values = values | append: ',' | append: value %}
+                {%- assign values = values | split: ',' %}
+
+                {%- assign color_image = value | handle | append: '.' | append: swatch_file_extension | asset_img_url: '50x' | prepend: 'https:' | split: '?' | first -%}
+                {%- assign color_swatch_fallback = value | split: ' ' | last | handle -%}
+
+                <a
+                  href="{{ variant.url | within: collection }}"
+                  class="color-swatch color-swatch--small"
+                  style="background-image: url({{ color_image }}); background-color: {{ color_swatch_fallback }};">
+                </a>
+              {% endunless %}
+             {% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+      </div>
+       </div>
+
+  </div>
+  {% else %}
+
+  <div class="bestsellerpro-item bestsellerpro-item-{{ forloop.index }}">
+    {% assign on_sale = false %}
+{% if product.compare_at_price > product.price %}
+  {%- assign on_sale = true -%}
+{% endif %}
+    
+    {% assign show_new = false %}
+  {% for tag in product.tags %}
+  {% if tag contains 'new' or tag contains 'New' or tag contains 'NEW' %}
+{% assign show_new = true %}
+  {% endif %}
+ {% endfor %}
+    
+    
+    {% if show_new %}
+     <div class="bspro__tag_new">
+          <img alt src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/3_dae3a5ed-c7db-4a1a-a6e5-4274d5ee51c5.png?v=1642495131"/>
+     </div>
+    {% endif %}
+    
+      <div class="bestsellerpro-imagewarrper">
+        <div class="swiper-container swiper_bestpro-{{ forloop.index }}">
+       <div class="swiper-button-prev bestpro-prevbtn bestpro-prevbtn-{{ forloop.index }}"><img  alt="" src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/leftarrowpro.png?v=1642573282"></div>
+        <div class="swiper-button-next bestpro-nextbtn bestpro-nextbtn-{{ forloop.index }}"><img  alt="" src="https://cdn.shopify.com/s/files/1/0252/5197/1119/files/rightarrowpro.png?v=1642573294"></div>
+          <div class="swiper-wrapper">
+           {% for image in product.images limit: 6 %}
+            <div class="swiper-slide">
+              <div class="swiperbs_imgwrapper">
+           {%- assign img_url = image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+               <a href="{{ product.url | within: collection }}"><img class="lazyload"
+                {% if forloop.first %} src="{{ image | img_url: '500x' }}"{% endif %}
+                data-src="{{ img_url }}"
+                data-widths="[180, 360, 540, 720, 900, 1080]"
+                data-aspectratio="{{ image.aspect_ratio }}"
+                data-sizes="auto"
+                alt="{{ image.alt | escape }}"></a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          </div>
+      </div>
+    
+    <div class="bests-bottom-text">
+    {% if block.settings.title != blank %}
+    <div class="bestsellerpro-itemtitle">  <a href="{{ product.url | within: collection }}">{{ block.settings.title }}</a></div>
+    {% else %}
+    <div class="bestsellerpro-itemtitle">  <a href="{{ product.url | within: collection }}">{{ product.title }}</a></div>
+    {% endif %}
+    
+    {% if  block.settings.subtitle != blank %}
+    <div class="bestsellerpro-itemsubtitle">{{ block.settings.subtitle }}</div>
+    {% else %}
+     <div class="bestsellerpro-itemsubtitle">{{ product.metafields.descriptors.subtitle }}</div>
+     {% endif %}
+    
+        <div class="grid-product__price">
+          {% if product.price_varies %}
+            {% assign price = product.price_min | money %}
+            <span {% if on_sale %}class="sale-price"{% endif %}>
+              From {{ price }}
+            </span>
+          {% else %}
+            <span {% if on_sale %}class="sale-price"{% endif %}>
+              {{ product.price  | money }}
+            </span>
+          {% endif %}
+          {% if on_sale %}
+            <span class="grid-product__price--original">{{ product.compare_at_price | money }}</span>
+            <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+            <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+          {% endif %}
+  
+          {%- assign product_variant = product.selected_or_first_available_variant -%}
+          {%- if product_variant.unit_price_measurement -%}
+            <div class="product__unit-price">
+              {%- capture unit_price_base_unit -%}
+                {%- if product_variant.unit_price_measurement -%}
+                  {%- if product_variant.unit_price_measurement.reference_value != 1 -%}
+                    {{ product_variant.unit_price_measurement.reference_value }}
+                  {%- endif -%}
+                  {{ product_variant.unit_price_measurement.reference_unit }}
+                {%- endif -%}
+              {%- endcapture -%}
+
+              {{ product_variant.unit_price | money }}/{{ unit_price_base_unit }}
+            </div>
+          {%- endif -%}
+        </div>
+    
+        {% if settings.collection_color_swatches %}
+      {%- assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase-%}
+      {%- assign swatch_file_extension = 'png' -%}
+
+      {% for option in product.options_with_values %}
+        {%- assign option_name = option.name | downcase -%}
+        {%- assign is_color = false -%}
+        {% if option_name contains swatch_trigger %}
+          {% assign is_color = true %}
+        {%- elsif swatch_trigger == 'color' and option_name contains 'colour' -%}
+          {% assign is_color = true %}
+        {% endif %}
+        {%- if is_color -%}
+          {%- assign option_index = forloop.index0 -%}
+          {%- assign values = '' -%}
+          <div class="grid-product__colors">
+            {% for variant in product.variants %}
+              {%- assign value = variant.options[option_index] %}
+              {% unless values contains value %}
+                {%- assign values = values | join: ',' %}
+                {%- assign values = values | append: ',' | append: value %}
+                {%- assign values = values | split: ',' %}
+
+                {%- assign color_image = value | handle | append: '.' | append: swatch_file_extension | asset_img_url: '50x' | prepend: 'https:' | split: '?' | first -%}
+                {%- assign color_swatch_fallback = value | split: ' ' | last | handle -%}
+
+                <a
+                  href="{{ variant.url | within: collection }}"
+                  class="color-swatch color-swatch--small color-swatch--{{ value | handle }}"
+                  style="background-image: url({{ color_image }}); background-color: {{ color_swatch_fallback }};">
+                </a>
+              {% endunless %}
+             {% endfor %}
+          </div>
+        {% endif %}
+      {% endfor %}
+  
+    {% endif %}
+    </div>
+    
+  <script>    
+  $(function(){  
+  var swiper_bestpro_{{ product.id }} = new Swiper ('.swiper_bestpro-{{ forloop.index }}', {
+ observer:true,
+ observeParents:true,
+    navigation: {
+      nextEl: '.bestpro-nextbtn-{{ forloop.index }}',
+      prevEl: '.bestpro-prevbtn-{{ forloop.index }}',
+    },
+                                                      
+  });  
+
+ 
+  });
+
+</script>
+  </div>
+  
+   {% endif %}
+    {% endfor %}
+<!--      <div></div><div></div> -->
+  </div>  
+ 
+</div>
+
+
+
+
+
+{% endif %}
+
+{% schema %}
+
+  {
+    "name": "Product",
+    "settings": [
+         {
+            "type": "checkbox",
+            "id": "show_block",
+            "label": "show this block?",
+            "default": true
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "text",
+            "id": "subtitle",
+            "label": "subtitle"
+          }    
+      
+    ],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "product"
+          },{
+            "type": "text",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "text",
+            "id": "subtitle",
+            "label": "subtitle"
+          },{
+            "type": "image_picker",
+            "id": "image",
+            "label": "image(Recommended size：448*448px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "mobile image(Recommended size：448*448px)"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Product",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+
+         

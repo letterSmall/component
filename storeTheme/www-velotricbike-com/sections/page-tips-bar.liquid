@@ -1,0 +1,140 @@
+{% if section.blocks.size > 0 %}
+<style>
+  .page-tips-bar-{{ section.id }} {
+    color: {{ section.settings.text_color }};
+    background-color: {{ section.settings.bg_color }};
+  }
+  .page-tips-bar-{{ section.id }} .tips-bar-wrapper {
+    padding-left: {{ section.settings.padding_left }}%;
+    padding-right: {{ section.settings.padding_right }}%;
+  }
+  .page-tips-bar-{{ section.id }} .text-item {
+    text-align: {{ section.settings.title_alignment }};
+    text-transform: {{ section.settings.title_transform }};
+  }
+</style>
+{% assign count = section.blocks.size %}
+{% case count %}
+{% when 1 %}
+{% assign item_width = 'one-whole' %}
+{% when 2 %}
+{% assign item_width = 'one-half' %}
+{% when 3 %}
+{% assign item_width = 'one-third' %}
+{% endcase %}
+<div class="page-tips-bar page-tips-bar-{{ section.id }}">
+  <div class="tips-bar-wrapper">
+    {% for block in section.blocks %}
+    {% if block.settings.title != blank %}
+    <div class="text-item {{ item_width }}">{{ block.settings.title }}</div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Page Tips Bar",
+    "settings": [
+   	  {
+        "id": "text_color",
+        "type": "color",
+        "label": "Text Color",
+		"default": "#ffffff"
+      },
+   	  {
+        "id": "bg_color",
+        "type": "color",
+        "label": "Background Color",
+		"default": "#282828"
+      },
+      {
+        "type": "select",
+        "id": "title_alignment",
+        "label": "Title Alignment",
+        "default": "center",
+        "options": [
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "title_transform",
+        "label": "Title Transform",
+        "default": "capitalize",
+        "options": [
+          {
+            "value": "capitalize",
+            "label": "Capitalize"
+          },
+          {
+            "value": "uppercase",
+            "label": "Uppercase"
+          },
+          {
+            "value": "lowercase",
+            "label": "Lowercase"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "padding_left",
+        "min": 0,
+        "max": 25,
+        "step": 1,
+        "unit": "%",
+        "label": "Padding Left",
+        "default": 8
+      },
+      {
+        "type": "range",
+        "id": "padding_right",
+        "min": 0,
+        "max": 25,
+        "step": 1,
+        "unit": "%",
+        "label": "Padding Right",
+        "default": 5
+      }
+	],
+	"max_blocks": 3,
+    "blocks": [
+      {
+        "type": "text",
+        "name": "Text Item",
+        "settings": [
+          {
+            "type": "html",
+            "id": "title",
+            "label": "Title",
+            "default": "10% Commission On All Sales*"
+          }
+		]
+      }
+    ],
+	"presets": [
+      {
+        "name": "Page Tips Bar"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,56 @@
+{%- capture body_classes -%}
+template-{{ template.name | handle }} {{ template.name }}-{{ template.suffix }} {{ template.name | append: '-' | append: handle }} {% if cart.item_count == 0 %}cart-empty{% endif %}
+{%- endcapture -%}
+
+<!doctype html>
+<html
+  class="no-js supports-no-cookies"
+  lang="{{ request.locale.iso_code }}"
+  style="--sf-page-opacity: 0;"
+  data-template="{{ template.name }}"
+  {% if enable_rtl %}dir="rtl"{% endif %}
+>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+	<meta name="theme-color" content="{{ settings.color_primary }}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  {% render 'preload' %}
+  {% render 'SEO' %}
+  {% render 'social-meta-tags' %}
+  {% render 'font-face' %}
+  {% render 'critical-css' %}
+  {% render 'critical-scripts' %}
+  {% render 'style-tags' %}
+  {% render 'custom-code-head' %}
+  {{ content_for_header }}
+  {% include "omega_multi_pixel" %} 
+</head>
+
+<body
+  id="sf-theme" style="opacity: 0;"
+  class="{{ body_classes }} relative min-h-screen{% if customer %} customer-logged-in{% endif %}"
+  {% if template.name == 'product' %}data-product-id="{{ product.id }}"{% endif %}
+>
+<script>window.KlarnaThemeGlobals={};{%case template.name%} {%when"product"%} {% if product.first_available_variant.price %}window.KlarnaThemeGlobals.data_purchase_amount = {{ product.first_available_variant.price }};{% endif %}window.KlarnaThemeGlobals.productVariants={{product.variants|json}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%when"cart"%} window.KlarnaThemeGlobals.data_purchase_amount={{cart.total_price}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%endcase%}</script>
+
+  
+  {% render 'theme-data' %}
+  {% section 'annoucement' %}
+  {% section 'header' %}
+  {% render 'scroll-top-button' %}
+  <main role="main" id="MainContent">
+    {{ content_for_layout }}
+    <div id="cart-drawer-container"></div>
+  </main>
+  {% section 'footer' %}
+  {% section 'mobile-sticky-bar' %}
+  {% render 'custom-code-body' %}
+  {% render 'foxkit-messenger' %}
+  {% render 'script-tags' %}
+<!-- Stamped - Begin Script-->
+<script async type="text/javascript" data-api-key="pubkey-xMDD4kXj67531kJHz6Jwn5JvrQYxxT" id="stamped-script-widget" src="https://cdn1.stamped.io/files/widget.min.js"></script>
+<!-- Stamped - End Script --><br>
+</body>
+</html>

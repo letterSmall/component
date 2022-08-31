@@ -1,0 +1,377 @@
+<div id="section-{{ section.id }}" class="Section" data-section-id="{{ section.id }}" data-section-type="article-list">
+  {%- if blog.articles_count == 0 -%}
+  <div class="EmptyState">
+    <div class="Container">
+      <h1 class="EmptyState__Title Heading u-h5">No Articles found</h1>
+    </div>
+  </div>
+  {%- else -%}
+  <div class="Blog">
+    <div class="page-width">
+      <nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
+        <a href="{{ routes.root_url }}" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+
+        <span class="breadcrumb__divider" aria-hidden="true">/</span>
+        {% if current_tags %}
+        {{ blog.title | link_to: blog.url }}
+        <span class="breadcrumb__divider" aria-hidden="true">/</span>
+        <span>{{ current_tags | join: " + " }}</span>
+        {% else %}
+        <span>{{ blog.title }}</span>
+        {% endif %}
+
+      </nav>
+    </div>
+
+    {%- if section.settings.show_featured_article and current_tags == blank -%}
+    	{%- assign articles_per_page = 13 -%}
+    {%- else -%}
+    	{%- assign articles_per_page = 12 -%}
+    {%- endif -%}
+
+    {%- paginate blog.articles by articles_per_page -%}
+      {% assign is_first_article_featured = false %}
+
+      {%- if section.settings.show_featured_article and current_tags == blank and blog.articles.first.image -%}
+      	{%- assign is_first_article_featured = true -%}
+      {%- endif -%}
+
+        {%- for article in blog.articles -%}
+          {%- if is_first_article_featured and forloop.first -%}
+            <article class="article article--layout Featured" data-aos>
+              <div class="article__image-wrap{% if article.image == blank %} article__image-wrap--empty{% endif %} article__image-wrap--right">
+                {%- unless article.image == blank -%}
+                <div class="article__image image-wrap">
+                  <div
+                       class="article__image--image animate-me lazyload"
+                       data-bgset="{% render 'bgset', image: article.image %}"
+                       data-sizes="auto">
+                  </div>
+                  <noscript>
+                    <div class="article__image--image animate-me lazyloaded"
+                         style="background-image: url({{ article.image | img_url: '500x' }})"></div>
+                  </noscript>
+                </div>
+                {%- endunless -%}
+              </div>
+              <div class="article__content">
+                <div class="article__content-meta">
+                  <div class="article__date">
+                    {%- assign first_item = true -%}
+                    {%- if section.settings.blog_show_tags and article.tags.size > 0 -%}
+                    {%- for tag in article.tags -%}
+                    {% if tag contains "_" %}{%- assign tag_starts_with = tag | slice: 0 -%}{% if tag_starts_with == "_" %}{% if tag_count %}{%- assign tag_count = tag_count | minus: 1 | at_least: 0 -%}{% endif %}{% continue %}{% endif %}{% endif %}
+                    {%- unless first_item -%} &middot; {%- endunless -%}
+                    {%- assign first_item = false -%}
+                    <a href="{{ blog.url }}/tagged/{{ tag | handle }}">
+                      {{ tag }}
+                    </a>
+                    {%- endfor -%}
+                    {%- endif -%}
+                    {%- if section.settings.blog_show_comments and article.comments_count > 0 -%}
+                    {%- unless first_item -%} &middot; {%- endunless -%}
+                    {%- assign first_item = false -%}
+                    <a href="{{ article.url }}#comments">
+                      {{ 'blogs.comments.with_count' | t: count: article.comments_count }}
+                    </a>
+                    {%- endif -%}
+                    {%- if section.settings.blog_show_date -%}
+                    {%- unless first_item -%} &middot; {%- endunless -%}
+                    {%- assign first_item = false -%}
+                    {{ article.published_at | time_tag: format: 'month_day_year' }}
+                    {%- endif -%}
+                  </div>
+
+                  <h2 class="h3 article__h3">
+                    <a href="{{ article.url }}">{{ article.title }}</a>
+                  </h2>
+
+                  {%- if section.settings.blog_show_author -%}
+                  <div class="article__author">by {{ article.author }}</div>
+                  {%- endif -%}
+                </div>
+
+                <div class="rte rte--block">
+                  {%- if article.excerpt.size > 0 -%}
+                  {{ article.excerpt }}
+                  {%- else -%}
+                  {{ article.content | strip_html | truncatewords: 40 }}
+                  {%- endif -%}
+                </div>
+
+                <a href="{{ article.url }}" class="btn">
+                  {{ 'blogs.article.read_more' | t }}
+                </a>
+              </div>
+            </article>
+            {% break %}
+          {%- endif -%}
+        {%- endfor -%}
+    
+    
+        <h1 class="blog-title">
+          {{- blog.title -}}
+        </h1>
+
+        {%- if section.settings.show_tags and blog.all_tags.size > 0 -%}
+        <ul class="inline-nav capitalize">
+          <li{% unless current_tags contains tag %} class="inline-nav--active"{% endunless %}>
+            <a href="/blogs/{{ blog.handle }}">All</a>
+          </li>
+
+          {%- for tag in blog.all_tags -%}
+          <li{% if current_tags contains tag %} class="inline-nav--active"{% endif %}>
+            <a href="/blogs/{{ blog.handle }}/tagged/{{ tag | handle }}">{{ tag }}</a>
+          </li>
+          {%- endfor -%}
+        </ul>
+        {%- endif -%}
+
+        <div class="Container">
+          {%- for article in blog.articles -%}
+          <article class="ArticleItem {% if is_first_article_featured and forloop.first %}hidden-tablet-and-up{% endif %}" {% if block %}{{ block.shopify_attributes }}{% endif %}>
+            {%- if article.image != blank -%}
+            <a href="{{ article.url }}" data-aos>
+              <div class="article__image-wrap{% if article.image == blank %} article__image-wrap--empty{% endif %}{% if is_even_post %} article__image-wrap--right{% endif %}">
+                {%- unless article.image == blank -%}
+                <div class="article__image image-wrap">
+                  <div
+                       class="article__image--image animate-me lazyload"
+                       data-bgset="{% render 'bgset', image: article.image %}"
+                       data-sizes="auto">
+                  </div>
+                  <noscript>
+                    <div class="article__image--image animate-me lazyloaded"
+                         style="background-image: url({{ article.image | img_url: '500x' }})"></div>
+                  </noscript>
+                </div>
+                {%- endunless -%}
+              </div>
+            </a>
+            {%- endif -%}
+
+            <div class="ArticleItem__Content">
+              {%- if section.settings.show_category -%}
+              <span class="ArticleItem__Category Heading u-h6 Text--subdued">{{ article.tags.first }}</span>
+              {%- endif -%}
+
+              <h2 class="ArticleItem__Title Heading u-h2">
+                <a href="{{ article.url }}">{{ article.title }}</a>
+              </h2>
+
+              {%- unless template.name == 'article' -%}
+              <p class="ArticleItem__Excerpt">{{ article.excerpt_or_content | strip_html | truncate: 150 }}</p>
+              {%- endunless -%}
+            </div>
+          </article>
+          {%- endfor -%}
+        </div>
+
+
+      {%- if paginate.pages > 1 -%}
+          {%- render 'pagination', paginate: paginate -%}
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+  {%- endif -%}
+</div>
+
+<style>
+  #section-{{ section.id }} .ImageHero,
+  #section-{{ section.id }} .ImageHero .Heading {
+    color: #ffffff;
+  }
+
+  #section-{{ section.id }} .ImageHero .Button {
+    color: #1c1c1c;
+    border-color: #ffffff;
+  }
+
+  #section-{{ section.id }} .ImageHero .Button::before {
+    background-color: #ffffff;
+  }
+
+  {%- if settings.show_button_transition -%}
+    @media (-moz-touch-enabled: 0), (hover: hover) {
+      #section-{{ section.id }} .ImageHero .Button:hover {
+        color: #ffffff;
+      }
+    }
+  {%- endif -%}
+@media only screen and (min-width: 1400px) {
+    .Featured .article__image-wrap, .Featured .article__image {
+        min-height: 785px;
+    }
+}
+
+@media only screen and (min-width: 990px) and (max-width: 1399px) {
+    .Featured .article__image-wrap, .Featured .article__image {
+        min-height: 600px;
+    }
+}
+
+@media only screen and (min-width: 750px) and (max-width: 989px) {
+  .Featured .article__image-wrap, .Featured .article__image {
+    min-height: 500px;
+  }
+}
+
+
+.Featured .article__content {
+    height: 100%;
+    width: 50%;
+    text-align: left;
+    padding: 104px;
+}
+
+.blog-title {
+    padding: 50px 20px;
+    margin: 0;
+    text-align: center;
+}
+
+.inline-nav {
+    list-style: none;
+    list-style-type: none;
+    text-align: center;
+    padding: 0;
+    margin: 30px 0;
+}
+
+.blog-title+.inline-nav {
+    margin-top: 0;
+}
+
+.inline-nav li {
+    display: inline-block;
+    padding: 5px 0;
+    margin: 5px 20px;
+}
+
+.inline-nav li a {
+    color: var(---color-link);
+    position: relative;
+}
+
+.inline-nav li a:after {
+    content: "";
+    margin: auto;
+    width: 10%;
+    height: 2px;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    opacity: 0;
+    background: var(---color-link-hover);
+    transition: .25s ease-out;
+    transition-property: color,background,border;
+}
+
+.inline-nav li a:hover:after, .inline-nav li.inline-nav--active a:after {
+    color: var(---color-link);
+    opacity: 1;
+    width: 100%;
+}
+
+.hidden-tablet-and-up {
+    display: none;
+}
+
+.Blog {
+    overflow: hidden;
+}
+
+.Blog .Container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.Blog .Container .ArticleItem {
+    flex: 1 0 33.33%;
+    overflow: hidden;
+}
+
+.Blog .Container .ArticleItem > a {
+    display: block;
+    overflow: hidden;
+}
+
+.Blog .Container .ArticleItem .article__image {
+    position: relative;
+    right: 0;
+}
+
+.ArticleItem__Content {
+    padding: 25px;
+}
+.article__image-wrap {
+    flex: 0 1 50%;
+}
+.template-blog .article {
+    margin-bottom: 0px;
+}
+.article__image-wrap {
+    height: auto;
+}
+
+.Blog .Container .ArticleItem .article__image {
+    height: auto;
+    padding-bottom: 60%;
+}
+h2.ArticleItem__Title.Heading.u-h2 {
+    font-size: 19px;
+}
+
+@media only screen and (max-width: 1399px) {
+  .Featured .article__content {
+    padding: 90px 60px;
+  }
+}
+
+@media only screen and (max-width: 769px) {
+  article.article.Featured {
+    display: none !important;
+  }
+
+  .Blog .Container {
+    display: block;
+  }
+
+  .blog-title {
+    padding: 30px 20px;
+  }
+
+  .hidden-tablet-and-up {
+    display: block;
+  }
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "Blog page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show filters",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured_article",
+      "label": "Show featured article",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category",
+      "label": "Show article category",
+      "info": "The first article's tag is used as the main category.",
+      "default": false
+    }
+  ]
+}
+{% endschema %}

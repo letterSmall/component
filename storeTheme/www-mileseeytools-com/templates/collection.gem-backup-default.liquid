@@ -1,0 +1,15 @@
+{% comment %}
+  The contents of the collection.liquid template can be found in /sections/collection-template.liquid
+{% endcomment %}
+
+{% section 'collection-header' %}
+<div class="container">
+    <div class="page page-collections">
+        {% section 'sidebar-collection' %}
+        {% section 'collection-template' %}
+        <div class="clearfix"></div>
+    </div>
+</div>
+{% section 'recently-viewed-products' %}
+{% section 'banner-custom-collection' %}
+{% section 'collection_customHtml' %}

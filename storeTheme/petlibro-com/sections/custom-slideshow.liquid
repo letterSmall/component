@@ -1,0 +1,146 @@
+{% if section.settings.show_section != blank and section.blocks.size > 0%}
+
+<div class="custom-slideshow custom-slideshow-{{ section.id }} {% if section.settings.tab_id != blank %}{{ section.settings.tab_id }}{% endif %}">
+  <div class="custom-slideshow-container swiper-container">
+    <div class="custom-slideshow-wrapper swiper-wrapper">
+      {% for block in section.blocks %}
+      {% if block.settings.image_link != blank %}
+      <a href="{{ block.settings.image_link }}" class="slideshow-item swiper-slide">
+        {% else %}
+        <div class="slideshow-item swiper-slide">
+          {% endif %}
+          
+          {% if block.settings.pc_image != blank %}
+          <img class="lazyload js"
+               src="{{ block.settings.pc_image | img_url: '1x' }}"
+               srcset="{{ block.settings.pc_image | img_url: '1500x' }}, {{ block.settings.pc_image | img_url: '960x' }}"
+               sizes="(max-width: 960px) 960px, 1500px" 
+               alt=""
+               width="{{ block.settings.pc_image.width }}" 
+               height="{{ block.settings.pc_image.height }}"/>
+          {% endif %}
+
+          {% if block.settings.image_link != blank %}
+          </a>
+        {% else %}
+        </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    var mySwiper = new Swiper(`.custom-slideshow-container`, {
+      speed: 5000,
+      autoplay: {
+        delay: 0,
+        stopOnLastSlide: false,
+        disableOnInteraction: false,
+      },
+      //       freeMode: true,
+      loop: true,
+      spaceBetween: 20,
+      centeredSlides: false,
+      slidesPerView: 4,
+      watchSlidesProgress: true,
+      mousewheels: true,
+      resizeObserver: true,
+      on: {
+        init: function(){
+          setTimeout(()=>{
+            let len = mySwiper.slides.length;
+            if($(window).width() > 791) {
+            for(let i = 0; i < len; i++) {
+              mySwiper.slides[i].style.height = ((mySwiper.width * 533) / 1920)+'px';
+            }
+          }
+          if($(window).width() <= 790) {
+            for(let i = 0; i < len; i++) {
+              mySwiper.slides[i].style.height = ((mySwiper.width * 430) / 880)+'px';
+            }
+          }
+          mySwiper.updateSlides();
+        }, 10);
+        }, 
+        resize: function(){
+          let len = mySwiper.slides.length;
+          if($(window).width() > 791) {
+            for(let i = 0; i < len; i++) {
+              mySwiper.slides[i].style.height = ((mySwiper.width * 533) / 1920)+'px';
+            }
+          }
+          if($(window).width() <= 790) {
+            for(let i = 0; i < len; i++) {
+              mySwiper.slides[i].style.height = ((mySwiper.width * 430) / 880)+'px';
+            }
+          }
+          mySwiper.updateSlides();
+        }, 
+      },
+      breakpoints:{
+        1600: { slidesPerView: 4, spaceBetween: 15}, 
+        820: {slidesPerView: 3,spaceBetween: 10},
+        590: {slidesPerView: 2,spaceBetween: 10}
+      }
+    });
+    mySwiper.el.onmouseover = (function(){
+      mySwiper.autoplay.stop();
+    });
+    mySwiper.el.onmouseout=(function(){
+      mySwiper.autoplay.start();
+    });
+  });
+</script>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Custom Slide Show",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "tab_id",
+        "label": "Tab ID",
+		"default": "overview",
+		"info": "This must be filled in for the first module of the category for Tabs Bar"
+      }
+	],
+    "blocks": [
+      {
+        "type": "image",
+        "name": "Image Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "pc_image",
+            "label": "Image"
+          },
+          {
+            "type": "url",
+            "id": "image_link",
+            "label": "Image Link"
+          }
+		]
+      }
+    ],
+   "presets": [
+      {
+		"name": "Custom Slide Show"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

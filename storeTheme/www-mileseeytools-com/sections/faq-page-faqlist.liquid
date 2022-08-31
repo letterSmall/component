@@ -1,0 +1,229 @@
+{% if section.blocks.size > 0 %}
+<style>
+  .faq-page-faqlist-{{ section.id }} {
+    margin-top: {{ section.settings.margin_top }}px;
+    margin-bottom: {{ section.settings.margin_bottom }}px;
+  }
+  @media only screen and (max-width: 790px) {
+    .faq-page-faqlist-{{ section.id }} {
+      margin-top: {{ section.settings.mb_margin_top }}px;
+      margin-bottom: {{ section.settings.mb_margin_bottom }}px;
+    }
+  }
+  {% if section.settings.primary_color != blank %}
+  .faq-page-faqlist-{{ section.id }} .faqlist-item .content-title {
+    color: {{ section.settings.primary_color }};
+  }
+  {% endif %}
+  {% if section.settings.secondary_color != blank %}
+  .faq-page-faqlist-{{ section.id }} .faqlist-item .content-desc {
+    color: {{ section.settings.secondary_color }};
+  }
+  {% endif %}
+</style>
+
+<div class="faq-page-faqlist faq-page-faqlist-{{ section.id }}">
+  <div class="faqlist-wrapper faqlist-wrapper-{{ section.id }} container">
+    {% for block in section.blocks %}
+    <div class="faqlist-item">
+      {% if block.settings.title != blank %}
+      <div class="item-title">
+        <div class="content-title">{{ block.settings.title }}</div>
+        <div class="content-toggle-btn">
+          <svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 1L8.5 8L1 1" stroke="black" stroke-width="2"/></svg>
+        </div>
+      </div>
+      {% endif %}
+      {% if block.settings.description != blank %}
+      <div class="item-desc content-desc">{{ block.settings.description }}</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+    <div class="faq-tips">No match was found. Please search again.</div>
+  </div>
+</div>
+{% endif %}
+<script type="text/javascript">
+  $(function(){
+    $(".faqlist-wrapper .faqlist-item .item-title").click(function() {
+      if($(this).siblings(".item-desc").is(":hidden") ){
+        $(this).find(".content-toggle-btn").html(`<svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 9L8.5 2L1 9" stroke="black" stroke-width="2"/></svg>`);
+      }
+      else{
+        $(this).find(".content-toggle-btn").html('<svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 1L8.5 8L1 1" stroke="black" stroke-width="2"/></svg>');
+      }
+      $(this).siblings(".item-desc").slideToggle();
+    });
+
+    if($(".header-content-box .header-search-box").height() > 0 && $(".faqlist-wrapper .faqlist-item").length) {
+      var faqCount = $(".faqlist-wrapper .faqlist-item").length;
+      var searchInput = $(".header-content-box .header-search-box #faq-search-input").val().trim().toLowerCase();
+      if(searchInput == '') {
+        $(".faqlist-wrapper .faqlist-item").addClass("active").removeClass("inactive");
+        $(".faqlist-wrapper .faq-tips").css("display", "none");
+        $(".faqlist-wrapper .faqlist-item .item-desc").slideUp();
+        $(".faqlist-wrapper .faqlist-item.active .item-desc").eq(0).slideDown();
+        $(".faqlist-wrapper .faqlist-item.active .item-title").eq(0).find(".content-toggle-btn").html(`<svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 9L8.5 2L1 9" stroke="black" stroke-width="2"/></svg>`);
+      }
+
+      $(".header-content-box .header-search-box #faq-search-input").change(function(){
+        $(".faqlist-wrapper .faqlist-item").addClass("active").removeClass("inactive");
+        $(".faqlist-wrapper .faqlist-item .item-desc").css("display", "none");
+        $(".faqlist-wrapper .faqlist-item .item-title .content-toggle-btn").html('<svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 1L8.5 8L1 1" stroke="black" stroke-width="2"/></svg>');
+        searchInput = $(".header-content-box .header-search-box #faq-search-input").val().trim().toLowerCase();
+        if(searchInput == '') {
+          $(".faqlist-wrapper .faqlist-item").addClass("active").removeClass("inactive");
+          $(".faqlist-wrapper .faq-tips").css("display", "none");
+        } else {
+          for(let i = 0; i < faqCount; i++) {
+            let tempTitle = $(".faqlist-wrapper .faqlist-item").eq(i).find(".item-title .content-title").text().toLowerCase();
+            let tempDesc = $(".faqlist-wrapper .faqlist-item").eq(i).find(".item-desc").text().toLowerCase();
+            let itemStr = tempTitle + " " + tempDesc;
+            if(itemStr.indexOf(searchInput) != -1) {
+              $(".faqlist-wrapper .faq-tips").css("display", "none");
+            }else {
+              $(".faqlist-wrapper .faqlist-item").eq(i).addClass("inactive").removeClass("active");
+              if($(".faqlist-wrapper .faqlist-item.active").length == 0) {
+                $(".faqlist-wrapper .faq-tips").css("display", "block");
+              }
+            }
+          }
+        }
+        $(".faqlist-wrapper .faqlist-item.active .item-desc").eq(0).slideDown();
+        $(".faqlist-wrapper .faqlist-item.active .item-title").eq(0).find(".content-toggle-btn").html(`<svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 9L8.5 2L1 9" stroke="black" stroke-width="2"/></svg>`);
+      });
+
+      $(".header-content-box .header-search-box #faq-search-btn").click(function(){
+        $(".faqlist-wrapper .faqlist-item").addClass("active").removeClass("inactive");
+        $(".faqlist-wrapper .faqlist-item .item-desc").css("display", "none");
+        $(".faqlist-wrapper .faqlist-item .item-title .content-toggle-btn").html('<svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 1L8.5 8L1 1" stroke="black" stroke-width="2"/></svg>');
+        searchInput = $(".header-content-box .header-search-box #faq-search-input").val().trim().toLowerCase();
+        if(searchInput == '') {
+          $(".faqlist-wrapper .faqlist-item").addClass("active").removeClass("inactive");
+          $(".faqlist-wrapper .faq-tips").css("display", "none");
+        } else {
+          for(let i = 0; i < faqCount; i++) {
+            let tempTitle = $(".faqlist-wrapper .faqlist-item").eq(i).find(".item-title .content-title").text().toLowerCase();
+            let tempDesc = $(".faqlist-wrapper .faqlist-item").eq(i).find(".item-desc").text().toLowerCase();
+            let itemStr = tempTitle + " " + tempDesc;
+            if(itemStr.indexOf(searchInput) != -1) {
+              $(".faqlist-wrapper .faq-tips").css("display", "none");
+            }else {
+              $(".faqlist-wrapper .faqlist-item").eq(i).addClass("inactive").removeClass("active");
+              if($(".faqlist-wrapper .faqlist-item.active").length == 0) {
+                $(".faqlist-wrapper .faq-tips").css("display", "block");
+              }
+            }
+          }
+        }
+        $(".faqlist-wrapper .faqlist-item.active .item-desc").eq(0).slideDown();
+        $(".faqlist-wrapper .faqlist-item.active .item-title").eq(0).find(".content-toggle-btn").html(`<svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 9L8.5 2L1 9" stroke="black" stroke-width="2"/></svg>`);
+      });
+
+      $("body").keydown(function (event) {
+        searchInput = $(".header-content-box .header-search-box #faq-search-input").val().trim().toLowerCase();
+        if (event.keyCode == 8) {
+          if(!searchInput) {
+            $(".faqlist-wrapper .faqlist-item").addClass("active").removeClass("inactive");
+            $(".faqlist-wrapper .faqlist-item .item-desc").css("display", "none");
+            $(".faqlist-wrapper .faqlist-item .item-title .content-toggle-btn").html('<svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 1L8.5 8L1 1" stroke="black" stroke-width="2"/></svg>');
+            $(".faqlist-wrapper .faq-tips").css("display", "none");
+            $(".faqlist-wrapper .faqlist-item.active .item-desc").eq(0).slideDown();
+            $(".faqlist-wrapper .faqlist-item.active .item-title").eq(0).find(".content-toggle-btn").html(`<svg width="17" height="10" viewBox="0 0 17 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 9L8.5 2L1 9" stroke="black" stroke-width="2"/></svg>`);
+          }
+        }
+      });
+    }
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "FAQ List",
+    "settings": [
+	  {
+        "type": "color",
+        "id": "primary_color",
+        "label": "Primary Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "secondary_color",
+        "label": "Secondary Color",
+        "default": "#505050"
+      },
+	  {
+        "type": "range",
+        "id": "margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin Top",
+        "default": 60
+      },
+      {
+        "type": "range",
+        "id": "margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Margin Bottom",
+        "default": 60
+      },
+      {
+        "type": "range",
+        "id": "mb_margin_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile Margin Top",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "mb_margin_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Mobile Margin Bottom",
+        "default": 40
+      }
+	],
+	"blocks": [
+      {
+        "type": "text",
+        "name": "FAQ Item",
+        "settings": [
+          {
+            "type": "html",
+            "id": "title",
+            "label": "FAQ Title",
+			"default": "How can I make a puchase from this store?"
+          },
+          {
+            "type": "html",
+            "id": "description",
+            "label": "FAQ Description",
+    		"default": "<p>Just register or login your own buyer account with the email address easily, then have the benefits including discount automatically, and complete the order confirmation.</p>"
+          }
+		]
+      }
+    ],
+	"presets": [
+      {
+        "name": "FAQ List"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

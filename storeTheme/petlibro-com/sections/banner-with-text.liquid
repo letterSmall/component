@@ -1,0 +1,273 @@
+{% if section.settings.show_section != blank %}
+<style>
+  .banner-with-text-{{ section.id }} .title-box {
+    color: {{ section.settings.title_color }};
+    text-transform: {{ section.settings.title_transform }}
+  }
+  .banner-with-text-{{ section.id }} .desc-box {
+    color: {{ section.settings.desc_color }};
+  }
+  .banner-with-text-{{ section.id }} .separator-box {
+    background-color: {{ section.settings.separator_color }};
+  }
+  @media only screen and (min-width: 821px) {
+    .banner-with-text-{{ section.id }} .content-container {
+      text-align: {{ section.settings.text_alignment }};
+      left: {{ section.settings.pc_left }}%;
+      top: {{ section.settings.pc_top }}%;
+    }
+  }
+  @media only screen and (max-width: 820px) {
+    .banner-with-text-{{ section.id }}.no-fullwidth .content-container {
+      text-align: {{ section.settings.mb_text_alignment }};
+      top: {{ section.settings.mb_top }}%;
+      left: {{ section.settings.mb_left }}%;
+    }
+    .banner-with-text-{{ section.id }}.full-width .content-container {
+      text-align: {{ section.settings.mb_text_alignment }};
+      top: {{ section.settings.mb_top }}%;
+      left: {{ section.settings.mb_left }}%;
+    }
+  }
+</style>
+<div class="banner-with-text banner-with-text-{{ section.id }} {% if section.settings.full_width %}full-width {% else %}no-fullwidth {% endif %} {% if section.settings.tab_id != blank %}{{ section.settings.tab_id }}{% endif %}">
+  {% capture img_temp %}
+  {% if section.settings.pc_image != blank %}
+  <img class="lazyload js pad-down--hide"
+       src="{{ section.settings.pc_image | img_url: '1x' }}"
+       srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+       sizes="(max-width: 960px) 960px, 1500px" 
+       alt=""
+       width="{{ section.settings.pc_image.width }}" 
+       height="{{ section.settings.pc_image.height }}"/>
+  {% if section.settings.mb_image != blank %}
+  <img class="lazyload js pad-up--hide"
+       src="{{ section.settings.mb_image | img_url: '1x' }}"
+       srcset="{{ section.settings.mb_image | img_url: '1500x' }}, {{ section.settings.mb_image | img_url: '960x' }}"
+       sizes="(max-width: 960px) 960px, 1500px" 
+       alt=""
+       width="{{ section.settings.mb_image.width }}" 
+       height="{{ section.settings.mb_image.height }}"/>
+  {% else %}
+  <img class="lazyload js pad-up--hide"
+       src="{{ section.settings.pc_image | img_url: '1x' }}"
+       srcset="{{ section.settings.pc_image | img_url: '1500x' }}, {{ section.settings.pc_image | img_url: '960x' }}"
+       sizes="(max-width: 960px) 960px, 1500px" 
+       alt=""
+       width="{{ section.settings.pc_image.width }}" 
+       height="{{ section.settings.pc_image.height }}"/>
+  {% endif %}
+  {% endif %}
+  {% endcapture %}
+  {% capture text_temp %}
+  {% if section.settings.title != blank %}
+  <div class="content-container">
+    <h2 class="title-box">{{ section.settings.title }}</h2>
+    {% if section.settings.show_separator %}
+    <div class="separator-box"></div>
+    {% endif %}
+    {% if section.settings.desc != blank %}
+    <div class="desc-box">{{ section.settings.desc }}</div>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% endcapture %}
+
+  {% if section.settings.full_width %}
+  {{ img_temp }}
+  <div class="text-wrapper page-width">
+    {{ text_temp }}
+  </div>
+  {% else %}
+  <div class="text-wrapper page-width">
+    {{ img_temp }}
+    {{ text_temp }}
+  </div>
+  {% endif %}
+</div>
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Banner With Text",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_section",
+        "label": "Show Section?",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "tab_id",
+        "label": "Tab ID",
+		"default": "overview",
+		"info": "This must be filled in for the first module of the category for Tabs Bar"
+      },
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full Width?",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "pc_image",
+        "label": "PC Image"
+      },
+	  {
+        "type": "image_picker",
+        "id": "mb_image",
+        "label": "Mobile Image"
+      },
+      {
+        "type": "color",
+        "id": "title_color",
+        "label": "Title Color",
+        "default":"#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "separator_color",
+        "label": "Separator Color",
+        "default":"#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "desc_color",
+        "label": "Description Color",
+        "default":"#ffffff"
+      },
+      {
+        "type": "html",
+        "id": "title",
+        "label": "Title",
+        "default": "A Fresh and Safe Taste <br>with Every Bite"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_separator",
+        "label": "Show Separator?",
+        "default": true
+      },
+      {
+        "type": "html",
+        "id": "desc",
+        "label": "Description",
+        "default": "<p>The patented rotor in the tank base, twist-lock lid, desiccant bag and sealing strip combine to keep food fresh, while the infrared safety system shuts down the feeder if pesky paws are detected inside the dispenser. Meanwhile, the Low Food Reminder alerts you when it’s time to refill the feeder.</p>"
+      },
+      {
+        "type": "select",
+        "id": "title_transform",
+        "options": [
+          {
+          "value": "lowercase",
+          "label": "Lowercase"
+          },
+          {
+          "value": "capitalize",
+          "label": "Capitalize"
+          },
+          {
+          "value": "uppercase",
+          "label": "Uppercase"
+          }
+        ],
+        "default": "capitalize",
+        "label": "Title Transform"
+      },
+      {
+        "type": "select",
+        "id": "text_alignment",
+        "options": [
+          {
+          "value": "left",
+          "label": "Left"
+          },
+          {
+          "value": "center",
+          "label": "Center"
+          },
+          {
+          "value": "right",
+          "label": "Right"
+          }
+        ],
+        "default": "left",
+        "label": "Text Alignment"
+      },
+      {
+        "type": "select",
+        "id": "mb_text_alignment",
+        "options": [
+          {
+          "value": "left",
+          "label": "Left"
+          },
+          {
+          "value": "center",
+          "label": "Center"
+          },
+          {
+          "value": "right",
+          "label": "Right"
+          }
+        ],
+        "default": "center",
+        "label": "Mobile Text Alignment"
+      },
+      {
+        "type": "range",
+        "id": "pc_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "PC Top Position",
+        "default": 50
+      },
+      {
+        "type": "range",
+        "id": "mb_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Mobile Top Position",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "pc_left",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "PC Left Position",
+        "default": 50
+      },
+      {
+        "type": "range",
+        "id": "mb_left",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "label": "Mobile Left Position",
+        "default": 0
+      }
+	],
+   "presets": [
+      {
+		"name": "Banner With Text"
+      }
+   ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

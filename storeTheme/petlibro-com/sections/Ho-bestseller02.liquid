@@ -1,0 +1,95 @@
+<div class="Hobestseller-container">
+  <div class="contianer-ho">
+   {% if section.settings.title != blank %}
+    <div class="Hobestseller--title">{{-section.settings.title-}}</div>
+   {% endif %}
+       <div class="Hobestseller-box Hobestseller-box03">
+  {% for block in section.blocks %}
+   <div class="Hobestseller-item Hobestseller-item-{{ forloop.index }}" style="background-image:url('{{ block.settings.image_sy2 | img_url:'master' }}')">
+     {% if block.settings.url %}
+     <a href="{{ block.settings.url }}"> 
+     {% endif %}
+     {% if block.settings.image_sy2 %}
+     <img class="Hologolist-itemimg small-hide"  src="{{ block.settings.image_sy2 | img_url:'master' }}" alt="{{ block.settings.title }}" />
+     {% endif %}
+       {% if block.settings.image_sy2_mb %}
+     <img class="Hologolist-itemimg medium--up-hide"  src="{{ block.settings.image_sy2_mb | img_url:'master' }}" alt="{{ block.settings.title }}" />
+     {% endif %}
+     {% if block.settings.url %}
+     </a>
+     {% endif %}
+     <div class="Hobestseller-item-text">
+      {% if block.settings.title != blank %}
+       <div class="Hobestseller-item-title">{{-block.settings.title-}}</div>
+     {% endif %}
+       {% if block.settings.subtitle != blank %}
+       <div class="Hobestseller-item-subtitle">{{-block.settings.subtitle-}}</div>
+     {% endif %}
+     </div>
+     {% if block.settings.url %}
+     <a class="Hobestseller-item-btn" href="{{ block.settings.url }}"><span>{{ block.settings.url_text }}</span></a>
+     {% endif %}
+   </div>
+  {% endfor %}
+  </div>
+  </div>
+  
+</div>
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Index Best Seller02",
+"class":"pa_tops",
+"settings": [
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+     {
+        "type": "image_picker",
+        "id": "image_sy2",
+        "label": "image"
+      },{
+        "type": "image_picker",
+        "id": "image_sy2_mb",
+        "label": "image mobile"
+      },{
+        "type": "text",
+        "id": "title",
+        "label": "title"
+      },{
+        "type": "text",
+        "id": "subtitle",
+        "label": "subtitle"
+      },{
+        "type": "text",
+        "id": "url_text",
+        "label": "url_text"
+      },{
+        "type": "url",
+        "id": "url",
+        "label": "url"
+      }
+          
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Index Best Seller02",
+        "category": "HO-layout"
+      }
+    ]
+  }
+{% endschema %}

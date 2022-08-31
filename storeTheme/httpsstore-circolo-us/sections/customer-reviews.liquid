@@ -1,0 +1,216 @@
+{% if section.blocks.size > 0 %}
+<style>
+  {% if section.settings.bg_color != blank %}
+  .customer-reviews-{{ section.id }} {
+    background-color: {{ section.settings.bg_color }};
+  }
+  {% endif %}
+  {% if section.settings.primary_color != blank %}
+  .customer-reviews-{{ section.id }} .title {
+    color: {{ section.settings.primary_color }};
+  }
+  {% endif %}
+  {% if section.settings.secondary_color != blank %}
+  .customer-reviews-{{ section.id }} .content-country {
+    color: {{ section.settings.secondary_color }};
+  }
+  {% endif %}
+  {% if section.settings.thirdly_color != blank %}
+  .customer-reviews-{{ section.id }} .content-desc {
+    color: {{ section.settings.thirdly_color }};
+  }
+  {% endif %}
+</style>
+
+<div class="customer-reviews customer-reviews-{{ section.id }}">
+  {% if section.settings.heading != blank %}
+  <div class="title-container page-width">
+    <h2 class="title-box title">{{ section.settings.heading }}</h2>
+    <div class="button-box">
+      <div class="slide-prev slide-button">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle r="13" transform="matrix(-1 0 0 1 16 16)" stroke="#F6696C" stroke-width="2"/>
+          <path d="M17.5164 9.82232C17.97 9.39256 18.6948 9.39256 19.1484 9.82232C19.6172 10.2666 19.6172 10.9986 19.1484 11.4428L14.3387 16L19.1484 20.5572C19.6172 21.0014 19.6172 21.7334 19.1484 22.1777C18.6948 22.6074 17.97 22.6074 17.5164 22.1777L11.8516 16.8102C11.3828 16.366 11.3828 15.634 11.8516 15.1898L17.5164 9.82232Z" fill="#F6696C"/>
+        </svg>
+      </div>
+      <div class="slide-next slide-button">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="13" stroke="#F6696C" stroke-width="2"/>
+          <path d="M14.4836 9.82232C14.03 9.39256 13.3052 9.39256 12.8516 9.82232C12.3828 10.2666 12.3828 10.9986 12.8516 11.4428L17.6613 16L12.8516 20.5572C12.3828 21.0014 12.3828 21.7334 12.8516 22.1777C13.3052 22.6074 14.03 22.6074 14.4836 22.1777L20.1484 16.8102C20.6172 16.366 20.6172 15.634 20.1484 15.1898L14.4836 9.82232Z" fill="#F6696C"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="reviews-container">
+    <div class="reviews-wrapper">
+      {% for block in section.blocks %}
+      <div class="review-item">
+        <div class="review-item-inner">
+          {% if block.settings.title != blank or block.settings.country != blank or block.settings.desc != blank %}
+          <div class="content-box">
+            {% if block.settings.title != blank %}
+            <h3 class="content-title title">{{ block.settings.title }}</h3>
+            {% endif %}
+            {% if block.settings.country != blank %}
+            <div class="content-country">{{ block.settings.country }}</div>
+            {% endif %}
+            {% if block.settings.desc != blank %}
+            <div class="content-desc">{{ block.settings.desc }}</div>
+            {% endif %}
+            {% if block.settings.link_url != blank and block.settings.show_more_btn %}
+            <div class="content-link pad-up--hide">
+              <a href="{{ block.settings.link_url }}" class="">{% if block.settings.link_text != blank %}{{ block.settings.link_text }}{% else %}Read More{% endif %}</a>
+            </div>
+            {% endif %}
+          </div>
+          {% endif %}
+          {% if block.settings.image != blank %}
+          {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+          <div class="image-box">
+            <img class="image lazyload"
+                 data-src="{{ img_url }}"
+                 data-widths="[180, 360, 540, 750, 900, 1080]"
+                 data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                 data-sizes="auto"
+                 alt="{{ block.settings.image.alt }}"
+                 width="{{ block.settings.image.width }}"
+                 height="{{ block.settings.image.height }}">
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    $('.customer-reviews .reviews-wrapper').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 3000,
+      infinite: true,
+      dots: false,
+      prevArrow: $('.customer-reviews .slide-prev'),
+      nextArrow: $('.customer-reviews .slide-next'),
+      centerMode: true,
+      centerPadding: '45%',
+      responsive: [
+        {
+          breakpoint: 1100,
+          settings: {
+            centerPadding: '30%',
+          }
+        },
+        {
+          breakpoint: 590,
+          settings: {
+            centerPadding: '15%',
+          }
+        }
+      ]
+    });
+  });
+</script>
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Customer Reviews",
+    "settings": [
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "primary_color",
+        "label": "Primary Color",
+        "default": "#111431"
+      },
+      {
+        "type": "color",
+        "id": "secondary_color",
+        "label": "Secondary Color",
+        "default": "#F6696C"
+      },
+      {
+        "type": "color",
+        "id": "thirdly_color",
+        "label": "Thirdly Color",
+        "default": "#788296"
+      },
+      {
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Circolo Stories"
+      }
+	],
+    "blocks": [
+      {
+        "type": "text_block",
+        "name": "Reviews Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Author",
+            "default": "Elaine A."
+          },
+          {
+            "type": "text",
+            "id": "country",
+            "label": "Country",
+            "default": "California"
+          },
+          {
+            "type": "html",
+            "id": "desc",
+            "label": "Text",
+            "default": "<span>The Circolo has completely transformed my dance training experience. I feel like I'm right in front of the teacher seeing every intricate detail taught while also seeing my whole body follow through on the choreography.</span>"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_more_btn",
+            "label": "Show Read More"
+          },
+          {
+            "type": "text",
+            "id": "link_text",
+            "label": "Reviews Link Label",
+            "default": "Read More"
+          },
+          {
+            "type": "url",
+            "id": "link_url",
+            "label": "Reviews Link"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Customer Reviews"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,208 @@
+<div class="videos-switcher">
+  <div class="section-product-video">
+    <div class="title">{{section.settings.title}}</div>
+    <div class="swiper-container videos-switcher-container">
+      <div class="videos-wrapper swiper-wrapper">
+        {% for block in section.blocks %}
+        <div class="video-item swiper-slide {% if forloop.first %} active{% endif %}" data-index="{{forloop.index}}">
+          <div class="player_video-wrapper" data-index="{{forloop.index}}">
+            {% if block.settings.image != blank %}
+            <img {% unless forloop.first %} data-{% endunless %}src="{{block.settings.image | img_url: 'master'}}"  class="lazyload prev_video_image hide-mb"/>
+            {% endif %}
+            {% if block.settings.image_mb != blank %}
+            <img {% unless forloop.first %} data-{% endunless %}src="{{block.settings.image_mb | img_url: 'master'}}" class="lazyload prev_video_image hide-pc" />
+            {% else %}
+            <img {% unless forloop.first %} data-{% endunless %}src="{{block.settings.image | img_url: 'master'}}" class="lazyload prev_video_image hide-pc" />
+            {% endif %}
+            <div class="play-icon-wrapper">
+              {%- render 'icon-svg',icon_svg: 'play_icon' -%}
+            </div>
+            <div class="product_player_video-wrapper">
+              <div id="product_player_video_{{forloop.index}}" class="product_player_video"></div>
+            </div>
+          </div>
+          <div class="video-text-wrapper">
+          <h2>{{block.settings.title }}</h2>
+          <p>{{block.settings.text }}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="pc-show">
+      <div class="swiper-button-prev fcw-swiper-button-prev video-swiper-button-prev">{%- render 'icon-svg',icon_svg: 'product-switch-arrow' -%}</div>
+      <div class="swiper-button-next fcw-swiper-button-next video-swiper-button-next">{%- render 'icon-svg',icon_svg: 'product-switch-arrow' -%}</div>
+      </div>
+      <div class="mb-show"><div class="swiper-pagination swiper-pagination-new"></div></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .videos-switcher{ background: {{ section.settings.bg_color }};}
+</style>
+
+<script>
+  var player_videos =[];
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/player_api?"+Math.random();
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+</script>
+<script>
+  function productVedioChange(event){
+    if(event.data == 0){
+      $(".player_video-wrapper").find(".prev_video_image").removeClass("hide");
+      $(".player_video-wrapper").find(".play-icon-wrapper").css("display","block");
+      $(".player_video-wrapper").find(".text").css("display","block");
+      $(".player_video-wrapper").find(".product_player_video-wrapper").css("display","none");
+    }
+  }
+  
+  var player_pdtpage_desc;
+  var player_pdtpage_product = [];
+  function onYouTubePlayerAPIReady() {
+    {% for block in section.blocks %}
+    player_pdtpage_product[{{forloop.index}}] = new YT.Player('product_player_video_{{forloop.index}}', {
+      height: '675',
+      width: '1200',
+      videoId: {{block.settings.code | json}},
+      playerVars:{
+        controls: 1,
+      },
+      events: {
+        'onStateChange': productVedioChange,                     
+      },
+   });
+    {% endfor %}
+ }
+</script>
+
+<script>
+  $(function(){
+    var last_video_index = 1;
+    var video_width =  1200;
+    var video_height =  675;
+    $(".player_video-wrapper").click(function(){
+      if(player_pdtpage_product){
+        if($(window).width() > 768){
+          $(this).find(".product_player_video").css({'width':$(this).find(".prev_video_image.hide-mb").width(),'height':$(this).find(".prev_video_image.hide-mb").height(),'display': 'block'});
+        }else{
+          $(this).find(".product_player_video").css({'width':$(this).find(".prev_video_image.hide-pc").width(),'height':$(this).find(".prev_video_image.hide-pc").height(),'display': 'block'});
+        }
+        $(this).find(".prev_video_image").addClass("hide");
+        $(this).find(".play-icon-wrapper").css("display","none");
+        $(this).find(".text").css("display","none");
+        $(this).find(".product_player_video-wrapper").css("display","block");
+        var now_index = parseInt($(this).attr("data-index"));
+        player_pdtpage_product[last_video_index].stopVideo();
+        player_pdtpage_product[now_index].seekTo(0);
+        player_pdtpage_product[now_index].playVideo();
+        last_video_index = now_index;	
+      }
+    });
+  });
+</script>
+
+<script type="text/javascript">
+  certifySwiper = new Swiper('.videos-switcher-container', {
+	watchSlidesProgress: true,
+	slidesPerView: 'auto',
+	centeredSlides: true,
+	/*loop: true,
+	loopedSlides: 3,
+	autoplay: true,*/
+	navigation: {
+		nextEl: '.video-swiper-button-next',
+		prevEl: '.video-swiper-button-prev',
+	},
+	pagination: {
+		el: '.swiper-pagination',
+		clickable :true,
+	},
+	on: {
+		progress: function(progress) {
+			for (i = 0; i < this.slides.length; i++) {
+				var slide = this.slides.eq(i);
+				var slideProgress = this.slides[i].progress;
+				modify = 1;
+				if (Math.abs(slideProgress) > 1) {
+					modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
+				}
+				translate = slideProgress * modify * 500 + 'px';
+				scale = 1;
+				zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
+				slide.transform('translateX(' + translate + ') scale(' + scale + ')');
+				slide.css('zIndex', zIndex);
+				slide.css('opacity', 1);
+				if (Math.abs(slideProgress) > 3) {
+					slide.css('opacity', 0);
+				}
+			}
+		},
+		setTransition: function(transition) {
+			for (var i = 0; i < this.slides.length; i++) {
+				var slide = this.slides.eq(i)
+				slide.transition(transition);
+			}
+
+		}
+	}
+
+})
+</script>
+
+{% schema %}
+  {
+    "name": "Videos Switcher",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Title",
+        "id": "title",
+		"default": "PRODUCT VIDEO"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "Title and Text Color",
+        "default": "#F2F2F2"
+      }
+	],
+	"blocks":[
+      {
+        "type": "video",
+        "name": "Video",
+        "settings":[
+          {
+            "type": "text",
+            "label": "Youtube Code",
+            "id": "code"
+          },{
+            "type": "image_picker",
+            "label": "Prev Image",
+            "id": "image",
+            "info": "Size: 1130px*570px"
+          },{
+            "type": "image_picker",
+            "label": "Prev Image Mobile",
+            "id": "image_mb"
+          },{
+            "type": "html",
+            "label": "Video Title",
+            "id": "title"
+          },{
+            "type": "html",
+            "label": "Video Text",
+            "id": "text"
+          }
+      	]
+      }
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

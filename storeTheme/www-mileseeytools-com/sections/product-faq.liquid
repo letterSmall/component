@@ -1,0 +1,70 @@
+<div class="section-product-faq">
+  <div class="container1000">
+    <h2 class="faq-title h2_uptitle">{{section.settings.title}}</h2>
+    <div class="faq-content">
+      {% for block in section.blocks %}
+      <div class="faq-item">
+        <h3 class="question">{{block.settings.question}}</h3>
+        <div class="answer">{{block.settings.answer}}</div>
+      </div>
+      {% endfor %}
+    </div>
+    <a href="{{section.settings.link}}" class="learn-more">
+      <svg width="17" height="9" viewBox="0 0 17 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 9L16.7272 0.75H0.272758L8.5 9Z" fill="black"/>
+      </svg><br>
+      {{section.settings.link_text}}
+    </a>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Product Faq",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Title",
+        "id": "title"
+      },{
+        "type": "text",
+        "label": "Bottom link text",
+        "id": "link_text"
+      },{
+        "type": "url",
+        "label": "Bottom link",
+        "id": "link"
+      }
+	],
+	"blocks":[
+      {
+        "type": "faq",
+        "name": "Faq",
+        "settings":[
+          {
+            "type": "text",
+            "label": "Question",
+            "id": "question"
+          },{
+            "type": "html",
+            "label": "Answer",
+            "id": "answer"
+          }
+      	]
+      }
+	],
+    "presets": [
+      {
+		"name": "Product Faq",
+		"category": "Text"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

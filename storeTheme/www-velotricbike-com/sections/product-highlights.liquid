@@ -1,0 +1,119 @@
+{%- if section.blocks.size > 0 -%}
+<section class="page-width section--{{ section.id }}">
+    <div class="product-highlights-container">
+        {% if section.settings.section_title != blank %}
+        <div class="h1 text-center">{{ section.settings.section_title }}</div>
+        {% endif %}
+        <div class="product-highlights-content image-{{ section.settings.layout }} {% if section.settings.round_image %}image-round{% endif %}">
+            {% if section.settings.image != blank %}
+            <div class="highlighted-image">
+                    {%- assign img_url = section.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                    <img class="lazyload {% if section.settings.mobile_image != blank %} small--hide{% endif %}"
+                        data-src="{{ img_url }}"
+                        data-widths="[180, 360, 540, 750, 900, 1080]"
+                        data-aspectratio="{{ section.settings.image.aspect_ratio }}"
+                        data-sizes="auto"
+                        alt="{{ section.settings.image.alt }}" />
+                    {%- if section.settings.mobile_image != blank -%}
+                        {%- assign img_url_mobile = section.settings.mobile_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                        <img class="lazyload medium-up--hide"
+                          src="{{ section.settings.mobile_image | img_url: '300x' }}"
+                          data-src="{{ img_url_mobile }}"
+                          data-aspectratio="{{ section.settings.mobile_image.aspect_ratio }}"
+                          data-sizes="auto"
+                          alt="{{ section.settings.mobile_image.alt | escape }}">
+                    {%- endif -%}
+            </div>
+            {% endif %}
+            <div class="product-highlights">
+            {%- for block in section.blocks -%}
+                <div class="highlight-block">
+                    {%- if block.settings.image != blank -%}
+                    <div class="highlight-img"><img src="{{ block.settings.image | img_url: '40x' }}" alt="{{ block.settings.image.alt }}" /></div>
+                    {%- endif -%}
+                    <div class="product-highlight-content">
+                        {%- if block.settings.title != blank -%}
+                            <div class="h5 highlight-title">{{ block.settings.title }}</div>
+                        {%- endif -%}
+                        {%- if block.settings.subtitle != blank -%}
+                            <div class="highlight-subtitle">{{ block.settings.subtitle }}</div>
+                        {%- endif -%}
+                    </div>
+                </div>
+            {%- endfor -%}
+            </div>
+        </div>
+    </div>
+</section>
+{%- endif -%}
+
+{%- schema -%}
+    {
+      "name": "Product Highlights",
+      "settings": [
+        {
+            "type": "text",
+            "id": "section_title",
+            "label": "Section title"
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
+            "type": "image_picker",
+            "id": "mobile_image",
+            "label": "Mobile Image"
+        },
+        {
+            "type": "checkbox",
+            "id": "round_image",
+            "label": "Is it round image?"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Layout",
+          "default": "right",
+          "options": [
+            {
+              "value": "left",
+              "label": "Image on left"
+            },
+            {
+              "value": "right",
+              "label": "Image on right"
+            }
+          ]
+        }
+      ],
+      "blocks": [
+        {
+          "type": "block",
+          "name": "Block",
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Image(Recommended size：100*100px)"
+            },{
+              "type": "text",
+              "id": "title",
+              "label": "Title"
+            },{
+              "type": "html",
+              "id": "subtitle",
+              "label": "Subtitle"
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Product Highlights"
+        }
+      ]
+    }
+{%- endschema -%}
+

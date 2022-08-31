@@ -1,0 +1,75 @@
+<div class="vac2lefttext-container pi_leftimg_righttext-container">
+  <div class="pi_leftimg-wrapper">
+    {% if section.settings.image %}
+    <img class="small-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+    {% endif %}
+  </div>
+
+  <div class="vac2lefttext-text pi_righttext">
+    {% if section.settings.title != blank %}
+    <div class="pi_textoverimage-title">{{ section.settings.title }}</div>
+    {% endif %}
+    {% if section.settings.content != blank %}
+    <div class="pi_textoverimage-content">{{ section.settings.content }}</div>
+    {% endif %}
+    
+    {% if section.settings.image_mb != blank %}
+    <img class="medium--up-hide" src="{{ section.settings.image_mb | img_url:'master' }}"/>
+    {% else %}
+    <img class="medium--up-hide" src="{{ section.settings.image | img_url:'master' }}"/>
+    {% endif %}
+
+    <div class="pi_right_small_img">
+      {% if section.settings.right_small_img %}
+      <img class="small-hide" src="{{ section.settings.right_small_img | img_url:'master' }}"/>
+      {% endif %}  
+      {% if section.settings.right_small_img_mb %}
+      <img  class="medium--up-hide" src="{{ section.settings.right_small_img_mb | img_url:'master' }}"/>
+      {% else %}
+      <img class="medium--up-hide" src="{{ section.settings.right_small_img | img_url:'master' }}"/>
+      {% endif %}
+    </div>  
+  </div>
+
+</div>
+
+
+{% schema %}
+{
+    "name": "PI LeftImg RightText",
+    "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Left Image(Recommended size：1920*px)"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Left Image Mobile(Recommended size：750*px)"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          },{
+            "type": "html",
+            "id": "content",
+            "label": "content"
+          },{
+            "type": "image_picker",
+            "id": "right_small_img",
+            "label": "Right Small Image"
+          },{
+            "type": "image_picker",
+            "id": "right_small_img_mb",
+            "label": "Right Small Image on Mobile"
+          }
+    ],
+
+    "presets": [
+      {
+        "name": "PI LeftImg RightText",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

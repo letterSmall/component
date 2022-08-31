@@ -1,0 +1,87 @@
+<div class="site-padding">
+  <div class="productlist-wrapper">
+    {%- for block in section.blocks -%}
+    <div class="product-item">
+      {% if block.settings.image != blank %}
+      <img src="{{ block.settings.image | img_url:'master' }}"/>
+        {% endif %}
+      <div class="text-wrapper">
+      {% if block.settings.title != blank %}
+      <div class="title35">{{ block.settings.title }}</div>
+      {% endif %}
+       {% if block.settings.content != blank %}
+      <div class="text">{{ block.settings.content }}</div>
+        {% endif %}
+
+     {% if block.settings.btn_link != blank %}
+        <a class="btn_link hide-pc" target="_blank" href="{{ block.settings.btn_link }}" >{{ block.settings.btn }}</a>
+      {% endif %}
+      </div>
+      {% if block.settings.btn_link != blank %}
+        <a class="btn_link hide-mb" target="_blank" href="{{ block.settings.btn_link }}" >{{ block.settings.btn }}</a>
+      {% endif %}
+    </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{{ 'clipboard.min.js' | asset_url | script_tag }}
+    <script>    
+      var copytext_icon = document.querySelector('.discount_copytext');
+      copytext_icon.addEventListener('click', () => {
+      var clipboard = new ClipboardJS(".discount_copytext");
+      copytext_icon.innerHTML = "Copied!";
+
+      clipboard.on('success', function(e) {
+        console.log('copied!', e.text);
+        e.clearSelection();
+      });
+
+      clipboard.on('error', function(e) {
+        console.log('No copied!');
+      });
+
+      })
+    </script>
+
+{% schema %}
+  {
+    "name": "Vac srobot Product List",
+    "settings": [ ],
+    "blocks": [
+        {
+          "type": "text",
+          "name": "item",
+          "settings": [
+            {
+              "type": "image_picker",
+              "id": "image",
+              "label": "Image(Recommended size：150px*)"
+            },{
+              "type": "html",
+              "id": "title",
+              "label": "title"
+            },{
+              "type": "html",
+              "id": "content",
+              "label": "content"
+            },{
+              "type": "text",
+              "id": "btn",
+              "label": "Button Text"
+            },{
+              "type": "url",
+              "id": "btn_link",
+              "label": "Button Link"
+            }
+          ]
+        }
+     ],
+    "presets": [
+      {
+        "name": "Vac srobot Product List",
+        "category": "Ho-Advance"
+      }
+    ]
+  }
+{% endschema %}

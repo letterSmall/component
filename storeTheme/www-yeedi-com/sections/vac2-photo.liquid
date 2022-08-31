@@ -1,0 +1,69 @@
+ <div class="vac2photo-container">
+  <div class="vac2photo-box">
+   {% for block in section.blocks %}
+    {% if forloop.first %}
+    <div class="vac2photo-item-boxfir">
+     {% elsif forloop.index == 2 %}
+       <div class="vac2photo-item-boxsec">
+     {% elsif forloop.index == 8 %}  
+       <div class="vac2photo-item-boxthir">
+    {% endif %}
+  <div class="vac2photo-item vac2photo-item-{{forloop.index}}">
+    {% if block.settings.image %}
+    <img class="lazyload medium-down--hide" alt src="{{ block.settings.image | img_url:'10x' }}" data-src="{{ block.settings.image | img_url:'master' }}" /> 
+     <img class="lazyload large-up--hide" alt src="{{ block.settings.image_mb | img_url:'10x' }}" data-src="{{ block.settings.image_mb | img_url:'master' }}" /> 
+   {% endif %}
+      {% if block.settings.title != blank %}
+  <div class="vac2photo-item-title">{{ block.settings.title }}</div>
+  {% endif %}
+   </div>
+    {% if forloop.first %}
+     </div>
+     {% elsif forloop.index == 7 %}
+        </div>
+     {% elsif forloop.last %}
+       </div>
+    {% endif %}
+   {% endfor %}
+  </div>
+</div>
+
+
+
+
+{% schema %}
+  {
+    "name": "Vac2pro Photo",
+    "settings": [
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },{
+            "type": "image_picker",
+            "id": "image_mb",
+            "label": "Image Mobile"
+          },{
+            "type": "html",
+            "id": "title",
+            "label": "title"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Vac2pro Photo",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+

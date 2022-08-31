@@ -1,0 +1,87 @@
+<div class="section-product-additional-feartures">
+  <div class="container">
+    <h2 class="title media-title">{{section.settings.title}}</h2>
+    <div class="feartures-wrapper">
+      {% for block in section.blocks %}
+      <div class="item">
+        <img src="{{block.settings.icon | img_url: 'master'}}" class="image"/>
+        <div class="text-wrapper">
+          <div class="text-title">{{block.settings.title}}</div>
+          <div class="text-content">{{block.settings.content}}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if product.metafields.global.specification != blank %}
+    <ul class="features-table">
+      {{ product.metafields.global.specification }}
+    </ul>
+    {% endif %}
+
+    <div class="bottom-link show-full" style="display: none;">SHOW FULL SPECS&nbsp;></div>
+    <div class="bottom-link hide-full">CLOSE FULL SPECS ></div>
+  </div>
+</div>
+
+<script>
+  $(".section-product-additional-feartures .show-full").click(function(){
+    $(this).css("display","none");
+    $(".section-product-additional-feartures .hide-full").css("display","block");
+    $(".section-product-additional-feartures .features-table").slideToggle(500);
+  });
+
+  $(".section-product-additional-feartures .hide-full").click(function(){
+    $(this).css("display","none");
+    $(".section-product-additional-feartures .show-full").css("display","block");
+    $(".section-product-additional-feartures .features-table").slideToggle(500);
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Product Specification",
+	"settings": [
+      {
+        "type": "text",
+        "label": "Section Title",
+        "id": "title",
+        "default": "Specification"
+      }
+	],
+	"blocks":[
+      {
+        "type": "fearture",
+        "name": "fearture",
+        "settings":[
+          {
+            "type": "image_picker",
+            "label": "Icon",
+            "id": "icon"
+          },{
+            "type": "html",
+            "label": "Title",
+            "id": "title"
+          },{
+            "type": "html",
+            "label": "Content",
+            "id": "content"
+          }
+      	]
+      }
+	],
+    "presets": [
+      {
+        "name": "Product Specification",
+        "category": "text"
+ 
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

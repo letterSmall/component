@@ -1,0 +1,102 @@
+<h3 class="h2_36 about-content-title">{{ section.settings.title }}</h3>
+{% if section.blocks.size > 0 %}
+<div class="container">
+  <div class="about-row-wrapper">
+    {% for block in section.blocks %}
+    <div class="about-row-item item-text-{{block.settings.layout }}">
+      <div class="imagebox"> 
+        {% if block.settings.image != blank %}
+        <img  src="{{ block.settings.image |img_url: 'master' }}" alt=""/>
+        {% endif %}
+      </div>
+      <div class="textbox" style="background:url({{ block.settings.image_bg |img_url: 'master' }}) top center no-repeat;">
+        {% if block.settings.title %}
+        <div class="title">{{ block.settings.title }}</div>
+         {% endif %}
+        {% if block.settings.text %}
+        <div class="text">{{ block.settings.text }}</div>
+          {% endif %}
+      </div>
+    </div>
+    {%endfor%}
+  </div>
+</div>
+{% endif%}
+
+{% schema %}
+{
+  "name": {
+    "da": "Billede med tekst",
+    "de": "Foto mit Text",
+    "en": "About Image with text",
+    "es": "Imagen con texto",
+    "fi": "Kuva tekstillä",
+    "fr": "Image avec du texte",
+    "hi": "टेक्स्ट वाली इमेज",
+    "it": "Immagine con testo",
+    "ja": "テキスト付き画像",
+    "ko": "텍스트 포함 이미지",
+    "ms": "Imej dengan teks",
+    "nb": "Bilde med tekst",
+    "nl": "Afbeelding met tekst",
+    "pt-BR": "Imagem com texto",
+    "pt-PT": "Imagem com texto",
+    "sv": "Bild med text",
+    "th": "รูปภาพพร้อมข้อความ",
+    "zh-CN": "带文本的图片",
+    "zh-TW": "附文字的圖片"
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Brand Story"
+    }
+  ],
+  "blocks":[
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+       {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_bg",
+          "label": "Background Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "html",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Image alignment",
+          "options":[
+            {
+              "value":"left",
+              "label":"Left"
+            },
+            {
+              "value":"right",
+              "label":"Right"
+            }
+          ],
+          "default":"left"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

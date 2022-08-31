@@ -1,0 +1,80 @@
+
+  <div class="Landingpage_image-box">
+   {% for block in section.blocks %}
+  <div class="Landingpage_image-item Landingpage_image-item-{{forloop.index}}">
+   {% if block.settings.banner %}
+    <div class="wi100img_ho">
+
+    <img class="small-hide lazyload" src="{{ block.settings.banner | img_url:'100x'  }}" data-src="{{ block.settings.banner | img_url:'master'  }}" alt/>
+    <img class="medium--up-hide lazyload" src="{{ block.settings.banner_mobile | img_url:'100x'  }}" data-src="{{ block.settings.banner_mobile | img_url:'master'  }}" alt/>
+
+    </div>
+   {% endif %}
+    
+    {% if block.settings.amz_buy_img %}
+    <a target="_blank" class="lp_amzbtn" href="{{block.settings.img_url}}"> <img src="{{ block.settings.amz_buy_img | img_url:'master'  }}" alt/></a>
+    {% elsif block.settings.btn_text != blank %}
+    <a target="_blank" class="lp_narmalbtn" href="{{block.settings.img_url}}">{{block.settings.btn_text}}</a>
+    {% endif %}
+    
+    {% if block.settings.code != '' %}
+    <div class="lp_codebtn"><img src="https://cdn.shopifycdn.net/s/files/1/0524/3643/5101/files/620_2x_c9eaeb23-060d-4bae-9e77-e8eb84be1825.png?v=1655963520" alt/><div class="lp_codebtn_text">CODE* : <span>{{block.settings.code}}</span></div></div>
+    {% endif %}
+    
+   </div>
+   {% endfor %}
+  </div>
+
+
+
+
+
+{% schema %}
+  {
+    "name": "Landingpage_image",
+    "settings": [
+
+    ],
+    "blocks": [
+      {
+        "type": "block",
+        "name": "block",
+        "settings": [
+          {
+        "type": "image_picker",
+        "id": "banner",
+        "label": "banner"
+      },{
+        "type": "image_picker",
+        "id": "banner_mobile",
+        "label": "banner(mobile)"
+      },{
+        "type": "url",
+        "id": "img_url",
+        "label": "img_url"
+      },{
+        "type": "image_picker",
+        "id": "amz_buy_img",
+        "label": "amz_buy_img"
+      },{
+        "type": "text",
+        "id": "btn_text",
+        "label": "btn_text"
+      },{
+        "type": "html",
+        "id": "code",
+        "label": "code"
+      }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Landingpage_image",
+        "category": "Ho-Advance"
+ 
+      }
+    ]
+  }
+{% endschema %}
+

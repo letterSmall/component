@@ -1,0 +1,546 @@
+
+<style>
+  {% if section.settings.bgcolor != blank %}
+  #shopify-section-{{-section.id-}}{
+    background-color: {{section.settings.bgcolor}} !important;
+    color:#111431 !important;
+  }
+ {% endif %}
+  .swiper-button-prev-rent,.swiper-button-next-rent{
+   background-image: none !important;
+  }
+  .swiper-button-prev-rent{
+  left:62px !important;
+  }
+  .swiper-button-next-rent{
+  right:62px !important;
+  }
+  #divCircleMirror .shopify-section:nth-of-type(1) .index-section {
+    padding: 0;
+}
+  .swiper--rent img{
+   vertical-align: top;
+  }
+  #divCircleMirror .shopify-section:nth-of-type(1) .align--center {
+    align-self: center;
+}
+  #divCircleMirror .shopify-section:nth-of-type(1) .custom__item {
+    padding-right: 0;
+}
+  .template-page #divCircleMirror .mulimage_boxho .custom__item:nth-child(2){
+      padding: 0 170px 0  114px;
+  }
+  #divCircleMirror .shopify-section:nth-of-type(2) .page-width {
+    border-top: none;
+}
+  #divCircleMirror .shopify-section:nth-of-type(1) .page-width {
+    padding-bottom: 0;
+    max-width: 1520px;
+}
+  .template-page #divCircleMirror .mulimage_boxho .custom__item:nth-child(1){
+  display: flex;
+  }
+  #divCircleMirror .shopify-section:nth-of-type(1) .circleMirrorH2 {
+        position: relative;
+    left: -3px;
+    margin-top: 0;
+    font-size: 40px;
+    padding-bottom: 0;
+    border-bottom: none;
+    line-height: 1.2;
+    margin-bottom: 12px;
+}
+#divCircleMirror .circleMirrorFirstP {
+    font-size: 16px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    font-family: var(--typeHeaderPrimary),var(--typeHeaderFallback);
+    font-weight: var(--typeHeaderWeight);    color: #111431;
+}  
+#divCircleMirror .circleMirrorSecondP {
+    font-size: 28px;
+    margin-bottom: 32px;
+    line-height: 1.14; 
+}
+  #divCircleMirror .circleMirrorSecondP pre{
+      font-family: var(--typeHeaderPrimary),var(--typeHeaderFallback);
+    font-weight: var(--typeHeaderWeight);
+      
+  }
+  #divCircleMirror .circleMirrorthirdP {
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    font-family: var(--typeHeaderPrimary),var(--typeHeaderFallback);
+    font-weight: var(--typeHeaderWeight);
+}
+
+  .cirleMirrorUl li {
+    min-height: auto;
+    margin-bottom: 8px;
+}
+ .cirleMirrorUl li:nth-of-type(1) {
+    padding-left: 35px;
+    background: url(https://cdn.shopifycdn.net/s/files/1/0559/5788/1006/files/mirror_2x_00f773c7-3ec1-458c-a49f-12bd9464fe0b.png?v=1654158773) no-repeat;
+    background-size: contain;
+    background-position: 1px 0px;
+}
+  .cirleMirrorUl li:nth-of-type(2) {
+    padding-left: 35px;
+    background: url(https://cdn.shopifycdn.net/s/files/1/0559/5788/1006/files/gift_2x_efcefba5-403b-4d6c-a741-ada3241aff1d.png?v=1654158771) no-repeat;
+    background-size: contain;
+    background-position: 1px 0px;
+}
+  .cirleMirrorUl li:nth-of-type(3) {
+    padding-left: 35px;
+    background: url(https://cdn.shopifycdn.net/s/files/1/0559/5788/1006/files/Delivery_2x_cad70f54-e400-4d5a-8b74-af74c0989c20.png?v=1654158769) no-repeat;
+    background-size: contain;
+    background-position: 3px 0px;
+}
+  .cirleMirrorUl li:nth-of-type(4) {
+    padding-left: 35px;
+    background: url(https://cdn.shopifycdn.net/s/files/1/0559/5788/1006/files/trial_2x_d2b687cb-a52d-4e93-a489-5302b914aaca.png?v=1654158775) no-repeat;
+    background-size: contain;
+    background-position: 2px 0px;
+}
+ .cirleMirrorUl {
+    font-size: 16px;
+} 
+ .rte .circleMirrorCheckTop {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    color: #F6696C;
+    text-transform: uppercase;
+}
+  .template-page #divCircleMirror #circleMirroript{
+       width: 80px;
+    height: 32px;
+    border: 1px solid #3C435B;
+    border-radius: 6px;
+    margin-right: 4px;    font-size: 14px;
+  }
+  #circleMirrorCheckSpan {
+    font-size: 12px;
+}
+  .tipcircleMirrorbtn {
+    margin-bottom: 0;
+    margin-top: 32px;
+    background: #F6696C;
+    border-radius: 6px;
+    color: #fff;
+    font-family: var(--typeHeaderPrimary),var(--typeHeaderFallback);
+    font-weight: var(--typeHeaderWeight);
+    font-size: 16px;
+    max-width: 384px;
+}
+  .rte .circleMirrorCheckBottom,.template-page #divCircleMirror #circleMirroript{
+   color: #3C435B;
+  }
+  @media (max-width:1520px){
+   .template-page #divCircleMirror .mulimage_boxho .custom__item:nth-child(2) {
+    padding: 0 120px 0 114px;
+}
+  }  
+  @media (max-width:1440px){
+    #divCircleMirror .shopify-section:nth-of-type(1) .page-width{
+    padding:0;
+    }
+  }
+  @media (max-width:1320px){
+.template-page #divCircleMirror .mulimage_boxho .custom__item:nth-child(2) {
+    padding: 20px 90px 20px 70px;
+}
+  }  
+  
+  @media (max-width:1200px){
+.template-page #divCircleMirror .mulimage_boxho .custom__item:nth-child(2) {
+    padding: 20px 60px 20px 50px;
+}
+    #divCircleMirror .shopify-section:nth-of-type(1) .circleMirrorH2 {
+    font-size: 32px;  margin-bottom: 8px;
+}
+    #divCircleMirror .circleMirrorSecondP {
+    margin-bottom: 24px;
+}
+#divCircleMirror .circleMirrorFirstP {
+    margin-bottom: 4px;
+}    
+ .tipcircleMirrorbtn {
+    margin-top: 24px;
+}   
+    
+  }
+  @media (max-width:992px){
+    .template-page #divCircleMirror .mulimage_boxho .custom__item{
+        flex: 0 1 100%;
+    }
+    .template-page #divCircleMirror .mulimage_boxho .custom__item:nth-child(2) {
+    padding: 20px 60px 50px 50px;
+}
+    
+} 
+  
+  @media (max-width:768px){
+  .swiper-button-prev-rent {
+    left: 30px !important;
+}  
+    .swiper-button-next-rent {
+    right: 30px !important;
+}
+    
+  }
+  
+  @media (max-width:590px){
+   .template-page #divCircleMirror .mulimage_boxho .custom__item:nth-child(1) {
+    margin-bottom: 0;
+}
+ .template-page #divCircleMirror .mulimage_boxho .custom__item:nth-child(2) {
+    padding: 24px 24px 50px 24px;
+}   
+ #divCircleMirror .shopify-section:nth-of-type(1) .circleMirrorH2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}   
+ #cicleMirrorBlack {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);    height: 100px;
+}   
+ .tipcircleMirrorbtn {
+    margin-bottom: 26px;
+    margin-top: auto;
+    padding: 14px;
+    height: auto;
+    line-height: 1.1;
+}
+    
+  } 
+  
+  
+</style>
+
+
+{%- if section.settings.space_around -%}
+  <div class="index-section ">
+{%- endif -%}
+{%- unless section.settings.full_width -%}
+  <div class="page-width">
+{%- endunless -%}
+  <div class="custom-content {% if  section.settings.bgcolor %}mulimage_boxho{% endif %}">
+  {%- for block in section.blocks -%}
+    {%- liquid
+      case block.settings.width
+        when '25%'
+          assign block_width = 'small--one-whole one-quarter'
+        when '33%'
+          assign block_width = 'small--one-whole one-third'
+        when '50%'
+          assign block_width = 'small--one-whole one-half'
+        when '66%'
+          assign block_width = 'small--one-whole two-thirds'
+        when '75%'
+          assign block_width = 'small--one-whole three-quarters'
+        when '100%'
+          assign block_width = 'one-whole'
+      endcase
+    -%}
+    <div class="custom__item {{ block_width }}{% if block.settings.alignment %} align--{{ block.settings.alignment }}{% endif %}" {{ block.shopify_attributes }}>
+      <div class="custom__item-inner custom__item-inner--{{ block.type }}{% if block.settings.image == blank and block.type == 'image' %} custom__item-inner--placeholder-image{% endif %}">
+        {%- case block.type -%}
+          {%- when 'liquid' -%}
+            {% if  block.settings.show_duoimg %}
+             <div class="swiper--rent swiper-container">
+              <div class="swiper-wrapper">
+                {% if  block.settings.muimage_01 %}
+                <div class="swiper-slide">
+                  <img alt src="{{ block.settings.muimage_01 | img_url:'1000x' }}">
+                </div>
+                {% endif %}
+                {% if  block.settings.muimage_02 %}
+                <div class="swiper-slide">
+                <img alt src="{{ block.settings.muimage_02 | img_url:'1000x' }}">
+                </div>
+                {% endif %}
+              </div>
+              <div class="swiper-button-prev swiper-button-prev-rent"><img alt src="https://cdn.shopifycdn.net/s/files/1/0559/5788/1006/files/Left_32x32_9913ae49-a557-4d02-8b34-48419e60ee54.png?v=1654140598"></div>
+              <div class="swiper-button-next swiper-button-next-rent"><img alt src="https://cdn.shopifycdn.net/s/files/1/0559/5788/1006/files/Explore_Right_24x24_45ce7724-a445-4d12-9deb-3289399c624a.png?v=1654140599"/></div>
+            </div>
+        {{ 'swiper.min.js' | asset_url | script_tag}}
+            <script>        
+              var Swiperrent = new Swiper ('.swiper--rent', {
+                loop: true,
+                navigation: {
+                  nextEl: '.swiper-button-next-rent',
+                  prevEl: '.swiper-button-prev-rent',
+                },
+              })        
+              </script>
+            {% else %}
+            {%- if block.settings.code != blank -%}
+              <div class="rte">
+                {{ block.settings.code }}
+              </div>
+            {%- else -%}
+              <div class="rte">
+                {{ 'home_page.onboarding.no_content' | t }}
+              </div>
+            {%- endif -%}
+            {% endif %}
+        
+          {%- when 'image' -%}
+            <div class="aos-animate">
+              {%- if block.settings.link != blank -%}
+                <a href="{{ block.settings.link }}">
+              {%- endif -%}
+              {%- if block.settings.image != blank -%}
+                <div class="image-wrap" style="height: 0; padding-bottom: {{ 100 | divided_by: block.settings.image.aspect_ratio }}%;">
+                  {%- assign img_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+                  {% comment %}
+                  <img class="lazyload"
+                       data-src="{{ img_url }}"
+                       data-widths="[360, 540, 720, 900, 1080, 1600]"
+                       data-aspectratio="{{ block.settings.image.aspect_ratio }}"
+                       data-sizes="auto"
+                       alt="{{ block.settings.image.alt }}"
+                       width="{{ block.settings.image.width }}"
+                       height="{{ block.settings.image.height }}">
+                  {% endcomment %}
+                  <img class="lazyload"
+                       src="{{ block.settings.image | img_url: '1x' }}"
+                       srcset="{{ block.settings.image | img_url: '1500x' }}, {{ block.settings.image | img_url: '960x' }}"
+                       sizes="(max-width: 960px) 960px, 1500px" 
+                       alt="{{ block.settings.image.alt }}
+                            width="{{ block.settings.image.width}}"
+                                                                   height="{{ block.settings.image.height }}"/>
+                  <noscript>
+                    <img class="lazyloaded" src="{{ block.settings.image | img_url: '400x' }}" alt="{{ block.settings.image.alt }}">
+                  </noscript>
+                </div>
+                {%- else -%}
+                  <div class="image-wrap">
+                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                  </div>
+              {%- endif -%}
+              {%- if block.settings.link != blank -%}
+                </a>
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      </div>
+    </div>
+  {%- endfor -%}
+  {%- if section.blocks.size == 0 -%}
+    <div class="page-width">
+      <div class="grid">
+        <div class="grid__item">
+          <div class="rte">
+            {{ 'home_page.onboarding.no_content' | t }}
+          </div>
+        </div>
+      </div>
+   </div>
+  {%- endif -%}
+  </div>
+{%- unless section.settings.full_width -%}
+  </div>
+{%- endunless -%}
+{%- if section.settings.space_around -%}
+  </div>
+{%- endif -%}
+
+{% schema %}
+  {
+    "name": "Custom content",
+    "max_blocks": 3,
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "full_width",
+        "label": "Full page width",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "space_around",
+        "label": "Add spacing above and below",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "bgcolor",
+        "label": "Background Color"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "liquid",
+        "name": "HTML",
+        "settings": [
+          {
+            "type": "liquid",
+            "id": "code",
+            "label": "HTML",
+            "default": "<h2>Custom content</h2><p>Use this advanced section to build your own layouts or to add custom HTML, Liquid, or scripts.</p>",
+            "info": "Supports Liquid"
+          },
+          {
+            "type": "select",
+            "id": "width",
+            "label": "Width",
+            "default": "100%",
+            "options": [
+              {
+                "value": "25%",
+                "label": "25%"
+              },
+              {
+                "value": "33%",
+                "label": "33%"
+              },
+              {
+                "value": "50%",
+                "label": "50%"
+              },
+              {
+                "value": "66%",
+                "label": "66%"
+              },
+              {
+                "value": "75%",
+                "label": "75%"
+              },
+              {
+                "value": "100%",
+                "label": "100%"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "alignment",
+            "label": "Vertical alignment",
+            "default": "center",
+            "info": "Aligns when next to other custom content",
+            "options": [
+              {
+                "value": "top-middle",
+                "label": "Top"
+              },
+              {
+                "value": "center",
+                "label": "Middle"
+              },
+              {
+                "value": "bottom-middle",
+                "label": "Bottom"
+              }
+            ]
+          },
+          {
+            "type": "checkbox",
+            "id": "show_duoimg",
+            "label": "Show Multiple Pictures?"
+          },{
+            "type": "image_picker",
+            "id": "muimage_01",
+            "label": "Image01"
+          },{
+            "type": "image_picker",
+            "id": "muimage_02",
+            "label": "Image02"
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "name": "Image",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          },
+          {
+            "type": "select",
+            "id": "width",
+            "label": "Width",
+            "default": "100%",
+            "options": [
+              {
+                "value": "25%",
+                "label": "25%"
+              },
+              {
+                "value": "33%",
+                "label": "33%"
+              },
+              {
+                "value": "50%",
+                "label": "50%"
+              },
+              {
+                "value": "66%",
+                "label": "66%"
+              },
+              {
+                "value": "75%",
+                "label": "75%"
+              },
+              {
+                "value": "100%",
+                "label": "100%"
+              }
+            ]
+          },
+          {
+            "type": "select",
+            "id": "alignment",
+            "label": "Vertical alignment",
+            "default": "center",
+            "info": "Aligns when next to other custom content",
+            "options": [
+              {
+                "value": "top-middle",
+                "label": "Top"
+              },
+              {
+                "value": "center",
+                "label": "Middle"
+              },
+              {
+                "value": "bottom-middle",
+                "label": "Bottom"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom content",
+        "blocks": [
+          {
+            "type": "image",
+            "settings": {
+              "width": "50%"
+            }
+          },
+          {
+            "type": "liquid",
+            "settings": {
+              "width": "50%"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
